@@ -28,8 +28,13 @@
         .top-bar h1 { font-size: 15px; font-weight: 700; color: #1a1a2e; }
         .top-bar h1 span { color: #0369a1; }
 
-        .top-bar-meta { display: flex; gap: 16px; font-size: 11px; color: #6b7280; }
+        .top-bar-meta { display: flex; gap: 16px; font-size: 11px; color: #6b7280; align-items: center; }
         .top-bar-meta strong { color: #374151; }
+        .top-link { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 0.3px; }
+        .derby-link { background: #dbeafe; color: #1d4ed8; }
+        .derby-link:hover { background: #bfdbfe; }
+        .scorecard-link { background: #dcfce7; color: #15803d; }
+        .scorecard-link:hover { background: #bbf7d0; }
 
         /* SUMMARY STRIP */
         .summary-strip {
@@ -275,7 +280,11 @@
         .detail-grade-trend { display: flex; align-items: center; gap: 3px; margin-top: 2px; }
 
         /* ALERTS */
-        .alert-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 6px; }
+        .region-group-header { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 6px 10px; margin-top: 10px; border-radius: 5px 5px 0 0; }
+        .region-group-header:first-child { margin-top: 0; }
+        .region-group-header.west-hdr { background: #f0f9ff; color: #0369a1; border-left: 3px solid #0369a1; }
+        .region-group-header.east-hdr { background: #f0fdf4; color: #15803d; border-left: 3px solid #15803d; }
+        .alert-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 6px; margin-bottom: 8px; }
         .alert-tile { padding: 7px 10px; border-radius: 5px; border-left: 3px solid; font-size: 12px; }
         .alert-tile.critical { background: #fef2f2; border-color: #dc2626; }
         .alert-tile.high { background: #fff7ed; border-color: #d97706; }
@@ -382,12 +391,33 @@
             display: flex; justify-content: space-between; align-items: center;
         }
         .chat-header h3 { font-size: 13px; font-weight: 700; }
+        .chat-header-actions { display: flex; align-items: center; gap: 8px; }
+        .chat-clear { background: rgba(255,255,255,0.2); border: none; color: #fff; font-size: 10px; cursor: pointer; padding: 2px 8px; border-radius: 3px; font-family: inherit; }
+        .chat-clear:hover { background: rgba(255,255,255,0.35); }
         .chat-close { background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; opacity: 0.8; }
         .chat-close:hover { opacity: 1; }
         .chat-body {
             flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px;
-            max-height: 380px;
+            max-height: 320px;
         }
+        .chat-input-wrap {
+            border-top: 1px solid #e5e7eb; padding: 8px 10px; display: flex; gap: 6px;
+        }
+        .chat-input {
+            flex: 1; border: 1px solid #d0d5dd; border-radius: 6px; padding: 7px 10px;
+            font-size: 12px; font-family: inherit; color: #1e293b; outline: none;
+        }
+        .chat-input:focus { border-color: #0369a1; }
+        .chat-input::placeholder { color: #9ca3af; }
+        .chat-send {
+            background: #0369a1; border: none; color: #fff; border-radius: 6px; padding: 0 12px;
+            font-size: 13px; cursor: pointer; font-family: inherit;
+        }
+        .chat-send:hover { background: #075985; }
+        .chat-msg.user { background: #0369a1; color: #fff; align-self: flex-end; border: none; }
+        .chat-msg.user p { color: #e0f2fe; }
+        .chat-msg.answer { background: #f8fafc; border: 1px solid #e2e8f0; align-self: flex-start; }
+        .chat-msg.answer p { color: #374151; }
         .chat-msg {
             padding: 8px 10px; border-radius: 8px; font-size: 12px; line-height: 1.4;
             max-width: 95%;
@@ -411,6 +441,8 @@
         .msg-tag.opp { background: #dcfce7; color: #15803d; }
         .msg-tag.quest { background: #fef3c7; color: #92400e; }
         .msg-tag.wtch { background: #fecaca; color: #dc2626; }
+        .chat-msg.derby { background: #f0f9ff; border: 1px solid #bae6fd; align-self: flex-start; }
+        .msg-tag.drby { background: #bae6fd; color: #0369a1; }
         .chat-msg h4 { font-size: 12px; font-weight: 600; color: #1e293b; margin-bottom: 2px; }
         .chat-msg p { font-size: 11px; color: #4b5563; }
         .chat-msg .data-point { font-weight: 600; color: #1e293b; }
@@ -466,7 +498,9 @@
         <div class="top-bar-meta">
             <span>Anderson Automotive Group</span>
             <span>March 2026 MTD</span>
-            <span>CarWars: <strong>Mar 22</strong></span>
+            <span>CarWars: <strong>Mar 23</strong></span>
+            <a href="https://ringringderby.vercel.app" target="_blank" class="top-link derby-link">Derby Board</a>
+            <a href="https://anderson-scorecard.vercel.app" target="_blank" class="top-link scorecard-link">Scorecard</a>
         </div>
     </div>
 
@@ -492,10 +526,17 @@
     </button>
     <div class="chat-panel" id="chatPanel">
         <div class="chat-header">
-            <h3>Ask Laura &mdash; Data Insights</h3>
-            <button class="chat-close" onclick="toggleChat()">&times;</button>
+            <h3>Ask Laura</h3>
+            <div class="chat-header-actions">
+                <button class="chat-clear" onclick="clearInsights()">Clear</button>
+                <button class="chat-close" onclick="toggleChat()">&times;</button>
+            </div>
         </div>
         <div class="chat-body" id="chatBody"></div>
+        <div class="chat-input-wrap">
+            <input class="chat-input" id="chatInput" type="text" placeholder="Ask about any store or metric..." onkeydown="if(event.key==='Enter')askQuestion()">
+            <button class="chat-send" onclick="askQuestion()">&#8593;</button>
+        </div>
     </div>
 
     <div class="main">
@@ -812,9 +853,9 @@
         // ============================================
         // ALERTS
         // ============================================
-        function renderAlerts(){
+        function getAlertsForStores(stores){
             const alerts=[];
-            D.stores.forEach(store=>{
+            stores.forEach(store=>{
                 const c=calc(store.current),b=calc(store.baseline),name=store.id;
                 if(gn(c.ov)<gn(b.ov)) alerts.push({sev:'critical',title:name+' DECLINED',desc:'Overall '+b.ov+' → '+c.ov+'. Immediate coaching needed.'});
                 const fails=[];
@@ -827,17 +868,27 @@
                 if((gn(c.rg)<gn(brg)||gn(c.sg)<gn(bsg))&&gn(c.ov)>=gn(b.ov)&&fails.length===0)
                     alerts.push({sev:'medium',title:name+' — Inbound Decline',desc:'Inbound slipped despite overall holding. Watch RI & Set.'});
             });
+            return alerts;
+        }
+        function renderAlerts(){
+            const west=D.stores.filter(s=>s.region==='West'), east=D.stores.filter(s=>s.region==='East');
+            const wAlerts=getAlertsForStores(west), eAlerts=getAlertsForStores(east);
             const p=document.getElementById('alertsPanel');
-            if(!alerts.length){p.innerHTML='<p style="color:#16a34a;padding:8px;">All stores within acceptable ranges.</p>';return;}
-            p.innerHTML='<div class="alert-tiles">'+alerts.map(a=>'<div class="alert-tile '+a.sev+'"><h4>'+a.title+'</h4><p>'+a.desc+'</p></div>').join('')+'</div>';
+            if(!wAlerts.length&&!eAlerts.length){p.innerHTML='<p style="color:#16a34a;padding:8px;">All stores within acceptable ranges.</p>';return;}
+            let h='';
+            h+='<div class="region-group-header west-hdr">West Region ('+wAlerts.length+' alert'+(wAlerts.length!==1?'s':'')+')</div>';
+            h+=wAlerts.length?'<div class="alert-tiles">'+wAlerts.map(a=>'<div class="alert-tile '+a.sev+'"><h4>'+a.title+'</h4><p>'+a.desc+'</p></div>').join('')+'</div>':'<p style="color:#16a34a;padding:6px 10px;font-size:12px;">All West stores within acceptable ranges.</p>';
+            h+='<div class="region-group-header east-hdr">East Region ('+eAlerts.length+' alert'+(eAlerts.length!==1?'s':'')+')</div>';
+            h+=eAlerts.length?'<div class="alert-tiles">'+eAlerts.map(a=>'<div class="alert-tile '+a.sev+'"><h4>'+a.title+'</h4><p>'+a.desc+'</p></div>').join('')+'</div>':'<p style="color:#16a34a;padding:6px 10px;font-size:12px;">All East stores within acceptable ranges.</p>';
+            p.innerHTML=h;
         }
 
         // ============================================
         // COACHING
         // ============================================
-        function renderCoaching(){
+        function getCoachingForStores(stores){
             const actions=[];
-            D.stores.forEach(store=>{
+            stores.forEach(store=>{
                 const c=calc(store.current),b=calc(store.baseline),name=store.id;
                 if(gn(c.ov)<gn(b.ov)) actions.push({pri:'Critical',store:name,focus:'Overall declined — '+b.ov+' → '+c.ov,items:['Immediate manager coaching session','Review call recordings','Daily accountability calls','Targeted coaching on weak metrics']});
                 if(c.rg==='F'||c.rg==='D') actions.push({pri:'Critical',store:name,focus:'RI % ('+store.current.req+'% — '+c.rg+')',items:['Increase Ring Ring frequency','Review objection handling','Daily call review sessions','Manager coaching on engagement']});
@@ -847,12 +898,24 @@
                 if((c.rg==='C'||c.rg==='C-')&&gn(c.rg)<gn(gg(store.baseline.req,'req'))) actions.push({pri:'High',store:name,focus:'RI declining ('+store.current.req+'% — '+c.rg+')',items:['Increase Ring Ring activity','Review engagement quality','Manager coaching 2-3x/week']});
                 if((c.sg==='C'||c.sg==='C-')&&gn(c.sg)<gn(gg(store.baseline.set,'set'))) actions.push({pri:'High',store:name,focus:'Set declining ('+store.current.set+'% — '+c.sg+')',items:['Increase Ring Ring frequency','Review closing techniques','Manager coaching 2-3x/week']});
             });
-            const seen=new Set();const unique=actions.filter(a=>{const k=a.store+a.focus;if(seen.has(k))return false;seen.add(k);return true;});
-            const p=document.getElementById('coachingPanel');
-            if(!unique.length){p.innerHTML='<p style="color:#16a34a;padding:8px;">All stores performing well.</p>';return;}
-            p.innerHTML='<div class="coaching-tiles">'+unique.slice(0,12).map(a=>
+            const seen=new Set();return actions.filter(a=>{const k=a.store+a.focus;if(seen.has(k))return false;seen.add(k);return true;});
+        }
+        function renderCoachingTiles(actions){
+            return actions.map(a=>
                 '<div class="coaching-tile"><h4><span class="cp cp-'+a.pri.toLowerCase()+'">'+a.pri+'</span> '+a.store+'</h4><div class="focus"><strong>Focus:</strong> '+a.focus+'</div><ul>'+a.items.map(i=>'<li>'+i+'</li>').join('')+'</ul></div>'
-            ).join('')+'</div>';
+            ).join('');
+        }
+        function renderCoaching(){
+            const west=D.stores.filter(s=>s.region==='West'), east=D.stores.filter(s=>s.region==='East');
+            const wActions=getCoachingForStores(west), eActions=getCoachingForStores(east);
+            const p=document.getElementById('coachingPanel');
+            if(!wActions.length&&!eActions.length){p.innerHTML='<p style="color:#16a34a;padding:8px;">All stores performing well.</p>';return;}
+            let h='';
+            h+='<div class="region-group-header west-hdr">West Region ('+wActions.length+' action'+(wActions.length!==1?'s':'')+')</div>';
+            h+=wActions.length?'<div class="coaching-tiles">'+renderCoachingTiles(wActions.slice(0,8))+'</div>':'<p style="color:#16a34a;padding:6px 10px;font-size:12px;">All West stores performing well.</p>';
+            h+='<div class="region-group-header east-hdr">East Region ('+eActions.length+' action'+(eActions.length!==1?'s':'')+')</div>';
+            h+=eActions.length?'<div class="coaching-tiles">'+renderCoachingTiles(eActions.slice(0,8))+'</div>':'<p style="color:#16a34a;padding:6px 10px;font-size:12px;">All East stores performing well.</p>';
+            p.innerHTML=h;
         }
 
         // ============================================
@@ -930,91 +993,200 @@
         function resetData(){if(confirm('Reset all data to March baseline?')){D.stores.forEach(s=>{s.current={...s.current};});renderDataEntry();recalculateGrades();}}
 
         // ===================================
-        // ASK LAURA — CHAT INSIGHTS
+        // ASK LAURA — CHAT INSIGHTS + Q&A
         // ===================================
         function toggleChat(){
             const p=document.getElementById('chatPanel');
             p.classList.toggle('open');
             if(p.classList.contains('open')) document.getElementById('chatBadge').style.display='none';
         }
+        function clearInsights(){
+            document.getElementById('chatBody').innerHTML='<div class="chat-msg system"><p>Insights cleared. Ask a question below or recalculate to regenerate.</p></div>';
+            document.getElementById('chatBadge').style.display='none';
+        }
 
         function generateInsights(){
-            const msgs=[];
-            // Biggest improvers
+            const all=[];
+            // Biggest improver
             let bestGain={store:null,delta:-99};
+            D.stores.forEach(s=>{const c=calc(s.current),b=calc(s.baseline),d=c.ovS-b.ovS;if(d>bestGain.delta)bestGain={store:s,delta:d,cg:c.ov,bg:b.ov};});
+            if(bestGain.store) all.push({pri:1,type:'opportunity',tag:'Opportunity',title:bestGain.store.id+' \u2014 Biggest Improver',
+                text:'Jumped from '+bestGain.bg+' to '+bestGain.cg+' overall. What\u2019s working here that we can replicate?'});
+            // Overall declines (high priority)
+            D.stores.forEach(s=>{const c=calc(s.current),b=calc(s.baseline);
+                if(gn(c.ov)<gn(b.ov)) all.push({pri:0,type:'watch',tag:'Watch',title:s.id+' \u2014 Overall declined ('+b.ov+' \u2192 '+c.ov+')',
+                    text:'What\u2019s driving the drop? Review recent call recordings.'});
+            });
+            // Big Set swings
+            D.stores.forEach(s=>{const d=s.current.set-s.baseline.set;
+                if(d>=10) all.push({pri:2,type:'opportunity',tag:'Opportunity',title:s.id+' \u2014 Set % surged +'+d.toFixed(0)+' pts',
+                    text:s.baseline.set+'% \u2192 '+s.current.set+'%. What changed in their approach?'});
+                if(d<=-8) all.push({pri:1,type:'watch',tag:'Watch',title:s.id+' \u2014 Set % fell '+Math.abs(d).toFixed(0)+' pts',
+                    text:s.baseline.set+'% \u2192 '+s.current.set+'%. Losing the close on the phone?'});
+            });
+            // Live Convos drops
+            D.stores.forEach(s=>{const d=s.current.live-s.baseline.live;
+                if(d<=-3) all.push({pri:2,type:'watch',tag:'Watch',title:s.id+' \u2014 Live Convos dropped '+d.toFixed(1)+' pts',
+                    text:s.baseline.live+'% \u2192 '+s.current.live+'%. Staffing issue or effort declining?'});
+            });
+            // Regional gap
+            const ws=D.stores.filter(s=>s.region==='West'),es=D.stores.filter(s=>s.region==='East');
+            const wS=(ws.map(s=>s.current.set).reduce((a,b)=>a+b,0)/ws.length).toFixed(1);
+            const eS=(es.map(s=>s.current.set).reduce((a,b)=>a+b,0)/es.length).toFixed(1);
+            if(Math.abs(wS-eS)>5) all.push({pri:3,type:'question',tag:'Question',title:'Set % gap: West '+wS+'% vs East '+eS+'%',
+                text:'Is one region using a different script or framework?'});
+            // Derby activity recommendations
+            const SCORECARD_URL='https://anderson-scorecard.vercel.app';
+            const DERBY_URL='https://ringringderby.vercel.app';
             D.stores.forEach(s=>{
                 const c=calc(s.current),b=calc(s.baseline);
-                const delta=c.ovS-b.ovS;
-                if(delta>bestGain.delta){bestGain={store:s,delta,cg:c.ov,bg:b.ov};}
+                const weakMetrics=[];
+                if(c.rg==='F'||c.rg==='D'||c.sg==='F'||c.sg==='D') weakMetrics.push('inbound');
+                if(c.lg==='F'||c.lg==='D'||c.ag==='F'||c.ag==='D') weakMetrics.push('outbound');
+                if(gn(c.ov)<gn(b.ov)){
+                    all.push({pri:1,type:'derby',tag:'Derby',title:s.id+' — Manager Ring Ring Session (5 pts)',
+                        text:'Overall declined '+b.ov+' → '+c.ov+'. Attending a Manager Ring Ring session earns the most Derby points. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
+                } else if(weakMetrics.length>0){
+                    all.push({pri:2,type:'derby',tag:'Derby',title:s.id+' — Mystery Shop recommended (1 pt)',
+                        text:'Weak '+weakMetrics.join(' & ')+' metrics. A mystery shop can identify coaching gaps. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
+                }
             });
-            if(bestGain.store) msgs.push({type:'opportunity',tag:'Opportunity',title:bestGain.store.id+' — Biggest Improver',
-                text:'Jumped from '+bestGain.bg+' to '+bestGain.cg+' overall. What\u2019s working here? Can we replicate this at other stores?'});
+            // Stores with no recent Derby activity suggestion (encourage Call Pairs for mid-range stores)
+            const midStores=D.stores.filter(s=>{const c=calc(s.current);return gColor(c.ov)==='yellow';});
+            if(midStores.length>0){
+                all.push({pri:3,type:'derby',tag:'Derby',title:midStores.length+' yellow stores — Call Pairs (3 pts each)',
+                    text:midStores.map(s=>s.id).join(', ')+' are in the yellow zone. Call Pairs can push them green. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
+            }
+            // General Derby reminder
+            all.push({pri:5,type:'system',tag:'',title:'Derby Reminder',
+                text:'Ring Ring Derby is live! <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">View Derby Scoreboard</a> | <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a>'});
+            // Sort by priority and cap at 8
+            all.sort((a,b)=>a.pri-b.pri);
+            return all.slice(0,8);
+        }
 
-            // Big metric swings (positive)
-            D.stores.forEach(s=>{
-                const setDelta=s.current.set-s.baseline.set;
-                if(setDelta>=10) msgs.push({type:'opportunity',tag:'Opportunity',title:s.id+' — Set % surged +'+setDelta.toFixed(0)+' pts',
-                    text:'From '+s.baseline.set+'% to '+s.current.set+'%. What changed in their appointment-setting approach?'});
-                const reqDelta=s.current.req-s.baseline.req;
-                if(reqDelta>=8) msgs.push({type:'opportunity',tag:'Opportunity',title:s.id+' — RI % up +'+reqDelta.toFixed(0)+' pts',
-                    text:'Strong engagement improvement. Worth sharing their approach at next team meeting.'});
-            });
-
-            // Drops / concerns
-            D.stores.forEach(s=>{
-                const c=calc(s.current),b=calc(s.baseline);
-                const liveDelta=s.current.live-s.baseline.live;
-                if(liveDelta<=-3) msgs.push({type:'watch',tag:'Watch',title:s.id+' — Live Convos dropped '+liveDelta.toFixed(1)+' pts',
-                    text:'From '+s.baseline.live+'% to '+s.current.live+'%. Staffing issue? Outbound effort declining?'});
-                const setDelta=s.current.set-s.baseline.set;
-                if(setDelta<=-5) msgs.push({type:'watch',tag:'Watch',title:s.id+' — Set % fell '+Math.abs(setDelta).toFixed(0)+' pts',
-                    text:'Went from '+s.baseline.set+'% to '+s.current.set+'%. Are they losing the close on the phone?'});
-                if(gn(c.ov)<gn(b.ov)) msgs.push({type:'watch',tag:'Watch',title:s.id+' — Overall grade declined ('+b.ov+' \u2192 '+c.ov+')',
-                    text:'What\u2019s driving the drop? Have you reviewed recent call recordings?'});
-            });
-
-            // Questions / patterns
-            const westStores=D.stores.filter(s=>s.region==='West'),eastStores=D.stores.filter(s=>s.region==='East');
-            const wAvgSet=(westStores.map(s=>s.current.set).reduce((a,b)=>a+b,0)/westStores.length).toFixed(1);
-            const eAvgSet=(eastStores.map(s=>s.current.set).reduce((a,b)=>a+b,0)/eastStores.length).toFixed(1);
-            if(Math.abs(wAvgSet-eAvgSet)>5) msgs.push({type:'question',tag:'Question',title:'Set % gap between regions',
-                text:'West avg '+wAvgSet+'% vs East avg '+eAvgSet+'%. Is one region using a different framework or script?'});
-
-            // Appt Set outliers
-            D.stores.forEach(s=>{
-                if(s.current.appt>=13&&s.baseline.appt<10) msgs.push({type:'opportunity',tag:'Opportunity',title:s.id+' — Appt Set % breakout',
-                    text:'From '+s.baseline.appt+'% to '+s.current.appt+'%. This store cracked the code on outbound appointments. Get their playbook!'});
-            });
-
-            // Inbound vs outbound disconnect
-            D.stores.forEach(s=>{
-                const c=calc(s.current);
-                const ibGPA=c.iS, obGPA=c.oS;
-                if(ibGPA>=3.0&&obGPA<2.0) msgs.push({type:'question',tag:'Question',title:s.id+' — Strong inbound, weak outbound',
-                    text:'Inbound grade: '+c.ib+', Outbound grade: '+c.ob+'. Is the outbound effort not happening, or is the technique the issue?'});
-                if(obGPA>=3.0&&ibGPA<2.0) msgs.push({type:'question',tag:'Question',title:s.id+' — Strong outbound, weak inbound',
-                    text:'Outbound grade: '+c.ob+', Inbound grade: '+c.ib+'. Are they cherry-picking outbound and neglecting inbound calls?'});
-            });
-
-            // Derby tie-in
-            msgs.push({type:'system',tag:'',title:'Derby Reminder',
-                text:'The Ring Ring Derby is in full swing. Which stores have completed their Mystery Shops and Call Pairs this week? Follow up with lagging stores.'});
-
-            return msgs;
+        function msgHtml(m){
+            const tc=m.type==='opportunity'?'opp':m.type==='question'?'quest':m.type==='watch'?'wtch':m.type==='derby'?'drby':'';
+            const tag=m.tag?'<span class="msg-tag '+tc+'">'+m.tag+'</span>':'';
+            return '<div class="chat-msg '+m.type+'">'+tag+'<h4>'+m.title+'</h4><p>'+m.text+'</p></div>';
         }
 
         function renderInsights(){
             const msgs=generateInsights();
             const body=document.getElementById('chatBody');
             const badge=document.getElementById('chatBadge');
-            const actionable=msgs.filter(m=>m.type!=='system');
-            badge.textContent=actionable.length;
-            badge.style.display=actionable.length>0?'flex':'none';
-            body.innerHTML=msgs.map(m=>{
-                const tagClass=m.type==='opportunity'?'opp':m.type==='question'?'quest':m.type==='watch'?'wtch':'';
-                const tagHtml=m.tag?'<span class="msg-tag '+tagClass+'">'+m.tag+'</span>':'';
-                return '<div class="chat-msg '+m.type+'">'+tagHtml+'<h4>'+m.title+'</h4><p>'+m.text+'</p></div>';
-            }).join('');
+            const count=msgs.filter(m=>m.type!=='system').length;
+            badge.textContent=count;
+            badge.style.display=count>0?'flex':'none';
+            body.innerHTML=msgs.map(msgHtml).join('');
+        }
+
+        // ===================================
+        // Q&A ENGINE
+        // ===================================
+        function askQuestion(){
+            const input=document.getElementById('chatInput');
+            const q=input.value.trim();
+            if(!q)return;
+            input.value='';
+            const body=document.getElementById('chatBody');
+            body.innerHTML+='<div class="chat-msg user"><p>'+q+'</p></div>';
+            const answer=answerQuery(q);
+            body.innerHTML+='<div class="chat-msg answer"><p>'+answer+'</p></div>';
+            body.scrollTop=body.scrollHeight;
+        }
+
+        function answerQuery(q){
+            const ql=q.toLowerCase();
+            // Find store by ID or partial name
+            const matchStore=D.stores.find(s=>ql.includes(s.id.toLowerCase())||ql.includes(s.name.toLowerCase().split(' ').pop()));
+            if(matchStore){
+                const c=calc(matchStore.current),b=calc(matchStore.baseline);
+                const trend=gn(c.ov)>gn(b.ov)?'improved':gn(c.ov)<gn(b.ov)?'declined':'held steady';
+                return '<strong>'+matchStore.id+'</strong> ('+matchStore.name+')<br>'+
+                    'Overall: <strong>'+c.ov+'</strong> (was '+b.ov+') \u2014 '+trend+'<br>'+
+                    'RI: '+matchStore.current.req+'% ('+c.rg+') | Set: '+matchStore.current.set+'% ('+c.sg+')<br>'+
+                    'Live: '+matchStore.current.live+'% ('+c.lg+') | Appt: '+matchStore.current.appt+'% ('+c.ag+')<br>'+
+                    'Inbound: '+c.ib+' | Outbound: '+c.ob;
+            }
+            // Best/top/highest
+            if(ql.match(/best|top|highest|#1|number one|winner/)){
+                const metric=ql.includes('set')?'set':ql.includes('req')||ql.includes(' ri')?'req':ql.includes('live')?'live':ql.includes('appt')?'appt':'ov';
+                if(metric==='ov'){
+                    const ranked=[...D.stores].sort((a,b)=>calc(b.current).ovS-calc(a.current).ovS);
+                    return 'Top 5 overall:<br>'+ranked.slice(0,5).map((s,i)=>(i+1)+'. <strong>'+s.id+'</strong> \u2014 '+calc(s.current).ov).join('<br>');
+                }else{
+                    const ranked=[...D.stores].sort((a,b)=>b.current[metric]-a.current[metric]);
+                    return 'Top 5 by '+metric+':<br>'+ranked.slice(0,5).map((s,i)=>(i+1)+'. <strong>'+s.id+'</strong> \u2014 '+s.current[metric]+'%').join('<br>');
+                }
+            }
+            // Worst/lowest/bottom
+            if(ql.match(/worst|lowest|bottom|struggling|weakest/)){
+                const metric=ql.includes('set')?'set':ql.includes('req')||ql.includes(' ri')?'req':ql.includes('live')?'live':ql.includes('appt')?'appt':'ov';
+                if(metric==='ov'){
+                    const ranked=[...D.stores].sort((a,b)=>calc(a.current).ovS-calc(b.current).ovS);
+                    return 'Bottom 5 overall:<br>'+ranked.slice(0,5).map((s,i)=>(i+1)+'. <strong>'+s.id+'</strong> \u2014 '+calc(s.current).ov).join('<br>');
+                }else{
+                    const ranked=[...D.stores].sort((a,b)=>a.current[metric]-b.current[metric]);
+                    return 'Bottom 5 by '+metric+':<br>'+ranked.slice(0,5).map((s,i)=>(i+1)+'. <strong>'+s.id+'</strong> \u2014 '+s.current[metric]+'%').join('<br>');
+                }
+            }
+            // Improved / declined
+            if(ql.match(/improved|improving|up|gaining/)){
+                const improved=D.stores.filter(s=>gn(calc(s.current).ov)>gn(calc(s.baseline).ov));
+                if(!improved.length) return 'No stores have improved their overall letter grade from baseline.';
+                return improved.length+' stores improved:<br>'+improved.map(s=>'\u2022 <strong>'+s.id+'</strong> '+calc(s.baseline).ov+' \u2192 '+calc(s.current).ov).join('<br>');
+            }
+            if(ql.match(/declined|dropping|down|falling|slipping/)){
+                const declined=D.stores.filter(s=>gn(calc(s.current).ov)<gn(calc(s.baseline).ov));
+                if(!declined.length) return 'No stores have declined in overall letter grade. Everyone is holding or improving!';
+                return declined.length+' stores declined:<br>'+declined.map(s=>'\u2022 <strong>'+s.id+'</strong> '+calc(s.baseline).ov+' \u2192 '+calc(s.current).ov).join('<br>');
+            }
+            // West vs East / compare regions
+            if(ql.match(/west|east|region|compare/)){
+                const ws=D.stores.filter(s=>s.region==='West'),es=D.stores.filter(s=>s.region==='East');
+                const wa=v=>(ws.map(s=>s.current[v]).reduce((a,b)=>a+b,0)/ws.length).toFixed(1);
+                const ea=v=>(es.map(s=>s.current[v]).reduce((a,b)=>a+b,0)/es.length).toFixed(1);
+                const wOv=s2g(ws.map(s=>calc(s.current).ovS).reduce((a,b)=>a+b,0)/ws.length);
+                const eOv=s2g(es.map(s=>calc(s.current).ovS).reduce((a,b)=>a+b,0)/es.length);
+                return '<strong>West</strong> (11 stores): Overall '+wOv+' | RI '+wa('req')+'% | Set '+wa('set')+'% | Live '+wa('live')+'% | Appt '+wa('appt')+'%<br><br>'+
+                    '<strong>East</strong> (5 stores): Overall '+eOv+' | RI '+ea('req')+'% | Set '+ea('set')+'% | Live '+ea('live')+'% | Appt '+ea('appt')+'%';
+            }
+            // Average / overall
+            if(ql.match(/average|overall|all stores|group/)){
+                const avg=v=>(D.stores.map(s=>s.current[v]).reduce((a,b)=>a+b,0)/D.stores.length).toFixed(1);
+                const ovGrade=s2g(D.stores.map(s=>calc(s.current).ovS).reduce((a,b)=>a+b,0)/D.stores.length);
+                return 'All 16 stores average:<br>Overall: <strong>'+ovGrade+'</strong><br>RI: '+avg('req')+'% | Set: '+avg('set')+'% | Live: '+avg('live')+'% | Appt: '+avg('appt')+'%';
+            }
+            // Benchmark
+            if(ql.match(/bench|target|goal/)){
+                return 'Benchmarks: RI 80% | Set 45% | Live Convos 20% | Appt Set 10%<br><br>Grade weighting: Overall = 60% Inbound + 40% Outbound<br>Inbound = 50% RI + 50% Set<br>Outbound = 60% Live + 40% Appt';
+            }
+            // Green / red / yellow count
+            if(ql.match(/green|red|yellow|how many/)){
+                let g=0,y=0,r=0;
+                D.stores.forEach(s=>{const col=gColor(calc(s.current).ov);if(col==='green')g++;else if(col==='yellow')y++;else r++;});
+                return '<strong>'+g+'</strong> green (A/A-/B+), <strong>'+y+'</strong> yellow (B through C), <strong>'+r+'</strong> red (C- and below)';
+            }
+            // Derby / scorecard / mystery shop / call pairs
+            if(ql.match(/derby|scorecard|mystery shop|call pair|manager session|activity|points/)){
+                const SCORECARD_URL='https://anderson-scorecard.vercel.app';
+                const DERBY_URL='https://ringringderby.vercel.app';
+                const recs=[];
+                // Declined stores → Manager Session (5 pts)
+                const declined=D.stores.filter(s=>gn(calc(s.current).ov)<gn(calc(s.baseline).ov));
+                if(declined.length) recs.push('<strong>Manager Ring Ring Session (5 pts)</strong> recommended for: '+declined.map(s=>s.id).join(', ')+' — overall grade declined, attending earns max Derby points');
+                // Stores with F/D metrics → Mystery Shop (1 pt)
+                const weak=D.stores.filter(s=>{const c=calc(s.current);return c.rg==='F'||c.rg==='D'||c.sg==='F'||c.sg==='D'||c.lg==='F'||c.lg==='D'||c.ag==='F'||c.ag==='D';});
+                const shopStores=weak.filter(s=>!declined.includes(s));
+                if(shopStores.length) recs.push('<strong>Mystery Shop (1 pt)</strong> recommended for: '+shopStores.map(s=>s.id).join(', ')+' — failing metrics need diagnosis');
+                // Yellow stores → Call Pairs (3 pts)
+                const yellow=D.stores.filter(s=>gColor(calc(s.current).ov)==='yellow'&&!declined.includes(s)&&!shopStores.includes(s));
+                if(yellow.length) recs.push('<strong>Call Pairs (3 pts)</strong> recommended for: '+yellow.map(s=>s.id).join(', ')+' — yellow zone, push toward green');
+                if(!recs.length) recs.push('All stores are performing well! Consider Call Pairs to maintain momentum.');
+                return recs.join('<br><br>')+'<br><br><a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">View Derby Board</a>';
+            }
+            return 'Try asking about a specific store (e.g. "How is Acura doing?"), rankings ("Who has the best set %?"), comparisons ("West vs East"), status ("Who improved?"), or Derby activities ("Which stores need a mystery shop?").';
         }
 
         function renderAll(){renderStores();renderAlerts();renderCoaching();renderRegions();renderDataEntry();renderSummary();renderInsights();}
