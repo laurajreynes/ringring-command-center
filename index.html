@@ -499,7 +499,7 @@
             <span>Anderson Automotive Group</span>
             <span>March 2026 MTD</span>
             <span>CarWars: <strong>Mar 23</strong></span>
-            <a href="https://ringringderby.vercel.app" target="_blank" class="top-link derby-link">Derby Board</a>
+            <a href="https://ringderby.vercel.app" target="_blank" class="top-link derby-link">Derby Board</a>
             <a href="https://anderson-scorecard.vercel.app" target="_blank" class="top-link scorecard-link">Scorecard</a>
         </div>
     </div>
@@ -617,7 +617,7 @@
             return `<div class="mini-bar-wrap">
                 <div class="mini-bar-fill ${barC(grade)}" style="width:${pct}%"></div>
                 <div class="mini-bar-benchmark" style="left:${benchPct}%" title="Benchmark: ${BENCH[metric]}%"></div>
-                <div class="mini-bar-text">${val}%</div>
+                <div class="mini-bar-text">${val}% <span class="g ${gc(grade)}" style="font-size:9px;padding:0 3px;margin-left:2px;">${grade}</span></div>
             </div>`;
         }
 
@@ -808,11 +808,11 @@
                 h+=`<tr>
                     <td><button class="row-expand-btn" onclick="toggleDetail(${idx},event)">&#9660;</button></td>
                     <td class="store-name" title="${store.name}">${store.id}</td>
-                    <td class="metric-cell ib-start">${miniBar(store.current.req,'req',c.rg)}<div class="mg"><span class="g ${gc(c.rg)}">${c.rg}</span></div></td>
-                    <td class="metric-cell">${miniBar(store.current.set,'set',c.sg)}<div class="mg"><span class="g ${gc(c.sg)}">${c.sg}</span></div></td>
+                    <td class="metric-cell ib-start">${miniBar(store.current.req,'req',c.rg)}</td>
+                    <td class="metric-cell">${miniBar(store.current.set,'set',c.sg)}</td>
                     <td class="grade-cell">${thermo(c.ib)}</td>
-                    <td class="metric-cell ob-start">${miniBar(store.current.live,'live',c.lg)}<div class="mg"><span class="g ${gc(c.lg)}">${c.lg}</span></div></td>
-                    <td class="metric-cell">${miniBar(store.current.appt,'appt',c.ag)}<div class="mg"><span class="g ${gc(c.ag)}">${c.ag}</span></div></td>
+                    <td class="metric-cell ob-start">${miniBar(store.current.live,'live',c.lg)}</td>
+                    <td class="metric-cell">${miniBar(store.current.appt,'appt',c.ag)}</td>
                     <td class="grade-cell">${thermo(c.ob)}</td>
                     <td class="grade-cell ov-col">
                         <span class="g ${gc(b.ov)}">${b.ov}</span>
@@ -1037,7 +1037,7 @@
                 text:'Is one region using a different script or framework?'});
             // Derby activity recommendations
             const SCORECARD_URL='https://anderson-scorecard.vercel.app';
-            const DERBY_URL='https://ringringderby.vercel.app';
+            const DERBY_URL='https://ringderby.vercel.app';
             D.stores.forEach(s=>{
                 const c=calc(s.current),b=calc(s.baseline);
                 const weakMetrics=[];
@@ -1171,7 +1171,7 @@
             // Derby / scorecard / mystery shop / call pairs
             if(ql.match(/derby|scorecard|mystery shop|call pair|manager session|activity|points/)){
                 const SCORECARD_URL='https://anderson-scorecard.vercel.app';
-                const DERBY_URL='https://ringringderby.vercel.app';
+                const DERBY_URL='https://ringderby.vercel.app';
                 const recs=[];
                 // Declined stores → Manager Session (5 pts)
                 const declined=D.stores.filter(s=>gn(calc(s.current).ov)<gn(calc(s.baseline).ov));
