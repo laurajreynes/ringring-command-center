@@ -356,16 +356,102 @@
         }
         .success-message.show { display: block; }
 
+        /* ASK LAURA CHAT WIDGET */
+        .chat-fab {
+            position: fixed; bottom: 20px; right: 20px; z-index: 1000;
+            width: 52px; height: 52px; border-radius: 50%; border: none;
+            background: #0369a1; color: #fff; font-size: 22px; cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .chat-fab:hover { background: #075985; transform: scale(1.05); }
+        .chat-fab .badge {
+            position: absolute; top: -2px; right: -2px; background: #dc2626; color: #fff;
+            font-size: 10px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .chat-panel {
+            position: fixed; bottom: 80px; right: 20px; z-index: 1000;
+            width: 360px; max-height: 480px; background: #fff; border-radius: 10px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.18); display: none; flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-panel.open { display: flex; }
+        .chat-header {
+            background: #0369a1; color: #fff; padding: 10px 14px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .chat-header h3 { font-size: 13px; font-weight: 700; }
+        .chat-close { background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; opacity: 0.8; }
+        .chat-close:hover { opacity: 1; }
+        .chat-body {
+            flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px;
+            max-height: 380px;
+        }
+        .chat-msg {
+            padding: 8px 10px; border-radius: 8px; font-size: 12px; line-height: 1.4;
+            max-width: 95%;
+        }
+        .chat-msg.system {
+            background: #f0f9ff; border: 1px solid #bae6fd; align-self: flex-start;
+        }
+        .chat-msg.opportunity {
+            background: #f0fdf4; border: 1px solid #bbf7d0; align-self: flex-start;
+        }
+        .chat-msg.question {
+            background: #fffbeb; border: 1px solid #fde68a; align-self: flex-start;
+        }
+        .chat-msg.watch {
+            background: #fef2f2; border: 1px solid #fecaca; align-self: flex-start;
+        }
+        .chat-msg .msg-tag {
+            display: inline-block; padding: 1px 5px; border-radius: 3px; font-size: 9px;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 3px;
+        }
+        .msg-tag.opp { background: #dcfce7; color: #15803d; }
+        .msg-tag.quest { background: #fef3c7; color: #92400e; }
+        .msg-tag.wtch { background: #fecaca; color: #dc2626; }
+        .chat-msg h4 { font-size: 12px; font-weight: 600; color: #1e293b; margin-bottom: 2px; }
+        .chat-msg p { font-size: 11px; color: #4b5563; }
+        .chat-msg .data-point { font-weight: 600; color: #1e293b; }
+        @media (max-width: 480px) {
+            .chat-panel { width: calc(100vw - 24px); right: 12px; bottom: 74px; max-height: 60vh; }
+            .chat-fab { bottom: 14px; right: 14px; width: 46px; height: 46px; font-size: 20px; }
+        }
+
+        /* MOBILE RESPONSIVE */
         @media (max-width: 1100px) {
             .detail-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 900px) {
             .coaching-tiles { grid-template-columns: 1fr; }
             .region-compare-grid { grid-template-columns: 1fr; }
+            .progress-strip { grid-template-columns: 1fr; }
         }
-        @media (max-width: 600px) {
-            .summary-strip { flex-wrap: wrap; gap: 10px; }
+        @media (max-width: 768px) {
+            .top-bar { flex-direction: column; gap: 4px; align-items: flex-start; padding: 8px 12px; }
+            .top-bar-meta { flex-wrap: wrap; gap: 8px; }
+            .tab-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .tab-btn { white-space: nowrap; padding: 7px 10px; font-size: 11px; }
+            .main { padding: 8px; }
+            .region-section { overflow-x: auto; }
+            .stores-table { min-width: 700px; }
+            .summary-strip { flex-wrap: wrap; gap: 8px; padding: 6px 12px; }
+            .detail-grid { grid-template-columns: 1fr; }
+            .entry-grid { grid-template-columns: 1fr !important; }
+            .progress-strip { grid-template-columns: 1fr; gap: 6px; }
+        }
+        @media (max-width: 480px) {
+            body { font-size: 12px; }
+            .top-bar h1 { font-size: 14px; }
+            .summary-item .num { font-size: 15px; }
+            .summary-item .lbl { font-size: 9px; }
+            .region-header { flex-direction: column; align-items: flex-start; gap: 4px; }
+            .region-summary { flex-wrap: wrap; }
             .alert-tiles { grid-template-columns: 1fr; }
+            .progress-donut-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .button-group { flex-direction: column; }
+            .button-group .btn { width: 100%; text-align: center; }
         }
         @media print {
             body { background: #fff; }
@@ -398,6 +484,18 @@
         <button class="tab-btn" onclick="switchTab('coaching',this)">Coaching</button>
         <button class="tab-btn" onclick="switchTab('regions',this)">Regions</button>
         <button class="tab-btn" onclick="switchTab('entry',this)">Data Entry</button>
+    </div>
+
+    <!-- Ask Laura Chat Widget -->
+    <button class="chat-fab" onclick="toggleChat()" id="chatFab" title="Ask Laura">
+        &#128172;<span class="badge" id="chatBadge">0</span>
+    </button>
+    <div class="chat-panel" id="chatPanel">
+        <div class="chat-header">
+            <h3>Ask Laura &mdash; Data Insights</h3>
+            <button class="chat-close" onclick="toggleChat()">&times;</button>
+        </div>
+        <div class="chat-body" id="chatBody"></div>
     </div>
 
     <div class="main">
@@ -831,7 +929,95 @@
         function saveCurrentData(){recalculateGrades();const m=document.getElementById('successMessage');m.classList.add('show');setTimeout(()=>m.classList.remove('show'),2500);}
         function resetData(){if(confirm('Reset all data to March baseline?')){D.stores.forEach(s=>{s.current={...s.current};});renderDataEntry();recalculateGrades();}}
 
-        function renderAll(){renderStores();renderAlerts();renderCoaching();renderRegions();renderDataEntry();renderSummary();}
+        // ===================================
+        // ASK LAURA — CHAT INSIGHTS
+        // ===================================
+        function toggleChat(){
+            const p=document.getElementById('chatPanel');
+            p.classList.toggle('open');
+            if(p.classList.contains('open')) document.getElementById('chatBadge').style.display='none';
+        }
+
+        function generateInsights(){
+            const msgs=[];
+            // Biggest improvers
+            let bestGain={store:null,delta:-99};
+            D.stores.forEach(s=>{
+                const c=calc(s.current),b=calc(s.baseline);
+                const delta=c.ovS-b.ovS;
+                if(delta>bestGain.delta){bestGain={store:s,delta,cg:c.ov,bg:b.ov};}
+            });
+            if(bestGain.store) msgs.push({type:'opportunity',tag:'Opportunity',title:bestGain.store.id+' — Biggest Improver',
+                text:'Jumped from '+bestGain.bg+' to '+bestGain.cg+' overall. What\u2019s working here? Can we replicate this at other stores?'});
+
+            // Big metric swings (positive)
+            D.stores.forEach(s=>{
+                const setDelta=s.current.set-s.baseline.set;
+                if(setDelta>=10) msgs.push({type:'opportunity',tag:'Opportunity',title:s.id+' — Set % surged +'+setDelta.toFixed(0)+' pts',
+                    text:'From '+s.baseline.set+'% to '+s.current.set+'%. What changed in their appointment-setting approach?'});
+                const reqDelta=s.current.req-s.baseline.req;
+                if(reqDelta>=8) msgs.push({type:'opportunity',tag:'Opportunity',title:s.id+' — RI % up +'+reqDelta.toFixed(0)+' pts',
+                    text:'Strong engagement improvement. Worth sharing their approach at next team meeting.'});
+            });
+
+            // Drops / concerns
+            D.stores.forEach(s=>{
+                const c=calc(s.current),b=calc(s.baseline);
+                const liveDelta=s.current.live-s.baseline.live;
+                if(liveDelta<=-3) msgs.push({type:'watch',tag:'Watch',title:s.id+' — Live Convos dropped '+liveDelta.toFixed(1)+' pts',
+                    text:'From '+s.baseline.live+'% to '+s.current.live+'%. Staffing issue? Outbound effort declining?'});
+                const setDelta=s.current.set-s.baseline.set;
+                if(setDelta<=-5) msgs.push({type:'watch',tag:'Watch',title:s.id+' — Set % fell '+Math.abs(setDelta).toFixed(0)+' pts',
+                    text:'Went from '+s.baseline.set+'% to '+s.current.set+'%. Are they losing the close on the phone?'});
+                if(gn(c.ov)<gn(b.ov)) msgs.push({type:'watch',tag:'Watch',title:s.id+' — Overall grade declined ('+b.ov+' \u2192 '+c.ov+')',
+                    text:'What\u2019s driving the drop? Have you reviewed recent call recordings?'});
+            });
+
+            // Questions / patterns
+            const westStores=D.stores.filter(s=>s.region==='West'),eastStores=D.stores.filter(s=>s.region==='East');
+            const wAvgSet=(westStores.map(s=>s.current.set).reduce((a,b)=>a+b,0)/westStores.length).toFixed(1);
+            const eAvgSet=(eastStores.map(s=>s.current.set).reduce((a,b)=>a+b,0)/eastStores.length).toFixed(1);
+            if(Math.abs(wAvgSet-eAvgSet)>5) msgs.push({type:'question',tag:'Question',title:'Set % gap between regions',
+                text:'West avg '+wAvgSet+'% vs East avg '+eAvgSet+'%. Is one region using a different framework or script?'});
+
+            // Appt Set outliers
+            D.stores.forEach(s=>{
+                if(s.current.appt>=13&&s.baseline.appt<10) msgs.push({type:'opportunity',tag:'Opportunity',title:s.id+' — Appt Set % breakout',
+                    text:'From '+s.baseline.appt+'% to '+s.current.appt+'%. This store cracked the code on outbound appointments. Get their playbook!'});
+            });
+
+            // Inbound vs outbound disconnect
+            D.stores.forEach(s=>{
+                const c=calc(s.current);
+                const ibGPA=c.iS, obGPA=c.oS;
+                if(ibGPA>=3.0&&obGPA<2.0) msgs.push({type:'question',tag:'Question',title:s.id+' — Strong inbound, weak outbound',
+                    text:'Inbound grade: '+c.ib+', Outbound grade: '+c.ob+'. Is the outbound effort not happening, or is the technique the issue?'});
+                if(obGPA>=3.0&&ibGPA<2.0) msgs.push({type:'question',tag:'Question',title:s.id+' — Strong outbound, weak inbound',
+                    text:'Outbound grade: '+c.ob+', Inbound grade: '+c.ib+'. Are they cherry-picking outbound and neglecting inbound calls?'});
+            });
+
+            // Derby tie-in
+            msgs.push({type:'system',tag:'',title:'Derby Reminder',
+                text:'The Ring Ring Derby is in full swing. Which stores have completed their Mystery Shops and Call Pairs this week? Follow up with lagging stores.'});
+
+            return msgs;
+        }
+
+        function renderInsights(){
+            const msgs=generateInsights();
+            const body=document.getElementById('chatBody');
+            const badge=document.getElementById('chatBadge');
+            const actionable=msgs.filter(m=>m.type!=='system');
+            badge.textContent=actionable.length;
+            badge.style.display=actionable.length>0?'flex':'none';
+            body.innerHTML=msgs.map(m=>{
+                const tagClass=m.type==='opportunity'?'opp':m.type==='question'?'quest':m.type==='watch'?'wtch':'';
+                const tagHtml=m.tag?'<span class="msg-tag '+tagClass+'">'+m.tag+'</span>':'';
+                return '<div class="chat-msg '+m.type+'">'+tagHtml+'<h4>'+m.title+'</h4><p>'+m.text+'</p></div>';
+            }).join('');
+        }
+
+        function renderAll(){renderStores();renderAlerts();renderCoaching();renderRegions();renderDataEntry();renderSummary();renderInsights();}
         document.addEventListener('DOMContentLoaded',renderAll);
     </script>
 </body>
