@@ -168,7 +168,7 @@
         }
 
         .bar-green { background: rgba(22,163,74,0.3); }
-        .bar-yellow { background: rgba(250,204,21,0.35); }
+        .bar-yellow { background: rgba(217,119,6,0.22); }
         .bar-red { background: rgba(220,38,38,0.25); }
 
         .mg { font-size: 10px; margin-top: 1px; text-align: center; }
@@ -176,7 +176,7 @@
         /* GRADE BADGE */
         .g { display: inline-block; padding: 1px 5px; border-radius: 3px; font-weight: 700; font-size: 11px; }
         .g-green { background: #dcfce7; color: #15803d; }
-        .g-yellow { background: #fef9c3; color: #854d0e; }
+        .g-yellow { background: #fef3c7; color: #92400e; }
         .g-red { background: #fecaca; color: #dc2626; }
 
         /* GRADE THERMOMETER */
@@ -204,7 +204,7 @@
         }
 
         .thermo-green { background: #16a34a; }
-        .thermo-yellow { background: #eab308; }
+        .thermo-yellow { background: #d97706; }
         .thermo-red { background: #dc2626; }
 
         .grade-cell { text-align: center; white-space: nowrap; }
@@ -269,11 +269,11 @@
         .progress-stats .ps-row { display: flex; align-items: center; gap: 4px; }
         .ps-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
         .ps-dot-green { background: #16a34a; }
-        .ps-dot-yellow { background: #eab308; }
+        .ps-dot-yellow { background: #d97706; }
         .ps-dot-red { background: #dc2626; }
         .progress-grade-bar { display: flex; height: 6px; border-radius: 3px; overflow: hidden; margin-top: 6px; }
         .pgb-green { background: #16a34a; }
-        .pgb-yellow { background: #eab308; }
+        .pgb-yellow { background: #d97706; }
         .pgb-red { background: #dc2626; }
 
         /* DETAIL GRADE TREND */
@@ -709,7 +709,7 @@
             return `<svg viewBox="0 0 56 56">
                 <circle cx="28" cy="28" r="${r}" fill="none" stroke="#f1f5f9" stroke-width="8"/>
                 ${gLen>0?`<circle cx="28" cy="28" r="${r}" fill="none" stroke="#16a34a" stroke-width="8" stroke-dasharray="${gLen} ${circ-gLen}" stroke-dashoffset="${gOff}"/>`:''}
-                ${yLen>0?`<circle cx="28" cy="28" r="${r}" fill="none" stroke="#eab308" stroke-width="8" stroke-dasharray="${yLen} ${circ-yLen}" stroke-dashoffset="${yOff}"/>`:''}
+                ${yLen>0?`<circle cx="28" cy="28" r="${r}" fill="none" stroke="#d97706" stroke-width="8" stroke-dasharray="${yLen} ${circ-yLen}" stroke-dashoffset="${yOff}"/>`:''}
                 ${rLen>0?`<circle cx="28" cy="28" r="${r}" fill="none" stroke="#dc2626" stroke-width="8" stroke-dasharray="${rLen} ${circ-rLen}" stroke-dashoffset="${rOff}"/>`:''}
             </svg>`;
         }
