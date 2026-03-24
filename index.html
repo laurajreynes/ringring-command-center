@@ -558,21 +558,21 @@
     <script>
         const D = {
             stores: [
-                { id:'SAS', name:'Fred Anderson Subaru', region:'West', baseline:{req:66.8,set:37.8,live:17.5,appt:8.2}, current:{req:64,set:27,live:17.8,appt:10.1} },
-                { id:'TAS', name:'Fred Anderson Toyota of Asheville', region:'West', baseline:{req:55.3,set:26.5,live:12.7,appt:10.3}, current:{req:63,set:32,live:18.4,appt:10.5} },
-                { id:'NAS', name:'Fred Anderson Nissan of Asheville', region:'West', baseline:{req:63.8,set:42.3,live:18.9,appt:8.5}, current:{req:62,set:42,live:14.8,appt:13.4} },
-                { id:'KGR', name:'Fred Anderson Kia of Greer', region:'West', baseline:{req:62.7,set:38.2,live:14.2,appt:10.2}, current:{req:75,set:57,live:13.3,appt:13.4} },
-                { id:'TGR', name:'Fred Anderson Toyota of Greer', region:'West', baseline:{req:57.0,set:32.8,live:17.4,appt:7.3}, current:{req:59,set:32,live:17.2,appt:11.6} },
-                { id:'CGR', name:'Fred Anderson Chevy Buick GMC Cadillac', region:'West', baseline:{req:51.3,set:25.7,live:16.6,appt:6.3}, current:{req:53,set:28,live:16.8,appt:11.3} },
-                { id:'HGR', name:'Fred Anderson Hyundai', region:'West', baseline:{req:63.5,set:38.3,live:10.4,appt:10.6}, current:{req:61,set:49,live:12.9,appt:16.8} },
-                { id:'GGR', name:'Genesis of Greer', region:'West', baseline:{req:65.3,set:33.2,live:12.6,appt:10.7}, current:{req:70,set:43,live:11.7,appt:11.6} },
-                { id:'AGV', name:'Fred Anderson Acura', region:'West', baseline:{req:59.5,set:32.2,live:14.9,appt:9.1}, current:{req:71,set:46,live:19.6,appt:13.6} },
-                { id:'KGV', name:'Fred Anderson Kia of Greenville', region:'West', baseline:{req:60.3,set:32.3,live:13.1,appt:8.9}, current:{req:67,set:31,live:15.6,appt:13.8} },
-                { id:'HGV', name:'Fred Anderson Honda of Greenville', region:'West', baseline:{req:68.5,set:40.5,live:16.3,appt:9.3}, current:{req:67,set:46,live:16.2,appt:13.1} },
-                { id:'TRA', name:'Fred Anderson Toyota of Raleigh', region:'East', baseline:{req:68.2,set:41.0,live:13.1,appt:10.3}, current:{req:68,set:41,live:15.3,appt:14.6} },
-                { id:'KRA', name:'Fred Anderson Kia of Raleigh', region:'East', baseline:{req:66.3,set:42.7,live:19.7,appt:7.5}, current:{req:71,set:35,live:12.9,appt:14.3} },
-                { id:'NRA', name:'Fred Anderson Nissan of Raleigh', region:'East', baseline:{req:66.0,set:43.3,live:16.4,appt:8.5}, current:{req:63,set:44,live:16.0,appt:13.2} },
-                { id:'TSA', name:'Fred Anderson Toyota of Sanford', region:'East', baseline:{req:62.0,set:34.3,live:17.9,appt:7.9}, current:{req:55,set:42,live:16.4,appt:12.4} },
+                { id:'SAS', name:'Fred Anderson Subaru', region:'West', baseline:{req:66.8,set:37.8,live:17.5,appt:8.2}, current:{req:64,set:27,live:16.8,appt:9.8} },
+                { id:'TAS', name:'Fred Anderson Toyota of Asheville', region:'West', baseline:{req:55.3,set:26.5,live:12.7,appt:10.3}, current:{req:63,set:32,live:17.5,appt:10.9} },
+                { id:'NAS', name:'Fred Anderson Nissan of Asheville', region:'West', baseline:{req:63.8,set:42.3,live:18.9,appt:8.5}, current:{req:62,set:42,live:17.6,appt:10.6} },
+                { id:'KGR', name:'Fred Anderson Kia of Greer', region:'West', baseline:{req:62.7,set:38.2,live:14.2,appt:10.2}, current:{req:75,set:57,live:15.3,appt:8.5} },
+                { id:'TGR', name:'Fred Anderson Toyota of Greer', region:'West', baseline:{req:57.0,set:32.8,live:17.4,appt:7.3}, current:{req:59,set:32,live:14.5,appt:9.6} },
+                { id:'CGR', name:'Fred Anderson Chevy Buick GMC Cadillac', region:'West', baseline:{req:51.3,set:25.7,live:16.6,appt:6.3}, current:{req:53,set:28,live:18.2,appt:8.4} },
+                { id:'HGR', name:'Fred Anderson Hyundai', region:'West', baseline:{req:63.5,set:38.3,live:10.4,appt:10.6}, current:{req:61,set:49,live:12.7,appt:10.4} },
+                { id:'GGR', name:'Genesis of Greer', region:'West', baseline:{req:65.3,set:33.2,live:12.6,appt:10.7}, current:{req:70,set:43,live:11.9,appt:9.0} },
+                { id:'AGV', name:'Fred Anderson Acura', region:'West', baseline:{req:59.5,set:32.2,live:14.1,appt:5.6}, current:{req:71,set:46,live:17.0,appt:11.6} },
+                { id:'KGV', name:'Fred Anderson Kia of Greenville', region:'West', baseline:{req:60.3,set:32.3,live:13.1,appt:8.9}, current:{req:67,set:31,live:15.9,appt:13.8} },
+                { id:'HGV', name:'Fred Anderson Honda of Greenville', region:'West', baseline:{req:68.5,set:40.5,live:16.3,appt:9.3}, current:{req:67,set:46,live:15.8,appt:10.8} },
+                { id:'TRA', name:'Fred Anderson Toyota of Raleigh', region:'East', baseline:{req:68.2,set:41.0,live:13.1,appt:10.3}, current:{req:68,set:41,live:14.5,appt:12.4} },
+                { id:'KRA', name:'Fred Anderson Kia of Raleigh', region:'East', baseline:{req:66.3,set:42.7,live:19.7,appt:7.5}, current:{req:71,set:35,live:15.1,appt:9.6} },
+                { id:'NRA', name:'Fred Anderson Nissan of Raleigh', region:'East', baseline:{req:66.0,set:43.3,live:16.4,appt:8.5}, current:{req:63,set:44,live:13.5,appt:7.8} },
+                { id:'TSA', name:'Fred Anderson Toyota of Sanford', region:'East', baseline:{req:62.0,set:34.3,live:17.9,appt:7.9}, current:{req:55,set:42,live:16.7,appt:7.7} },
                 { id:'TCH', name:'Fred Anderson Toyota of Charleston', region:'East', baseline:{req:72.5,set:30.3,live:13.6,appt:7.6}, current:{req:68,set:29,live:14.9,appt:9.1} }
             ]
         };
