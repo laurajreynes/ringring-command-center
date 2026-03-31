@@ -132,7 +132,7 @@
 
         .metric-cell { text-align: center; padding: 3px 4px !important; }
 
-        /* MINI BAR — metric vs benchmark */
+        /* MINI BAR â metric vs benchmark */
         .mini-bar-wrap {
             position: relative;
             height: 22px;
@@ -509,7 +509,7 @@
         <div class="summary-item"><div class="num num-green" id="improvedCount">0</div><div class="lbl">Improved</div></div>
         <div class="summary-item"><div class="num num-red" id="declinedCount">0</div><div class="lbl">Declined</div></div>
         <div class="summary-item"><div class="num num-amber" id="steadyCount">0</div><div class="lbl">Steady</div></div>
-        <div class="summary-item" style="margin-left:auto;"><div class="lbl" id="currentDate" style="color:#6b7280;">—</div></div>
+        <div class="summary-item" style="margin-left:auto;"><div class="lbl" id="currentDate" style="color:#6b7280;">â</div></div>
     </div>
 
     <div class="tab-nav">
@@ -545,7 +545,7 @@
         <div class="tab-panel" id="panel-coaching"><div id="coachingPanel"></div></div>
         <div class="tab-panel" id="panel-regions"><div id="regionPanel"></div></div>
         <div class="tab-panel" id="panel-entry">
-            <div class="success-message" id="successMessage">Data saved — dashboard updated.</div>
+            <div class="success-message" id="successMessage">Data saved â dashboard updated.</div>
             <div id="dataEntryForm"></div>
             <div class="button-group">
                 <button class="btn btn-green" onclick="recalculateGrades()">Recalculate</button>
@@ -558,22 +558,22 @@
     <script>
         const D = {
             stores: [
-                { id:'SAS', name:'Fred Anderson Subaru', region:'West', baseline:{req:66.8,set:37.8,live:17.5,appt:8.2}, current:{req:65,set:29,live:17.0,appt:10.0} },
-                { id:'TAS', name:'Fred Anderson Toyota of Asheville', region:'West', baseline:{req:55.3,set:26.5,live:12.7,appt:10.3}, current:{req:62,set:31,live:17.2,appt:11.5} },
-                { id:'NAS', name:'Fred Anderson Nissan of Asheville', region:'West', baseline:{req:63.8,set:42.3,live:18.9,appt:8.5}, current:{req:65,set:43,live:17.7,appt:11.0} },
-                { id:'KGR', name:'Fred Anderson Kia of Greer', region:'West', baseline:{req:62.7,set:38.2,live:14.2,appt:10.2}, current:{req:78,set:59,live:15.7,appt:8.6} },
-                { id:'TGR', name:'Fred Anderson Toyota of Greer', region:'West', baseline:{req:57.0,set:32.8,live:17.4,appt:7.3}, current:{req:60,set:32,live:15.2,appt:9.1} },
-                { id:'CGR', name:'Fred Anderson Chevy Buick GMC Cadillac', region:'West', baseline:{req:51.3,set:25.7,live:16.6,appt:6.3}, current:{req:52,set:26,live:18.2,appt:8.0} },
-                { id:'HGR', name:'Fred Anderson Hyundai', region:'West', baseline:{req:63.5,set:38.3,live:10.4,appt:10.6}, current:{req:61,set:45,live:12.8,appt:10.0} },
-                { id:'GGR', name:'Genesis of Greer', region:'West', baseline:{req:65.3,set:33.2,live:12.6,appt:10.7}, current:{req:61,set:37,live:11.7,appt:9.0} },
-                { id:'AGV', name:'Fred Anderson Acura', region:'West', baseline:{req:59.5,set:32.2,live:14.9,appt:9.1}, current:{req:70,set:46,live:16.7,appt:11.2} },
-                { id:'KGV', name:'Fred Anderson Kia of Greenville', region:'West', baseline:{req:60.3,set:32.3,live:13.1,appt:8.9}, current:{req:65,set:33,live:16.4,appt:13.3} },
-                { id:'HGV', name:'Fred Anderson Honda of Greenville', region:'West', baseline:{req:68.5,set:40.5,live:16.3,appt:9.3}, current:{req:66,set:43,live:16.0,appt:11.1} },
-                { id:'TRA', name:'Fred Anderson Toyota of Raleigh', region:'East', baseline:{req:68.2,set:41.0,live:13.1,appt:10.3}, current:{req:70,set:41,live:14.7,appt:12.5} },
-                { id:'KRA', name:'Fred Anderson Kia of Raleigh', region:'East', baseline:{req:66.3,set:42.7,live:19.7,appt:7.5}, current:{req:72,set:37,live:14.8,appt:9.0} },
-                { id:'NRA', name:'Fred Anderson Nissan of Raleigh', region:'East', baseline:{req:66.0,set:43.3,live:16.4,appt:8.5}, current:{req:63,set:45,live:13.7,appt:7.0} },
-                { id:'TSA', name:'Fred Anderson Toyota of Sanford', region:'East', baseline:{req:62.0,set:34.3,live:17.9,appt:7.9}, current:{req:56,set:46,live:16.7,appt:8.7} },
-                { id:'TCH', name:'Fred Anderson Toyota of Charleston', region:'East', baseline:{req:72.5,set:30.3,live:13.6,appt:7.6}, current:{req:68,set:30,live:13.5,appt:6.7} }
+                { id:'SAS', name:'Fred Anderson Subaru', region:'West', baseline:{req:66.8,set:37.8,live:17.5,appt:8.2}, current:{req:67,set:30,live:18,appt:10} },
+                { id:'TAS', name:'Fred Anderson Toyota of Asheville', region:'West', baseline:{req:55.3,set:26.5,live:12.7,appt:10.3}, current:{req:62,set:30,live:19,appt:10} },
+                { id:'NAS', name:'Fred Anderson Nissan of Asheville', region:'West', baseline:{req:63.8,set:42.3,live:18.9,appt:8.5}, current:{req:64,set:42,live:15,appt:13} },
+                { id:'KGR', name:'Fred Anderson Kia of Greer', region:'West', baseline:{req:62.7,set:38.2,live:14.2,appt:10.2}, current:{req:78,set:56,live:14,appt:13} },
+                { id:'TGR', name:'Fred Anderson Toyota of Greer', region:'West', baseline:{req:57.0,set:32.8,live:17.4,appt:7.3}, current:{req:60,set:33,live:18,appt:11} },
+                { id:'CGR', name:'Fred Anderson Chevy Buick GMC Cadillac', region:'West', baseline:{req:51.3,set:25.7,live:16.6,appt:6.3}, current:{req:51,set:26,live:17,appt:11} },
+                { id:'HGR', name:'Fred Anderson Hyundai', region:'West', baseline:{req:63.5,set:38.3,live:10.4,appt:10.6}, current:{req:63,set:42,live:13,appt:16} },
+                { id:'GGR', name:'Genesis of Greer', region:'West', baseline:{req:65.3,set:33.2,live:12.6,appt:10.7}, current:{req:61,set:33,live:11,appt:13} },
+                { id:'AGV', name:'Fred Anderson Acura', region:'West', baseline:{req:59.5,set:32.2,live:14.9,appt:9.1}, current:{req:69,set:46,live:20,appt:14} },
+                { id:'KGV', name:'Fred Anderson Kia of Greenville', region:'West', baseline:{req:60.3,set:32.3,live:13.1,appt:8.9}, current:{req:65,set:35,live:16,appt:14} },
+                { id:'HGV', name:'Fred Anderson Honda of Greenville', region:'West', baseline:{req:68.5,set:40.5,live:16.3,appt:9.3}, current:{req:66,set:42,live:16,appt:13} },
+                { id:'TRA', name:'Fred Anderson Toyota of Raleigh', region:'East', baseline:{req:68.2,set:41.0,live:13.1,appt:10.3}, current:{req:70,set:41,live:15,appt:15} },
+                { id:'KRA', name:'Fred Anderson Kia of Raleigh', region:'East', baseline:{req:66.3,set:42.7,live:19.7,appt:7.5}, current:{req:70,set:36,live:13,appt:14} },
+                { id:'NRA', name:'Fred Anderson Nissan of Raleigh', region:'East', baseline:{req:66.0,set:43.3,live:16.4,appt:8.5}, current:{req:63,set:44,live:16,appt:13} },
+                { id:'TSA', name:'Fred Anderson Toyota of Sanford', region:'East', baseline:{req:62.0,set:34.3,live:17.9,appt:7.9}, current:{req:57,set:45,live:16,appt:12} },
+                { id:'TCH', name:'Fred Anderson Toyota of Charleston', region:'East', baseline:{req:72.5,set:30.3,live:13.6,appt:7.6}, current:{req:68,set:31,live:15,appt:10} }
             ]
         };
 
@@ -607,7 +607,7 @@
         function thermoC(g){return'thermo-'+gColor(g);}
         function sn(n){return n.replace('Fred Anderson ','').replace('Genesis of ','Genesis ');}
 
-        // GPA to percentage for thermometer (0-4 → 0-100%)
+        // GPA to percentage for thermometer (0-4 â 0-100%)
         function gpaPercent(grade){ return Math.min(100, (gn(grade)/4)*100); }
 
         // Mini bar HTML
@@ -697,7 +697,7 @@
             return s.asc?'<span class="sort-arrow active">&#9650;</span>':'<span class="sort-arrow active">&#9660;</span>';
         }
 
-        // Donut SVG helper — segments drawn sequentially around the circle
+        // Donut SVG helper â segments drawn sequentially around the circle
         function donutSVG(pctGreen, pctYellow, pctRed) {
             const r=22, circ=2*Math.PI*r;
             const gLen=circ*pctGreen/100, yLen=circ*pctYellow/100, rLen=circ*pctRed/100;
@@ -732,7 +732,7 @@
                     <div class="progress-donut">${donutSVG(pG,pY,pR)}<div class="progress-donut-label">${s2g(avgOv)}</div></div>
                     <div class="progress-stats">
                         <div class="ps-row"><span class="ps-dot ps-dot-green"></span><strong>${green}</strong> green (A/A-/B+)</div>
-                        <div class="ps-row"><span class="ps-dot ps-dot-yellow"></span><strong>${yellow}</strong> yellow (B–C)</div>
+                        <div class="ps-row"><span class="ps-dot ps-dot-yellow"></span><strong>${yellow}</strong> yellow (BâC)</div>
                         <div class="ps-row"><span class="ps-dot ps-dot-red"></span><strong>${red}</strong> red (C- &amp; below)</div>
                         <div class="ps-row" style="margin-top:2px;color:#6b7280;">
                             <span class="trend-arrow trend-up">&#9650;</span>${improved}
@@ -857,16 +857,16 @@
             const alerts=[];
             stores.forEach(store=>{
                 const c=calc(store.current),b=calc(store.baseline),name=store.id;
-                if(gn(c.ov)<gn(b.ov)) alerts.push({sev:'critical',title:name+' DECLINED',desc:'Overall '+b.ov+' → '+c.ov+'. Immediate coaching needed.'});
+                if(gn(c.ov)<gn(b.ov)) alerts.push({sev:'critical',title:name+' DECLINED',desc:'Overall '+b.ov+' â '+c.ov+'. Immediate coaching needed.'});
                 const fails=[];
                 if(c.rg==='F'||c.rg==='D') fails.push('RI: '+store.current.req+'% ('+c.rg+')');
                 if(c.sg==='F'||c.sg==='D') fails.push('Set: '+store.current.set+'% ('+c.sg+')');
                 if(c.lg==='F'||c.lg==='D') fails.push('Live: '+store.current.live+'% ('+c.lg+')');
                 if(c.ag==='F'||c.ag==='D') fails.push('Appt: '+store.current.appt+'% ('+c.ag+')');
-                if(fails.length>0&&gn(c.ov)>=gn(b.ov)) alerts.push({sev:'high',title:name+' — Critical Metrics',desc:fails.join(', ')});
+                if(fails.length>0&&gn(c.ov)>=gn(b.ov)) alerts.push({sev:'high',title:name+' â Critical Metrics',desc:fails.join(', ')});
                 const brg=gg(store.baseline.req,'req'),bsg=gg(store.baseline.set,'set');
                 if((gn(c.rg)<gn(brg)||gn(c.sg)<gn(bsg))&&gn(c.ov)>=gn(b.ov)&&fails.length===0)
-                    alerts.push({sev:'medium',title:name+' — Inbound Decline',desc:'Inbound slipped despite overall holding. Watch RI & Set.'});
+                    alerts.push({sev:'medium',title:name+' â Inbound Decline',desc:'Inbound slipped despite overall holding. Watch RI & Set.'});
             });
             return alerts;
         }
@@ -890,13 +890,13 @@
             const actions=[];
             stores.forEach(store=>{
                 const c=calc(store.current),b=calc(store.baseline),name=store.id;
-                if(gn(c.ov)<gn(b.ov)) actions.push({pri:'Critical',store:name,focus:'Overall declined — '+b.ov+' → '+c.ov,items:['Immediate manager coaching session','Review call recordings','Daily accountability calls','Targeted coaching on weak metrics']});
-                if(c.rg==='F'||c.rg==='D') actions.push({pri:'Critical',store:name,focus:'RI % ('+store.current.req+'% — '+c.rg+')',items:['Increase Ring Ring frequency','Review objection handling','Daily call review sessions','Manager coaching on engagement']});
-                if(c.sg==='F'||c.sg==='D') actions.push({pri:'Critical',store:name,focus:'Set % ('+store.current.set+'% — '+c.sg+')',items:['Review appointment setting framework','Increase coaching frequency','Closing technique training','Daily accountability checks']});
-                if(c.lg==='F'||c.lg==='D') actions.push({pri:'Critical',store:name,focus:'Live % ('+store.current.live+'% — '+c.lg+')',items:['Review outbound dialing strategy','Increase manager follow-up','Call coaching sessions','Review call efficiency']});
-                if(c.ag==='F'||c.ag==='D') actions.push({pri:'Critical',store:name,focus:'Appt Set % ('+store.current.appt+'% — '+c.ag+')',items:['Review booking process','Increase coaching','Appointment closing training','Daily quality checks']});
-                if((c.rg==='C'||c.rg==='C-')&&gn(c.rg)<gn(gg(store.baseline.req,'req'))) actions.push({pri:'High',store:name,focus:'RI declining ('+store.current.req+'% — '+c.rg+')',items:['Increase Ring Ring activity','Review engagement quality','Manager coaching 2-3x/week']});
-                if((c.sg==='C'||c.sg==='C-')&&gn(c.sg)<gn(gg(store.baseline.set,'set'))) actions.push({pri:'High',store:name,focus:'Set declining ('+store.current.set+'% — '+c.sg+')',items:['Increase Ring Ring frequency','Review closing techniques','Manager coaching 2-3x/week']});
+                if(gn(c.ov)<gn(b.ov)) actions.push({pri:'Critical',store:name,focus:'Overall declined â '+b.ov+' â '+c.ov,items:['Immediate manager coaching session','Review call recordings','Daily accountability calls','Targeted coaching on weak metrics']});
+                if(c.rg==='F'||c.rg==='D') actions.push({pri:'Critical',store:name,focus:'RI % ('+store.current.req+'% â '+c.rg+')',items:['Increase Ring Ring frequency','Review objection handling','Daily call review sessions','Manager coaching on engagement']});
+                if(c.sg==='F'||c.sg==='D') actions.push({pri:'Critical',store:name,focus:'Set % ('+store.current.set+'% â '+c.sg+')',items:['Review appointment setting framework','Increase coaching frequency','Closing technique training','Daily accountability checks']});
+                if(c.lg==='F'||c.lg==='D') actions.push({pri:'Critical',store:name,focus:'Live % ('+store.current.live+'% â '+c.lg+')',items:['Review outbound dialing strategy','Increase manager follow-up','Call coaching sessions','Review call efficiency']});
+                if(c.ag==='F'||c.ag==='D') actions.push({pri:'Critical',store:name,focus:'Appt Set % ('+store.current.appt+'% â '+c.ag+')',items:['Review booking process','Increase coaching','Appointment closing training','Daily quality checks']});
+                if((c.rg==='C'||c.rg==='C-')&&gn(c.rg)<gn(gg(store.baseline.req,'req'))) actions.push({pri:'High',store:name,focus:'RI declining ('+store.current.req+'% â '+c.rg+')',items:['Increase Ring Ring activity','Review engagement quality','Manager coaching 2-3x/week']});
+                if((c.sg==='C'||c.sg==='C-')&&gn(c.sg)<gn(gg(store.baseline.set,'set'))) actions.push({pri:'High',store:name,focus:'Set declining ('+store.current.set+'% â '+c.sg+')',items:['Increase Ring Ring frequency','Review closing techniques','Manager coaching 2-3x/week']});
             });
             const seen=new Set();return actions.filter(a=>{const k=a.store+a.focus;if(seen.has(k))return false;seen.add(k);return true;});
         }
@@ -993,7 +993,7 @@
         function resetData(){if(confirm('Reset all data to March baseline?')){D.stores.forEach(s=>{s.current={...s.current};});renderDataEntry();recalculateGrades();}}
 
         // ===================================
-        // ASK LAURA — CHAT INSIGHTS + Q&A
+        // ASK LAURA â CHAT INSIGHTS + Q&A
         // ===================================
         function toggleChat(){
             const p=document.getElementById('chatPanel');
@@ -1044,17 +1044,17 @@
                 if(c.rg==='F'||c.rg==='D'||c.sg==='F'||c.sg==='D') weakMetrics.push('inbound');
                 if(c.lg==='F'||c.lg==='D'||c.ag==='F'||c.ag==='D') weakMetrics.push('outbound');
                 if(gn(c.ov)<gn(b.ov)){
-                    all.push({pri:1,type:'derby',tag:'Derby',title:s.id+' — Manager Ring Ring Session (5 pts)',
-                        text:'Overall declined '+b.ov+' → '+c.ov+'. Attending a Manager Ring Ring session earns the most Derby points. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
+                    all.push({pri:1,type:'derby',tag:'Derby',title:s.id+' â Manager Ring Ring Session (5 pts)',
+                        text:'Overall declined '+b.ov+' â '+c.ov+'. Attending a Manager Ring Ring session earns the most Derby points. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
                 } else if(weakMetrics.length>0){
-                    all.push({pri:2,type:'derby',tag:'Derby',title:s.id+' — Mystery Shop recommended (1 pt)',
+                    all.push({pri:2,type:'derby',tag:'Derby',title:s.id+' â Mystery Shop recommended (1 pt)',
                         text:'Weak '+weakMetrics.join(' & ')+' metrics. A mystery shop can identify coaching gaps. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
                 }
             });
             // Stores with no recent Derby activity suggestion (encourage Call Pairs for mid-range stores)
             const midStores=D.stores.filter(s=>{const c=calc(s.current);return gColor(c.ov)==='yellow';});
             if(midStores.length>0){
-                all.push({pri:3,type:'derby',tag:'Derby',title:midStores.length+' yellow stores — Call Pairs (3 pts each)',
+                all.push({pri:3,type:'derby',tag:'Derby',title:midStores.length+' yellow stores â Call Pairs (3 pts each)',
                     text:midStores.map(s=>s.id).join(', ')+' are in the yellow zone. Call Pairs can push them green. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
             }
             // General Derby reminder
@@ -1173,16 +1173,16 @@
                 const SCORECARD_URL='https://anderson-scorecard.vercel.app';
                 const DERBY_URL='https://ringderby.vercel.app';
                 const recs=[];
-                // Declined stores → Manager Session (5 pts)
+                // Declined stores â Manager Session (5 pts)
                 const declined=D.stores.filter(s=>gn(calc(s.current).ov)<gn(calc(s.baseline).ov));
-                if(declined.length) recs.push('<strong>Manager Ring Ring Session (5 pts)</strong> recommended for: '+declined.map(s=>s.id).join(', ')+' — overall grade declined, attending earns max Derby points');
-                // Stores with F/D metrics → Mystery Shop (1 pt)
+                if(declined.length) recs.push('<strong>Manager Ring Ring Session (5 pts)</strong> recommended for: '+declined.map(s=>s.id).join(', ')+' â overall grade declined, attending earns max Derby points');
+                // Stores with F/D metrics â Mystery Shop (1 pt)
                 const weak=D.stores.filter(s=>{const c=calc(s.current);return c.rg==='F'||c.rg==='D'||c.sg==='F'||c.sg==='D'||c.lg==='F'||c.lg==='D'||c.ag==='F'||c.ag==='D';});
                 const shopStores=weak.filter(s=>!declined.includes(s));
-                if(shopStores.length) recs.push('<strong>Mystery Shop (1 pt)</strong> recommended for: '+shopStores.map(s=>s.id).join(', ')+' — failing metrics need diagnosis');
-                // Yellow stores → Call Pairs (3 pts)
+                if(shopStores.length) recs.push('<strong>Mystery Shop (1 pt)</strong> recommended for: '+shopStores.map(s=>s.id).join(', ')+' â failing metrics need diagnosis');
+                // Yellow stores â Call Pairs (3 pts)
                 const yellow=D.stores.filter(s=>gColor(calc(s.current).ov)==='yellow'&&!declined.includes(s)&&!shopStores.includes(s));
-                if(yellow.length) recs.push('<strong>Call Pairs (3 pts)</strong> recommended for: '+yellow.map(s=>s.id).join(', ')+' — yellow zone, push toward green');
+                if(yellow.length) recs.push('<strong>Call Pairs (3 pts)</strong> recommended for: '+yellow.map(s=>s.id).join(', ')+' â yellow zone, push toward green');
                 if(!recs.length) recs.push('All stores are performing well! Consider Call Pairs to maintain momentum.');
                 return recs.join('<br><br>')+'<br><br><a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">View Derby Board</a>';
             }
