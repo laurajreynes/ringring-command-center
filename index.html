@@ -832,6 +832,9 @@
             document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
             document.getElementById('panel-'+tab).classList.add('active');
             btn.classList.add('active');
+            // Redraw charts when their tab becomes visible (canvas needs non-zero dimensions)
+            if(tab==='trends') setTimeout(drawTrendChart,50);
+            if(tab==='obtrends') setTimeout(drawOBTrendChart,50);
         }
 
         // ============================================
@@ -1555,7 +1558,7 @@
         // ============================================
         // INBOUND TRENDS
         // ============================================
-        let trendMetric = 'set';
+        let trendMetric = 'ri';
 
         function trendAvg(metric, monthIdx) {
             let sum=0, count=0;
@@ -1627,9 +1630,8 @@
             let chartHTML = `<div class="trends-chart-wrap">
                 <canvas id="trendCanvas" width="900" height="260"></canvas>
                 <div class="trends-chart-legend">
-                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#1a1a2e;"></div><strong>Group Avg</strong></div>
-                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#0369a1;"></div>West</div>
-                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#dc2626;"></div>East</div>
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#eab308;"></div>West</div>
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#2563eb;"></div>East</div>
                     <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#9ca3af;border-top:2px dashed #9ca3af;height:0;"></div>Benchmark</div>
                 </div>
             </div>`;
@@ -1706,8 +1708,8 @@
             document.getElementById('trendsPanel').innerHTML = `
                 <div class="trends-header">
                     <div class="trends-toggle">
-                        <button class="${m==='set'?'active':''}" onclick="trendMetric='set';renderTrends()">Set %</button>
                         <button class="${m==='ri'?'active':''}" onclick="trendMetric='ri';renderTrends()">Request In %</button>
+                        <button class="${m==='set'?'active':''}" onclick="trendMetric='set';renderTrends()">Set %</button>
                     </div>
                     <span style="font-size:11px;color:#6b7280;">Jan – Apr 2026 YTD | Monthly CRISP Data</span>
                 </div>
@@ -1781,9 +1783,8 @@
             let chartHTML = `<div class="trends-chart-wrap">
                 <canvas id="obTrendCanvas" width="900" height="260"></canvas>
                 <div class="trends-chart-legend">
-                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#1a1a2e;"></div><strong>Group Avg</strong></div>
-                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#0369a1;"></div>West</div>
-                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#dc2626;"></div>East</div>
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#eab308;"></div>West</div>
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#2563eb;"></div>East</div>
                     <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#9ca3af;border-top:2px dashed #9ca3af;height:0;"></div>Benchmark</div>
                 </div>
             </div>`;
@@ -1888,11 +1889,10 @@
                 stores.forEach(st=>{const v=OB_TRENDS[m][st.id];if(v&&v[mi]!==null){s+=v[mi];c++;}});
                 return c>0?(s/c):null;
             }
-            const groupSeries = months.map((_,i)=>obTrendAvg(m,i));
             const westSeries = months.map((_,i)=>seriesAvg(westStores,i));
             const eastSeries = months.map((_,i)=>seriesAvg(eastStores,i));
 
-            const allVals = [...groupSeries,...westSeries,...eastSeries,bench].filter(v=>v!==null);
+            const allVals = [...westSeries,...eastSeries,bench].filter(v=>v!==null);
             let minV = Math.floor(Math.min(...allVals)/5)*5 - 2;
             let maxV = Math.ceil(Math.max(...allVals)/5)*5 + 3;
 
@@ -1939,9 +1939,8 @@
                 });
             }
 
-            drawLine(westSeries, '#0369a1', 2.5);
-            drawLine(eastSeries, '#dc2626', 2.5);
-            drawLine(groupSeries, '#1a1a2e', 3);
+            drawLine(westSeries, '#eab308', 2.5);
+            drawLine(eastSeries, '#2563eb', 2.5);
 
             ctx.fillStyle = '#6b7280'; ctx.font = '11px Helvetica Neue, Helvetica, Arial'; ctx.textAlign = 'center';
             months.forEach((mo,i) => { ctx.fillText(mo, toX(i), h-pad.bottom+18); });
@@ -1971,12 +1970,11 @@
                 stores.forEach(st=>{const v=TRENDS[m][st.id];if(v&&v[mi]!==null){s+=v[mi];c++;}});
                 return c>0?(s/c):null;
             }
-            const groupSeries = months.map((_,i)=>trendAvg(m,i));
             const westSeries = months.map((_,i)=>seriesAvg(westStores,i));
             const eastSeries = months.map((_,i)=>seriesAvg(eastStores,i));
 
             // Y range
-            const allVals = [...groupSeries,...westSeries,...eastSeries,bench].filter(v=>v!==null);
+            const allVals = [...westSeries,...eastSeries,bench].filter(v=>v!==null);
             let minV = Math.floor(Math.min(...allVals)/5)*5 - 2;
             let maxV = Math.ceil(Math.max(...allVals)/5)*5 + 3;
 
@@ -2027,9 +2025,8 @@
                 });
             }
 
-            drawLine(westSeries, '#0369a1', 2.5);
-            drawLine(eastSeries, '#dc2626', 2.5);
-            drawLine(groupSeries, '#1a1a2e', 3);
+            drawLine(westSeries, '#eab308', 2.5);
+            drawLine(eastSeries, '#2563eb', 2.5);
 
             // X axis
             ctx.fillStyle = '#6b7280'; ctx.font = '11px Helvetica Neue, Helvetica, Arial'; ctx.textAlign = 'center';
