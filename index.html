@@ -1337,13 +1337,14 @@
             if(ql.match(/trend|month|ytd|over time|history|improving overall|getting better|trajectory/)){
                 const metric = ql.includes('ri') || ql.includes('request') ? 'ri' : 'set';
                 const label = metric==='set' ? 'Set%' : 'RI%';
-                const janAvg = trendAvg(metric,2), aprAvg = trendAvg(metric,5), novAvg = trendAvg(metric,0);
-                const ytdD = aprAvg-janAvg, fullD = aprAvg-novAvg;
-                let resp = '<strong>'+label+' YTD Trend</strong><br>Group avg: '+novAvg.toFixed(1)+'% (Nov) → '+janAvg.toFixed(1)+'% (Jan) → <strong>'+aprAvg.toFixed(1)+'%</strong> (Apr)<br>'+
-                    'YTD change: <strong style="color:'+(ytdD>=0?'#16a34a':'#dc2626')+'">'+(ytdD>=0?'+':'')+ytdD.toFixed(1)+'</strong> | Since Nov: <strong style="color:'+(fullD>=0?'#16a34a':'#dc2626')+'">'+(fullD>=0?'+':'')+fullD.toFixed(1)+'</strong><br><br>';
+                const ms = TRENDS.months;
+                const janAvg = trendAvg(metric,0), aprAvg = trendAvg(metric,ms.length-1);
+                const ytdD = aprAvg-janAvg;
+                let resp = '<strong>'+label+' YTD Trend</strong><br>Group avg: '+janAvg.toFixed(1)+'% (Jan) → <strong>'+aprAvg.toFixed(1)+'%</strong> (Apr)<br>'+
+                    'YTD change: <strong style="color:'+(ytdD>=0?'#16a34a':'#dc2626')+'">'+(ytdD>=0?'+':'')+ytdD.toFixed(1)+'</strong><br><br>';
                 // Top movers
                 const deltas=[];
-                D.stores.forEach(s=>{const v=TRENDS[metric][s.id];if(v&&v[2]!==null&&v[5]!==null)deltas.push({id:s.id,d:v[5]-v[2]});});
+                D.stores.forEach(s=>{const v=TRENDS[metric][s.id];if(v&&v[0]!==null&&v[ms.length-1]!==null)deltas.push({id:s.id,d:v[ms.length-1]-v[0]});});
                 deltas.sort((a,b)=>b.d-a.d);
                 resp+='Top gainers: '+deltas.slice(0,3).map(s=>'<strong>'+s.id+'</strong> (+'+ s.d+')').join(', ')+'<br>';
                 resp+='Needs attention: '+deltas.slice(-3).reverse().map(s=>'<strong>'+s.id+'</strong> ('+s.d+')').join(', ');
@@ -1503,7 +1504,7 @@
             }
 
             let trendHTML = `<div class="spotlight-section">
-                <h4>Inbound Trends (Nov – Apr)</h4>
+                <h4>Inbound Trends (Jan – Apr YTD)</h4>
                 <div style="display:flex;gap:6px;margin-bottom:4px;padding-left:36px;font-size:9px;color:#9ca3af;">
                     ${months.map(mo=>'<div style="min-width:36px;text-align:center;">'+mo+'</div>').join('')}
                 </div>
@@ -1585,23 +1586,22 @@
             const storeDeltas = [];
             D.stores.forEach(s => {
                 const vals = TRENDS[m][s.id];
-                if(!vals || vals[2]===null || vals[5]===null) return;
-                storeDeltas.push({id:s.id, name:s.name, jan:vals[2], apr:vals[5], d:vals[5]-vals[2], vals:vals});
+                if(!vals || vals[0]===null || vals[months.length-1]===null) return;
+                storeDeltas.push({id:s.id, name:s.name, jan:vals[0], apr:vals[months.length-1], d:vals[months.length-1]-vals[0], vals:vals});
             });
             storeDeltas.sort((a,b) => b.d - a.d);
             const improving = storeDeltas.filter(s=>s.d>0).length;
             const declining = storeDeltas.filter(s=>s.d<0).length;
 
-            const novAvg = trendAvg(m,0), janAvg = trendAvg(m,2), aprAvg = trendAvg(m,5);
-            const ytdDelta = aprAvg - janAvg, fullDelta = aprAvg - novAvg;
+            const janAvg = trendAvg(m,0), aprAvg = trendAvg(m,months.length-1);
+            const ytdDelta = aprAvg - janAvg;
             const benchGap = bench - aprAvg;
 
             // Exec summary
             let execHTML = `<div class="trends-exec">
                 <h4>Executive Summary — ${label} YTD Trend</h4>
-                <p>Group average: <strong>${novAvg!==null?novAvg.toFixed(1):'—'}%</strong> (Nov) → <strong>${janAvg!==null?janAvg.toFixed(1):'—'}%</strong> (Jan) → <strong>${aprAvg!==null?aprAvg.toFixed(1):'—'}%</strong> (Apr) —
-                <strong style="color:${ytdDelta>=0?'#16a34a':'#dc2626'}">${ytdDelta>=0?'+':''}${ytdDelta.toFixed(1)} YTD</strong>,
-                <strong style="color:${fullDelta>=0?'#16a34a':'#dc2626'}">${fullDelta>=0?'+':''}${fullDelta.toFixed(1)} since Nov</strong><br>
+                <p>Group average: <strong>${janAvg!==null?janAvg.toFixed(1):'—'}%</strong> (Jan) → <strong>${aprAvg!==null?aprAvg.toFixed(1):'—'}%</strong> (Apr) —
+                <strong style="color:${ytdDelta>=0?'#16a34a':'#dc2626'}">${ytdDelta>=0?'+':''}${ytdDelta.toFixed(1)} YTD</strong><br>
                 <strong>${improving}</strong> of ${storeDeltas.length} stores improved since Jan, <strong>${declining}</strong> declined.<br>
                 Benchmark: <strong>${bench}%</strong> — Group is currently <strong>${benchGap<=0?'at or above':benchGap.toFixed(1)+' below'}</strong> benchmark.</p>
             </div>`;
@@ -1614,8 +1614,8 @@
                 stores.forEach(st=>{const v=TRENDS[m][st.id];if(v&&v[mi]!==null){s+=v[mi];c++;}});
                 return c>0?(s/c):null;
             }
-            const wJan=regionAvg(westStores,2), wApr=regionAvg(westStores,5);
-            const eJan=regionAvg(eastStores,2), eApr=regionAvg(eastStores,5);
+            const wJan=regionAvg(westStores,0), wApr=regionAvg(westStores,months.length-1);
+            const eJan=regionAvg(eastStores,0), eApr=regionAvg(eastStores,months.length-1);
             const wD=wApr-wJan, eD=eApr-eJan;
             execHTML += `<div class="trends-exec" style="background:#f8fafc;border-color:#e2e8f0;margin-top:8px;">
                 <h4 style="color:#475569;">East vs West</h4>
@@ -1659,7 +1659,7 @@
             // Add TCC if it has data
             const tccVals = TRENDS[m]['TCC'];
             if(tccVals && !sorted.find(s=>s.id==='TCC')) {
-                sorted.unshift({id:'TCC', name:'AAG - Toyota of Cape Coral', jan:null, apr:tccVals[5], d:null, vals:tccVals});
+                sorted.unshift({id:'TCC', name:'AAG - Toyota of Cape Coral', jan:null, apr:tccVals[months.length-1], d:null, vals:tccVals});
             }
 
             sorted.forEach(s => {
@@ -1699,7 +1699,7 @@
                 const avg = trendAvg(m,i);
                 hmHTML += `<td><span class="hm-cell" style="${hmColor(avg!==null?Math.round(avg):null,bench)}">${avg!==null?avg.toFixed(1)+'%':'—'}</span></td>`;
             });
-            const avgD = (trendAvg(m,5)||0) - (trendAvg(m,2)||0);
+            const avgD = (trendAvg(m,months.length-1)||0) - (trendAvg(m,0)||0);
             hmHTML += `<td></td><td class="change-cell" style="color:${avgD>=0?'#16a34a':'#dc2626'}">${avgD>=0?'+':''}${avgD.toFixed(1)} ${avgD>=0?'▲':'▼'}</td>`;
             hmHTML += `</tr></tbody></table>`;
 
@@ -1709,7 +1709,7 @@
                         <button class="${m==='set'?'active':''}" onclick="trendMetric='set';renderTrends()">Set %</button>
                         <button class="${m==='ri'?'active':''}" onclick="trendMetric='ri';renderTrends()">Request In %</button>
                     </div>
-                    <span style="font-size:11px;color:#6b7280;">Nov 2025 – Apr 2026 | Monthly CRISP Data</span>
+                    <span style="font-size:11px;color:#6b7280;">Jan – Apr 2026 YTD | Monthly CRISP Data</span>
                 </div>
                 ${execHTML}${chartHTML}${moversHTML}${hmHTML}`;
 
@@ -1740,21 +1740,21 @@
             const storeDeltas = [];
             D.stores.forEach(s => {
                 const vals = OB_TRENDS[m][s.id];
-                if(!vals || vals[2]===null || vals[5]===null) return;
-                storeDeltas.push({id:s.id, name:s.name, jan:vals[2], apr:vals[5], d:parseFloat((vals[5]-vals[2]).toFixed(1)), vals:vals});
+                if(!vals || vals[0]===null || vals[months.length-1]===null) return;
+                storeDeltas.push({id:s.id, name:s.name, jan:vals[0], apr:vals[months.length-1], d:parseFloat((vals[months.length-1]-vals[0]).toFixed(1)), vals:vals});
             });
             storeDeltas.sort((a,b) => b.d - a.d);
             const improving = storeDeltas.filter(s=>s.d>0).length;
             const declining = storeDeltas.filter(s=>s.d<0).length;
 
-            const novAvg = obTrendAvg(m,0), janAvg = obTrendAvg(m,2), aprAvg = obTrendAvg(m,5);
-            const ytdDelta = aprAvg - janAvg, fullDelta = aprAvg - novAvg;
+            const janAvg = obTrendAvg(m,0), aprAvg = obTrendAvg(m,months.length-1);
+            const ytdDelta = aprAvg - janAvg;
             const benchGap = bench - aprAvg;
 
             // Exec summary
             let execHTML = `<div class="trends-exec">
                 <h4>Outbound — ${label} YTD Trend</h4>
-                <p>Group average: <strong>${novAvg!==null?novAvg.toFixed(1):'—'}%</strong> (Nov) → <strong>${janAvg!==null?janAvg.toFixed(1):'—'}%</strong> (Jan) → <strong>${aprAvg!==null?aprAvg.toFixed(1):'—'}%</strong> (Apr) —
+                <p>Group average: <strong>${janAvg!==null?janAvg.toFixed(1):'—'}%</strong> (Jan) → <strong>${aprAvg!==null?aprAvg.toFixed(1):'—'}%</strong> (Apr) —
                 <strong style="color:${ytdDelta>=0?'#16a34a':'#dc2626'}">${ytdDelta>=0?'+':''}${ytdDelta.toFixed(1)}</strong> YTD<br>
                 <strong>${improving}</strong> of ${storeDeltas.length} stores improved since Jan, <strong>${declining}</strong> declined.<br>
                 Benchmark: <strong>${bench}%</strong> — Group is currently <strong>${benchGap<=0?'at or above':benchGap.toFixed(1)+' below'}</strong> benchmark.</p>
@@ -1768,8 +1768,8 @@
                 stores.forEach(st=>{const v=OB_TRENDS[m][st.id];if(v&&v[mi]!==null){s+=v[mi];c++;}});
                 return c>0?(s/c):null;
             }
-            const wJan=obRegionAvg(westStores,2), wApr=obRegionAvg(westStores,5);
-            const eJan=obRegionAvg(eastStores,2), eApr=obRegionAvg(eastStores,5);
+            const wJan=obRegionAvg(westStores,0), wApr=obRegionAvg(westStores,months.length-1);
+            const eJan=obRegionAvg(eastStores,0), eApr=obRegionAvg(eastStores,months.length-1);
             const wD=wApr-wJan, eD=eApr-eJan;
             execHTML += `<div class="trends-exec" style="background:#f8fafc;border-color:#e2e8f0;margin-top:8px;">
                 <h4 style="color:#475569;">East vs West</h4>
@@ -1809,7 +1809,7 @@
             hmHTML += `<th>Sparkline</th><th>Change</th><th>Staff</th></tr></thead><tbody>`;
 
             const sorted = [...D.stores].filter(s=>OB_TRENDS[m][s.id]).sort((a,b) => {
-                const aV = OB_TRENDS[m][a.id][5], bV = OB_TRENDS[m][b.id][5];
+                const aV = OB_TRENDS[m][a.id][months.length-1], bV = OB_TRENDS[m][b.id][months.length-1];
                 return (bV||0) - (aV||0);
             });
 
@@ -1817,7 +1817,7 @@
                 const vals = OB_TRENDS[m][s.id];
                 if(!vals) return;
                 const staff = STAFF[s.id] || [];
-                const janVal = vals[2], aprVal = vals[5];
+                const janVal = vals[0], aprVal = vals[months.length-1];
                 const d = (janVal!==null && aprVal!==null) ? parseFloat((aprVal-janVal).toFixed(1)) : null;
                 const shortName = s.name.replace('Fred Anderson ','').replace('AAG - ','');
                 hmHTML += `<tr><td><strong><a href="#" onclick="event.preventDefault();showSpotlight('${s.id}')" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px;">${s.id}</a></strong> <span style="color:#9ca3af;font-size:10px;">${shortName}</span></td>`;
@@ -1849,7 +1849,7 @@
                 const avg = obTrendAvg(m,i);
                 hmHTML += `<td><span class="hm-cell" style="${hmColor(avg!==null?Math.round(avg):null,bench)}">${avg!==null?avg.toFixed(1)+'%':'—'}</span></td>`;
             });
-            const avgD = (obTrendAvg(m,5)||0) - (obTrendAvg(m,2)||0);
+            const avgD = (obTrendAvg(m,months.length-1)||0) - (obTrendAvg(m,0)||0);
             hmHTML += `<td></td><td class="change-cell" style="color:${avgD>=0?'#16a34a':'#dc2626'};font-weight:700;">${avgD>=0?'+':''}${avgD.toFixed(1)} ${avgD>=0?'▲':'▼'}</td><td></td></tr></tbody></table>`;
 
             document.getElementById('obTrendsPanel').innerHTML = `
@@ -1858,7 +1858,7 @@
                         <button class="${m==='live'?'active':''}" onclick="obMetric='live';renderOBTrends()">Live Convos %</button>
                         <button class="${m==='appt'?'active':''}" onclick="obMetric='appt';renderOBTrends()">Appt Set %</button>
                     </div>
-                    <span style="font-size:11px;color:#6b7280;">Nov 2025 – Apr 2026 | CarWars Monthly Data</span>
+                    <span style="font-size:11px;color:#6b7280;">Jan – Apr 2026 YTD | CarWars Monthly Data</span>
                 </div>
                 ${execHTML}${chartHTML}${moversHTML}${hmHTML}`;
 
@@ -2042,11 +2042,11 @@
             // CarWars date = yesterday (data is always previous day)
             const yesterday = new Date(now); yesterday.setDate(now.getDate()-1);
             const cwDate = mo[yesterday.getMonth()]+' '+yesterday.getDate();
-            // 30-day range
-            const rangeStart = new Date(now); rangeStart.setDate(now.getDate()-30);
-            const rangeStr = mo[rangeStart.getMonth()]+' '+rangeStart.getDate()+' – '+mo[yesterday.getMonth()]+' '+yesterday.getDate();
+            // MTD range: 1st of current month through yesterday
+            const monthStart = mo[now.getMonth()]+' 1';
+            const rangeStr = monthStart+' – '+mo[yesterday.getMonth()]+' '+yesterday.getDate();
             document.getElementById('carwarsDate').textContent = cwDate;
-            document.getElementById('dateRange').textContent = 'Last 30 Days ('+rangeStr+')';
+            document.getElementById('dateRange').textContent = mo[now.getMonth()]+' MTD ('+rangeStr+')';
         }
         function renderAll(){renderDates();renderStores();renderAlerts();renderCoaching();renderRegions();renderTrends();renderOBTrends();renderDataEntry();renderSummary();renderInsights();}
         document.addEventListener('DOMContentLoaded',renderAll);
