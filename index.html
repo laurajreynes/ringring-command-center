@@ -489,12 +489,20 @@
             body { background: #fff; }
             .tab-panel { display: block !important; }
             .detail-row { display: table-row !important; }
+            /* Modal-only print mode */
+            body.printing-modal * { visibility: hidden !important; }
+            body.printing-modal .staff-overlay,
+            body.printing-modal .staff-overlay * { visibility: visible !important; }
+            body.printing-modal .staff-overlay { position:absolute; top:0; left:0; background:#fff; display:flex !important; }
+            body.printing-modal .staff-modal { box-shadow:none; max-height:none; overflow:visible; max-width:100%; }
+            body.printing-modal .staff-modal-hdr button,
+            body.printing-modal .staff-modal-hdr div:last-child { display:none !important; }
         }
 
         /* INBOUND TRENDS */
         .trends-header { display:flex; gap:12px; align-items:center; margin-bottom:12px; flex-wrap:wrap; }
         .trends-toggle { display:flex; gap:0; border:1px solid #d0d5dd; border-radius:6px; overflow:hidden; }
-        .trends-toggle button { padding:5px 14px; font-size:11px; font-weight:600; border:none; cursor:pointer; background:#fff; color:#6b7280; }
+        .trends-toggle button { padding:8px 20px; font-size:12px; font-weight:600; border:none; cursor:pointer; background:#fff; color:#6b7280; transition:all 0.15s; }
         .trends-toggle button.active { background:#0369a1; color:#fff; }
         .trends-exec { background:#f0f9ff; border:1px solid #bae6fd; border-radius:8px; padding:12px 16px; margin-bottom:14px; }
         .trends-exec h4 { font-size:12px; font-weight:700; color:#0369a1; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.3px; }
@@ -542,6 +550,26 @@
         .staff-tbl td { padding:4px 8px; border-bottom:1px solid #f0f0f0; }
         .staff-tbl tr:hover td { background:#f9fafb; }
         .staff-tbl .num { text-align:right; font-variant-numeric:tabular-nums; }
+        /* STORE SPOTLIGHT MODAL */
+        .spotlight-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.45); z-index:9998; justify-content:center; align-items:center; }
+        .spotlight-overlay.active { display:flex; }
+        .spotlight-modal { background:#fff; border-radius:10px; max-width:860px; width:95%; max-height:88vh; overflow:auto; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
+        .spotlight-hdr { padding:14px 20px 10px; border-bottom:1px solid #e5e7eb; display:flex; justify-content:space-between; align-items:center; }
+        .spotlight-hdr h3 { font-size:15px; font-weight:700; color:#1a1a2e; }
+        .spotlight-hdr .close-btn { background:none; border:none; font-size:20px; cursor:pointer; color:#6b7280; padding:0 4px; }
+        .spotlight-grade-strip { display:flex; gap:8px; padding:12px 20px; border-bottom:1px solid #f0f0f0; flex-wrap:wrap; }
+        .spotlight-grade-box { flex:1; min-width:80px; text-align:center; padding:8px; border-radius:6px; }
+        .spotlight-grade-box .sg-label { font-size:9px; text-transform:uppercase; letter-spacing:0.4px; color:#6b7280; margin-bottom:2px; }
+        .spotlight-grade-box .sg-val { font-size:22px; font-weight:700; }
+        .spotlight-grade-box .sg-pct { font-size:11px; color:#6b7280; }
+        .spotlight-body { padding:12px 20px 20px; }
+        .spotlight-section { margin-bottom:16px; }
+        .spotlight-section h4 { font-size:11px; text-transform:uppercase; letter-spacing:0.4px; color:#6b7280; margin-bottom:8px; font-weight:600; border-bottom:1px solid #e5e7eb; padding-bottom:4px; }
+        .spotlight-trend-row { display:flex; gap:6px; align-items:center; margin-bottom:4px; font-size:12px; }
+        .spotlight-trend-label { width:30px; color:#6b7280; font-weight:500; }
+        .spotlight-trend-vals { display:flex; gap:2px; }
+        .spotlight-trend-cell { padding:2px 6px; border-radius:3px; font-weight:600; font-size:11px; min-width:36px; text-align:center; }
+
         .staff-apr-click { cursor:pointer; position:relative; z-index:5; border-radius:3px; padding:1px 2px; margin:-1px -2px; }
         .staff-apr-click:hover { background:rgba(0,0,0,0.04); }
         .staff-apr-click:hover .detail-bar-fill-inner { filter:brightness(1.15); }
@@ -554,10 +582,11 @@
         <h1><span>Ring Ring</span> Command Center</h1>
         <div class="top-bar-meta">
             <span>Anderson Automotive Group</span>
-            <span>Last 30 Days (Mar 10 – Apr 9)</span>
-            <span>CarWars: <strong>Apr 9</strong></span>
+            <span id="dateRange">Last 30 Days</span>
+            <span>CarWars: <strong id="carwarsDate"></strong></span>
             <a href="https://ringderby.vercel.app" target="_blank" class="top-link derby-link">Derby Board</a>
             <a href="https://anderson-scorecard.vercel.app" target="_blank" class="top-link scorecard-link">Scorecard</a>
+            <button onclick="window.print()" class="top-link" style="background:#f3f4f6;color:#374151;border:none;cursor:pointer;font-family:inherit;">Export PDF</button>
         </div>
     </div>
 
@@ -575,6 +604,7 @@
         <button class="tab-btn" onclick="switchTab('coaching',this)">Coaching</button>
         <button class="tab-btn" onclick="switchTab('regions',this)">Regions</button>
         <button class="tab-btn" onclick="switchTab('trends',this)">Inbound Trends</button>
+        <button class="tab-btn" onclick="switchTab('obtrends',this)">Outbound Trends</button>
         <button class="tab-btn" onclick="switchTab('entry',this)">Data Entry</button>
     </div>
 
@@ -603,6 +633,7 @@
         <div class="tab-panel" id="panel-coaching"><div id="coachingPanel"></div></div>
         <div class="tab-panel" id="panel-regions"><div id="regionPanel"></div></div>
         <div class="tab-panel" id="panel-trends"><div id="trendsPanel"></div></div>
+        <div class="tab-panel" id="panel-obtrends"><div id="obTrendsPanel"></div></div>
         <div class="tab-panel" id="panel-entry">
             <div class="success-message" id="successMessage">Data saved — dashboard updated.</div>
             <div id="dataEntryForm"></div>
@@ -675,6 +706,33 @@
                 'AGV':[29,39,35,46,46,38],'CGR':[28,27,23,33,26,42],'KGR':[45,40,37,48,55,46],
                 'GGR':[29,22,36,42,30,60],'HGR':[33,27,20,34,39,46],'TGR':[40,32,31,32,33,44],
                 'TRA':[38,35,38,36,41,40],'TCC':[null,null,null,null,null,72]
+            }
+        };
+
+        // Monthly outbound trend data (Nov–Apr) — from CarWars staff exports
+        const OB_TRENDS = {
+            months: ['Dec','Jan','Feb','Mar','Apr'],
+            live: {
+                'TRA':[14.4,15.4,15.0,13.7,14.1],'TAS':[17.6,18.7,13.9,14.9,17.7],
+                'NAS':[15.1,15.2,16.0,16.4,15.2],'KRA':[12.8,13.3,16.3,15.5,11.9],
+                'TSA':[16.0,16.1,17.6,15.2,14.0],'TCH':[13.7,15.2,14.8,14.4,13.3],
+                'NRA':[15.3,15.9,16.2,13.8,16.6],'SAS':[18.1,17.9,16.9,18.2,16.0],
+                'KGV':[12.5,15.6,12.6,11.8,17.0],'HGV':[16.6,16.3,16.5,17.1,15.9],
+                'AGV':[17.0,19.5,16.6,16.7,17.4],'CGR':[13.9,16.6,18.9,14.5,16.9],
+                'KGR':[12.8,13.6,15.4,12.4,11.9],'GGR':[13.1,10.9,10.2,10.2,9.9],
+                'HGR':[10.4,12.9,10.7,10.6,12.1],'TGR':[17.9,17.8,15.5,15.1,14.5],
+                'TCC':[null,null,null,null,24.5]
+            },
+            appt: {
+                'TRA':[14.6,14.6,14.8,13.3,15.6],'TAS':[10.9,10.5,9.8,8.4,10.6],
+                'NAS':[11.5,12.7,10.5,10.6,10.1],'KRA':[15.4,13.9,14.1,12.7,13.1],
+                'TSA':[13.2,12.2,13.4,11.1,10.8],'TCH':[11.6,9.5,12.2,8.9,11.0],
+                'NRA':[12.0,13.0,14.0,11.8,16.2],'SAS':[10.1,10.4,10.6,9.1,8.8],
+                'KGV':[14.6,13.9,13.8,12.1,9.8],'HGV':[15.0,13.4,12.3,12.3,12.5],
+                'AGV':[15.1,14.0,11.8,12.0,13.6],'CGR':[12.3,11.2,9.4,8.0,11.5],
+                'KGR':[13.3,12.9,11.1,14.0,14.6],'GGR':[13.6,14.0,13.7,11.7,16.3],
+                'HGR':[15.8,16.1,11.8,13.5,12.2],'TGR':[11.3,11.1,11.2,10.3,13.4],
+                'TCC':[null,null,null,null,21.6]
             }
         };
 
@@ -919,7 +977,7 @@
 
                 h+=`<tr>
                     <td><button class="row-expand-btn" onclick="toggleDetail(${idx},event)">&#9660;</button></td>
-                    <td class="store-name" title="${store.name}">${store.id}</td>
+                    <td class="store-name" title="${store.name}"><a href="#" onclick="event.preventDefault();event.stopPropagation();showSpotlight('${store.id}')" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px;">${store.id}</a></td>
                     <td class="metric-cell ib-start">${miniBar(store.current.req,'req',c.rg)}</td>
                     <td class="metric-cell">${miniBar(store.current.set,'set',c.sg)}</td>
                     <td class="grade-cell">${thermo(c.ib)}</td>
@@ -1356,7 +1414,10 @@
             const modalHTML = `
                 <div class="staff-modal-hdr">
                     <h3>${storeName} — Apr MTD Outbound (Salespeople Only)</h3>
-                    <button class="close-btn" onclick="closeStaffModal()">&times;</button>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <button onclick="printStaffModal()" style="background:#0369a1;color:#fff;border:none;border-radius:4px;padding:4px 12px;font-size:11px;font-weight:600;cursor:pointer;">Export PDF</button>
+                        <button class="close-btn" onclick="closeStaffModal()">&times;</button>
+                    </div>
                 </div>
                 <div class="staff-modal-body">
                     <div class="staff-summary">
@@ -1388,7 +1449,107 @@
         function closeStaffModal() {
             document.getElementById('staffOverlay').classList.remove('active');
         }
-        document.addEventListener('keydown', e => { if(e.key==='Escape') closeStaffModal(); });
+        function printStaffModal() {
+            document.body.classList.add('printing-modal');
+            window.print();
+            document.body.classList.remove('printing-modal');
+        }
+        document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeStaffModal(); closeSpotlight(); }});
+
+        // ============================================
+        // STORE SPOTLIGHT
+        // ============================================
+        function showSpotlight(storeId) {
+            const store = D.stores.find(s=>s.id===storeId);
+            if(!store) return;
+            const c = calc(store.current), b = calc(store.baseline);
+            const staff = STAFF[storeId] || [];
+
+            // Grade color helper
+            function gBg(grade) {
+                const col = gColor(grade);
+                return col==='green'?'background:#dcfce7;color:#15803d;':col==='yellow'?'background:#fef9c3;color:#854d0e;':'background:#fecaca;color:#991b1b;';
+            }
+
+            // Grade strip
+            const metrics = [
+                {label:'Overall', grade:c.ov, base:b.ov},
+                {label:'Inbound', grade:c.ib, base:b.ib},
+                {label:'RI%', grade:c.rg, pct:store.current.req+'%', base:store.baseline.req+'%'},
+                {label:'Set%', grade:c.sg, pct:store.current.set+'%', base:store.baseline.set+'%'},
+                {label:'Outbound', grade:c.ob, base:b.ob},
+                {label:'Live%', grade:c.lg, pct:store.current.live+'%', base:store.baseline.live+'%'},
+                {label:'Appt%', grade:c.ag, pct:store.current.appt+'%', base:store.baseline.appt+'%'}
+            ];
+
+            let gradeStrip = metrics.map(m => `
+                <div class="spotlight-grade-box" style="${gBg(m.grade)}">
+                    <div class="sg-label">${m.label}</div>
+                    <div class="sg-val">${m.grade}</div>
+                    <div class="sg-pct">${m.pct||''} ${m.base?'(was '+m.base+')':''}</div>
+                </div>`).join('');
+
+            // Inbound trends
+            const months = TRENDS.months;
+            function trendRow(label, vals, bench) {
+                if(!vals) return '';
+                let html = `<div class="spotlight-trend-row"><span class="spotlight-trend-label">${label}</span><div class="spotlight-trend-vals">`;
+                vals.forEach((v,i) => {
+                    const bg = v===null?'background:#f9fafb;color:#d0d5dd;': v>=bench?'background:#dcfce7;color:#15803d;': v>=bench*0.8?'background:#fef9c3;color:#854d0e;':'background:#fecaca;color:#991b1b;';
+                    html += `<div class="spotlight-trend-cell" style="${bg}">${v!==null?v+'%':'—'}</div>`;
+                });
+                html += `</div></div>`;
+                return html;
+            }
+
+            let trendHTML = `<div class="spotlight-section">
+                <h4>Inbound Trends (Nov – Apr)</h4>
+                <div style="display:flex;gap:6px;margin-bottom:4px;padding-left:36px;font-size:9px;color:#9ca3af;">
+                    ${months.map(mo=>'<div style="min-width:36px;text-align:center;">'+mo+'</div>').join('')}
+                </div>
+                ${trendRow('RI%', TRENDS.ri[storeId], 80)}
+                ${trendRow('Set%', TRENDS.set[storeId], 45)}
+            </div>`;
+
+            // Staff table (top 10)
+            let staffHTML = '';
+            if(staff.length) {
+                let totOB=0,totC=0,totA=0;
+                staff.forEach(p=>{totOB+=p.ob;totC+=p.c;totA+=p.a;});
+                const topStaff = staff.slice(0,10);
+                staffHTML = `<div class="spotlight-section">
+                    <h4>Top Salespeople — Outbound MTD (${staff.length} total | <a href="#" onclick="event.preventDefault();closeSpotlight();showStaffModal('${storeId}');" style="color:#0369a1;text-decoration:underline;font-size:11px;text-transform:none;letter-spacing:0;font-weight:400;">View all</a>)</h4>
+                    <table class="staff-tbl" style="font-size:11px;">
+                        <thead><tr><th>Salesperson</th><th class="num">OB</th><th class="num">Conn</th><th class="num">Live%</th><th class="num">Appts</th><th class="num">Appt%</th></tr></thead>
+                        <tbody>${topStaff.map(p=>{
+                            const pl=p.ob>0?((p.c/p.ob)*100).toFixed(1):'—';
+                            const pa=p.c>0?((p.a/p.c)*100).toFixed(1):'—';
+                            return '<tr><td>'+p.n+'</td><td class="num">'+p.ob+'</td><td class="num">'+p.c+'</td><td class="num">'+pl+'%</td><td class="num">'+p.a+'</td><td class="num">'+pa+'%</td></tr>';
+                        }).join('')}</tbody>
+                        <tfoot><tr style="font-weight:700;border-top:2px solid #d0d5dd;">
+                            <td>STORE TOTAL</td><td class="num">${totOB}</td><td class="num">${totC}</td>
+                            <td class="num">${totOB>0?((totC/totOB)*100).toFixed(1):'0'}%</td>
+                            <td class="num">${totA}</td><td class="num">${totC>0?((totA/totC)*100).toFixed(1):'0'}%</td>
+                        </tr></tfoot>
+                    </table>
+                </div>`;
+            }
+
+            document.getElementById('spotlightModal').innerHTML = `
+                <div class="spotlight-hdr">
+                    <h3>${store.name} (${store.id}) — ${store.region}</h3>
+                    <button class="close-btn" onclick="closeSpotlight()">&times;</button>
+                </div>
+                <div class="spotlight-grade-strip">${gradeStrip}</div>
+                <div class="spotlight-body">
+                    ${trendHTML}
+                    ${staffHTML}
+                </div>`;
+            document.getElementById('spotlightOverlay').classList.add('active');
+        }
+        function closeSpotlight() {
+            document.getElementById('spotlightOverlay').classList.remove('active');
+        }
 
         // ============================================
         // INBOUND TRENDS
@@ -1546,13 +1707,244 @@
                 <div class="trends-header">
                     <div class="trends-toggle">
                         <button class="${m==='set'?'active':''}" onclick="trendMetric='set';renderTrends()">Set %</button>
-                        <button class="${m==='req'?'active':''}" onclick="trendMetric='req';renderTrends()">Request In %</button>
+                        <button class="${m==='ri'?'active':''}" onclick="trendMetric='ri';renderTrends()">Request In %</button>
                     </div>
                     <span style="font-size:11px;color:#6b7280;">Nov 2025 – Apr 2026 | Monthly CRISP Data</span>
                 </div>
                 ${execHTML}${chartHTML}${moversHTML}${hmHTML}`;
 
             drawTrendChart();
+        }
+
+        // ============================================
+        // OUTBOUND TRENDS
+        // ============================================
+        let obMetric = 'live';
+
+        function obTrendAvg(metric, monthIdx) {
+            let sum=0, count=0;
+            D.stores.forEach(s => {
+                const vals = OB_TRENDS[metric][s.id];
+                if(vals && vals[monthIdx] !== null) { sum += vals[monthIdx]; count++; }
+            });
+            return count > 0 ? (sum/count) : null;
+        }
+
+        function renderOBTrends() {
+            const m = obMetric;
+            const label = m === 'live' ? 'Live Convos %' : 'Appt Set %';
+            const bench = m === 'live' ? 20 : 10;
+            const months = OB_TRENDS.months;
+
+            // Compute deltas (Jan→Apr)
+            const storeDeltas = [];
+            D.stores.forEach(s => {
+                const vals = OB_TRENDS[m][s.id];
+                if(!vals || vals[2]===null || vals[5]===null) return;
+                storeDeltas.push({id:s.id, name:s.name, jan:vals[2], apr:vals[5], d:parseFloat((vals[5]-vals[2]).toFixed(1)), vals:vals});
+            });
+            storeDeltas.sort((a,b) => b.d - a.d);
+            const improving = storeDeltas.filter(s=>s.d>0).length;
+            const declining = storeDeltas.filter(s=>s.d<0).length;
+
+            const novAvg = obTrendAvg(m,0), janAvg = obTrendAvg(m,2), aprAvg = obTrendAvg(m,5);
+            const ytdDelta = aprAvg - janAvg, fullDelta = aprAvg - novAvg;
+            const benchGap = bench - aprAvg;
+
+            // Exec summary
+            let execHTML = `<div class="trends-exec">
+                <h4>Outbound — ${label} YTD Trend</h4>
+                <p>Group average: <strong>${novAvg!==null?novAvg.toFixed(1):'—'}%</strong> (Nov) → <strong>${janAvg!==null?janAvg.toFixed(1):'—'}%</strong> (Jan) → <strong>${aprAvg!==null?aprAvg.toFixed(1):'—'}%</strong> (Apr) —
+                <strong style="color:${ytdDelta>=0?'#16a34a':'#dc2626'}">${ytdDelta>=0?'+':''}${ytdDelta.toFixed(1)}</strong> YTD<br>
+                <strong>${improving}</strong> of ${storeDeltas.length} stores improved since Jan, <strong>${declining}</strong> declined.<br>
+                Benchmark: <strong>${bench}%</strong> — Group is currently <strong>${benchGap<=0?'at or above':benchGap.toFixed(1)+' below'}</strong> benchmark.</p>
+            </div>`;
+
+            // East vs West
+            const westStores = D.stores.filter(s=>s.region==='West');
+            const eastStores = D.stores.filter(s=>s.region==='East');
+            function obRegionAvg(stores, mi) {
+                let s=0,c=0;
+                stores.forEach(st=>{const v=OB_TRENDS[m][st.id];if(v&&v[mi]!==null){s+=v[mi];c++;}});
+                return c>0?(s/c):null;
+            }
+            const wJan=obRegionAvg(westStores,2), wApr=obRegionAvg(westStores,5);
+            const eJan=obRegionAvg(eastStores,2), eApr=obRegionAvg(eastStores,5);
+            const wD=wApr-wJan, eD=eApr-eJan;
+            execHTML += `<div class="trends-exec" style="background:#f8fafc;border-color:#e2e8f0;margin-top:8px;">
+                <h4 style="color:#475569;">East vs West</h4>
+                <p><strong>West</strong> (${westStores.length} stores): ${wJan!==null?wJan.toFixed(1):'—'}% (Jan) → <strong>${wApr!==null?wApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${wD>=0?'#16a34a':'#dc2626'}">${wD>=0?'+':''}${wD.toFixed(1)}</strong> &nbsp;&nbsp;|&nbsp;&nbsp;
+                <strong>East</strong> (${eastStores.length} stores): ${eJan!==null?eJan.toFixed(1):'—'}% (Jan) → <strong>${eApr!==null?eApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${eD>=0?'#16a34a':'#dc2626'}">${eD>=0?'+':''}${eD.toFixed(1)}</strong></p>
+            </div>`;
+
+            // Chart
+            let chartHTML = `<div class="trends-chart-wrap">
+                <canvas id="obTrendCanvas" width="900" height="260"></canvas>
+                <div class="trends-chart-legend">
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#1a1a2e;"></div><strong>Group Avg</strong></div>
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#0369a1;"></div>West</div>
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#dc2626;"></div>East</div>
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#9ca3af;border-top:2px dashed #9ca3af;height:0;"></div>Benchmark</div>
+                </div>
+            </div>`;
+
+            // Movers
+            const gainers = storeDeltas.filter(s=>s.d>0).slice(0,5);
+            const losers = storeDeltas.filter(s=>s.d<0).sort((a,b)=>a.d-b.d).slice(0,5);
+            let moversHTML = `<div class="trends-movers">
+                <div class="trends-mover-card">
+                    <h5>&#9650; Biggest Gainers (Jan → Apr)</h5>
+                    ${gainers.length ? gainers.map(s=>`<div class="trends-mover-item"><span class="store-name">${s.id}</span><span class="vals">${s.jan}% → ${s.apr}%</span><span class="delta-up">+${s.d}</span></div>`).join('') : '<div style="color:#6b7280;font-size:11px;">No stores gained</div>'}
+                </div>
+                <div class="trends-mover-card">
+                    <h5>&#9660; Needs Attention</h5>
+                    ${losers.length ? losers.map(s=>`<div class="trends-mover-item"><span class="store-name">${s.id}</span><span class="vals">${s.jan}% → ${s.apr}%</span><span class="delta-down">${s.d}</span></div>`).join('') : '<div style="color:#16a34a;font-size:12px;font-weight:600;">Everyone improved!</div>'}
+                </div>
+            </div>`;
+
+            // Heatmap table
+            let hmHTML = `<table class="heatmap"><thead><tr>
+                <th style="width:180px;">Store</th>`;
+            months.forEach(mo => { hmHTML += `<th>${mo}</th>`; });
+            hmHTML += `<th>Sparkline</th><th>Change</th><th>Staff</th></tr></thead><tbody>`;
+
+            const sorted = [...D.stores].filter(s=>OB_TRENDS[m][s.id]).sort((a,b) => {
+                const aV = OB_TRENDS[m][a.id][5], bV = OB_TRENDS[m][b.id][5];
+                return (bV||0) - (aV||0);
+            });
+
+            sorted.forEach(s => {
+                const vals = OB_TRENDS[m][s.id];
+                if(!vals) return;
+                const staff = STAFF[s.id] || [];
+                const janVal = vals[2], aprVal = vals[5];
+                const d = (janVal!==null && aprVal!==null) ? parseFloat((aprVal-janVal).toFixed(1)) : null;
+                const shortName = s.name.replace('Fred Anderson ','').replace('AAG - ','');
+                hmHTML += `<tr><td><strong><a href="#" onclick="event.preventDefault();showSpotlight('${s.id}')" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px;">${s.id}</a></strong> <span style="color:#9ca3af;font-size:10px;">${shortName}</span></td>`;
+                vals.forEach(v => {
+                    hmHTML += `<td><span class="hm-cell" style="${hmColor(v,bench)}">${v!==null?v+'%':'—'}</span></td>`;
+                });
+                // Sparkline
+                const validVals = vals.filter(v=>v!==null);
+                const maxVal = Math.max(...validVals, bench);
+                hmHTML += `<td><div class="sparkline">`;
+                vals.forEach(v => {
+                    if(v===null){hmHTML+=`<div class="sparkline-bar" style="height:2px;background:#e5e7eb;"></div>`;return;}
+                    const pct = Math.max(10,(v/maxVal)*100);
+                    const color = v>=bench?'#16a34a':v>=bench*0.8?'#eab308':'#dc2626';
+                    hmHTML+=`<div class="sparkline-bar" style="height:${pct}%;background:${color};"></div>`;
+                });
+                hmHTML += `</div></td>`;
+                if(d!==null){
+                    hmHTML += `<td class="change-cell" style="color:${d>=0?'#16a34a':'#dc2626'};font-weight:700;">${d>=0?'+':''}${d} ${d>0?'▲':d<0?'▼':'—'}</td>`;
+                } else {
+                    hmHTML += `<td style="color:#9ca3af;">New</td>`;
+                }
+                hmHTML += `<td><a href="#" onclick="event.preventDefault();showStaffModal('${s.id}')" style="color:#0369a1;font-size:10px;">View ${staff.length}</a></td></tr>`;
+            });
+
+            // Avg row
+            hmHTML += `<tr class="avg-row"><td><strong>GROUP AVG</strong></td>`;
+            months.forEach((mo,i) => {
+                const avg = obTrendAvg(m,i);
+                hmHTML += `<td><span class="hm-cell" style="${hmColor(avg!==null?Math.round(avg):null,bench)}">${avg!==null?avg.toFixed(1)+'%':'—'}</span></td>`;
+            });
+            const avgD = (obTrendAvg(m,5)||0) - (obTrendAvg(m,2)||0);
+            hmHTML += `<td></td><td class="change-cell" style="color:${avgD>=0?'#16a34a':'#dc2626'};font-weight:700;">${avgD>=0?'+':''}${avgD.toFixed(1)} ${avgD>=0?'▲':'▼'}</td><td></td></tr></tbody></table>`;
+
+            document.getElementById('obTrendsPanel').innerHTML = `
+                <div class="trends-header">
+                    <div class="trends-toggle">
+                        <button class="${m==='live'?'active':''}" onclick="obMetric='live';renderOBTrends()">Live Convos %</button>
+                        <button class="${m==='appt'?'active':''}" onclick="obMetric='appt';renderOBTrends()">Appt Set %</button>
+                    </div>
+                    <span style="font-size:11px;color:#6b7280;">Nov 2025 – Apr 2026 | CarWars Monthly Data</span>
+                </div>
+                ${execHTML}${chartHTML}${moversHTML}${hmHTML}`;
+
+            drawOBTrendChart();
+        }
+
+        function drawOBTrendChart() {
+            const canvas = document.getElementById('obTrendCanvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const dpr = window.devicePixelRatio || 1;
+            const w = canvas.clientWidth, h = canvas.clientHeight;
+            canvas.width = w * dpr; canvas.height = h * dpr;
+            ctx.scale(dpr, dpr);
+
+            const m = obMetric;
+            const months = OB_TRENDS.months;
+            const bench = m === 'live' ? 20 : 10;
+            const pad = {top:20, right:60, bottom:30, left:44};
+            const cw = w - pad.left - pad.right;
+            const ch = h - pad.top - pad.bottom;
+
+            const westStores = D.stores.filter(s=>s.region==='West');
+            const eastStores = D.stores.filter(s=>s.region==='East');
+            function seriesAvg(stores, mi) {
+                let s=0,c=0;
+                stores.forEach(st=>{const v=OB_TRENDS[m][st.id];if(v&&v[mi]!==null){s+=v[mi];c++;}});
+                return c>0?(s/c):null;
+            }
+            const groupSeries = months.map((_,i)=>obTrendAvg(m,i));
+            const westSeries = months.map((_,i)=>seriesAvg(westStores,i));
+            const eastSeries = months.map((_,i)=>seriesAvg(eastStores,i));
+
+            const allVals = [...groupSeries,...westSeries,...eastSeries,bench].filter(v=>v!==null);
+            let minV = Math.floor(Math.min(...allVals)/5)*5 - 2;
+            let maxV = Math.ceil(Math.max(...allVals)/5)*5 + 3;
+
+            const xStep = cw / (months.length - 1);
+            const toX = i => pad.left + i * xStep;
+            const toY = v => pad.top + (maxV - v) * (ch / (maxV - minV));
+
+            // Grid
+            ctx.strokeStyle = '#e5e7eb'; ctx.lineWidth = 0.5;
+            for(let v = Math.ceil(minV/5)*5; v <= maxV; v += 5) {
+                const y = toY(v);
+                ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(w-pad.right, y); ctx.stroke();
+                ctx.fillStyle = '#9ca3af'; ctx.font = '10px Helvetica Neue, Helvetica, Arial'; ctx.textAlign = 'right';
+                ctx.fillText(v + '%', pad.left - 6, y + 3);
+            }
+
+            // Benchmark
+            const benchY = toY(bench);
+            ctx.strokeStyle = '#9ca3af'; ctx.lineWidth = 1.5; ctx.setLineDash([6,4]);
+            ctx.beginPath(); ctx.moveTo(pad.left, benchY); ctx.lineTo(w-pad.right, benchY); ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = '#6b7280'; ctx.font = 'bold 10px Helvetica Neue, Helvetica, Arial'; ctx.textAlign = 'left';
+            ctx.fillText('Bench ' + bench + '%', w-pad.right+6, benchY+4);
+
+            function drawLine(series, color, width) {
+                ctx.strokeStyle = color; ctx.lineWidth = width; ctx.setLineDash([]);
+                ctx.beginPath();
+                let started = false;
+                series.forEach((v,i) => {
+                    if(v===null) return;
+                    const x = toX(i), y = toY(v);
+                    if(!started){ctx.moveTo(x,y);started=true;}else ctx.lineTo(x,y);
+                });
+                ctx.stroke();
+                series.forEach((v,i) => {
+                    if(v===null) return;
+                    const x = toX(i), y = toY(v);
+                    ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
+                    ctx.fillStyle='#fff'; ctx.fill();
+                    ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
+                    ctx.strokeStyle=color; ctx.lineWidth=2; ctx.stroke();
+                    ctx.fillStyle=color; ctx.font='bold 10px Helvetica Neue, Helvetica, Arial'; ctx.textAlign='center';
+                    ctx.fillText(v.toFixed(1)+'%', x, y-10);
+                });
+            }
+
+            drawLine(westSeries, '#0369a1', 2.5);
+            drawLine(eastSeries, '#dc2626', 2.5);
+            drawLine(groupSeries, '#1a1a2e', 3);
+
+            ctx.fillStyle = '#6b7280'; ctx.font = '11px Helvetica Neue, Helvetica, Arial'; ctx.textAlign = 'center';
+            months.forEach((mo,i) => { ctx.fillText(mo, toX(i), h-pad.bottom+18); });
         }
 
         function drawTrendChart() {
@@ -1644,11 +2036,26 @@
             months.forEach((mo,i) => { ctx.fillText(mo, toX(i), h-pad.bottom+18); });
         }
 
-        function renderAll(){renderStores();renderAlerts();renderCoaching();renderRegions();renderTrends();renderDataEntry();renderSummary();renderInsights();}
+        function renderDates(){
+            const now = new Date();
+            const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            // CarWars date = yesterday (data is always previous day)
+            const yesterday = new Date(now); yesterday.setDate(now.getDate()-1);
+            const cwDate = mo[yesterday.getMonth()]+' '+yesterday.getDate();
+            // 30-day range
+            const rangeStart = new Date(now); rangeStart.setDate(now.getDate()-30);
+            const rangeStr = mo[rangeStart.getMonth()]+' '+rangeStart.getDate()+' – '+mo[yesterday.getMonth()]+' '+yesterday.getDate();
+            document.getElementById('carwarsDate').textContent = cwDate;
+            document.getElementById('dateRange').textContent = 'Last 30 Days ('+rangeStr+')';
+        }
+        function renderAll(){renderDates();renderStores();renderAlerts();renderCoaching();renderRegions();renderTrends();renderOBTrends();renderDataEntry();renderSummary();renderInsights();}
         document.addEventListener('DOMContentLoaded',renderAll);
     </script>
     <div class="staff-overlay" id="staffOverlay" onclick="if(event.target===this)closeStaffModal()">
         <div class="staff-modal"></div>
+    </div>
+    <div class="spotlight-overlay" id="spotlightOverlay" onclick="if(event.target===this)closeSpotlight()">
+        <div class="spotlight-modal" id="spotlightModal"></div>
     </div>
 </body>
 </html>
