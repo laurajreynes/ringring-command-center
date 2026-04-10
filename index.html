@@ -508,9 +508,11 @@
         .staff-tbl td { padding:4px 8px; border-bottom:1px solid #f0f0f0; }
         .staff-tbl tr:hover td { background:#f9fafb; }
         .staff-tbl .num { text-align:right; font-variant-numeric:tabular-nums; }
-        .staff-apr-click { cursor:pointer; position:relative; }
+        .staff-apr-click { cursor:pointer; position:relative; z-index:5; border-radius:3px; padding:1px 2px; margin:-1px -2px; }
+        .staff-apr-click:hover { background:rgba(0,0,0,0.04); }
         .staff-apr-click:hover .detail-bar-fill-inner { filter:brightness(1.15); }
-        .staff-apr-click .detail-bar-label { text-decoration:underline; text-decoration-style:dotted; text-underline-offset:2px; }
+        .staff-apr-click .detail-bar-label { text-decoration:underline; text-underline-offset:2px; }
+        .staff-apr-click * { pointer-events:none; }
     </style>
 </head>
 <body>
@@ -682,7 +684,7 @@
             const basePct = Math.min(100,(baseVal/maxV)*100);
             const curPct = Math.min(100,(curVal/maxV)*100);
             const ytdPct = Math.min(100,(ytdVal/maxV)*100);
-            const clickAttr = storeId ? ` class="staff-apr-click" onclick="showStaffModal('${storeId}')" title="Click to see per-salesperson breakdown"` : '';
+            const clickAttr = storeId ? ` class="staff-apr-click" onclick="event.stopPropagation();showStaffModal('${storeId}')" title="Click to see per-salesperson breakdown"` : '';
             return `
                 <div class="detail-bar-row">
                     <span class="detail-bar-label">Base</span>
@@ -889,7 +891,7 @@
                         <div class="detail-card"><div class="dl">Appt Set % <span style="color:#9ca3af;">bench: ${BENCH.appt}%</span></div>${detailBar('',store.baseline.appt,store.current.appt,store.ytd.appt,'appt',store.id)}</div>
                         <div class="detail-card"><div class="dl">Outbound Grade</div>
                             <div class="detail-bar-row"><span class="detail-bar-label">Base</span><span class="g ${gc(b.ob)}">${b.ob}</span></div>
-                            <div class="detail-bar-row"><span class="detail-bar-label">Apr</span><span class="g ${gc(c.ob)}">${c.ob}</span>
+                            <div class="detail-bar-row staff-apr-click" onclick="event.stopPropagation();showStaffModal('${store.id}')" title="Click to see per-salesperson breakdown"><span class="detail-bar-label">Apr</span><span class="g ${gc(c.ob)}">${c.ob}</span>
                                 ${gn(c.ob)>gn(b.ob)?'<span class="trend-arrow trend-up" style="margin-left:4px;">&#9650;</span>':gn(c.ob)<gn(b.ob)?'<span class="trend-arrow trend-down" style="margin-left:4px;">&#9660;</span>':'<span class="trend-arrow trend-neutral" style="margin-left:4px;">&mdash;</span>'}
                             </div>
                         </div>
