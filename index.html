@@ -508,6 +508,11 @@
         .trends-mover-item .delta-up { font-weight:700; color:#16a34a; }
         .trends-mover-item .delta-down { font-weight:700; color:#dc2626; }
         .trends-mover-item .vals { font-size:10px; color:#9ca3af; }
+        .trends-chart-wrap { background:#fff; border:1px solid #e5e7eb; border-radius:8px; padding:16px; margin-bottom:14px; }
+        .trends-chart-wrap canvas { width:100%; height:260px; }
+        .trends-chart-legend { display:flex; gap:18px; margin-top:10px; font-size:11px; align-items:center; }
+        .trends-chart-legend-item { display:flex; align-items:center; gap:5px; }
+        .trends-chart-legend-line { width:24px; height:3px; border-radius:2px; }
         .heatmap { width:100%; border-collapse:collapse; font-size:11px; background:#fff; border:1px solid #e5e7eb; border-radius:8px; overflow:hidden; }
         .heatmap th { text-align:center; padding:7px 8px; border-bottom:2px solid #d0d5dd; font-size:10px; text-transform:uppercase; letter-spacing:0.3px; color:#6b7280; font-weight:600; background:#f9fafb; }
         .heatmap th:first-child { text-align:left; }
@@ -1277,13 +1282,13 @@
                 const janAvg = trendAvg(metric,2), aprAvg = trendAvg(metric,5), novAvg = trendAvg(metric,0);
                 const ytdD = aprAvg-janAvg, fullD = aprAvg-novAvg;
                 let resp = '<strong>'+label+' YTD Trend</strong><br>Group avg: '+novAvg.toFixed(1)+'% (Nov) → '+janAvg.toFixed(1)+'% (Jan) → <strong>'+aprAvg.toFixed(1)+'%</strong> (Apr)<br>'+
-                    'YTD change: <strong style="color:'+(ytdD>=0?'#16a34a':'#dc2626')+'">'+(ytdD>=0?'+':'')+ytdD.toFixed(1)+'pp</strong> | Since Nov: <strong style="color:'+(fullD>=0?'#16a34a':'#dc2626')+'">'+(fullD>=0?'+':'')+fullD.toFixed(1)+'pp</strong><br><br>';
+                    'YTD change: <strong style="color:'+(ytdD>=0?'#16a34a':'#dc2626')+'">'+(ytdD>=0?'+':'')+ytdD.toFixed(1)+'</strong> | Since Nov: <strong style="color:'+(fullD>=0?'#16a34a':'#dc2626')+'">'+(fullD>=0?'+':'')+fullD.toFixed(1)+'</strong><br><br>';
                 // Top movers
                 const deltas=[];
                 D.stores.forEach(s=>{const v=TRENDS[metric][s.id];if(v&&v[2]!==null&&v[5]!==null)deltas.push({id:s.id,d:v[5]-v[2]});});
                 deltas.sort((a,b)=>b.d-a.d);
-                resp+='Top gainers: '+deltas.slice(0,3).map(s=>'<strong>'+s.id+'</strong> (+'+ s.d+'pp)').join(', ')+'<br>';
-                resp+='Needs attention: '+deltas.slice(-3).reverse().map(s=>'<strong>'+s.id+'</strong> ('+s.d+'pp)').join(', ');
+                resp+='Top gainers: '+deltas.slice(0,3).map(s=>'<strong>'+s.id+'</strong> (+'+ s.d+')').join(', ')+'<br>';
+                resp+='Needs attention: '+deltas.slice(-3).reverse().map(s=>'<strong>'+s.id+'</strong> ('+s.d+')').join(', ');
                 resp+='<br><br>See the <strong>Inbound Trends</strong> tab for the full chart and table.';
                 return resp;
             }
@@ -1434,10 +1439,10 @@
             let execHTML = `<div class="trends-exec">
                 <h4>Executive Summary — ${label} YTD Trend</h4>
                 <p>Group average: <strong>${novAvg!==null?novAvg.toFixed(1):'—'}%</strong> (Nov) → <strong>${janAvg!==null?janAvg.toFixed(1):'—'}%</strong> (Jan) → <strong>${aprAvg!==null?aprAvg.toFixed(1):'—'}%</strong> (Apr) —
-                <strong style="color:${ytdDelta>=0?'#16a34a':'#dc2626'}">${ytdDelta>=0?'+':''}${ytdDelta.toFixed(1)}pp YTD</strong>,
-                <strong style="color:${fullDelta>=0?'#16a34a':'#dc2626'}">${fullDelta>=0?'+':''}${fullDelta.toFixed(1)}pp since Nov</strong><br>
+                <strong style="color:${ytdDelta>=0?'#16a34a':'#dc2626'}">${ytdDelta>=0?'+':''}${ytdDelta.toFixed(1)} YTD</strong>,
+                <strong style="color:${fullDelta>=0?'#16a34a':'#dc2626'}">${fullDelta>=0?'+':''}${fullDelta.toFixed(1)} since Nov</strong><br>
                 <strong>${improving}</strong> of ${storeDeltas.length} stores improved since Jan, <strong>${declining}</strong> declined.<br>
-                Benchmark: <strong>${bench}%</strong> — Group is currently <strong>${benchGap<=0?'at or above':benchGap.toFixed(1)+'pp below'}</strong> benchmark.</p>
+                Benchmark: <strong>${bench}%</strong> — Group is currently <strong>${benchGap<=0?'at or above':benchGap.toFixed(1)+' below'}</strong> benchmark.</p>
             </div>`;
 
             // East vs West exec breakdown
@@ -1453,8 +1458,19 @@
             const wD=wApr-wJan, eD=eApr-eJan;
             execHTML += `<div class="trends-exec" style="background:#f8fafc;border-color:#e2e8f0;margin-top:8px;">
                 <h4 style="color:#475569;">East vs West</h4>
-                <p><strong>West</strong> (${westStores.length} stores): ${wJan!==null?wJan.toFixed(1):'—'}% (Jan) → <strong>${wApr!==null?wApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${wD>=0?'#16a34a':'#dc2626'}">${wD>=0?'+':''}${wD.toFixed(1)}pp</strong> &nbsp;&nbsp;|&nbsp;&nbsp;
-                <strong>East</strong> (${eastStores.length} stores): ${eJan!==null?eJan.toFixed(1):'—'}% (Jan) → <strong>${eApr!==null?eApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${eD>=0?'#16a34a':'#dc2626'}">${eD>=0?'+':''}${eD.toFixed(1)}pp</strong></p>
+                <p><strong>West</strong> (${westStores.length} stores): ${wJan!==null?wJan.toFixed(1):'—'}% (Jan) → <strong>${wApr!==null?wApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${wD>=0?'#16a34a':'#dc2626'}">${wD>=0?'+':''}${wD.toFixed(1)}</strong> &nbsp;&nbsp;|&nbsp;&nbsp;
+                <strong>East</strong> (${eastStores.length} stores): ${eJan!==null?eJan.toFixed(1):'—'}% (Jan) → <strong>${eApr!==null?eApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${eD>=0?'#16a34a':'#dc2626'}">${eD>=0?'+':''}${eD.toFixed(1)}</strong></p>
+            </div>`;
+
+            // Chart — Group Avg, West, East lines
+            let chartHTML = `<div class="trends-chart-wrap">
+                <canvas id="trendCanvas" width="900" height="260"></canvas>
+                <div class="trends-chart-legend">
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#1a1a2e;"></div><strong>Group Avg</strong></div>
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#0369a1;"></div>West</div>
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#dc2626;"></div>East</div>
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#9ca3af;border-top:2px dashed #9ca3af;height:0;"></div>Benchmark</div>
+                </div>
             </div>`;
 
             // Movers cards — top 5 up, bottom 5 down
@@ -1463,11 +1479,11 @@
             let moversHTML = `<div class="trends-movers">
                 <div class="trends-mover-card">
                     <h5>&#9650; Biggest Gainers (Jan → Apr)</h5>
-                    ${gainers.map(s=>`<div class="trends-mover-item"><span class="store-name">${s.id}</span><span class="vals">${s.jan}% → ${s.apr}%</span><span class="delta-up">+${s.d}pp</span></div>`).join('')}
+                    ${gainers.map(s=>`<div class="trends-mover-item"><span class="store-name">${s.id}</span><span class="vals">${s.jan}% → ${s.apr}%</span><span class="delta-up">+${s.d}</span></div>`).join('')}
                 </div>
                 <div class="trends-mover-card">
                     <h5>&#9660; Needs Attention</h5>
-                    ${losers.length ? losers.map(s=>`<div class="trends-mover-item"><span class="store-name">${s.id}</span><span class="vals">${s.jan}% → ${s.apr}%</span><span class="delta-down">${s.d}pp</span></div>`).join('') : '<div style="color:#16a34a;font-size:12px;font-weight:600;">Everyone improved!</div>'}
+                    ${losers.length ? losers.map(s=>`<div class="trends-mover-item"><span class="store-name">${s.id}</span><span class="vals">${s.jan}% → ${s.apr}%</span><span class="delta-down">${s.d}</span></div>`).join('') : '<div style="color:#16a34a;font-size:12px;font-weight:600;">Everyone improved!</div>'}
                 </div>
             </div>`;
 
@@ -1509,7 +1525,7 @@
                 if(s.d !== null) {
                     const cls = s.d>0?'color:#16a34a':'color:#dc2626';
                     const arrow = s.d>0?'▲':s.d<0?'▼':'—';
-                    hmHTML += `<td class="change-cell" style="${cls}">${s.d>=0?'+':''}${s.d}pp ${arrow}</td>`;
+                    hmHTML += `<td class="change-cell" style="${cls}">${s.d>=0?'+':''}${s.d} ${arrow}</td>`;
                 } else {
                     hmHTML += `<td style="color:#9ca3af;">New</td>`;
                 }
@@ -1523,7 +1539,7 @@
                 hmHTML += `<td><span class="hm-cell" style="${hmColor(avg!==null?Math.round(avg):null,bench)}">${avg!==null?avg.toFixed(1)+'%':'—'}</span></td>`;
             });
             const avgD = (trendAvg(m,5)||0) - (trendAvg(m,2)||0);
-            hmHTML += `<td></td><td class="change-cell" style="color:${avgD>=0?'#16a34a':'#dc2626'}">${avgD>=0?'+':''}${avgD.toFixed(1)}pp ${avgD>=0?'▲':'▼'}</td>`;
+            hmHTML += `<td></td><td class="change-cell" style="color:${avgD>=0?'#16a34a':'#dc2626'}">${avgD>=0?'+':''}${avgD.toFixed(1)} ${avgD>=0?'▲':'▼'}</td>`;
             hmHTML += `</tr></tbody></table>`;
 
             document.getElementById('trendsPanel').innerHTML = `
@@ -1534,7 +1550,98 @@
                     </div>
                     <span style="font-size:11px;color:#6b7280;">Nov 2025 – Apr 2026 | Monthly CRISP Data</span>
                 </div>
-                ${execHTML}${moversHTML}${hmHTML}`;
+                ${execHTML}${chartHTML}${moversHTML}${hmHTML}`;
+
+            drawTrendChart();
+        }
+
+        function drawTrendChart() {
+            const canvas = document.getElementById('trendCanvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const dpr = window.devicePixelRatio || 1;
+            const w = canvas.clientWidth, h = canvas.clientHeight;
+            canvas.width = w * dpr; canvas.height = h * dpr;
+            ctx.scale(dpr, dpr);
+
+            const m = trendMetric;
+            const months = TRENDS.months;
+            const bench = m === 'set' ? 45 : 80;
+            const pad = {top:20, right:60, bottom:30, left:44};
+            const cw = w - pad.left - pad.right;
+            const ch = h - pad.top - pad.bottom;
+
+            // Compute all 3 series
+            const westStores = D.stores.filter(s=>s.region==='West');
+            const eastStores = D.stores.filter(s=>s.region==='East');
+            function seriesAvg(stores, mi) {
+                let s=0,c=0;
+                stores.forEach(st=>{const v=TRENDS[m][st.id];if(v&&v[mi]!==null){s+=v[mi];c++;}});
+                return c>0?(s/c):null;
+            }
+            const groupSeries = months.map((_,i)=>trendAvg(m,i));
+            const westSeries = months.map((_,i)=>seriesAvg(westStores,i));
+            const eastSeries = months.map((_,i)=>seriesAvg(eastStores,i));
+
+            // Y range
+            const allVals = [...groupSeries,...westSeries,...eastSeries,bench].filter(v=>v!==null);
+            let minV = Math.floor(Math.min(...allVals)/5)*5 - 2;
+            let maxV = Math.ceil(Math.max(...allVals)/5)*5 + 3;
+
+            const xStep = cw / (months.length - 1);
+            const yScale = ch / (maxV - minV);
+            const toX = i => pad.left + i * xStep;
+            const toY = v => pad.top + (maxV - v) * yScale;
+
+            // Grid
+            ctx.strokeStyle = '#e5e7eb'; ctx.lineWidth = 0.5;
+            for(let v = Math.ceil(minV/5)*5; v <= maxV; v += 5) {
+                const y = toY(v);
+                ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(w-pad.right, y); ctx.stroke();
+                ctx.fillStyle = '#9ca3af'; ctx.font = '10px Helvetica Neue, Helvetica, Arial'; ctx.textAlign = 'right';
+                ctx.fillText(v + '%', pad.left - 6, y + 3);
+            }
+
+            // Benchmark dashed line
+            const benchY = toY(bench);
+            ctx.strokeStyle = '#9ca3af'; ctx.lineWidth = 1.5; ctx.setLineDash([6,4]);
+            ctx.beginPath(); ctx.moveTo(pad.left, benchY); ctx.lineTo(w-pad.right, benchY); ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = '#6b7280'; ctx.font = 'bold 10px Helvetica Neue, Helvetica, Arial'; ctx.textAlign = 'left';
+            ctx.fillText('Bench ' + bench + '%', w-pad.right+6, benchY+4);
+
+            // Draw a line series
+            function drawLine(series, color, width, dash) {
+                ctx.strokeStyle = color; ctx.lineWidth = width; ctx.setLineDash(dash||[]);
+                ctx.beginPath();
+                let started = false;
+                series.forEach((v,i) => {
+                    if(v===null) return;
+                    const x = toX(i), y = toY(v);
+                    if(!started){ctx.moveTo(x,y);started=true;}else ctx.lineTo(x,y);
+                });
+                ctx.stroke(); ctx.setLineDash([]);
+                // Dots + value labels
+                series.forEach((v,i) => {
+                    if(v===null) return;
+                    const x = toX(i), y = toY(v);
+                    ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
+                    ctx.fillStyle='#fff'; ctx.fill();
+                    ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
+                    ctx.strokeStyle=color; ctx.lineWidth=2; ctx.stroke();
+                    // Value label
+                    ctx.fillStyle=color; ctx.font='bold 10px Helvetica Neue, Helvetica, Arial'; ctx.textAlign='center';
+                    ctx.fillText(v.toFixed(1)+'%', x, y-10);
+                });
+            }
+
+            drawLine(westSeries, '#0369a1', 2.5);
+            drawLine(eastSeries, '#dc2626', 2.5);
+            drawLine(groupSeries, '#1a1a2e', 3);
+
+            // X axis
+            ctx.fillStyle = '#6b7280'; ctx.font = '11px Helvetica Neue, Helvetica, Arial'; ctx.textAlign = 'center';
+            months.forEach((mo,i) => { ctx.fillText(mo, toX(i), h-pad.bottom+18); });
         }
 
         function renderAll(){renderStores();renderAlerts();renderCoaching();renderRegions();renderTrends();renderDataEntry();renderSummary();renderInsights();}
