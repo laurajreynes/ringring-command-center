@@ -491,6 +491,32 @@
             .detail-row { display: table-row !important; }
         }
 
+        /* INBOUND TRENDS */
+        .trends-header { display:flex; gap:12px; align-items:center; margin-bottom:12px; flex-wrap:wrap; }
+        .trends-toggle { display:flex; gap:0; border:1px solid #d0d5dd; border-radius:6px; overflow:hidden; }
+        .trends-toggle button { padding:5px 14px; font-size:11px; font-weight:600; border:none; cursor:pointer; background:#fff; color:#6b7280; }
+        .trends-toggle button.active { background:#0369a1; color:#fff; }
+        .trends-exec { background:#f0f9ff; border:1px solid #bae6fd; border-radius:8px; padding:12px 16px; margin-bottom:14px; }
+        .trends-exec h4 { font-size:12px; font-weight:700; color:#0369a1; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.3px; }
+        .trends-exec p { font-size:12px; color:#374151; line-height:1.6; margin:0; }
+        .trends-exec strong { color:#1a1a2e; }
+        .trends-chart-wrap { background:#fff; border:1px solid #e5e7eb; border-radius:8px; padding:16px; margin-bottom:14px; position:relative; }
+        .trends-chart-wrap canvas { width:100%; height:320px; }
+        .trends-legend { display:flex; flex-wrap:wrap; gap:6px 12px; margin-top:8px; font-size:10px; }
+        .trends-legend-item { display:flex; align-items:center; gap:4px; cursor:pointer; opacity:0.85; }
+        .trends-legend-item:hover { opacity:1; }
+        .trends-legend-item.dimmed { opacity:0.25; }
+        .trends-legend-dot { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
+        .trends-table { width:100%; border-collapse:collapse; font-size:11px; background:#fff; border:1px solid #e5e7eb; border-radius:8px; overflow:hidden; }
+        .trends-table th { text-align:left; padding:6px 8px; border-bottom:2px solid #d0d5dd; font-size:10px; text-transform:uppercase; letter-spacing:0.3px; color:#6b7280; font-weight:600; background:#f9fafb; }
+        .trends-table td { padding:5px 8px; border-bottom:1px solid #f0f0f0; }
+        .trends-table tr:hover td { background:#f9fafb; }
+        .trends-table .num { text-align:right; font-variant-numeric:tabular-nums; }
+        .trends-table .trend-up { color:#16a34a; }
+        .trends-table .trend-down { color:#dc2626; }
+        .trends-table .trend-flat { color:#6b7280; }
+        .trends-avg-row td { font-weight:700; background:#f0f9ff !important; border-top:2px solid #d0d5dd; }
+
         /* STAFF DRILL-DOWN MODAL */
         .staff-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.45); z-index:9999; justify-content:center; align-items:center; }
         .staff-overlay.active { display:flex; }
@@ -540,6 +566,7 @@
         <button class="tab-btn" onclick="switchTab('alerts',this)">Alerts</button>
         <button class="tab-btn" onclick="switchTab('coaching',this)">Coaching</button>
         <button class="tab-btn" onclick="switchTab('regions',this)">Regions</button>
+        <button class="tab-btn" onclick="switchTab('trends',this)">Inbound Trends</button>
         <button class="tab-btn" onclick="switchTab('entry',this)">Data Entry</button>
     </div>
 
@@ -567,6 +594,7 @@
         <div class="tab-panel" id="panel-alerts"><div id="alertsPanel"></div></div>
         <div class="tab-panel" id="panel-coaching"><div id="coachingPanel"></div></div>
         <div class="tab-panel" id="panel-regions"><div id="regionPanel"></div></div>
+        <div class="tab-panel" id="panel-trends"><div id="trendsPanel"></div></div>
         <div class="tab-panel" id="panel-entry">
             <div class="success-message" id="successMessage">Data saved — dashboard updated.</div>
             <div id="dataEntryForm"></div>
@@ -619,6 +647,27 @@
             'TSA':[{n:'David Darrow',ob:216,c:25,a:2},{n:'Rockwell Linsley',ob:193,c:27,a:3},{n:'Dustin Phillips',ob:178,c:15,a:0},{n:'Kay Weston',ob:171,c:24,a:2},{n:'Lacy Tripp',ob:166,c:42,a:2},{n:'Richard Covington',ob:166,c:23,a:0},{n:'Paul McCoy',ob:135,c:21,a:1},{n:'Oladepo Williams',ob:123,c:36,a:3},{n:'Omar Sosa',ob:101,c:16,a:2},{n:'Dorien Harrington',ob:98,c:6,a:0},{n:'Freddy Davis',ob:88,c:19,a:1}],
             'TCH':[{n:'Justin Elrod',ob:185,c:12,a:3},{n:'Anthony Casiechitty',ob:180,c:8,a:0},{n:'Michael Price',ob:168,c:26,a:2},{n:'Casey Nordgren',ob:163,c:21,a:0},{n:'Christopher Jennings',ob:159,c:19,a:1},{n:'Matthew Dieterich',ob:157,c:9,a:0},{n:'Elijah Mcnaughton',ob:154,c:18,a:2},{n:'Hector Chavarria',ob:153,c:10,a:2},{n:'Brent Poling',ob:151,c:17,a:2},{n:'Joshua Woods',ob:149,c:15,a:0},{n:'Matt Gladwell',ob:147,c:13,a:1},{n:'Brandon McCall',ob:146,c:15,a:1},{n:'Carl Deluca',ob:138,c:10,a:0},{n:'Jowaine Bookal',ob:132,c:21,a:0},{n:'Arizona Steadman',ob:131,c:10,a:1},{n:'Eddie Cooks',ob:127,c:14,a:0},{n:'Andrey Bredyuk',ob:123,c:22,a:0},{n:'Eric Peterson',ob:117,c:20,a:1},{n:'Robert Minson',ob:113,c:16,a:0},{n:'Braeden Myers',ob:75,c:10,a:1},{n:'DeMarcus Craft',ob:71,c:7,a:0},{n:'Mason Panther',ob:64,c:14,a:2},{n:'Justin Perez',ob:56,c:16,a:0},{n:'Henry Caira',ob:50,c:3,a:0},{n:'Benjamin Longo',ob:48,c:10,a:1},{n:'Andrew Huffman',ob:31,c:10,a:1}],
             'TCC':[{n:'Will Thermidor',ob:12,c:2,a:0},{n:'Christian Odio',ob:11,c:2,a:0},{n:'Peter Esposito',ob:10,c:3,a:1},{n:'Sean Rowland',ob:10,c:2,a:0},{n:'Kelly Floyd',ob:8,c:7,a:1},{n:'Zak Banwart',ob:8,c:5,a:0},{n:'Cody Thompson',ob:7,c:1,a:1},{n:'Steven Herrera',ob:7,c:1,a:0},{n:'Luis Ferrer Jimenez',ob:7,c:1,a:0},{n:'Jeff Princile',ob:6,c:1,a:1},{n:'Jayden Hodges',ob:5,c:1,a:0},{n:'Matt Smith',ob:5,c:4,a:1},{n:"D'Marcus Anthony",ob:4,c:3,a:0},{n:'Damian Flores',ob:4,c:1,a:0},{n:'Mario Aguilera',ob:4,c:2,a:0},{n:'Lazaro Garcia',ob:3,c:2,a:0},{n:'Alain Pino',ob:3,c:1,a:0},{n:'Louis Mazzaro',ob:3,c:2,a:1},{n:'Nick Plank',ob:3,c:2,a:0},{n:'Troy Sanchez',ob:2,c:2,a:0},{n:'Carlos Tamayo',ob:1,c:0,a:0},{n:'Henry Rosales Guerrero',ob:1,c:1,a:0},{n:'Charles Leigh',ob:1,c:1,a:0}],
+        };
+
+        // Monthly trend data (Nov–Apr) — from CRISP inbound reports
+        const TRENDS = {
+            months: ['Nov','Dec','Jan','Feb','Mar','Apr'],
+            ri: {
+                'SAS':[67,61,61,64,67,84],'TAS':[53,56,52,53,60,68],'NAS':[63,68,64,58,63,63],
+                'KRA':[65,65,63,75,72,58],'TSA':[59,66,64,65,57,62],'TCH':[72,69,69,70,68,64],
+                'NRA':[69,59,63,66,63,70],'KGV':[53,59,59,70,65,65],'HGV':[66,64,60,67,66,63],
+                'AGV':[63,47,54,61,69,63],'CGR':[52,49,50,56,51,60],'KGR':[64,58,72,72,77,78],
+                'GGR':[69,62,61,51,61,67],'HGR':[67,58,57,70,63,61],'TGR':[56,54,51,58,59,55],
+                'TRA':[69,65,63,66,70,69],'TCC':[null,null,null,null,null,84]
+            },
+            set: {
+                'SAS':[41,38,37,39,28,41],'TAS':[29,23,24,23,30,32],'NAS':[45,30,37,39,41,35],
+                'KRA':[46,44,42,36,38,53],'TSA':[37,33,34,32,45,36],'TCH':[34,30,31,27,31,31],
+                'NRA':[43,39,38,41,44,42],'KGV':[31,25,33,34,35,40],'HGV':[41,37,37,39,43,42],
+                'AGV':[29,39,35,46,46,38],'CGR':[28,27,23,33,26,42],'KGR':[45,40,37,48,55,46],
+                'GGR':[29,22,36,42,30,60],'HGR':[33,27,20,34,39,46],'TGR':[40,32,31,32,33,44],
+                'TRA':[38,35,38,36,41,40],'TCC':[null,null,null,null,null,72]
+            }
         };
 
         // Benchmarks for bar charts
@@ -1158,11 +1207,16 @@
             if(matchStore){
                 const c=calc(matchStore.current),b=calc(matchStore.baseline);
                 const trend=gn(c.ov)>gn(b.ov)?'improved':gn(c.ov)<gn(b.ov)?'declined':'held steady';
-                return '<strong>'+matchStore.id+'</strong> ('+matchStore.name+')<br>'+
+                let resp = '<strong>'+matchStore.id+'</strong> ('+matchStore.name+')<br>'+
                     'Overall: <strong>'+c.ov+'</strong> (was '+b.ov+') \u2014 '+trend+'<br>'+
                     'RI: '+matchStore.current.req+'% ('+c.rg+') | Set: '+matchStore.current.set+'% ('+c.sg+')<br>'+
                     'Live: '+matchStore.current.live+'% ('+c.lg+') | Appt: '+matchStore.current.appt+'% ('+c.ag+')<br>'+
                     'Inbound: '+c.ib+' | Outbound: '+c.ob;
+                // Add monthly trend sparkline
+                const sv=TRENDS.set[matchStore.id], rv=TRENDS.ri[matchStore.id];
+                if(sv) resp+='<br><br><strong>Set% trend:</strong> '+TRENDS.months.map((mo,i)=>sv[i]!==null?mo+': '+sv[i]+'%':'').filter(Boolean).join(' → ');
+                if(rv) resp+='<br><strong>RI% trend:</strong> '+TRENDS.months.map((mo,i)=>rv[i]!==null?mo+': '+rv[i]+'%':'').filter(Boolean).join(' → ');
+                return resp;
             }
             // Best/top/highest
             if(ql.match(/best|top|highest|#1|number one|winner/)){
@@ -1211,7 +1265,24 @@
             if(ql.match(/average|overall|all stores|group/)){
                 const avg=v=>(D.stores.map(s=>s.current[v]).reduce((a,b)=>a+b,0)/D.stores.length).toFixed(1);
                 const ovGrade=s2g(D.stores.map(s=>calc(s.current).ovS).reduce((a,b)=>a+b,0)/D.stores.length);
-                return 'All 16 stores average:<br>Overall: <strong>'+ovGrade+'</strong><br>RI: '+avg('req')+'% | Set: '+avg('set')+'% | Live: '+avg('live')+'% | Appt: '+avg('appt')+'%';
+                return 'All 17 stores average:<br>Overall: <strong>'+ovGrade+'</strong><br>RI: '+avg('req')+'% | Set: '+avg('set')+'% | Live: '+avg('live')+'% | Appt: '+avg('appt')+'%';
+            }
+            // Trend queries
+            if(ql.match(/trend|month|ytd|over time|history|improving overall|getting better|trajectory/)){
+                const metric = ql.includes('ri') || ql.includes('request') ? 'ri' : 'set';
+                const label = metric==='set' ? 'Set%' : 'RI%';
+                const janAvg = trendAvg(metric,2), aprAvg = trendAvg(metric,5), novAvg = trendAvg(metric,0);
+                const ytdD = aprAvg-janAvg, fullD = aprAvg-novAvg;
+                let resp = '<strong>'+label+' YTD Trend</strong><br>Group avg: '+novAvg.toFixed(1)+'% (Nov) → '+janAvg.toFixed(1)+'% (Jan) → <strong>'+aprAvg.toFixed(1)+'%</strong> (Apr)<br>'+
+                    'YTD change: <strong style="color:'+(ytdD>=0?'#16a34a':'#dc2626')+'">'+(ytdD>=0?'+':'')+ytdD.toFixed(1)+'pp</strong> | Since Nov: <strong style="color:'+(fullD>=0?'#16a34a':'#dc2626')+'">'+(fullD>=0?'+':'')+fullD.toFixed(1)+'pp</strong><br><br>';
+                // Top movers
+                const deltas=[];
+                D.stores.forEach(s=>{const v=TRENDS[metric][s.id];if(v&&v[2]!==null&&v[5]!==null)deltas.push({id:s.id,d:v[5]-v[2]});});
+                deltas.sort((a,b)=>b.d-a.d);
+                resp+='Top gainers: '+deltas.slice(0,3).map(s=>'<strong>'+s.id+'</strong> (+'+ s.d+'pp)').join(', ')+'<br>';
+                resp+='Needs attention: '+deltas.slice(-3).reverse().map(s=>'<strong>'+s.id+'</strong> ('+s.d+'pp)').join(', ');
+                resp+='<br><br>See the <strong>Inbound Trends</strong> tab for the full chart and table.';
+                return resp;
             }
             // Benchmark
             if(ql.match(/bench|target|goal/)){
@@ -1311,7 +1382,237 @@
         }
         document.addEventListener('keydown', e => { if(e.key==='Escape') closeStaffModal(); });
 
-        function renderAll(){renderStores();renderAlerts();renderCoaching();renderRegions();renderDataEntry();renderSummary();renderInsights();}
+        // ============================================
+        // INBOUND TRENDS
+        // ============================================
+        let trendMetric = 'set'; // default to Set%
+        const STORE_COLORS = {
+            'SAS':'#2563eb','TAS':'#dc2626','NAS':'#16a34a','KRA':'#9333ea','TSA':'#ea580c',
+            'TCH':'#0891b2','NRA':'#c026d3','KGV':'#65a30d','HGV':'#d97706','AGV':'#0d9488',
+            'CGR':'#e11d48','KGR':'#4f46e5','GGR':'#059669','HGR':'#b91c1c','TGR':'#7c3aed',
+            'TRA':'#0369a1','TCC':'#64748b'
+        };
+        let hiddenStores = new Set();
+
+        function trendAvg(metric, monthIdx) {
+            let sum=0, count=0;
+            D.stores.forEach(s => {
+                const vals = TRENDS[metric][s.id];
+                if(vals && vals[monthIdx] !== null) { sum += vals[monthIdx]; count++; }
+            });
+            return count > 0 ? (sum/count) : null;
+        }
+
+        function renderTrends() {
+            const m = trendMetric;
+            const label = m === 'set' ? 'Set %' : 'Request In %';
+            const bench = m === 'set' ? 45 : 80;
+            const months = TRENDS.months;
+
+            // Exec summary
+            const novAvg = trendAvg(m, 0);
+            const aprAvg = trendAvg(m, 5);
+            const janAvg = trendAvg(m, 2);
+            const delta = aprAvg - novAvg;
+            const ytdDelta = aprAvg - janAvg;
+            // Count improving stores (Jan→Apr for YTD)
+            let improving=0, declining=0;
+            const storeDeltas = [];
+            D.stores.forEach(s => {
+                const vals = TRENDS[m][s.id];
+                if(!vals || vals[2]===null || vals[5]===null) return;
+                const d = vals[5] - vals[2];
+                storeDeltas.push({id:s.id, name:s.name, d:d});
+                if(d > 0) improving++;
+                else if(d < 0) declining++;
+            });
+            storeDeltas.sort((a,b) => b.d - a.d);
+            const topGainers = storeDeltas.filter(s=>s.d>0).slice(0,3).map(s=>s.id+' (+'+s.d+'pp)').join(', ');
+            const topDecliners = storeDeltas.filter(s=>s.d<0).slice(0,3).map(s=>s.id+' ('+s.d+'pp)').join(', ');
+
+            let execHTML = `<div class="trends-exec">
+                <h4>Executive Summary — ${label} YTD Trend</h4>
+                <p>Group average: <strong>${novAvg!==null?novAvg.toFixed(1):'—'}%</strong> (Nov) → <strong>${janAvg!==null?janAvg.toFixed(1):'—'}%</strong> (Jan) → <strong>${aprAvg!==null?aprAvg.toFixed(1):'—'}%</strong> (Apr) —
+                <strong style="color:${ytdDelta>=0?'#16a34a':'#dc2626'}">${ytdDelta>=0?'+':''}${ytdDelta!==null?ytdDelta.toFixed(1):'—'}pp YTD</strong>,
+                <strong style="color:${delta>=0?'#16a34a':'#dc2626'}">${delta>=0?'+':''}${delta!==null?delta.toFixed(1):'—'}pp since Nov</strong><br>
+                <strong>${improving}</strong> of ${improving+declining} stores improved since Jan. ${topGainers ? 'Top gainers: <strong>'+topGainers+'</strong>.' : ''}
+                ${topDecliners ? 'Needs attention: <strong>'+topDecliners+'</strong>.' : ''}<br>
+                Benchmark: <strong>${bench}%</strong> — Group is currently <strong>${aprAvg!==null?(aprAvg>=bench?'above':''+((bench-aprAvg).toFixed(1))+'pp below'):'—'}</strong> benchmark.</p>
+            </div>`;
+
+            // Chart (canvas-based)
+            let chartHTML = `<div class="trends-chart-wrap">
+                <canvas id="trendCanvas" width="900" height="320"></canvas>
+                <div class="trends-legend" id="trendLegend"></div>
+            </div>`;
+
+            // Table
+            let tableHTML = `<table class="trends-table"><thead><tr>
+                <th>Store</th>`;
+            months.forEach(mo => { tableHTML += `<th class="num">${mo}</th>`; });
+            tableHTML += `<th class="num">YTD Avg</th><th class="num">Jan→Apr</th><th>Trend</th></tr></thead><tbody>`;
+
+            // Sort by Apr value descending
+            const sorted = [...D.stores].filter(s=>TRENDS[m][s.id]).sort((a,b) => {
+                const aV = TRENDS[m][a.id][5], bV = TRENDS[m][b.id][5];
+                return (bV||0) - (aV||0);
+            });
+
+            sorted.forEach(s => {
+                const vals = TRENDS[m][s.id];
+                if(!vals) return;
+                const janVal = vals[2], aprVal = vals[5];
+                const d = (janVal!==null && aprVal!==null) ? aprVal - janVal : null;
+                const avg = vals.filter(v=>v!==null);
+                const ytdAvg = avg.length ? (avg.reduce((a,b)=>a+b,0)/avg.length).toFixed(1) : '—';
+                const trendClass = d>0?'trend-up':d<0?'trend-down':'trend-flat';
+                const trendArrow = d>0?'▲':d<0?'▼':'—';
+                tableHTML += `<tr>
+                    <td><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${STORE_COLORS[s.id]};margin-right:4px;"></span><strong>${s.id}</strong> <span style="color:#9ca3af;font-size:10px;">${s.name.split(' - ').pop()}</span></td>`;
+                vals.forEach((v,i) => {
+                    const cellColor = v!==null ? (v >= bench ? 'color:#16a34a;font-weight:600;' : v >= bench*0.85 ? '' : 'color:#dc2626;') : 'color:#d0d5dd;';
+                    tableHTML += `<td class="num" style="${cellColor}">${v!==null?v+'%':'—'}</td>`;
+                });
+                tableHTML += `<td class="num">${ytdAvg}%</td>
+                    <td class="num ${trendClass}">${d!==null?(d>=0?'+':'')+d+'pp':'—'}</td>
+                    <td class="${trendClass}">${trendArrow}</td></tr>`;
+            });
+
+            // Average row
+            tableHTML += `<tr class="trends-avg-row"><td><strong>GROUP AVG</strong></td>`;
+            months.forEach((mo,i) => {
+                const avg = trendAvg(m,i);
+                tableHTML += `<td class="num">${avg!==null?avg.toFixed(1)+'%':'—'}</td>`;
+            });
+            const allAvgs = months.map((mo,i)=>trendAvg(m,i)).filter(v=>v!==null);
+            const overallAvg = allAvgs.length ? (allAvgs.reduce((a,b)=>a+b,0)/allAvgs.length).toFixed(1) : '—';
+            const avgDelta = (trendAvg(m,5)||0) - (trendAvg(m,2)||0);
+            tableHTML += `<td class="num">${overallAvg}%</td>
+                <td class="num ${avgDelta>=0?'trend-up':'trend-down'}">${avgDelta>=0?'+':''}${avgDelta.toFixed(1)}pp</td>
+                <td class="${avgDelta>=0?'trend-up':'trend-down'}">${avgDelta>=0?'▲':'▼'}</td></tr>`;
+            tableHTML += `</tbody></table>`;
+
+            document.getElementById('trendsPanel').innerHTML = `
+                <div class="trends-header">
+                    <div class="trends-toggle">
+                        <button class="${m==='set'?'active':''}" onclick="trendMetric='set';renderTrends()">Set %</button>
+                        <button class="${m==='req'?'active':''}" onclick="trendMetric='req';renderTrends()">Request In %</button>
+                    </div>
+                    <span style="font-size:11px;color:#6b7280;">Nov 2025 – Apr 2026 | Monthly CRISP Data</span>
+                </div>
+                ${execHTML}${chartHTML}${tableHTML}`;
+
+            drawTrendChart();
+        }
+
+        function drawTrendChart() {
+            const canvas = document.getElementById('trendCanvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const dpr = window.devicePixelRatio || 1;
+            const w = canvas.clientWidth, h = canvas.clientHeight;
+            canvas.width = w * dpr; canvas.height = h * dpr;
+            ctx.scale(dpr, dpr);
+
+            const m = trendMetric;
+            const months = TRENDS.months;
+            const pad = {top:20, right:20, bottom:35, left:40};
+            const cw = w - pad.left - pad.right;
+            const ch = h - pad.top - pad.bottom;
+
+            // Determine Y range
+            let minV=100, maxV=0;
+            D.stores.forEach(s => {
+                const vals = TRENDS[m][s.id];
+                if(vals) vals.forEach(v => { if(v!==null) { minV=Math.min(minV,v); maxV=Math.max(maxV,v); }});
+            });
+            minV = Math.floor(minV/10)*10;
+            maxV = Math.ceil(maxV/10)*10 + 5;
+
+            const xStep = cw / (months.length - 1);
+            const yScale = ch / (maxV - minV);
+
+            // Grid lines
+            ctx.strokeStyle = '#e5e7eb'; ctx.lineWidth = 0.5;
+            for(let v = minV; v <= maxV; v += 10) {
+                const y = pad.top + (maxV - v) * yScale;
+                ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(w - pad.right, y); ctx.stroke();
+                ctx.fillStyle = '#9ca3af'; ctx.font = '10px Helvetica'; ctx.textAlign = 'right';
+                ctx.fillText(v + '%', pad.left - 5, y + 3);
+            }
+
+            // Benchmark line
+            const bench = m === 'set' ? 45 : 80;
+            if(bench >= minV && bench <= maxV) {
+                const benchY = pad.top + (maxV - bench) * yScale;
+                ctx.strokeStyle = '#374151'; ctx.lineWidth = 1.5; ctx.setLineDash([6,4]);
+                ctx.beginPath(); ctx.moveTo(pad.left, benchY); ctx.lineTo(w - pad.right, benchY); ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillStyle = '#374151'; ctx.font = 'bold 9px Helvetica'; ctx.textAlign = 'left';
+                ctx.fillText('BENCH ' + bench + '%', w - pad.right + 2, benchY - 3);
+            }
+
+            // Group average line (thick, black)
+            ctx.strokeStyle = '#1a1a2e'; ctx.lineWidth = 2.5; ctx.setLineDash([]);
+            ctx.beginPath();
+            months.forEach((mo, i) => {
+                const avg = trendAvg(m, i);
+                if(avg === null) return;
+                const x = pad.left + i * xStep;
+                const y = pad.top + (maxV - avg) * yScale;
+                if(i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+            // Dots for average
+            months.forEach((mo, i) => {
+                const avg = trendAvg(m, i);
+                if(avg === null) return;
+                const x = pad.left + i * xStep;
+                const y = pad.top + (maxV - avg) * yScale;
+                ctx.beginPath(); ctx.arc(x, y, 3.5, 0, Math.PI*2); ctx.fillStyle='#1a1a2e'; ctx.fill();
+            });
+
+            // Store lines
+            D.stores.forEach(s => {
+                const vals = TRENDS[m][s.id];
+                if(!vals || hiddenStores.has(s.id)) return;
+                ctx.strokeStyle = STORE_COLORS[s.id]; ctx.lineWidth = 1.5; ctx.globalAlpha = 0.7;
+                ctx.beginPath();
+                let started = false;
+                vals.forEach((v, i) => {
+                    if(v === null) return;
+                    const x = pad.left + i * xStep;
+                    const y = pad.top + (maxV - v) * yScale;
+                    if(!started) { ctx.moveTo(x, y); started = true; } else ctx.lineTo(x, y);
+                });
+                ctx.stroke();
+                // Dots
+                vals.forEach((v, i) => {
+                    if(v === null) return;
+                    const x = pad.left + i * xStep;
+                    const y = pad.top + (maxV - v) * yScale;
+                    ctx.beginPath(); ctx.arc(x, y, 2.5, 0, Math.PI*2); ctx.fillStyle = STORE_COLORS[s.id]; ctx.fill();
+                });
+                ctx.globalAlpha = 1;
+            });
+
+            // X axis labels
+            ctx.fillStyle = '#6b7280'; ctx.font = '11px Helvetica'; ctx.textAlign = 'center';
+            months.forEach((mo, i) => {
+                ctx.fillText(mo, pad.left + i * xStep, h - pad.bottom + 18);
+            });
+
+            // Legend
+            let legHTML = `<div class="trends-legend-item" onclick="hiddenStores.clear();renderTrends()"><div class="trends-legend-dot" style="background:#1a1a2e;"></div><strong>Group Avg</strong></div>`;
+            D.stores.forEach(s => {
+                if(!TRENDS[m][s.id]) return;
+                const dim = hiddenStores.has(s.id) ? ' dimmed' : '';
+                legHTML += `<div class="trends-legend-item${dim}" onclick="hiddenStores.has('${s.id}')?hiddenStores.delete('${s.id}'):hiddenStores.add('${s.id}');renderTrends()"><div class="trends-legend-dot" style="background:${STORE_COLORS[s.id]};"></div>${s.id}</div>`;
+            });
+            document.getElementById('trendLegend').innerHTML = legHTML;
+        }
+
+        function renderAll(){renderStores();renderAlerts();renderCoaching();renderRegions();renderTrends();renderDataEntry();renderSummary();renderInsights();}
         document.addEventListener('DOMContentLoaded',renderAll);
     </script>
     <div class="staff-overlay" id="staffOverlay" onclick="if(event.target===this)closeStaffModal()">
