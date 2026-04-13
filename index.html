@@ -285,27 +285,34 @@
         .region-group-header.west-hdr { background: #f0f9ff; color: #0369a1; border-left: 3px solid #0369a1; }
         .region-group-header.east-hdr { background: #f0fdf4; color: #15803d; border-left: 3px solid #15803d; }
         .alert-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 6px; margin-bottom: 8px; }
-        .alert-tile { padding: 7px 10px; border-radius: 5px; border-left: 3px solid; font-size: 12px; transition: box-shadow 0.15s, transform 0.1s; }
+        .alert-tile { padding: 7px 10px; border-radius: 6px; border-left: 3px solid; font-size: 12px; transition: box-shadow 0.15s, transform 0.1s; }
         .alert-tile:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); transform: translateY(-1px); }
-        .alert-tile.critical { background: #fef2f2; border-color: #dc2626; }
-        .alert-tile.high { background: rgba(234,179,8,0.1); border-color: #eab308; }
-        .alert-tile.medium { background: rgba(234,179,8,0.1); border-color: #eab308; }
+        .alert-tile.critical { background: #fff; border-color: #dc2626; }
+        .alert-tile.high { background: #fff; border-color: #f59e0b; }
+        .alert-tile.medium { background: #fff; border-color: #6366f1; }
         .alert-tile h4 { font-size: 12px; font-weight: 600; color: #1e293b; margin-bottom: 1px; }
         .alert-tile p { color: #6b7280; font-size: 11px; }
+        .alert-detail-panel { background: #f8fafc; border-radius: 6px; padding: 10px; }
 
         /* COACHING */
-        .coaching-tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
-        .coaching-tile {
-            background: #fff; border: 1px solid #e5e7eb;
-            border-left: 3px solid #0369a1; border-radius: 0 5px 5px 0; padding: 7px 10px;
+        .coaching-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 8px; }
+        .coaching-card {
+            background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px;
+            cursor: pointer; transition: box-shadow 0.15s, transform 0.1s;
         }
-        .coaching-tile h4 { font-size: 12px; font-weight: 600; color: #1e293b; margin-bottom: 2px; display: flex; align-items: center; gap: 5px; }
-        .cp { display: inline-block; padding: 1px 5px; border-radius: 3px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
-        .cp-critical { background: #fecaca; color: #dc2626; }
-        .cp-high { background: #fed7aa; color: #c2410c; }
-        .coaching-tile .focus { font-size: 11px; color: #6b7280; margin-bottom: 3px; }
-        .coaching-tile ul { margin-left: 14px; font-size: 11px; color: #6b7280; }
-        .coaching-tile li { margin-bottom: 1px; }
+        .coaching-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); transform: translateY(-1px); }
+        .coaching-card-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .coaching-card-hdr h4 { font-size: 13px; font-weight: 700; color: #1e293b; margin: 0; }
+        .coaching-card-hdr .cc-grade { font-size: 16px; font-weight: 800; }
+        .coaching-card-hdr .cc-arrow { font-size: 10px; margin-left: 2px; }
+        .cc-issues { display: flex; flex-direction: column; gap: 5px; }
+        .cc-issue { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+        .cc-tag { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; flex-shrink: 0; }
+        .cc-tag-ib { background: #eff6ff; color: #2563eb; }
+        .cc-tag-ob { background: #faf5ff; color: #7c3aed; }
+        .cc-metric { font-weight: 600; color: #334155; }
+        .cc-val { color: #64748b; }
+        .cc-action { font-size: 11px; color: #94a3b8; margin-top: 6px; }
 
         /* REGION COMPARE */
         .region-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -1064,13 +1071,13 @@
             // Build grade breakdown
             function gradePill(label, grade, pct) {
                 const col = gColor(grade);
-                const bg = col==='green'?'#ecfdf5':col==='yellow'?'#f0f4ff':'#fef2f2';
-                const fg = col==='green'?'#059669':col==='yellow'?'#4338ca':'#dc2626';
-                const border = col==='green'?'#a7f3d0':col==='yellow'?'#c7d2fe':'#fecaca';
-                return '<div style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;background:'+bg+';border:1px solid '+border+';margin:2px;font-size:11px;">'+
-                    '<span style="font-weight:600;color:#475569;">'+label+'</span>'+
-                    '<span style="font-weight:800;color:'+fg+';font-size:14px;">'+grade+'</span>'+
-                    (pct?'<span style="color:#64748b;font-size:10px;">'+pct+'</span>':'')+
+                const bg = col==='green'?'#ecfdf5':col==='yellow'?'#eff6ff':'#fef2f2';
+                const fg = col==='green'?'#059669':col==='yellow'?'#2563eb':'#dc2626';
+                const border = col==='green'?'#bbf7d0':col==='yellow'?'#bfdbfe':'#fecaca';
+                return '<div style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:8px;background:'+bg+';border:1px solid '+border+';margin:2px;">'+
+                    '<span style="font-size:11px;font-weight:500;color:#64748b;">'+label+'</span>'+
+                    '<span style="font-weight:800;color:'+fg+';font-size:15px;line-height:1;">'+grade+'</span>'+
+                    (pct?'<span style="font-size:10px;color:#94a3b8;">'+pct+'</span>':'')+
                 '</div>';
             }
 
@@ -1106,12 +1113,12 @@
             let chartHTML = '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">';
             chartHTML += '<div style="flex:1;min-width:200px;">';
             chartHTML += '<div style="font-size:10px;text-transform:uppercase;color:#6b7280;letter-spacing:0.3px;margin-bottom:4px;font-weight:600;">Inbound Trends</div>';
-            chartHTML += '<canvas id="alert-chart-ib-'+sid+'" style="width:100%;height:110px;"></canvas>';
+            chartHTML += '<canvas id="alert-chart-ib-'+sid+'" style="width:100%;height:130px;"></canvas>';
             chartHTML += '</div>';
             if(type==='declined' || type==='critical') {
                 chartHTML += '<div style="flex:1;min-width:200px;">';
                 chartHTML += '<div style="font-size:10px;text-transform:uppercase;color:#6b7280;letter-spacing:0.3px;margin-bottom:4px;font-weight:600;">Outbound Trends</div>';
-                chartHTML += '<canvas id="alert-chart-ob-'+sid+'" style="width:100%;height:110px;"></canvas>';
+                chartHTML += '<canvas id="alert-chart-ob-'+sid+'" style="width:100%;height:130px;"></canvas>';
                 chartHTML += '</div>';
             }
             chartHTML += '</div>';
@@ -1140,14 +1147,14 @@
 
             const vals1 = series1 || [];
             const vals2 = series2 || [];
-            const pad = {top:16, right:10, bottom:22, left:32};
+            const pad = {top:28, right:30, bottom:22, left:34};
             const cw = w - pad.left - pad.right;
             const ch = h - pad.top - pad.bottom;
 
             // Y range
             const allVals = [...vals1,...vals2].filter(v=>v!==null);
-            if(!allVals.length) { ctx.fillStyle='#9ca3af';ctx.font='11px sans-serif';ctx.fillText('No trend data',w/2-30,h/2);return; }
-            let minV = Math.floor(Math.min(...allVals)/5)*5 - 5;
+            if(!allVals.length) { ctx.fillStyle='#9ca3af';ctx.font='11px sans-serif';ctx.textAlign='center';ctx.fillText('No trend data',w/2,h/2);return; }
+            let minV = Math.floor(Math.min(...allVals)/5)*5 - 3;
             let maxV = Math.ceil(Math.max(...allVals)/5)*5 + 5;
             if(minV<0) minV=0;
 
@@ -1156,23 +1163,29 @@
             const toX = i => pad.left + i * xStep;
             const toY = v => pad.top + (maxV - v) * yScale;
 
+            // Background
+            ctx.fillStyle = '#fff'; ctx.fillRect(0,0,w,h);
+
             // Grid
-            ctx.strokeStyle = '#e5e7eb'; ctx.lineWidth = 0.5;
+            ctx.strokeStyle = '#f1f5f9'; ctx.lineWidth = 1;
             for(let v = Math.ceil(minV/10)*10; v <= maxV; v += 10) {
                 const y = toY(v);
                 ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(w-pad.right, y); ctx.stroke();
-                ctx.fillStyle = '#9ca3af'; ctx.font = '9px sans-serif'; ctx.textAlign = 'right';
-                ctx.fillText(v+'%', pad.left - 4, y + 3);
+                ctx.fillStyle = '#94a3b8'; ctx.font = '9px -apple-system, sans-serif'; ctx.textAlign = 'right';
+                ctx.fillText(v+'%', pad.left - 5, y + 3);
             }
 
             // Month labels
-            ctx.fillStyle = '#9ca3af'; ctx.font = '9px sans-serif'; ctx.textAlign = 'center';
-            months.forEach((mo,i) => ctx.fillText(mo, toX(i), h - 4));
+            ctx.fillStyle = '#94a3b8'; ctx.font = '9px -apple-system, sans-serif'; ctx.textAlign = 'center';
+            months.forEach((mo,i) => ctx.fillText(mo, toX(i), h - 5));
+
+            // Collect label positions to avoid overlap
+            const labels = [];
 
             // Draw line helper
-            function drawMiniLine(vals, color) {
+            function drawMiniLine(vals, color, seriesIdx) {
                 if(!vals||!vals.length) return;
-                ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.setLineDash([]);
+                ctx.strokeStyle = color; ctx.lineWidth = 2.5; ctx.setLineDash([]);
                 ctx.beginPath();
                 let started = false;
                 vals.forEach((v,i) => {
@@ -1187,21 +1200,44 @@
                     ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2);
                     ctx.fillStyle='#fff'; ctx.fill();
                     ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2);
-                    ctx.strokeStyle=color; ctx.lineWidth=1.5; ctx.stroke();
-                    ctx.fillStyle=color; ctx.font='bold 9px sans-serif'; ctx.textAlign='center';
-                    ctx.fillText(v+'%', x, y-7);
+                    ctx.strokeStyle=color; ctx.lineWidth=2; ctx.stroke();
+                    // Store label position
+                    labels.push({x, y:y-9, text:v+'%', color, seriesIdx, monthIdx:i});
                 });
             }
 
-            drawMiniLine(vals1, color1);
-            drawMiniLine(vals2, color2);
+            drawMiniLine(vals1, color1, 0);
+            drawMiniLine(vals2, color2, 1);
 
-            // Legend
-            ctx.font = 'bold 9px sans-serif';
-            const lx = pad.left + 2;
-            ctx.fillStyle = color1; ctx.fillRect(lx, 2, 8, 8); ctx.fillText(label1, lx+12, 9);
-            const l2x = lx + ctx.measureText(label1).width + 22;
-            ctx.fillStyle = color2; ctx.fillRect(l2x, 2, 8, 8); ctx.fillText(label2, l2x+12, 9);
+            // Resolve overlapping labels — nudge apart vertically
+            labels.sort((a,b) => a.monthIdx - b.monthIdx || a.y - b.y);
+            for(let i=0;i<labels.length;i++){
+                for(let j=i+1;j<labels.length;j++){
+                    if(labels[i].monthIdx===labels[j].monthIdx && Math.abs(labels[i].y - labels[j].y)<11){
+                        labels[i].y -= 6;
+                        labels[j].y += 6;
+                    }
+                }
+            }
+
+            // Draw labels
+            labels.forEach(l => {
+                ctx.fillStyle = l.color; ctx.font = 'bold 9px -apple-system, sans-serif'; ctx.textAlign = 'center';
+                ctx.fillText(l.text, l.x, l.y);
+            });
+
+            // Legend — centered at top
+            ctx.font = 'bold 10px -apple-system, sans-serif';
+            const legendW = ctx.measureText(label1).width + ctx.measureText(label2).width + 44;
+            const lx = (w - legendW) / 2;
+            ctx.fillStyle = color1;
+            ctx.beginPath(); ctx.arc(lx+4, 8, 4, 0, Math.PI*2); ctx.fill();
+            ctx.textAlign = 'left';
+            ctx.fillText(label1, lx+12, 11);
+            const l2x = lx + ctx.measureText(label1).width + 28;
+            ctx.fillStyle = color2;
+            ctx.beginPath(); ctx.arc(l2x+4, 8, 4, 0, Math.PI*2); ctx.fill();
+            ctx.fillText(label2, l2x+12, 11);
         }
 
         function renderAlerts(){
@@ -1212,9 +1248,9 @@
 
             function alertTile(a) {
                 return '<div class="alert-tile '+a.sev+'" onclick="toggleAlertDetail(\''+a.sid+'\',\''+a.type+'\')" style="cursor:pointer;">'+
-                    '<h4>'+a.title+' <span style="font-size:9px;color:#9ca3af;font-weight:400;">▾ click to expand</span></h4>'+
+                    '<h4>'+a.title+' <span style="font-size:9px;color:#b0b8c4;font-weight:400;margin-left:4px;">↓ details</span></h4>'+
                     '<p>'+a.desc+'</p>'+
-                    '<div class="alert-detail-panel" id="alert-detail-'+a.sid+'" style="display:none;margin-top:8px;padding-top:8px;border-top:1px solid rgba(0,0,0,0.08);"></div>'+
+                    '<div class="alert-detail-panel" id="alert-detail-'+a.sid+'" style="display:none;margin-top:10px;"></div>'+
                 '</div>';
             }
 
@@ -1231,34 +1267,52 @@
         // COACHING
         // ============================================
         function getCoachingForStores(stores){
-            const actions=[];
+            const cards=[];
             stores.filter(s=>s.id!=='TCC').forEach(store=>{
-                const c=calc(store.current),b=calc(store.baseline),name=store.id;
-                if(gn(c.ov)<gn(b.ov)) actions.push({pri:'Critical',store:name,focus:'Overall declined — '+b.ov+' → '+c.ov,items:['Immediate manager coaching session','Review call recordings','Daily accountability calls','Targeted coaching on weak metrics']});
-                if(c.rg==='F'||c.rg==='D') actions.push({pri:'Critical',store:name,focus:'RI % ('+store.current.req+'% — '+c.rg+')',items:['Increase Ring Ring frequency','Review objection handling','Daily call review sessions','Manager coaching on engagement']});
-                if(c.sg==='F'||c.sg==='D') actions.push({pri:'Critical',store:name,focus:'Set % ('+store.current.set+'% — '+c.sg+')',items:['Review appointment setting framework','Increase coaching frequency','Closing technique training','Daily accountability checks']});
-                if(c.lg==='F'||c.lg==='D') actions.push({pri:'Critical',store:name,focus:'Live % ('+store.current.live+'% — '+c.lg+')',items:['Review outbound dialing strategy','Increase manager follow-up','Call coaching sessions','Review call efficiency']});
-                if(c.ag==='F'||c.ag==='D') actions.push({pri:'Critical',store:name,focus:'Appt Set % ('+store.current.appt+'% — '+c.ag+')',items:['Review booking process','Increase coaching','Appointment closing training','Daily quality checks']});
-                if((c.rg==='C'||c.rg==='C-')&&gn(c.rg)<gn(gg(store.baseline.req,'req'))) actions.push({pri:'High',store:name,focus:'RI declining ('+store.current.req+'% — '+c.rg+')',items:['Increase Ring Ring activity','Review engagement quality','Manager coaching 2-3x/week']});
-                if((c.sg==='C'||c.sg==='C-')&&gn(c.sg)<gn(gg(store.baseline.set,'set'))) actions.push({pri:'High',store:name,focus:'Set declining ('+store.current.set+'% — '+c.sg+')',items:['Increase Ring Ring frequency','Review closing techniques','Manager coaching 2-3x/week']});
+                const c=calc(store.current),b=calc(store.baseline);
+                const issues=[];
+                // Inbound issues
+                if(c.rg==='F'||c.rg==='D') issues.push({tag:'ib',metric:'RI %',val:store.current.req+'%',grade:c.rg});
+                else if((c.rg==='C'||c.rg==='C-')&&gn(c.rg)<gn(gg(store.baseline.req,'req'))) issues.push({tag:'ib',metric:'RI %',val:store.current.req+'%',grade:c.rg});
+                if(c.sg==='F'||c.sg==='D') issues.push({tag:'ib',metric:'Set %',val:store.current.set+'%',grade:c.sg});
+                else if((c.sg==='C'||c.sg==='C-')&&gn(c.sg)<gn(gg(store.baseline.set,'set'))) issues.push({tag:'ib',metric:'Set %',val:store.current.set+'%',grade:c.sg});
+                // Outbound issues
+                if(c.lg==='F'||c.lg==='D') issues.push({tag:'ob',metric:'Live %',val:store.current.live+'%',grade:c.lg});
+                if(c.ag==='F'||c.ag==='D') issues.push({tag:'ob',metric:'Appt %',val:store.current.appt+'%',grade:c.ag});
+                if(issues.length>0){
+                    cards.push({sid:store.id,name:store.name,ovGrade:c.ov,ovS:calc(store.current).ovS,issues:issues});
+                }
             });
-            const seen=new Set();return actions.filter(a=>{const k=a.store+a.focus;if(seen.has(k))return false;seen.add(k);return true;});
+            // Sort worst overall first
+            cards.sort((a,b)=>a.ovS-b.ovS);
+            return cards.slice(0,3);
         }
-        function renderCoachingTiles(actions){
-            return actions.map(a=>
-                '<div class="coaching-tile"><h4><span class="cp cp-'+a.pri.toLowerCase()+'">'+a.pri+'</span> '+a.store+'</h4><div class="focus"><strong>Focus:</strong> '+a.focus+'</div><ul>'+a.items.map(i=>'<li>'+i+'</li>').join('')+'</ul></div>'
-            ).join('');
+        function renderCoachingCard(card){
+            const gc_=gn(card.ovGrade)>=3.3?'#059669':gn(card.ovGrade)>=1.7?'#2563eb':'#dc2626';
+            let h='<div class="coaching-card" onclick="showSpotlight(\''+card.sid+'\')">';
+            h+='<div class="coaching-card-hdr"><h4>'+card.sid+'</h4><span class="cc-grade" style="color:'+gc_+'">'+card.ovGrade+' <span class="cc-arrow">→</span></span></div>';
+            h+='<div class="cc-issues">';
+            card.issues.forEach(iss=>{
+                const tagCls=iss.tag==='ib'?'cc-tag-ib':'cc-tag-ob';
+                const tagLabel=iss.tag==='ib'?'INBOUND':'OUTBOUND';
+                const gCol=gn(iss.grade)>=3.3?'#059669':gn(iss.grade)>=1.7?'#2563eb':'#dc2626';
+                h+='<div class="cc-issue"><span class="cc-tag '+tagCls+'">'+tagLabel+'</span><span class="cc-metric">'+iss.metric+'</span><span class="cc-val">'+iss.val+' <span style="color:'+gCol+';font-weight:700;">'+iss.grade+'</span></span></div>';
+            });
+            h+='</div>';
+            h+='<div class="cc-action">Click to open store spotlight →</div>';
+            h+='</div>';
+            return h;
         }
         function renderCoaching(){
             const west=D.stores.filter(s=>s.region==='West'), east=D.stores.filter(s=>s.region==='East');
-            const wActions=getCoachingForStores(west), eActions=getCoachingForStores(east);
+            const wCards=getCoachingForStores(west), eCards=getCoachingForStores(east);
             const p=document.getElementById('coachingPanel');
-            if(!wActions.length&&!eActions.length){p.innerHTML='<p style="color:#16a34a;padding:8px;">All stores performing well.</p>';return;}
+            if(!wCards.length&&!eCards.length){p.innerHTML='<p style="color:#16a34a;padding:8px;">All stores performing well — no coaching actions needed.</p>';return;}
             let h='';
-            h+='<div class="region-group-header west-hdr">West Region ('+wActions.length+' action'+(wActions.length!==1?'s':'')+')</div>';
-            h+=wActions.length?'<div class="coaching-tiles">'+renderCoachingTiles(wActions.slice(0,8))+'</div>':'<p style="color:#16a34a;padding:6px 10px;font-size:12px;">All West stores performing well.</p>';
-            h+='<div class="region-group-header east-hdr">East Region ('+eActions.length+' action'+(eActions.length!==1?'s':'')+')</div>';
-            h+=eActions.length?'<div class="coaching-tiles">'+renderCoachingTiles(eActions.slice(0,8))+'</div>':'<p style="color:#16a34a;padding:6px 10px;font-size:12px;">All East stores performing well.</p>';
+            h+='<div class="region-group-header west-hdr">West Region'+( wCards.length?' ('+wCards.length+' store'+(wCards.length!==1?'s':'')+'  need attention)':'' )+'</div>';
+            h+=wCards.length?'<div class="coaching-tiles">'+wCards.map(renderCoachingCard).join('')+'</div>':'<p style="color:#16a34a;padding:6px 10px;font-size:12px;">All West stores performing well.</p>';
+            h+='<div class="region-group-header east-hdr">East Region'+( eCards.length?' ('+eCards.length+' store'+(eCards.length!==1?'s':'')+'  need attention)':'' )+'</div>';
+            h+=eCards.length?'<div class="coaching-tiles">'+eCards.map(renderCoachingCard).join('')+'</div>':'<p style="color:#16a34a;padding:6px 10px;font-size:12px;">All East stores performing well.</p>';
             p.innerHTML=h;
         }
 
