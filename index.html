@@ -613,6 +613,7 @@
         <button class="tab-btn" onclick="switchTab('regions',this)">Regions</button>
         <button class="tab-btn" onclick="switchTab('trends',this)">Inbound Trends</button>
         <button class="tab-btn" onclick="switchTab('obtrends',this)">Outbound Trends</button>
+        <button class="tab-btn" onclick="switchTab('baseline',this)">Baseline Ref</button>
         <button class="tab-btn" onclick="switchTab('entry',this)">Data Entry</button>
     </div>
 
@@ -642,6 +643,7 @@
         <div class="tab-panel" id="panel-regions"><div id="regionPanel"></div></div>
         <div class="tab-panel" id="panel-trends"><div id="trendsPanel"></div></div>
         <div class="tab-panel" id="panel-obtrends"><div id="obTrendsPanel"></div></div>
+        <div class="tab-panel" id="panel-baseline"><div id="baselinePanel"></div></div>
         <div class="tab-panel" id="panel-entry">
             <div class="success-message" id="successMessage">Data saved — dashboard updated.</div>
             <div id="dataEntryForm"></div>
@@ -659,7 +661,7 @@
                 { id:'SAS', name:'Fred Anderson Subaru', region:'West', baseline:{req:66.8,set:37.8,live:17.5,appt:8.2}, current:{req:86,set:38,live:15.1,appt:7.2}, ytd:{req:65.0,set:37.0,live:17.5,appt:8.7} },
                 { id:'TAS', name:'Fred Anderson Toyota of Asheville', region:'West', baseline:{req:55.3,set:26.5,live:12.7,appt:10.3}, current:{req:61,set:28,live:15.6,appt:10.6}, ytd:{req:56.0,set:26.0,live:15.6,appt:10.9} },
                 { id:'NAS', name:'Fred Anderson Nissan of Asheville', region:'West', baseline:{req:63.8,set:42.3,live:18.9,appt:8.5}, current:{req:68,set:34,live:17.6,appt:10.0}, ytd:{req:63.0,set:38.0,live:16.2,appt:10.1} },
-                { id:'KGR', name:'Fred Anderson Kia of Greer', region:'West', baseline:{req:62.7,set:38.2,live:14.2,appt:10.2}, current:{req:74,set:49,live:15.6,appt:13.2}, ytd:{req:69.0,set:46.0,live:14.8,appt:10.0} },
+                { id:'KGR', name:'Fred Anderson Kia of Greer', region:'West', baseline:{req:62.7,set:38.2,live:14.2,appt:10.2}, current:{req:76,set:52,live:15.6,appt:13.2}, ytd:{req:69.0,set:46.0,live:14.8,appt:10.0} },
                 { id:'TGR', name:'Fred Anderson Toyota of Greer', region:'West', baseline:{req:57.0,set:32.8,live:17.4,appt:7.3}, current:{req:52,set:43,live:12.7,appt:8.5}, ytd:{req:55.0,set:34.0,live:18.8,appt:8.3} },
                 { id:'CGR', name:'Fred Anderson Chevy Buick GMC Cadillac', region:'West', baseline:{req:51.3,set:25.7,live:16.6,appt:6.3}, current:{req:58,set:40,live:19.2,appt:8.7}, ytd:{req:52.0,set:28.0,live:15.9,appt:7.8} },
                 { id:'HGR', name:'Fred Anderson Hyundai', region:'West', baseline:{req:63.5,set:38.3,live:10.4,appt:10.6}, current:{req:59,set:44,live:13.9,appt:6.7}, ytd:{req:63.0,set:32.0,live:11.8,appt:11.6} },
@@ -668,7 +670,7 @@
                 { id:'KGV', name:'Fred Anderson Kia of Greenville', region:'West', baseline:{req:60.3,set:32.3,live:13.1,appt:8.9}, current:{req:64,set:36,live:17.2,appt:10.6}, ytd:{req:61.0,set:32.0,live:14.1,appt:11.4} },
                 { id:'HGV', name:'Fred Anderson Honda of Greenville', region:'West', baseline:{req:68.5,set:40.5,live:16.3,appt:9.3}, current:{req:62,set:40,live:15.0,appt:8.9}, ytd:{req:65.0,set:40.0,live:16.7,appt:11.3} },
                 { id:'TRA', name:'Fred Anderson Toyota of Raleigh', region:'East', baseline:{req:68.2,set:41.0,live:13.1,appt:10.3}, current:{req:68,set:39,live:12.9,appt:11.1}, ytd:{req:67.0,set:38.0,live:13.9,appt:11.5} },
-                { id:'KRA', name:'Fred Anderson Kia of Raleigh', region:'East', baseline:{req:66.3,set:42.7,live:19.7,appt:7.5}, current:{req:58,set:50,live:12.2,appt:6.0}, ytd:{req:67.0,set:42.0,live:15.9,appt:8.2} },
+                { id:'KRA', name:'Fred Anderson Kia of Raleigh', region:'East', baseline:{req:66.3,set:42.7,live:19.7,appt:7.5}, current:{req:59,set:50,live:12.2,appt:6.0}, ytd:{req:67.0,set:42.0,live:15.9,appt:8.2} },
                 { id:'NRA', name:'Fred Anderson Nissan of Raleigh', region:'East', baseline:{req:66.0,set:43.3,live:16.4,appt:8.5}, current:{req:64,set:39,live:16.1,appt:11.7}, ytd:{req:64.0,set:41.0,live:14.8,appt:8.8} },
                 { id:'TSA', name:'Fred Anderson Toyota of Sanford', region:'East', baseline:{req:62.0,set:34.3,live:17.9,appt:7.9}, current:{req:62,set:36,live:15.9,appt:6.9}, ytd:{req:62.0,set:36.0,live:17.5,appt:8.6} },
                 { id:'TCH', name:'Fred Anderson Toyota of Charleston', region:'East', baseline:{req:72.5,set:30.3,live:13.6,appt:7.6}, current:{req:65,set:30,live:11.3,appt:6.6}, ytd:{req:69.0,set:31.0,live:13.0,appt:6.8} },
@@ -701,9 +703,9 @@
             months: ['Jan','Feb','Mar','Apr'],
             ri: {
                 'SAS':[61,64,67,86],'TAS':[52,53,60,61],'NAS':[64,58,63,68],
-                'KRA':[63,75,72,58],'TSA':[64,65,57,62],'TCH':[69,70,68,65],
+                'KRA':[63,75,72,59],'TSA':[64,65,57,62],'TCH':[69,70,68,65],
                 'NRA':[63,66,63,64],'KGV':[59,70,65,64],'HGV':[60,67,66,62],
-                'AGV':[54,61,69,66],'CGR':[50,56,51,58],'KGR':[72,72,77,74],
+                'AGV':[54,61,69,66],'CGR':[50,56,51,58],'KGR':[72,72,77,76],
                 'GGR':[61,51,61,63],'HGR':[57,70,63,59],'TGR':[51,58,59,52],
                 'TRA':[63,66,70,68],'TCC':[null,null,null,78]
             },
@@ -711,7 +713,7 @@
                 'SAS':[37,39,28,38],'TAS':[24,23,30,28],'NAS':[37,39,41,34],
                 'KRA':[42,36,38,50],'TSA':[34,32,45,36],'TCH':[31,27,31,30],
                 'NRA':[38,41,44,39],'KGV':[33,34,35,36],'HGV':[37,39,43,40],
-                'AGV':[35,46,46,39],'CGR':[23,33,26,40],'KGR':[37,48,55,49],
+                'AGV':[35,46,46,39],'CGR':[23,33,26,40],'KGR':[37,48,55,52],
                 'GGR':[36,42,30,45],'HGR':[20,34,39,44],'TGR':[31,32,33,43],
                 'TRA':[38,36,41,39],'TCC':[null,null,null,69]
             }
@@ -721,25 +723,25 @@
         const OB_TRENDS = {
             months: ['Jan','Feb','Mar','Apr'],
             live: {
-                'TRA':[15.4,15.0,13.7,12.9],'TAS':[18.7,13.9,14.9,15.6],
-                'NAS':[15.2,16.0,16.4,17.6],'KRA':[13.3,16.3,15.5,12.2],
-                'TSA':[16.1,17.6,15.2,15.9],'TCH':[15.2,14.8,14.4,11.3],
-                'NRA':[15.9,16.2,13.8,16.1],'SAS':[17.9,16.9,18.2,15.1],
-                'KGV':[15.6,12.6,11.8,17.2],'HGV':[16.3,16.5,17.1,15.0],
-                'AGV':[19.5,16.6,16.7,15.2],'CGR':[16.6,18.9,14.5,19.2],
-                'KGR':[13.6,15.4,12.4,15.6],'GGR':[10.9,10.2,10.2,9.2],
-                'HGR':[12.9,10.7,10.6,13.9],'TGR':[17.8,15.5,15.1,12.7],
+                'TRA':[15.4,15.0,13.2,12.9],'TAS':[18.7,13.9,16.1,15.6],
+                'NAS':[15.2,16.0,17.9,17.6],'KRA':[13.3,16.3,12.4,12.2],
+                'TSA':[16.1,17.6,16.2,15.9],'TCH':[15.2,14.8,11.5,11.3],
+                'NRA':[15.9,16.2,15.5,16.1],'SAS':[17.9,16.9,15.7,15.1],
+                'KGV':[15.6,12.6,17.4,17.2],'HGV':[16.3,16.5,14.6,15.0],
+                'AGV':[19.5,16.6,14.6,15.2],'CGR':[16.6,18.9,19.3,19.2],
+                'KGR':[13.6,15.4,15.4,15.6],'GGR':[10.9,10.2,9.0,9.2],
+                'HGR':[12.9,10.7,13.5,13.9],'TGR':[17.8,15.5,12.8,12.7],
                 'TCC':[null,null,null,34.8]
             },
             appt: {
-                'TRA':[14.6,14.8,13.3,11.1],'TAS':[10.5,9.8,8.4,10.6],
-                'NAS':[12.7,10.5,10.6,10.0],'KRA':[13.9,14.1,12.7,6.0],
-                'TSA':[12.2,13.4,11.1,6.9],'TCH':[9.5,12.2,8.9,6.6],
-                'NRA':[13.0,14.0,11.8,11.7],'SAS':[10.4,10.6,9.1,7.2],
-                'KGV':[13.9,13.8,12.1,10.6],'HGV':[13.4,12.3,12.3,8.9],
-                'AGV':[14.0,11.8,12.0,11.8],'CGR':[11.2,9.4,8.0,8.7],
-                'KGR':[12.9,11.1,14.0,13.2],'GGR':[14.0,13.7,11.7,10.1],
-                'HGR':[16.1,11.8,13.5,6.7],'TGR':[11.1,11.2,10.3,8.5],
+                'TRA':[14.6,14.8,11.7,11.1],'TAS':[10.5,9.8,11.7,10.6],
+                'NAS':[12.7,10.5,10.1,10.0],'KRA':[13.9,14.1,5.9,6.0],
+                'TSA':[12.2,13.4,8.6,6.9],'TCH':[9.5,12.2,6.3,6.6],
+                'NRA':[13.0,14.0,11.2,11.7],'SAS':[10.4,10.6,7.8,7.2],
+                'KGV':[13.9,13.8,11.0,10.6],'HGV':[13.4,12.3,9.2,8.9],
+                'AGV':[14.0,11.8,11.2,11.8],'CGR':[11.2,9.4,8.2,8.7],
+                'KGR':[12.9,11.1,12.4,13.2],'GGR':[14.0,13.7,9.3,10.1],
+                'HGR':[16.1,11.8,9.1,6.7],'TGR':[11.1,11.2,9.0,8.5],
                 'TCC':[null,null,null,13.0]
             }
         };
@@ -767,6 +769,28 @@
             const iS=(gn(rg)+gn(sg))/2, oS=gn(lg)*0.6+gn(ag)*0.4, ovS=iS*0.6+oS*0.4;
             return{ib:s2g(iS),ob:s2g(oS),ov:s2g(ovS),iS,oS,ovS,rg,sg,lg,ag};
         }
+
+        // Compute March (Last Month) and YTD from TRENDS arrays
+        D.stores.forEach(s=>{
+            const ri=TRENDS.ri[s.id], st=TRENDS.set[s.id];
+            const lv=OB_TRENDS.live[s.id], ap=OB_TRENDS.appt[s.id];
+            // March = index 2
+            s.march = {
+                req: ri&&ri[2]!=null ? ri[2] : s.current.req,
+                set: st&&st[2]!=null ? st[2] : s.current.set,
+                live: lv&&lv[2]!=null ? lv[2] : s.current.live,
+                appt: ap&&ap[2]!=null ? ap[2] : s.current.appt
+            };
+            // Recompute YTD as average of all available months in TRENDS
+            function avg(arr){ if(!arr) return null; const v=arr.filter(x=>x!=null); return v.length?+(v.reduce((a,b)=>a+b,0)/v.length).toFixed(1):null; }
+            const ytdReq=avg(ri), ytdSet=avg(st), ytdLive=avg(lv), ytdAppt=avg(ap);
+            s.ytd = {
+                req: ytdReq!=null ? ytdReq : s.ytd.req,
+                set: ytdSet!=null ? ytdSet : s.ytd.set,
+                live: ytdLive!=null ? ytdLive : s.ytd.live,
+                appt: ytdAppt!=null ? ytdAppt : s.ytd.appt
+            };
+        });
 
         function gColor(g){const n=gn(g);if(n>=3.3)return'green';if(n>=1.7)return'yellow';return'red';}
         function gc(g){return'g-'+gColor(g);}
@@ -798,31 +822,31 @@
         }
 
         // Detail bar chart row
-        function detailBar(label, baseVal, curVal, ytdVal, metric, storeId) {
-            const baseGrade = gg(baseVal, metric);
-            const curGrade = gg(curVal, metric);
+        function detailBar(label, ytdVal, marVal, curVal, metric, storeId) {
             const ytdGrade = gg(ytdVal, metric);
+            const marGrade = gg(marVal, metric);
+            const curGrade = gg(curVal, metric);
             const maxV = MAXV[metric];
             const benchPct = (BENCH[metric]/maxV)*100;
-            const basePct = Math.min(100,(baseVal/maxV)*100);
-            const curPct = Math.min(100,(curVal/maxV)*100);
             const ytdPct = Math.min(100,(ytdVal/maxV)*100);
+            const marPct = Math.min(100,(marVal/maxV)*100);
+            const curPct = Math.min(100,(curVal/maxV)*100);
             const clickAttr = storeId ? ` class="staff-apr-click" onclick="event.stopPropagation();showStaffModal('${storeId}')" title="Click to see per-salesperson breakdown"` : '';
             return `
-                <div class="detail-bar-row">
-                    <span class="detail-bar-label">Base</span>
-                    <div class="detail-bar-track">
-                        <div class="detail-bar-fill-inner ${barC(baseGrade)}" style="width:${basePct}%"></div>
-                        <div class="detail-bar-mark" style="left:${benchPct}%"></div>
-                        <div class="detail-bar-val">${baseVal}% <span class="g ${gc(baseGrade)}">${baseGrade}</span></div>
-                    </div>
-                </div>
                 <div class="detail-bar-row">
                     <span class="detail-bar-label">YTD</span>
                     <div class="detail-bar-track">
                         <div class="detail-bar-fill-inner ${barC(ytdGrade)}" style="width:${ytdPct}%"></div>
                         <div class="detail-bar-mark" style="left:${benchPct}%"></div>
                         <div class="detail-bar-val">${ytdVal}% <span class="g ${gc(ytdGrade)}">${ytdGrade}</span></div>
+                    </div>
+                </div>
+                <div class="detail-bar-row">
+                    <span class="detail-bar-label">Mar</span>
+                    <div class="detail-bar-track">
+                        <div class="detail-bar-fill-inner ${barC(marGrade)}" style="width:${marPct}%"></div>
+                        <div class="detail-bar-mark" style="left:${benchPct}%"></div>
+                        <div class="detail-bar-val">${marVal}% <span class="g ${gc(marGrade)}">${marGrade}</span></div>
                     </div>
                 </div>
                 <div class="detail-bar-row"${clickAttr}>
@@ -898,11 +922,11 @@
         function progressCard(title, stores, borderColor) {
             let green=0,yellow=0,red=0,improved=0,declined=0,steady=0;
             stores.forEach(s=>{
-                const c=calc(s.current), b=calc(s.baseline);
+                const c=calc(s.current), m=calc(s.march);
                 const col=gColor(c.ov);
                 if(col==='green')green++;else if(col==='yellow')yellow++;else red++;
-                const cg=gn(c.ov),bg=gn(b.ov);
-                if(cg>bg)improved++;else if(cg<bg)declined++;else steady++;
+                const cg=gn(c.ov),mg=gn(m.ov);
+                if(cg>mg)improved++;else if(cg<mg)declined++;else steady++;
             });
             const n=stores.length;
             const pG=(green/n*100),pY=(yellow/n*100),pR=(red/n*100);
@@ -966,7 +990,7 @@
                     <th rowspan="2" class="left sortable" onclick="toggleSort('${label}','store')">Store${sortArrow(label,'store')}</th>
                     <th colspan="3" class="group-label group-ib ib-start">Inbound (CRISP)</th>
                     <th colspan="3" class="group-label group-ob ob-start">Outbound (Salesperson Call Report)</th>
-                    <th rowspan="2" class="group-label group-ov ov-col sortable" onclick="toggleSort('${label}','ov')">Overall${sortArrow(label,'ov')}</th>
+                    <th colspan="3" class="group-label group-ov ov-col sortable" onclick="toggleSort('${label}','ov')">Overall${sortArrow(label,'ov')}</th>
                 </tr>
                 <tr>
                     <th class="ib-start sortable" onclick="toggleSort('${label}','req')">RI %${sortArrow(label,'req')}</th>
@@ -975,15 +999,18 @@
                     <th class="ob-start sortable" onclick="toggleSort('${label}','live')">Live %${sortArrow(label,'live')}</th>
                     <th class="sortable" onclick="toggleSort('${label}','appt')">Appt Set %${sortArrow(label,'appt')}</th>
                     <th class="sortable" onclick="toggleSort('${label}','ob')">Grade${sortArrow(label,'ob')}</th>
+                    <th class="ov-col" style="font-size:10px;">YTD</th>
+                    <th class="ov-col" style="font-size:10px;">Mar</th>
+                    <th class="ov-col" style="font-size:10px;">Apr</th>
                 </tr>
             </thead><tbody>`;
 
             const sorted=sortStores(stores,label);
             sorted.forEach(store=>{
-                const c=calc(store.current), b=calc(store.baseline);
-                const bOvGpa=gn(b.ov),cOvGpa=gn(c.ov);
-                const trend=cOvGpa>bOvGpa?'&#9650;':cOvGpa<bOvGpa?'&#9660;':'&mdash;';
-                const tc=cOvGpa>bOvGpa?'trend-up':cOvGpa<bOvGpa?'trend-down':'trend-neutral';
+                const c=calc(store.current), m=calc(store.march), y=calc(store.ytd);
+                const mOvGpa=gn(m.ov),cOvGpa=gn(c.ov);
+                const trend=cOvGpa>mOvGpa?'&#9650;':cOvGpa<mOvGpa?'&#9660;':'&mdash;';
+                const tc=cOvGpa>mOvGpa?'trend-up':cOvGpa<mOvGpa?'trend-down':'trend-neutral';
                 const idx=D.stores.indexOf(store);
 
                 h+=`<tr>
@@ -995,30 +1022,36 @@
                     <td class="metric-cell ob-start">${miniBar(store.current.live,'live',c.lg)}</td>
                     <td class="metric-cell">${miniBar(store.current.appt,'appt',c.ag)}</td>
                     <td class="grade-cell">${thermo(c.ob)}</td>
-                    <td class="grade-cell ov-col">
-                        <span class="g ${gc(b.ov)}">${b.ov}</span>
-                        <span class="arrow-sep">&#8594;</span>
-                        <span class="g ${gc(c.ov)}">${c.ov}</span>
-                        <span class="trend-arrow ${tc}">${trend}</span>
+                    <td class="grade-cell ov-col" style="text-align:center;line-height:1.5;">
+                        <span style="font-size:9px;color:#94a3b8;display:block;">YTD</span><span class="g ${gc(y.ov)}">${y.ov}</span>
+                    </td>
+                    <td class="grade-cell ov-col" style="text-align:center;line-height:1.5;">
+                        <span style="font-size:9px;color:#94a3b8;display:block;">Mar</span><span class="g ${gc(m.ov)}">${m.ov}</span>
+                    </td>
+                    <td class="grade-cell ov-col" style="text-align:center;line-height:1.5;">
+                        <span style="font-size:9px;color:#94a3b8;display:block;">Apr</span><span class="g ${gc(c.ov)}">${c.ov}</span>
+                        <span class="trend-arrow ${tc}" style="font-size:9px;">${trend}</span>
                     </td>
                 </tr>
-                <tr class="detail-row" id="detail-${idx}"><td colspan="9">
+                <tr class="detail-row" id="detail-${idx}"><td colspan="11">
                     <div style="font-size:11px;color:#6b7280;margin-bottom:4px;font-weight:600;">${store.name}</div>
                     <div class="detail-grid">
-                        <div class="detail-card"><div class="dl">Request In % <span style="color:#9ca3af;">bench: ${BENCH.req}%</span></div>${detailBar('',store.baseline.req,store.current.req,store.ytd.req,'req')}</div>
-                        <div class="detail-card"><div class="dl">Set % <span style="color:#9ca3af;">bench: ${BENCH.set}%</span></div>${detailBar('',store.baseline.set,store.current.set,store.ytd.set,'set')}</div>
+                        <div class="detail-card"><div class="dl">Request In % <span style="color:#9ca3af;">bench: ${BENCH.req}%</span></div>${detailBar('',store.ytd.req,store.march.req,store.current.req,'req')}</div>
+                        <div class="detail-card"><div class="dl">Set % <span style="color:#9ca3af;">bench: ${BENCH.set}%</span></div>${detailBar('',store.ytd.set,store.march.set,store.current.set,'set')}</div>
                         <div class="detail-card"><div class="dl">Inbound Grade</div>
-                            <div class="detail-bar-row"><span class="detail-bar-label">Base</span><span class="g ${gc(b.ib)}">${b.ib}</span></div>
+                            <div class="detail-bar-row"><span class="detail-bar-label">YTD</span><span class="g ${gc(y.ib)}">${y.ib}</span></div>
+                            <div class="detail-bar-row"><span class="detail-bar-label">Mar</span><span class="g ${gc(m.ib)}">${m.ib}</span></div>
                             <div class="detail-bar-row"><span class="detail-bar-label">Apr</span><span class="g ${gc(c.ib)}">${c.ib}</span>
-                                ${gn(c.ib)>gn(b.ib)?'<span class="trend-arrow trend-up" style="margin-left:4px;">&#9650;</span>':gn(c.ib)<gn(b.ib)?'<span class="trend-arrow trend-down" style="margin-left:4px;">&#9660;</span>':'<span class="trend-arrow trend-neutral" style="margin-left:4px;">&mdash;</span>'}
+                                ${gn(c.ib)>gn(m.ib)?'<span class="trend-arrow trend-up" style="margin-left:4px;">&#9650;</span>':gn(c.ib)<gn(m.ib)?'<span class="trend-arrow trend-down" style="margin-left:4px;">&#9660;</span>':'<span class="trend-arrow trend-neutral" style="margin-left:4px;">&mdash;</span>'}
                             </div>
                         </div>
-                        <div class="detail-card"><div class="dl">Live Convos % <span style="color:#9ca3af;">bench: ${BENCH.live}%</span></div>${detailBar('',store.baseline.live,store.current.live,store.ytd.live,'live',store.id)}</div>
-                        <div class="detail-card"><div class="dl">Appt Set % <span style="color:#9ca3af;">bench: ${BENCH.appt}%</span></div>${detailBar('',store.baseline.appt,store.current.appt,store.ytd.appt,'appt',store.id)}</div>
+                        <div class="detail-card"><div class="dl">Live Convos % <span style="color:#9ca3af;">bench: ${BENCH.live}%</span></div>${detailBar('',store.ytd.live,store.march.live,store.current.live,'live',store.id)}</div>
+                        <div class="detail-card"><div class="dl">Appt Set % <span style="color:#9ca3af;">bench: ${BENCH.appt}%</span></div>${detailBar('',store.ytd.appt,store.march.appt,store.current.appt,'appt',store.id)}</div>
                         <div class="detail-card"><div class="dl">Outbound Grade</div>
-                            <div class="detail-bar-row"><span class="detail-bar-label">Base</span><span class="g ${gc(b.ob)}">${b.ob}</span></div>
+                            <div class="detail-bar-row"><span class="detail-bar-label">YTD</span><span class="g ${gc(y.ob)}">${y.ob}</span></div>
+                            <div class="detail-bar-row"><span class="detail-bar-label">Mar</span><span class="g ${gc(m.ob)}">${m.ob}</span></div>
                             <div class="detail-bar-row staff-apr-click" onclick="event.stopPropagation();showStaffModal('${store.id}')" title="Click to see per-salesperson breakdown"><span class="detail-bar-label">Apr</span><span class="g ${gc(c.ob)}">${c.ob}</span>
-                                ${gn(c.ob)>gn(b.ob)?'<span class="trend-arrow trend-up" style="margin-left:4px;">&#9650;</span>':gn(c.ob)<gn(b.ob)?'<span class="trend-arrow trend-down" style="margin-left:4px;">&#9660;</span>':'<span class="trend-arrow trend-neutral" style="margin-left:4px;">&mdash;</span>'}
+                                ${gn(c.ob)>gn(m.ob)?'<span class="trend-arrow trend-up" style="margin-left:4px;">&#9650;</span>':gn(c.ob)<gn(m.ob)?'<span class="trend-arrow trend-down" style="margin-left:4px;">&#9660;</span>':'<span class="trend-arrow trend-neutral" style="margin-left:4px;">&mdash;</span>'}
                             </div>
                         </div>
                     </div>
@@ -1037,17 +1070,17 @@
         function getAlertsForStores(stores){
             const alerts=[];
             stores.filter(s=>s.id!=='TCC').forEach(store=>{
-                const c=calc(store.current),b=calc(store.baseline),name=store.id;
-                if(gn(c.ov)<gn(b.ov)) alerts.push({sev:'critical',sid:store.id,type:'declined',title:name+' DECLINED',desc:'Overall '+b.ov+' → '+c.ov+'. Immediate coaching needed.'});
+                const c=calc(store.current),m=calc(store.march),name=store.id;
+                if(gn(c.ov)<gn(m.ov)) alerts.push({sev:'critical',sid:store.id,type:'declined',title:name+' DECLINED',desc:'Overall '+m.ov+' → '+c.ov+' (Mar → Apr). Immediate coaching needed.'});
                 const fails=[];
                 if(c.rg==='F'||c.rg==='D') fails.push('RI: '+store.current.req+'% ('+c.rg+')');
                 if(c.sg==='F'||c.sg==='D') fails.push('Set: '+store.current.set+'% ('+c.sg+')');
                 if(c.lg==='F'||c.lg==='D') fails.push('Live: '+store.current.live+'% ('+c.lg+')');
                 if(c.ag==='F'||c.ag==='D') fails.push('Appt: '+store.current.appt+'% ('+c.ag+')');
-                if(fails.length>0&&gn(c.ov)>=gn(b.ov)) alerts.push({sev:'high',sid:store.id,type:'critical',title:name+' — Critical Metrics',desc:fails.join(', ')});
-                const brg=gg(store.baseline.req,'req'),bsg=gg(store.baseline.set,'set');
-                if((gn(c.rg)<gn(brg)||gn(c.sg)<gn(bsg))&&gn(c.ov)>=gn(b.ov)&&fails.length===0)
-                    alerts.push({sev:'medium',sid:store.id,type:'inbound',title:name+' — Inbound Decline',desc:'Inbound slipped despite overall holding. Watch RI & Set.'});
+                if(fails.length>0&&gn(c.ov)>=gn(m.ov)) alerts.push({sev:'high',sid:store.id,type:'critical',title:name+' — Critical Metrics',desc:fails.join(', ')});
+                const mrg=gg(store.march.req,'req'),msg=gg(store.march.set,'set');
+                if((gn(c.rg)<gn(mrg)||gn(c.sg)<gn(msg))&&gn(c.ov)>=gn(m.ov)&&fails.length===0)
+                    alerts.push({sev:'medium',sid:store.id,type:'inbound',title:name+' — Inbound Decline',desc:'Inbound slipped from March despite overall holding. Watch RI & Set.'});
             });
             return alerts;
         }
@@ -1066,7 +1099,7 @@
             alertExpandedId = sid;
             const store = D.stores.find(s=>s.id===sid);
             if(!store) return;
-            const c = calc(store.current), b = calc(store.baseline);
+            const c = calc(store.current), m = calc(store.march);
 
             // Build grade breakdown
             function gradePill(label, grade, pct) {
@@ -1091,7 +1124,7 @@
                 html += gradePill('Overall', c.ov, '');
                 html += '</div>';
                 if(type==='declined') {
-                    html += '<div style="font-size:10px;color:#64748b;margin-bottom:10px;">Was: Overall '+b.ov+' · Inbound '+b.ib+' · Outbound '+b.ob+'</div>';
+                    html += '<div style="font-size:10px;color:#64748b;margin-bottom:10px;">March: Overall '+m.ov+' · Inbound '+m.ib+' · Outbound '+m.ob+'</div>';
                 }
             }
 
@@ -1265,13 +1298,13 @@
         function getCoachingForStores(stores){
             const cards=[];
             stores.filter(s=>s.id!=='TCC').forEach(store=>{
-                const c=calc(store.current),b=calc(store.baseline);
+                const c=calc(store.current),m=calc(store.march);
                 const issues=[];
                 // Inbound issues
                 if(c.rg==='F'||c.rg==='D') issues.push({tag:'ib',metric:'RI %',val:store.current.req+'%',grade:c.rg});
-                else if((c.rg==='C'||c.rg==='C-')&&gn(c.rg)<gn(gg(store.baseline.req,'req'))) issues.push({tag:'ib',metric:'RI %',val:store.current.req+'%',grade:c.rg});
+                else if((c.rg==='C'||c.rg==='C-')&&gn(c.rg)<gn(gg(store.march.req,'req'))) issues.push({tag:'ib',metric:'RI %',val:store.current.req+'%',grade:c.rg});
                 if(c.sg==='F'||c.sg==='D') issues.push({tag:'ib',metric:'Set %',val:store.current.set+'%',grade:c.sg});
-                else if((c.sg==='C'||c.sg==='C-')&&gn(c.sg)<gn(gg(store.baseline.set,'set'))) issues.push({tag:'ib',metric:'Set %',val:store.current.set+'%',grade:c.sg});
+                else if((c.sg==='C'||c.sg==='C-')&&gn(c.sg)<gn(gg(store.march.set,'set'))) issues.push({tag:'ib',metric:'Set %',val:store.current.set+'%',grade:c.sg});
                 // Outbound issues
                 if(c.lg==='F'||c.lg==='D') issues.push({tag:'ob',metric:'Live %',val:store.current.live+'%',grade:c.lg});
                 if(c.ag==='F'||c.ag==='D') issues.push({tag:'ob',metric:'Appt %',val:store.current.appt+'%',grade:c.ag});
@@ -1364,9 +1397,32 @@
             form.innerHTML=regionBlock(west,'West','west')+regionBlock(east,'East','east');
         }
 
+        function renderBaseline(){
+            const p=document.getElementById('baselinePanel');
+            const west=D.stores.filter(s=>s.region==='West'), east=D.stores.filter(s=>s.region==='East');
+            function baseTable(stores,label,cls){
+                let h='<div class="region-section"><div class="region-header region-'+cls+'-hdr"><h3>'+label+' Region — Baseline Reference</h3></div>';
+                h+='<table class="stores-table"><thead><tr><th class="left">Store</th><th>RI %</th><th>Set %</th><th>Inbound</th><th>Live %</th><th>Appt %</th><th>Outbound</th><th>Overall</th></tr></thead><tbody>';
+                stores.forEach(s=>{
+                    const b=calc(s.baseline);
+                    h+='<tr><td class="store-name" title="'+s.name+'">'+s.id+'</td>';
+                    h+='<td class="metric-cell">'+s.baseline.req+'% <span class="g '+gc(b.rg)+'">'+b.rg+'</span></td>';
+                    h+='<td class="metric-cell">'+s.baseline.set+'% <span class="g '+gc(b.sg)+'">'+b.sg+'</span></td>';
+                    h+='<td class="grade-cell"><span class="g '+gc(b.ib)+'">'+b.ib+'</span></td>';
+                    h+='<td class="metric-cell">'+s.baseline.live+'% <span class="g '+gc(b.lg)+'">'+b.lg+'</span></td>';
+                    h+='<td class="metric-cell">'+s.baseline.appt+'% <span class="g '+gc(b.ag)+'">'+b.ag+'</span></td>';
+                    h+='<td class="grade-cell"><span class="g '+gc(b.ob)+'">'+b.ob+'</span></td>';
+                    h+='<td class="grade-cell"><span class="g '+gc(b.ov)+'">'+b.ov+'</span></td></tr>';
+                });
+                h+='</tbody></table></div>';
+                return h;
+            }
+            p.innerHTML='<p style="font-size:12px;color:#64748b;padding:6px 0;">Baseline grades represent the starting point (pre-Ring Ring or initial benchmark period). Stored here for reference.</p>'+baseTable(west,'West','west')+baseTable(east,'East','east');
+        }
+
         function renderSummary(){
             let imp=0,dec=0,ste=0;
-            D.stores.forEach(s=>{const c=gn(calc(s.current).ov),b=gn(calc(s.baseline).ov);if(c>b)imp++;else if(c<b)dec++;else ste++;});
+            D.stores.forEach(s=>{const c=gn(calc(s.current).ov),m=gn(calc(s.march).ov);if(c>m)imp++;else if(c<m)dec++;else ste++;});
             document.getElementById('improvedCount').textContent=imp;
             document.getElementById('declinedCount').textContent=dec;
             document.getElementById('steadyCount').textContent=ste;
@@ -1402,27 +1458,27 @@
         function generateInsights(){
             const all=[];
             const alertStores = D.stores.filter(s=>s.id!=='TCC');
-            // Biggest improver
+            // Biggest improver (Mar → Apr)
             let bestGain={store:null,delta:-99};
-            alertStores.forEach(s=>{const c=calc(s.current),b=calc(s.baseline),d=c.ovS-b.ovS;if(d>bestGain.delta)bestGain={store:s,delta:d,cg:c.ov,bg:b.ov};});
+            alertStores.forEach(s=>{const c=calc(s.current),m=calc(s.march),d=c.ovS-m.ovS;if(d>bestGain.delta)bestGain={store:s,delta:d,cg:c.ov,mg:m.ov};});
             if(bestGain.store) all.push({pri:1,type:'opportunity',tag:'Opportunity',title:bestGain.store.id+' \u2014 Biggest Improver',
-                text:'Jumped from '+bestGain.bg+' to '+bestGain.cg+' overall. What\u2019s working here that we can replicate?'});
+                text:'Jumped from '+bestGain.mg+' to '+bestGain.cg+' overall (Mar → Apr). What\u2019s working here that we can replicate?'});
             // Overall declines (high priority)
-            alertStores.forEach(s=>{const c=calc(s.current),b=calc(s.baseline);
-                if(gn(c.ov)<gn(b.ov)) all.push({pri:0,type:'watch',tag:'Watch',title:s.id+' \u2014 Overall declined ('+b.ov+' \u2192 '+c.ov+')',
-                    text:'What\u2019s driving the drop? Review recent call recordings.'});
+            alertStores.forEach(s=>{const c=calc(s.current),m=calc(s.march);
+                if(gn(c.ov)<gn(m.ov)) all.push({pri:0,type:'watch',tag:'Watch',title:s.id+' \u2014 Overall declined ('+m.ov+' \u2192 '+c.ov+')',
+                    text:'What\u2019s driving the drop from March? Review recent call recordings.'});
             });
-            // Big Set swings
-            alertStores.forEach(s=>{const d=s.current.set-s.baseline.set;
+            // Big Set swings (Mar → Apr)
+            alertStores.forEach(s=>{const d=s.current.set-s.march.set;
                 if(d>=10) all.push({pri:2,type:'opportunity',tag:'Opportunity',title:s.id+' \u2014 Set % surged +'+d.toFixed(0)+' pts',
-                    text:s.baseline.set+'% \u2192 '+s.current.set+'%. What changed in their approach?'});
+                    text:s.march.set+'% \u2192 '+s.current.set+'% (Mar → Apr). What changed in their approach?'});
                 if(d<=-8) all.push({pri:1,type:'watch',tag:'Watch',title:s.id+' \u2014 Set % fell '+Math.abs(d).toFixed(0)+' pts',
-                    text:s.baseline.set+'% \u2192 '+s.current.set+'%. Losing the close on the phone?'});
+                    text:s.march.set+'% \u2192 '+s.current.set+'% (Mar → Apr). Losing the close on the phone?'});
             });
-            // Live Convos drops
-            alertStores.forEach(s=>{const d=s.current.live-s.baseline.live;
+            // Live Convos drops (Mar → Apr)
+            alertStores.forEach(s=>{const d=s.current.live-s.march.live;
                 if(d<=-3) all.push({pri:2,type:'watch',tag:'Watch',title:s.id+' \u2014 Live Convos dropped '+d.toFixed(1)+' pts',
-                    text:s.baseline.live+'% \u2192 '+s.current.live+'%. Staffing issue or effort declining?'});
+                    text:s.march.live+'% \u2192 '+s.current.live+'% (Mar → Apr). Staffing issue or effort declining?'});
             });
             // Regional gap
             const ws=D.stores.filter(s=>s.region==='West'),es=D.stores.filter(s=>s.region==='East');
@@ -1434,13 +1490,13 @@
             const SCORECARD_URL='https://anderson-scorecard.vercel.app';
             const DERBY_URL='https://ringderby.vercel.app';
             alertStores.forEach(s=>{
-                const c=calc(s.current),b=calc(s.baseline);
+                const c=calc(s.current),m=calc(s.march);
                 const weakMetrics=[];
                 if(c.rg==='F'||c.rg==='D'||c.sg==='F'||c.sg==='D') weakMetrics.push('inbound');
                 if(c.lg==='F'||c.lg==='D'||c.ag==='F'||c.ag==='D') weakMetrics.push('outbound');
-                if(gn(c.ov)<gn(b.ov)){
+                if(gn(c.ov)<gn(m.ov)){
                     all.push({pri:1,type:'derby',tag:'Derby',title:s.id+' — Manager Ring Ring Session (5 pts)',
-                        text:'Overall declined '+b.ov+' → '+c.ov+'. Attending a Manager Ring Ring session earns the most Derby points. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
+                        text:'Overall declined '+m.ov+' → '+c.ov+' (Mar → Apr). Attending a Manager Ring Ring session earns the most Derby points. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
                 } else if(weakMetrics.length>0){
                     all.push({pri:2,type:'derby',tag:'Derby',title:s.id+' — Mystery Shop recommended (1 pt)',
                         text:'Weak '+weakMetrics.join(' & ')+' metrics. A mystery shop can identify coaching gaps. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
@@ -1511,10 +1567,10 @@
             // Find store by ID or partial name
             const matchStore=D.stores.find(s=>ql.includes(s.id.toLowerCase())||ql.includes(s.name.toLowerCase().split(' ').pop()));
             if(matchStore){
-                const c=calc(matchStore.current),b=calc(matchStore.baseline);
-                const trend=gn(c.ov)>gn(b.ov)?'improved':gn(c.ov)<gn(b.ov)?'declined':'held steady';
+                const c=calc(matchStore.current),m=calc(matchStore.march);
+                const trend=gn(c.ov)>gn(m.ov)?'improved':gn(c.ov)<gn(m.ov)?'declined':'held steady';
                 let resp = '<strong>'+matchStore.id+'</strong> ('+matchStore.name+')<br>'+
-                    'Overall: <strong>'+c.ov+'</strong> (was '+b.ov+') \u2014 '+trend+'<br>'+
+                    'Overall: <strong>'+c.ov+'</strong> (Mar: '+m.ov+') \u2014 '+trend+'<br>'+
                     'RI: '+matchStore.current.req+'% ('+c.rg+') | Set: '+matchStore.current.set+'% ('+c.sg+')<br>'+
                     'Live: '+matchStore.current.live+'% ('+c.lg+') | Appt: '+matchStore.current.appt+'% ('+c.ag+')<br>'+
                     'Inbound: '+c.ib+' | Outbound: '+c.ob;
@@ -1548,14 +1604,14 @@
             }
             // Improved / declined
             if(ql.match(/improved|improving|up|gaining/)){
-                const improved=D.stores.filter(s=>gn(calc(s.current).ov)>gn(calc(s.baseline).ov));
-                if(!improved.length) return 'No stores have improved their overall letter grade from baseline.';
-                return improved.length+' stores improved:<br>'+improved.map(s=>'\u2022 <strong>'+s.id+'</strong> '+calc(s.baseline).ov+' \u2192 '+calc(s.current).ov).join('<br>');
+                const improved=D.stores.filter(s=>gn(calc(s.current).ov)>gn(calc(s.march).ov));
+                if(!improved.length) return 'No stores improved their overall letter grade from March.';
+                return improved.length+' stores improved (Mar → Apr):<br>'+improved.map(s=>'\u2022 <strong>'+s.id+'</strong> '+calc(s.march).ov+' \u2192 '+calc(s.current).ov).join('<br>');
             }
             if(ql.match(/declined|dropping|down|falling|slipping/)){
-                const declined=D.stores.filter(s=>gn(calc(s.current).ov)<gn(calc(s.baseline).ov));
-                if(!declined.length) return 'No stores have declined in overall letter grade. Everyone is holding or improving!';
-                return declined.length+' stores declined:<br>'+declined.map(s=>'\u2022 <strong>'+s.id+'</strong> '+calc(s.baseline).ov+' \u2192 '+calc(s.current).ov).join('<br>');
+                const declined=D.stores.filter(s=>gn(calc(s.current).ov)<gn(calc(s.march).ov));
+                if(!declined.length) return 'No stores declined in overall letter grade from March. Everyone is holding or improving!';
+                return declined.length+' stores declined (Mar → Apr):<br>'+declined.map(s=>'\u2022 <strong>'+s.id+'</strong> '+calc(s.march).ov+' \u2192 '+calc(s.current).ov).join('<br>');
             }
             // West vs East / compare regions
             if(ql.match(/west|east|region|compare/)){
@@ -1607,7 +1663,7 @@
                 const DERBY_URL='https://ringderby.vercel.app';
                 const recs=[];
                 // Declined stores → Manager Session (5 pts)
-                const declined=D.stores.filter(s=>gn(calc(s.current).ov)<gn(calc(s.baseline).ov));
+                const declined=D.stores.filter(s=>gn(calc(s.current).ov)<gn(calc(s.march).ov));
                 if(declined.length) recs.push('<strong>Manager Ring Ring Session (5 pts)</strong> recommended for: '+declined.map(s=>s.id).join(', ')+' — overall grade declined, attending earns max Derby points');
                 // Stores with F/D metrics → Mystery Shop (1 pt)
                 const weak=D.stores.filter(s=>{const c=calc(s.current);return c.rg==='F'||c.rg==='D'||c.sg==='F'||c.sg==='D'||c.lg==='F'||c.lg==='D'||c.ag==='F'||c.ag==='D';});
@@ -1703,7 +1759,7 @@
         function showSpotlight(storeId) {
             const store = D.stores.find(s=>s.id===storeId);
             if(!store) return;
-            const c = calc(store.current), b = calc(store.baseline);
+            const c = calc(store.current), m = calc(store.march), y = calc(store.ytd);
             const staff = STAFF[storeId] || [];
 
             // Grade color helper
@@ -1712,22 +1768,22 @@
                 return col==='green'?'background:#dcfce7;color:#15803d;':col==='yellow'?'background:#fef9c3;color:#854d0e;':'background:#fecaca;color:#991b1b;';
             }
 
-            // Grade strip
+            // Grade strip — show Apr (current) with Mar comparison
             const metrics = [
-                {label:'Overall', grade:c.ov, base:b.ov},
-                {label:'Inbound', grade:c.ib, base:b.ib},
-                {label:'RI%', grade:c.rg, pct:store.current.req+'%', base:store.baseline.req+'%'},
-                {label:'Set%', grade:c.sg, pct:store.current.set+'%', base:store.baseline.set+'%'},
-                {label:'Outbound', grade:c.ob, base:b.ob},
-                {label:'Live%', grade:c.lg, pct:store.current.live+'%', base:store.baseline.live+'%'},
-                {label:'Appt%', grade:c.ag, pct:store.current.appt+'%', base:store.baseline.appt+'%'}
+                {label:'Overall', grade:c.ov, prev:m.ov},
+                {label:'Inbound', grade:c.ib, prev:m.ib},
+                {label:'RI%', grade:c.rg, pct:store.current.req+'%', prev:store.march.req+'%'},
+                {label:'Set%', grade:c.sg, pct:store.current.set+'%', prev:store.march.set+'%'},
+                {label:'Outbound', grade:c.ob, prev:m.ob},
+                {label:'Live%', grade:c.lg, pct:store.current.live+'%', prev:store.march.live+'%'},
+                {label:'Appt%', grade:c.ag, pct:store.current.appt+'%', prev:store.march.appt+'%'}
             ];
 
-            let gradeStrip = metrics.map(m => `
-                <div class="spotlight-grade-box" style="${gBg(m.grade)}">
-                    <div class="sg-label">${m.label}</div>
-                    <div class="sg-val">${m.grade}</div>
-                    <div class="sg-pct">${m.pct||''} ${m.base?'(was '+m.base+')':''}</div>
+            let gradeStrip = metrics.map(mt => `
+                <div class="spotlight-grade-box" style="${gBg(mt.grade)}">
+                    <div class="sg-label">${mt.label}</div>
+                    <div class="sg-val">${mt.grade}</div>
+                    <div class="sg-pct">${mt.pct||''} ${mt.prev?'(Mar: '+mt.prev+')':''}</div>
                 </div>`).join('');
 
             // Inbound trends
@@ -2282,7 +2338,7 @@
             document.getElementById('carwarsDate').textContent = cwDate;
             document.getElementById('dateRange').textContent = mo[now.getMonth()]+' MTD ('+rangeStr+')';
         }
-        function renderAll(){renderDates();renderStores();renderAlerts();renderCoaching();renderRegions();renderTrends();renderOBTrends();renderDataEntry();renderSummary();renderInsights();}
+        function renderAll(){renderDates();renderStores();renderAlerts();renderCoaching();renderRegions();renderTrends();renderOBTrends();renderBaseline();renderDataEntry();renderSummary();renderInsights();}
         document.addEventListener('DOMContentLoaded',renderAll);
     </script>
     <div class="staff-overlay" id="staffOverlay" onclick="if(event.target===this)closeStaffModal()">
