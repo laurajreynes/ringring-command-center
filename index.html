@@ -1081,49 +1081,45 @@
                 '</div>';
             }
 
-            let gradeHTML = '<div style="margin-bottom:8px;">';
-            gradeHTML += '<div style="font-size:10px;text-transform:uppercase;color:#475569;letter-spacing:0.5px;margin-bottom:6px;font-weight:700;">Grade Breakdown</div>';
-            if(type==='inbound') {
-                // Inbound decline: only show inbound grades
-                gradeHTML += '<div style="display:flex;flex-wrap:wrap;gap:3px;">';
-                gradeHTML += gradePill('Inbound', c.ib, '');
-                gradeHTML += gradePill('RI', c.rg, store.current.req+'%');
-                gradeHTML += gradePill('Set', c.sg, store.current.set+'%');
-                gradeHTML += '</div>';
-            } else {
-                // Declined or critical: show all
-                gradeHTML += '<div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px;">';
-                gradeHTML += gradePill('Overall', c.ov, '');
-                gradeHTML += gradePill('Inbound', c.ib, '');
-                gradeHTML += gradePill('Outbound', c.ob, '');
-                gradeHTML += '</div>';
-                gradeHTML += '<div style="display:flex;flex-wrap:wrap;gap:3px;">';
-                gradeHTML += gradePill('RI', c.rg, store.current.req+'%');
-                gradeHTML += gradePill('Set', c.sg, store.current.set+'%');
-                gradeHTML += gradePill('Live', c.lg, store.current.live+'%');
-                gradeHTML += gradePill('Appt', c.ag, store.current.appt+'%');
-                gradeHTML += '</div>';
+            // Build sections — each has a header, grade pills, and chart side by side
+            const showOb = (type==='declined' || type==='critical');
+            let html = '';
+
+            // Overall pill row (only for declined/critical)
+            if(showOb) {
+                html += '<div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:10px;">';
+                html += gradePill('Overall', c.ov, '');
+                html += '</div>';
                 if(type==='declined') {
-                    gradeHTML += '<div style="font-size:10px;color:#64748b;margin-top:5px;">Was: Overall '+b.ov+' · Inbound '+b.ib+' · Outbound '+b.ob+'</div>';
+                    html += '<div style="font-size:10px;color:#64748b;margin-bottom:10px;">Was: Overall '+b.ov+' · Inbound '+b.ib+' · Outbound '+b.ob+'</div>';
                 }
             }
-            gradeHTML += '</div>';
 
-            // Mini trend charts
-            let chartHTML = '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">';
-            chartHTML += '<div style="flex:1;min-width:200px;">';
-            chartHTML += '<div style="font-size:10px;text-transform:uppercase;color:#6b7280;letter-spacing:0.3px;margin-bottom:4px;font-weight:600;">Inbound Trends</div>';
-            chartHTML += '<canvas id="alert-chart-ib-'+sid+'" style="width:100%;height:130px;"></canvas>';
-            chartHTML += '</div>';
-            if(type==='declined' || type==='critical') {
-                chartHTML += '<div style="flex:1;min-width:200px;">';
-                chartHTML += '<div style="font-size:10px;text-transform:uppercase;color:#6b7280;letter-spacing:0.3px;margin-bottom:4px;font-weight:600;">Outbound Trends</div>';
-                chartHTML += '<canvas id="alert-chart-ob-'+sid+'" style="width:100%;height:130px;"></canvas>';
-                chartHTML += '</div>';
+            // Inbound section
+            html += '<div style="margin-bottom:'+( showOb?'14':'4' )+'px;">';
+            html += '<div style="font-size:10px;text-transform:uppercase;color:#475569;letter-spacing:0.5px;margin-bottom:6px;font-weight:700;">Inbound</div>';
+            html += '<div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px;">';
+            html += gradePill('Inbound', c.ib, '');
+            html += gradePill('RI', c.rg, store.current.req+'%');
+            html += gradePill('Set', c.sg, store.current.set+'%');
+            html += '</div>';
+            html += '<canvas id="alert-chart-ib-'+sid+'" style="width:100%;height:130px;"></canvas>';
+            html += '</div>';
+
+            // Outbound section (only for declined/critical)
+            if(showOb) {
+                html += '<div>';
+                html += '<div style="font-size:10px;text-transform:uppercase;color:#475569;letter-spacing:0.5px;margin-bottom:6px;font-weight:700;">Outbound</div>';
+                html += '<div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px;">';
+                html += gradePill('Outbound', c.ob, '');
+                html += gradePill('Live', c.lg, store.current.live+'%');
+                html += gradePill('Appt', c.ag, store.current.appt+'%');
+                html += '</div>';
+                html += '<canvas id="alert-chart-ob-'+sid+'" style="width:100%;height:130px;"></canvas>';
+                html += '</div>';
             }
-            chartHTML += '</div>';
 
-            detailEl.innerHTML = gradeHTML + chartHTML;
+            detailEl.innerHTML = html;
             detailEl.style.display = 'block';
 
             // Draw mini charts after DOM update
