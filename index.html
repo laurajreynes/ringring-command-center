@@ -1399,10 +1399,12 @@
 
         let baseExpandedId = null;
         function toggleBaseDetail(sid) {
+            const row = document.getElementById('base-row-'+sid);
             const el = document.getElementById('base-detail-'+sid);
-            if(baseExpandedId === sid) { el.style.display='none'; baseExpandedId=null; return; }
-            document.querySelectorAll('.base-detail-panel').forEach(e=>e.style.display='none');
+            if(baseExpandedId === sid) { row.style.display='none'; baseExpandedId=null; return; }
+            document.querySelectorAll('.base-detail-row').forEach(e=>e.style.display='none');
             baseExpandedId = sid;
+            row.style.display='table-row';
             const s = D.stores.find(x=>x.id===sid);
             if(!s) return;
             const b=calc(s.baseline), c=calc(s.current);
@@ -1436,7 +1438,6 @@
             h+='<canvas id="base-chart-ob-'+sid+'" style="width:100%;height:130px;"></canvas></div>';
             h+='</div></div>';
             el.innerHTML = h;
-            el.style.display = 'block';
             setTimeout(()=>{
                 drawAlertMiniChart('base-chart-ib-'+sid, TRENDS.ri[sid], TRENDS.set[sid], 'RI%', 'Set%', '#2563eb', '#f97316', TRENDS.months);
                 drawAlertMiniChart('base-chart-ob-'+sid, OB_TRENDS.live[sid], OB_TRENDS.appt[sid], 'Live%', 'Appt%', '#2563eb', '#f97316', OB_TRENDS.months);
@@ -1463,7 +1464,7 @@
                     h+='<td class="grade-cell"><span class="g '+gc(b.ob)+'">'+b.ob+'</span></td>';
                     h+='<td class="grade-cell"><span class="g '+gc(b.ov)+'">'+b.ov+'</span> → <span class="g '+gc(c.ov)+'">'+c.ov+'</span>'+arrow+'</td>';
                     h+='</tr>';
-                    h+='<tr class="detail-row"><td colspan="9"><div class="base-detail-panel" id="base-detail-'+s.id+'" style="display:none;background:#f8fafc;border-radius:6px;padding:10px;"></div></td></tr>';
+                    h+='<tr class="base-detail-row" id="base-row-'+s.id+'" style="display:none;"><td colspan="9" style="background:#f9fafb;padding:8px;border-top:1px solid #e5e7eb;"><div class="base-detail-panel" id="base-detail-'+s.id+'" style="background:#f8fafc;border-radius:6px;padding:10px;"></div></td></tr>';
                 });
                 h+='</tbody></table></div>';
                 return h;
