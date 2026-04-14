@@ -1397,27 +1397,168 @@
             form.innerHTML=regionBlock(west,'West','west')+regionBlock(east,'East','east');
         }
 
+        let baseExpandedId = null;
+        function toggleBaseDetail(sid) {
+            const el = document.getElementById('base-detail-'+sid);
+            if(baseExpandedId === sid) { el.style.display='none'; baseExpandedId=null; return; }
+            document.querySelectorAll('.base-detail-panel').forEach(e=>e.style.display='none');
+            baseExpandedId = sid;
+            const s = D.stores.find(x=>x.id===sid);
+            if(!s) return;
+            const b=calc(s.baseline), c=calc(s.current);
+            // Grade comparison: baseline → current
+            function pill(label, bg, cg) {
+                const bCol=gn(bg)>=3.3?'#059669':gn(bg)>=1.7?'#2563eb':'#dc2626';
+                const cCol=gn(cg)>=3.3?'#059669':gn(cg)>=1.7?'#2563eb':'#dc2626';
+                const arrow=gn(cg)>gn(bg)?'<span style="color:#059669;font-size:10px;"> ▲</span>':gn(cg)<gn(bg)?'<span style="color:#dc2626;font-size:10px;"> ▼</span>':'<span style="color:#94a3b8;font-size:10px;"> —</span>';
+                return '<div style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;background:#f8fafc;border:1px solid #e2e8f0;margin:2px;">'+
+                    '<span style="font-size:10px;color:#64748b;">'+label+'</span>'+
+                    '<span style="font-weight:700;color:'+bCol+';font-size:13px;">'+bg+'</span>'+
+                    '<span style="color:#94a3b8;font-size:10px;">→</span>'+
+                    '<span style="font-weight:700;color:'+cCol+';font-size:13px;">'+cg+'</span>'+arrow+
+                '</div>';
+            }
+            let h='<div style="padding:6px 0;">';
+            h+='<div style="font-size:10px;text-transform:uppercase;color:#475569;letter-spacing:0.5px;margin-bottom:5px;font-weight:700;">Baseline → Current (Apr)</div>';
+            h+='<div style="display:flex;flex-wrap:wrap;gap:2px;margin-bottom:10px;">';
+            h+=pill('Overall',b.ov,c.ov)+pill('Inbound',b.ib,c.ib)+pill('Outbound',b.ob,c.ob);
+            h+='</div>';
+            h+='<div style="display:flex;flex-wrap:wrap;gap:2px;margin-bottom:12px;">';
+            h+=pill('RI',b.rg,c.rg)+pill('Set',b.sg,c.sg)+pill('Live',b.lg,c.lg)+pill('Appt',b.ag,c.ag);
+            h+='</div>';
+            // Trend charts
+            h+='<div style="display:flex;gap:8px;flex-wrap:wrap;">';
+            h+='<div style="flex:1;min-width:200px;">';
+            h+='<div style="font-size:10px;text-transform:uppercase;color:#475569;letter-spacing:0.3px;margin-bottom:4px;font-weight:600;">Inbound Trends</div>';
+            h+='<canvas id="base-chart-ib-'+sid+'" style="width:100%;height:130px;"></canvas></div>';
+            h+='<div style="flex:1;min-width:200px;">';
+            h+='<div style="font-size:10px;text-transform:uppercase;color:#475569;letter-spacing:0.3px;margin-bottom:4px;font-weight:600;">Outbound Trends</div>';
+            h+='<canvas id="base-chart-ob-'+sid+'" style="width:100%;height:130px;"></canvas></div>';
+            h+='</div></div>';
+            el.innerHTML = h;
+            el.style.display = 'block';
+            setTimeout(()=>{
+                drawAlertMiniChart('base-chart-ib-'+sid, TRENDS.ri[sid], TRENDS.set[sid], 'RI%', 'Set%', '#2563eb', '#f97316', TRENDS.months);
+                drawAlertMiniChart('base-chart-ob-'+sid, OB_TRENDS.live[sid], OB_TRENDS.appt[sid], 'Live%', 'Appt%', '#2563eb', '#f97316', OB_TRENDS.months);
+            }, 30);
+        }
         function renderBaseline(){
             const p=document.getElementById('baselinePanel');
             const west=D.stores.filter(s=>s.region==='West'), east=D.stores.filter(s=>s.region==='East');
+            const allStores=D.stores.filter(s=>s.id!=='TCC');
             function baseTable(stores,label,cls){
                 let h='<div class="region-section"><div class="region-header region-'+cls+'-hdr"><h3>'+label+' Region — Baseline Reference</h3></div>';
-                h+='<table class="stores-table"><thead><tr><th class="left">Store</th><th>RI %</th><th>Set %</th><th>Inbound</th><th>Live %</th><th>Appt %</th><th>Outbound</th><th>Overall</th></tr></thead><tbody>';
+                h+='<table class="stores-table"><thead><tr><th style="width:22px;"></th><th class="left">Store</th><th>RI %</th><th>Set %</th><th>Inbound</th><th>Live %</th><th>Appt %</th><th>Outbound</th><th>Overall</th></tr></thead><tbody>';
                 stores.forEach(s=>{
-                    const b=calc(s.baseline);
-                    h+='<tr><td class="store-name" title="'+s.name+'">'+s.id+'</td>';
+                    const b=calc(s.baseline), c=calc(s.current);
+                    const arrow=gn(c.ov)>gn(b.ov)?'<span class="trend-arrow trend-up" style="font-size:9px;margin-left:3px;">▲</span>':gn(c.ov)<gn(b.ov)?'<span class="trend-arrow trend-down" style="font-size:9px;margin-left:3px;">▼</span>':'';
+                    h+='<tr style="cursor:pointer;" onclick="toggleBaseDetail(\''+s.id+'\')">';
+                    h+='<td><button class="row-expand-btn" style="font-size:8px;">▼</button></td>';
+                    h+='<td class="store-name" title="'+s.name+'">'+s.id+'</td>';
                     h+='<td class="metric-cell">'+s.baseline.req+'% <span class="g '+gc(b.rg)+'">'+b.rg+'</span></td>';
                     h+='<td class="metric-cell">'+s.baseline.set+'% <span class="g '+gc(b.sg)+'">'+b.sg+'</span></td>';
                     h+='<td class="grade-cell"><span class="g '+gc(b.ib)+'">'+b.ib+'</span></td>';
                     h+='<td class="metric-cell">'+s.baseline.live+'% <span class="g '+gc(b.lg)+'">'+b.lg+'</span></td>';
                     h+='<td class="metric-cell">'+s.baseline.appt+'% <span class="g '+gc(b.ag)+'">'+b.ag+'</span></td>';
                     h+='<td class="grade-cell"><span class="g '+gc(b.ob)+'">'+b.ob+'</span></td>';
-                    h+='<td class="grade-cell"><span class="g '+gc(b.ov)+'">'+b.ov+'</span></td></tr>';
+                    h+='<td class="grade-cell"><span class="g '+gc(b.ov)+'">'+b.ov+'</span> → <span class="g '+gc(c.ov)+'">'+c.ov+'</span>'+arrow+'</td>';
+                    h+='</tr>';
+                    h+='<tr class="detail-row"><td colspan="9"><div class="base-detail-panel" id="base-detail-'+s.id+'" style="display:none;background:#f8fafc;border-radius:6px;padding:10px;"></div></td></tr>';
                 });
                 h+='</tbody></table></div>';
                 return h;
             }
-            p.innerHTML='<p style="font-size:12px;color:#64748b;padding:6px 0;">Baseline grades represent the starting point (pre-Ring Ring or initial benchmark period). Stored here for reference.</p>'+baseTable(west,'West','west')+baseTable(east,'East','east');
+            // Executive summary
+            function execSummary(){
+                let improved=[], declined=[], steady=[];
+                allStores.forEach(s=>{
+                    const bg=gn(calc(s.baseline).ov), cg=gn(calc(s.current).ov);
+                    if(cg>bg) improved.push(s);
+                    else if(cg<bg) declined.push(s);
+                    else steady.push(s);
+                });
+                // Group-level averages
+                const avgBase = allStores.map(s=>calc(s.baseline).ovS).reduce((a,b)=>a+b,0)/allStores.length;
+                const avgCur = allStores.map(s=>calc(s.current).ovS).reduce((a,b)=>a+b,0)/allStores.length;
+                const grpTrend = avgCur>avgBase?'improved':'declined';
+                const grpArrow = avgCur>avgBase?'<span class="trend-arrow trend-up">▲</span>':'<span class="trend-arrow trend-down">▼</span>';
+                // Inbound vs outbound group averages
+                const avgBaseIB = allStores.map(s=>calc(s.baseline).iS).reduce((a,b)=>a+b,0)/allStores.length;
+                const avgCurIB = allStores.map(s=>calc(s.current).iS).reduce((a,b)=>a+b,0)/allStores.length;
+                const avgBaseOB = allStores.map(s=>calc(s.baseline).oS).reduce((a,b)=>a+b,0)/allStores.length;
+                const avgCurOB = allStores.map(s=>calc(s.current).oS).reduce((a,b)=>a+b,0)/allStores.length;
+
+                let h='<div style="margin-top:20px;padding:16px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;">';
+                h+='<h3 style="font-size:14px;font-weight:700;color:#1e293b;margin:0 0 12px 0;">Executive Summary — Baseline to Current</h3>';
+
+                // Overall group grade
+                h+='<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;">';
+                h+='<div style="flex:1;min-width:140px;padding:10px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;text-align:center;">';
+                h+='<div style="font-size:10px;text-transform:uppercase;color:#64748b;margin-bottom:4px;">Group Overall</div>';
+                h+='<span class="g '+gc(s2g(avgBase))+'">'+s2g(avgBase)+'</span> <span style="color:#94a3b8;">→</span> <span class="g '+gc(s2g(avgCur))+'">'+s2g(avgCur)+'</span> '+grpArrow;
+                h+='</div>';
+                h+='<div style="flex:1;min-width:140px;padding:10px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;text-align:center;">';
+                h+='<div style="font-size:10px;text-transform:uppercase;color:#64748b;margin-bottom:4px;">Group Inbound</div>';
+                h+='<span class="g '+gc(s2g(avgBaseIB))+'">'+s2g(avgBaseIB)+'</span> <span style="color:#94a3b8;">→</span> <span class="g '+gc(s2g(avgCurIB))+'">'+s2g(avgCurIB)+'</span>';
+                h+=(avgCurIB>avgBaseIB?'<span class="trend-arrow trend-up"> ▲</span>':'<span class="trend-arrow trend-down"> ▼</span>');
+                h+='</div>';
+                h+='<div style="flex:1;min-width:140px;padding:10px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;text-align:center;">';
+                h+='<div style="font-size:10px;text-transform:uppercase;color:#64748b;margin-bottom:4px;">Group Outbound</div>';
+                h+='<span class="g '+gc(s2g(avgBaseOB))+'">'+s2g(avgBaseOB)+'</span> <span style="color:#94a3b8;">→</span> <span class="g '+gc(s2g(avgCurOB))+'">'+s2g(avgCurOB)+'</span>';
+                h+=(avgCurOB>avgBaseOB?'<span class="trend-arrow trend-up"> ▲</span>':'<span class="trend-arrow trend-down"> ▼</span>');
+                h+='</div>';
+                h+='<div style="flex:1;min-width:140px;padding:10px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;text-align:center;">';
+                h+='<div style="font-size:10px;text-transform:uppercase;color:#64748b;margin-bottom:4px;">Stores</div>';
+                h+='<span style="color:#059669;font-weight:700;">'+improved.length+' ▲</span> &nbsp;';
+                h+='<span style="color:#dc2626;font-weight:700;">'+declined.length+' ▼</span> &nbsp;';
+                h+='<span style="color:#94a3b8;font-weight:700;">'+steady.length+' —</span>';
+                h+='</div></div>';
+
+                // Improvements
+                if(improved.length){
+                    h+='<div style="margin-bottom:10px;">';
+                    h+='<div style="font-size:11px;font-weight:700;color:#059669;margin-bottom:4px;">✓ Improvements ('+improved.length+' stores)</div>';
+                    h+='<div style="font-size:12px;color:#334155;line-height:1.6;">';
+                    improved.sort((a,b)=>(calc(b.current).ovS-calc(b.baseline).ovS)-(calc(a.current).ovS-calc(a.baseline).ovS));
+                    h+=improved.map(s=>{
+                        const bg=calc(s.baseline), cg=calc(s.current);
+                        return '<strong>'+s.id+'</strong> '+bg.ov+' → '+cg.ov;
+                    }).join(' &nbsp;·&nbsp; ');
+                    h+='</div></div>';
+                }
+                // Declines
+                if(declined.length){
+                    h+='<div style="margin-bottom:10px;">';
+                    h+='<div style="font-size:11px;font-weight:700;color:#dc2626;margin-bottom:4px;">⚠ Opportunities ('+declined.length+' stores)</div>';
+                    h+='<div style="font-size:12px;color:#334155;line-height:1.6;">';
+                    declined.sort((a,b)=>(calc(a.current).ovS-calc(a.baseline).ovS)-(calc(b.current).ovS-calc(b.baseline).ovS));
+                    h+=declined.map(s=>{
+                        const bg=calc(s.baseline), cg=calc(s.current);
+                        return '<strong>'+s.id+'</strong> '+bg.ov+' → '+cg.ov;
+                    }).join(' &nbsp;·&nbsp; ');
+                    h+='</div></div>';
+                }
+                // Key metric shifts
+                const metrics=['req','set','live','appt'];
+                const mLabels={'req':'RI %','set':'Set %','live':'Live %','appt':'Appt %'};
+                h+='<div style="margin-top:8px;">';
+                h+='<div style="font-size:11px;font-weight:700;color:#475569;margin-bottom:4px;">Key Metric Shifts (Group Average)</div>';
+                h+='<div style="display:flex;gap:12px;flex-wrap:wrap;">';
+                metrics.forEach(m=>{
+                    const avgB=(allStores.map(s=>s.baseline[m]).reduce((a,b)=>a+b,0)/allStores.length).toFixed(1);
+                    const avgC=(allStores.map(s=>s.current[m]).reduce((a,b)=>a+b,0)/allStores.length).toFixed(1);
+                    const diff=(avgC-avgB).toFixed(1);
+                    const col=diff>0?'#059669':diff<0?'#dc2626':'#64748b';
+                    h+='<div style="font-size:12px;color:#334155;"><strong>'+mLabels[m]+':</strong> '+avgB+'% → '+avgC+'% <span style="color:'+col+';font-weight:600;">('+( diff>0?'+':'')+diff+')</span></div>';
+                });
+                h+='</div></div>';
+
+                h+='</div>';
+                return h;
+            }
+
+            p.innerHTML='<p style="font-size:12px;color:#64748b;padding:6px 0;">Baseline grades represent the starting point (pre-Ring Ring or initial benchmark period). Click any row to see trends.</p>'+baseTable(west,'West','west')+baseTable(east,'East','east')+execSummary();
+            baseExpandedId = null;
         }
 
         function renderSummary(){
