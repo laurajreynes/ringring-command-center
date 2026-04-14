@@ -1478,81 +1478,160 @@
                     else if(cg<bg) declined.push(s);
                     else steady.push(s);
                 });
-                // Group-level averages
-                const avgBase = allStores.map(s=>calc(s.baseline).ovS).reduce((a,b)=>a+b,0)/allStores.length;
-                const avgCur = allStores.map(s=>calc(s.current).ovS).reduce((a,b)=>a+b,0)/allStores.length;
-                const grpTrend = avgCur>avgBase?'improved':'declined';
-                const grpArrow = avgCur>avgBase?'<span class="trend-arrow trend-up">▲</span>':'<span class="trend-arrow trend-down">▼</span>';
-                // Inbound vs outbound group averages
-                const avgBaseIB = allStores.map(s=>calc(s.baseline).iS).reduce((a,b)=>a+b,0)/allStores.length;
-                const avgCurIB = allStores.map(s=>calc(s.current).iS).reduce((a,b)=>a+b,0)/allStores.length;
-                const avgBaseOB = allStores.map(s=>calc(s.baseline).oS).reduce((a,b)=>a+b,0)/allStores.length;
-                const avgCurOB = allStores.map(s=>calc(s.current).oS).reduce((a,b)=>a+b,0)/allStores.length;
+                improved.sort((a,b)=>(calc(b.current).ovS-calc(b.baseline).ovS)-(calc(a.current).ovS-calc(a.baseline).ovS));
+                declined.sort((a,b)=>(calc(a.current).ovS-calc(a.baseline).ovS)-(calc(b.current).ovS-calc(b.baseline).ovS));
 
-                let h='<div style="margin-top:20px;padding:16px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;">';
-                h+='<h3 style="font-size:14px;font-weight:700;color:#1e293b;margin:0 0 12px 0;">Executive Summary — Baseline to Current</h3>';
+                // Group averages
+                const n=allStores.length;
+                const avgB=m=>+(allStores.map(s=>s.baseline[m]).reduce((a,b)=>a+b,0)/n).toFixed(1);
+                const avgC=m=>+(allStores.map(s=>s.current[m]).reduce((a,b)=>a+b,0)/n).toFixed(1);
+                const avgBaseOv=allStores.map(s=>calc(s.baseline).ovS).reduce((a,b)=>a+b,0)/n;
+                const avgCurOv=allStores.map(s=>calc(s.current).ovS).reduce((a,b)=>a+b,0)/n;
+                const avgBaseIB=allStores.map(s=>calc(s.baseline).iS).reduce((a,b)=>a+b,0)/n;
+                const avgCurIB=allStores.map(s=>calc(s.current).iS).reduce((a,b)=>a+b,0)/n;
+                const avgBaseOB=allStores.map(s=>calc(s.baseline).oS).reduce((a,b)=>a+b,0)/n;
+                const avgCurOB=allStores.map(s=>calc(s.current).oS).reduce((a,b)=>a+b,0)/n;
 
-                // Overall group grade
-                h+='<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;">';
-                h+='<div style="flex:1;min-width:140px;padding:10px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;text-align:center;">';
-                h+='<div style="font-size:10px;text-transform:uppercase;color:#64748b;margin-bottom:4px;">Group Overall</div>';
-                h+='<span class="g '+gc(s2g(avgBase))+'">'+s2g(avgBase)+'</span> <span style="color:#94a3b8;">→</span> <span class="g '+gc(s2g(avgCur))+'">'+s2g(avgCur)+'</span> '+grpArrow;
-                h+='</div>';
-                h+='<div style="flex:1;min-width:140px;padding:10px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;text-align:center;">';
-                h+='<div style="font-size:10px;text-transform:uppercase;color:#64748b;margin-bottom:4px;">Group Inbound</div>';
-                h+='<span class="g '+gc(s2g(avgBaseIB))+'">'+s2g(avgBaseIB)+'</span> <span style="color:#94a3b8;">→</span> <span class="g '+gc(s2g(avgCurIB))+'">'+s2g(avgCurIB)+'</span>';
-                h+=(avgCurIB>avgBaseIB?'<span class="trend-arrow trend-up"> ▲</span>':'<span class="trend-arrow trend-down"> ▼</span>');
-                h+='</div>';
-                h+='<div style="flex:1;min-width:140px;padding:10px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;text-align:center;">';
-                h+='<div style="font-size:10px;text-transform:uppercase;color:#64748b;margin-bottom:4px;">Group Outbound</div>';
-                h+='<span class="g '+gc(s2g(avgBaseOB))+'">'+s2g(avgBaseOB)+'</span> <span style="color:#94a3b8;">→</span> <span class="g '+gc(s2g(avgCurOB))+'">'+s2g(avgCurOB)+'</span>';
-                h+=(avgCurOB>avgBaseOB?'<span class="trend-arrow trend-up"> ▲</span>':'<span class="trend-arrow trend-down"> ▼</span>');
-                h+='</div>';
-                h+='<div style="flex:1;min-width:140px;padding:10px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;text-align:center;">';
-                h+='<div style="font-size:10px;text-transform:uppercase;color:#64748b;margin-bottom:4px;">Stores</div>';
-                h+='<span style="color:#059669;font-weight:700;">'+improved.length+' ▲</span> &nbsp;';
-                h+='<span style="color:#dc2626;font-weight:700;">'+declined.length+' ▼</span> &nbsp;';
-                h+='<span style="color:#94a3b8;font-weight:700;">'+steady.length+' —</span>';
-                h+='</div></div>';
-
-                // Improvements
-                if(improved.length){
-                    h+='<div style="margin-bottom:10px;">';
-                    h+='<div style="font-size:11px;font-weight:700;color:#059669;margin-bottom:4px;">✓ Improvements ('+improved.length+' stores)</div>';
-                    h+='<div style="font-size:12px;color:#334155;line-height:1.6;">';
-                    improved.sort((a,b)=>(calc(b.current).ovS-calc(b.baseline).ovS)-(calc(a.current).ovS-calc(a.baseline).ovS));
-                    h+=improved.map(s=>{
-                        const bg=calc(s.baseline), cg=calc(s.current);
-                        return '<strong>'+s.id+'</strong> '+bg.ov+' → '+cg.ov;
-                    }).join(' &nbsp;·&nbsp; ');
-                    h+='</div></div>';
-                }
-                // Declines
-                if(declined.length){
-                    h+='<div style="margin-bottom:10px;">';
-                    h+='<div style="font-size:11px;font-weight:700;color:#dc2626;margin-bottom:4px;">⚠ Opportunities ('+declined.length+' stores)</div>';
-                    h+='<div style="font-size:12px;color:#334155;line-height:1.6;">';
-                    declined.sort((a,b)=>(calc(a.current).ovS-calc(a.baseline).ovS)-(calc(b.current).ovS-calc(b.baseline).ovS));
-                    h+=declined.map(s=>{
-                        const bg=calc(s.baseline), cg=calc(s.current);
-                        return '<strong>'+s.id+'</strong> '+bg.ov+' → '+cg.ov;
-                    }).join(' &nbsp;·&nbsp; ');
-                    h+='</div></div>';
-                }
-                // Key metric shifts
-                const metrics=['req','set','live','appt'];
-                const mLabels={'req':'RI %','set':'Set %','live':'Live %','appt':'Appt %'};
-                h+='<div style="margin-top:8px;">';
-                h+='<div style="font-size:11px;font-weight:700;color:#475569;margin-bottom:4px;">Key Metric Shifts (Group Average)</div>';
-                h+='<div style="display:flex;gap:12px;flex-wrap:wrap;">';
-                metrics.forEach(m=>{
-                    const avgB=(allStores.map(s=>s.baseline[m]).reduce((a,b)=>a+b,0)/allStores.length).toFixed(1);
-                    const avgC=(allStores.map(s=>s.current[m]).reduce((a,b)=>a+b,0)/allStores.length).toFixed(1);
-                    const diff=(avgC-avgB).toFixed(1);
-                    const col=diff>0?'#059669':diff<0?'#dc2626':'#64748b';
-                    h+='<div style="font-size:12px;color:#334155;"><strong>'+mLabels[m]+':</strong> '+avgB+'% → '+avgC+'% <span style="color:'+col+';font-weight:600;">('+( diff>0?'+':'')+diff+')</span></div>';
+                // Biggest single-metric wins/drops
+                let bestRI={s:null,d:-99},bestSet={s:null,d:-99},worstLive={s:null,d:99},bestImprover={s:null,d:-99};
+                allStores.forEach(s=>{
+                    const rd=s.current.req-s.baseline.req; if(rd>bestRI.d) bestRI={s,d:rd};
+                    const sd2=s.current.set-s.baseline.set; if(sd2>bestSet.d) bestSet={s,d:sd2};
+                    const ld=s.current.live-s.baseline.live; if(ld<worstLive.d) worstLive={s,d:ld};
+                    const od=calc(s.current).ovS-calc(s.baseline).ovS; if(od>bestImprover.d) bestImprover={s,d:od};
                 });
+
+                // Count green/yellow/red stores
+                const greenStores=allStores.filter(s=>gColor(calc(s.current).ov)==='green').length;
+                const yellowStores=allStores.filter(s=>gColor(calc(s.current).ov)==='yellow').length;
+                const redStores=allStores.filter(s=>gColor(calc(s.current).ov)==='red').length;
+                const greenBase=allStores.filter(s=>gColor(calc(s.baseline).ov)==='green').length;
+
+                // Helper: metric card
+                function mCard(label,bv,cv,bench,unit){
+                    const diff=+(cv-bv).toFixed(1);
+                    const col=diff>0?'#059669':diff<0?'#dc2626':'#64748b';
+                    const pctOfBench=bench?Math.round(cv/bench*100):null;
+                    return '<div style="flex:1;min-width:130px;padding:10px 12px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;">'+
+                        '<div style="font-size:9px;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin-bottom:3px;">'+label+'</div>'+
+                        '<div style="font-size:20px;font-weight:800;color:#1e293b;">'+cv+unit+'</div>'+
+                        '<div style="font-size:11px;color:'+col+';font-weight:600;">'+( diff>0?'+':'')+diff+unit+' from baseline</div>'+
+                        (pctOfBench?'<div style="font-size:10px;color:#94a3b8;margin-top:2px;">'+pctOfBench+'% of benchmark ('+bench+unit+')</div>':'')+
+                    '</div>';
+                }
+
+                let h='<div style="margin-top:24px;">';
+                h+='<h3 style="font-size:15px;font-weight:700;color:#1e293b;margin:0 0 16px 0;border-bottom:2px solid #e2e8f0;padding-bottom:8px;">Executive Summary — Baseline to Current</h3>';
+
+                // === ROW 1: Grade overview cards ===
+                h+='<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">';
+                // Overall
+                const ovArrow=avgCurOv>avgBaseOv?'<span style="color:#059669;"> ▲</span>':avgCurOv<avgBaseOv?'<span style="color:#dc2626;"> ▼</span>':'';
+                h+='<div style="flex:1.5;min-width:180px;padding:14px;background:linear-gradient(135deg,#f8fafc,#f1f5f9);border-radius:8px;border:1px solid #e2e8f0;">';
+                h+='<div style="font-size:9px;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;">Group Overall</div>';
+                h+='<div style="font-size:28px;font-weight:800;margin:2px 0;"><span class="g '+gc(s2g(avgBaseOv))+'">'+s2g(avgBaseOv)+'</span> <span style="color:#cbd5e1;font-size:18px;">→</span> <span class="g '+gc(s2g(avgCurOv))+'">'+s2g(avgCurOv)+'</span>'+ovArrow+'</div>';
+                h+='<div style="font-size:11px;color:#64748b;">'+improved.length+' improved · '+declined.length+' declined · '+steady.length+' steady</div>';
+                h+='</div>';
+                // Inbound
+                const ibArrow=avgCurIB>avgBaseIB?'<span style="color:#059669;"> ▲</span>':'<span style="color:#dc2626;"> ▼</span>';
+                h+='<div style="flex:1;min-width:140px;padding:14px;background:#eff6ff;border-radius:8px;border:1px solid #bfdbfe;">';
+                h+='<div style="font-size:9px;text-transform:uppercase;color:#3b82f6;letter-spacing:0.5px;">Inbound</div>';
+                h+='<div style="font-size:22px;font-weight:800;margin:2px 0;"><span class="g '+gc(s2g(avgBaseIB))+'">'+s2g(avgBaseIB)+'</span> <span style="color:#93c5fd;font-size:14px;">→</span> <span class="g '+gc(s2g(avgCurIB))+'">'+s2g(avgCurIB)+'</span>'+ibArrow+'</div>';
+                h+='<div style="font-size:11px;color:#64748b;">RI +'+( avgC('req')-avgB('req')).toFixed(1)+' pts · Set +'+( avgC('set')-avgB('set')).toFixed(1)+' pts</div>';
+                h+='</div>';
+                // Outbound
+                const obArrow=avgCurOB>avgBaseOB?'<span style="color:#059669;"> ▲</span>':'<span style="color:#dc2626;"> ▼</span>';
+                h+='<div style="flex:1;min-width:140px;padding:14px;background:#faf5ff;border-radius:8px;border:1px solid #d8b4fe;">';
+                h+='<div style="font-size:9px;text-transform:uppercase;color:#7c3aed;letter-spacing:0.5px;">Outbound</div>';
+                h+='<div style="font-size:22px;font-weight:800;margin:2px 0;"><span class="g '+gc(s2g(avgBaseOB))+'">'+s2g(avgBaseOB)+'</span> <span style="color:#c4b5fd;font-size:14px;">→</span> <span class="g '+gc(s2g(avgCurOB))+'">'+s2g(avgCurOB)+'</span>'+obArrow+'</div>';
+                h+='<div style="font-size:11px;color:#64748b;">Live '+(avgC('live')-avgB('live')>0?'+':'')+(avgC('live')-avgB('live')).toFixed(1)+' pts · Appt '+(avgC('appt')-avgB('appt')>0?'+':'')+(avgC('appt')-avgB('appt')).toFixed(1)+' pts</div>';
+                h+='</div>';
+                // Store health
+                h+='<div style="flex:0.8;min-width:120px;padding:14px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;text-align:center;">';
+                h+='<div style="font-size:9px;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin-bottom:4px;">Store Health</div>';
+                h+='<div style="font-size:13px;line-height:1.8;">';
+                h+='<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#16a34a;margin-right:3px;"></span><strong>'+greenStores+'</strong> green <span style="color:#94a3b8;font-size:10px;">(was '+greenBase+')</span><br>';
+                h+='<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#eab308;margin-right:3px;"></span><strong>'+yellowStores+'</strong> yellow<br>';
+                h+='<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#dc2626;margin-right:3px;"></span><strong>'+redStores+'</strong> red</div>';
                 h+='</div></div>';
+
+                // === ROW 2: Metric cards ===
+                h+='<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">';
+                h+=mCard('Avg RI %',avgB('req'),avgC('req'),80,'%');
+                h+=mCard('Avg Set %',avgB('set'),avgC('set'),45,'%');
+                h+=mCard('Avg Live %',avgB('live'),avgC('live'),20,'%');
+                h+=mCard('Avg Appt %',avgB('appt'),avgC('appt'),10,'%');
+                h+='</div>';
+
+                // === ROW 3: Wins ===
+                h+='<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">';
+                // Wins column
+                h+='<div style="flex:1;min-width:280px;padding:14px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0;">';
+                h+='<div style="font-size:12px;font-weight:700;color:#15803d;margin-bottom:10px;">Wins Since Baseline</div>';
+                if(improved.length){
+                    improved.forEach(s=>{
+                        const b2=calc(s.baseline), c2=calc(s.current);
+                        // Find what drove the improvement
+                        const drivers=[];
+                        if(gn(c2.rg)>gn(b2.rg)) drivers.push('RI% up ('+(s.current.req-s.baseline.req>0?'+':'')+(s.current.req-s.baseline.req).toFixed(0)+')');
+                        if(gn(c2.sg)>gn(b2.sg)) drivers.push('Set% up ('+(s.current.set-s.baseline.set>0?'+':'')+(s.current.set-s.baseline.set).toFixed(0)+')');
+                        if(gn(c2.lg)>gn(b2.lg)) drivers.push('Live% up');
+                        if(gn(c2.ag)>gn(b2.ag)) drivers.push('Appt% up');
+                        h+='<div style="margin-bottom:8px;padding:6px 8px;background:#fff;border-radius:4px;border-left:3px solid #16a34a;">';
+                        h+='<div style="font-size:12px;font-weight:700;color:#1e293b;">'+s.id+' <span class="g '+gc(b2.ov)+'">'+b2.ov+'</span> → <span class="g '+gc(c2.ov)+'">'+c2.ov+'</span></div>';
+                        h+='<div style="font-size:11px;color:#64748b;">'+(drivers.length?drivers.join(' · '):'Steady improvement across metrics')+'</div>';
+                        h+='</div>';
+                    });
+                } else {
+                    h+='<div style="font-size:12px;color:#64748b;">No overall grade improvements yet.</div>';
+                }
+                // Spotlight: biggest single wins
+                h+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid #bbf7d0;">';
+                h+='<div style="font-size:10px;text-transform:uppercase;color:#15803d;letter-spacing:0.4px;margin-bottom:4px;font-weight:600;">Standout Metrics</div>';
+                if(bestRI.s) h+='<div style="font-size:11px;color:#334155;margin-bottom:2px;"><strong>'+bestRI.s.id+'</strong> — biggest RI jump: +'+bestRI.d.toFixed(0)+' pts ('+bestRI.s.baseline.req+'% → '+bestRI.s.current.req+'%)</div>';
+                if(bestSet.s) h+='<div style="font-size:11px;color:#334155;margin-bottom:2px;"><strong>'+bestSet.s.id+'</strong> — biggest Set jump: +'+bestSet.d.toFixed(0)+' pts ('+bestSet.s.baseline.set+'% → '+bestSet.s.current.set+'%)</div>';
+                if(bestImprover.s) h+='<div style="font-size:11px;color:#334155;"><strong>'+bestImprover.s.id+'</strong> — largest overall grade gain: '+calc(bestImprover.s.baseline).ov+' → '+calc(bestImprover.s.current).ov+'</div>';
+                h+='</div></div>';
+
+                // Opportunities column
+                h+='<div style="flex:1;min-width:280px;padding:14px;background:#fef2f2;border-radius:8px;border:1px solid #fecaca;">';
+                h+='<div style="font-size:12px;font-weight:700;color:#dc2626;margin-bottom:10px;">Opportunities</div>';
+                if(declined.length){
+                    declined.forEach(s=>{
+                        const b2=calc(s.baseline), c2=calc(s.current);
+                        const issues=[];
+                        if(gn(c2.rg)<gn(b2.rg)) issues.push('RI% down ('+(s.current.req-s.baseline.req).toFixed(0)+')');
+                        if(gn(c2.sg)<gn(b2.sg)) issues.push('Set% down ('+(s.current.set-s.baseline.set).toFixed(0)+')');
+                        if(gn(c2.lg)<gn(b2.lg)) issues.push('Live% down');
+                        if(gn(c2.ag)<gn(b2.ag)) issues.push('Appt% down');
+                        h+='<div style="margin-bottom:8px;padding:6px 8px;background:#fff;border-radius:4px;border-left:3px solid #dc2626;">';
+                        h+='<div style="font-size:12px;font-weight:700;color:#1e293b;">'+s.id+' <span class="g '+gc(b2.ov)+'">'+b2.ov+'</span> → <span class="g '+gc(c2.ov)+'">'+c2.ov+'</span></div>';
+                        h+='<div style="font-size:11px;color:#64748b;">'+(issues.length?issues.join(' · '):'Slight grade decline')+'</div>';
+                        h+='</div>';
+                    });
+                } else {
+                    h+='<div style="font-size:12px;color:#64748b;">No stores declined from baseline!</div>';
+                }
+                // Spotlight: biggest concerns
+                h+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid #fecaca;">';
+                h+='<div style="font-size:10px;text-transform:uppercase;color:#dc2626;letter-spacing:0.4px;margin-bottom:4px;font-weight:600;">Watch Areas</div>';
+                if(worstLive.s&&worstLive.d<-1) h+='<div style="font-size:11px;color:#334155;margin-bottom:2px;"><strong>'+worstLive.s.id+'</strong> — largest Live% drop: '+worstLive.d.toFixed(1)+' pts ('+worstLive.s.baseline.live+'% → '+worstLive.s.current.live+'%)</div>';
+                const failingStores=allStores.filter(s=>{const c2=calc(s.current);return c2.rg==='F'||c2.rg==='D'||c2.sg==='F'||c2.sg==='D'||c2.lg==='F'||c2.lg==='D'||c2.ag==='F'||c2.ag==='D';});
+                h+='<div style="font-size:11px;color:#334155;margin-bottom:2px;"><strong>'+failingStores.length+'</strong> stores have at least one D or F metric currently</div>';
+                const obDecline=allStores.filter(s=>gn(calc(s.current).ob)<gn(calc(s.baseline).ob)).length;
+                h+='<div style="font-size:11px;color:#334155;"><strong>'+obDecline+'</strong> of '+n+' stores saw outbound grade decline from baseline</div>';
+                h+='</div></div>';
+                h+='</div>';
+
+                // === ROW 4: Bottom line ===
+                h+='<div style="padding:10px 14px;background:#f1f5f9;border-radius:6px;border:1px solid #e2e8f0;font-size:12px;color:#334155;line-height:1.6;">';
+                h+='<strong style="color:#1e293b;">Bottom Line:</strong> ';
+                h+='Group overall grade '+(avgCurOv>=avgBaseOv?'held':'slipped')+' at <strong>'+s2g(avgCurOv)+'</strong>. ';
+                h+='Inbound is the bright spot — Set % climbed <strong>+'+( avgC('set')-avgB('set')).toFixed(1)+' pts</strong> group-wide. ';
+                if(avgCurOB<avgBaseOB) h+='Outbound remains the primary opportunity — Live Convos and Appt Set both declined from baseline. ';
+                h+='<strong>'+improved.length+' of '+n+'</strong> stores improved their overall letter grade'+(greenStores>greenBase?', and green-zone stores grew from '+greenBase+' to '+greenStores:'')+'. ';
+                if(declined.length) h+=declined.length+' store'+(declined.length>1?'s':'')+' declined and need focused coaching.';
+                h+='</div>';
 
                 h+='</div>';
                 return h;
