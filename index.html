@@ -1835,20 +1835,33 @@
             const livePct = totOB>0 ? ((totC/totOB)*100).toFixed(1) : '0.0';
             const apptPct = totC>0 ? ((totA/totC)*100).toFixed(1) : '0.0';
 
+            // Sort by live % tier (green top, yellow mid, red bottom), then by live% descending within tier
+            const sorted = staff.map(p => {
+                const lv = p.ob>0 ? (p.c/p.ob)*100 : 0;
+                const tier = lv>=20?0 : lv>=15?1 : 2; // green=0, yellow=1, red=2
+                return {...p, lv, tier};
+            }).sort((a,b) => a.tier!==b.tier ? a.tier-b.tier : b.lv-a.lv);
+
             let rows = '';
-            staff.forEach((p,i) => {
-                const pLive = p.ob>0 ? ((p.c/p.ob)*100).toFixed(1) : '—';
+            sorted.forEach((p,i) => {
+                const pLive = p.ob>0 ? p.lv.toFixed(1) : '—';
                 const pAppt = p.c>0 ? ((p.a/p.c)*100).toFixed(1) : '—';
-                rows += `<tr>
+                const livCol = p.tier===0?'color:#15803d;font-weight:700;':p.tier===1?'color:#92400e;font-weight:700;':'color:#dc2626;font-weight:700;';
+                rows += `<tr style="${p.tier===0?'background:#f0fdf4;':p.tier===1?'background:#fffbeb;':'background:#fef2f2;'}">
                     <td>${i+1}</td>
                     <td>${p.n}</td>
                     <td class="num">${p.ob}</td>
                     <td class="num">${p.c}</td>
-                    <td class="num">${pLive}%</td>
+                    <td class="num" style="${livCol}">${pLive}%</td>
                     <td class="num">${p.a}</td>
                     <td class="num">${pAppt}%</td>
                 </tr>`;
             });
+
+            // Count by tier
+            const greenN=sorted.filter(p=>p.tier===0).length;
+            const yellowN=sorted.filter(p=>p.tier===1).length;
+            const redN=sorted.filter(p=>p.tier===2).length;
 
             const modalHTML = `
                 <div class="staff-modal-hdr">
@@ -1866,6 +1879,12 @@
                         <div class="ss-box"><strong>${livePct}%</strong>Live Convos %</div>
                         <div class="ss-box"><strong>${totA}</strong>Appts Set</div>
                         <div class="ss-box"><strong>${apptPct}%</strong>Appt Set %</div>
+                    </div>
+                    <div style="display:flex;gap:12px;align-items:center;padding:6px 0;font-size:11px;">
+                        <span style="font-weight:600;color:#64748b;">Live Convos %:</span>
+                        <span style="background:#f0fdf4;color:#15803d;padding:2px 8px;border-radius:4px;font-weight:600;">${greenN} ≥ 20% (Benchmark)</span>
+                        <span style="background:#fffbeb;color:#92400e;padding:2px 8px;border-radius:4px;font-weight:600;">${yellowN} 15–20%</span>
+                        <span style="background:#fef2f2;color:#dc2626;padding:2px 8px;border-radius:4px;font-weight:600;">${redN} < 15% (Coaching needed)</span>
                     </div>
                     <table class="staff-tbl">
                         <thead><tr><th>#</th><th>Salesperson</th><th class="num">OB Calls</th><th class="num">Conn</th><th class="num">Live %</th><th class="num">Appts</th><th class="num">Appt %</th></tr></thead>
