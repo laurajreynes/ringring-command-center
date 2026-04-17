@@ -1814,15 +1814,15 @@
                 else if(setDelta>=5) push='<strong>The push</strong> \u2014 Set% up '+sv[0]+'% \u2192 '+sv[sv.length-1]+'% since Jan. Momentum is real. Ask what changed \u2014 then get them to commit to locking it in through month-end.';
                 else if(gn(c.ov)>=3.0) push='<strong>The push</strong> \u2014 Solid across the board. Ask: "What\'s one thing that would move us from '+c.ov+' to A?" Force them to name it.';
                 else push='<strong>The push</strong> \u2014 Numbers are stuck. Ask: "If you could change one thing about how we handle calls this week, what would it be?" Listen for the real answer.';
+                const fmt=(mv,cv)=>mv!=null?mv+'% \u2192 '+cv+'%':cv+'%';
                 let resp='<strong>'+s.id+'</strong> \u2014 '+s.name+'<br>'+
                     'Overall <strong>'+c.ov+'</strong> ('+trend+' '+m.ov+' in Mar)<br><br>'+
                     '<strong>1.</strong> '+win+'<br><br>'+
                     '<strong>2.</strong> '+gap+'<br><br>'+
                     '<strong>3.</strong> '+push+'<br><br>'+
-                    '<em>Numbers to have handy:</em><br>'+
-                    'RI '+s.current.req+'% ('+c.rg+') \u00b7 Set '+s.current.set+'% ('+c.sg+') \u00b7 Live '+s.current.live+'% ('+c.lg+') \u00b7 Appt '+s.current.appt+'% ('+c.ag+')';
-                if(setArr) resp+='<br>Set%: '+TRENDS.months.map((mo,i)=>setArr[i]!==null?mo+' '+setArr[i]+'%':'').filter(Boolean).join(' \u2192 ');
-                if(riArr) resp+='<br>RI%: '+TRENDS.months.map((mo,i)=>riArr[i]!==null?mo+' '+riArr[i]+'%':'').filter(Boolean).join(' \u2192 ');
+                    '<em>Mar \u2192 Apr:</em><br>'+
+                    'Inbound \u2014 RI '+fmt(s.march.req,s.current.req)+' \u00b7 Set '+fmt(s.march.set,s.current.set)+'<br>'+
+                    'Outbound \u2014 Live '+fmt(s.march.live,s.current.live)+' \u00b7 Appt '+fmt(s.march.appt,s.current.appt);
                 return resp;
             }
             // Best/top/highest
