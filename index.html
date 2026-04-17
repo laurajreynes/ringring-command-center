@@ -1679,34 +1679,118 @@
         function generateInsights(){
             const all=[];
             const alertStores = D.stores.filter(s=>s.id!=='TCC');
+            // Day-seeded picker — phrasing varies day to day but stays stable within a day
+            const today=new Date();
+            const daySeed=today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate();
+            const hash=k=>(k||'').split('').reduce((a,c)=>a+c.charCodeAt(0),0);
+            const pick=(arr,key)=>arr[(daySeed+hash(key))%arr.length];
             // Biggest improver (Mar → Apr)
             let bestGain={store:null,delta:-99};
             alertStores.forEach(s=>{const c=calc(s.current),m=calc(s.march),d=c.ovS-m.ovS;if(d>bestGain.delta)bestGain={store:s,delta:d,cg:c.ov,mg:m.ov};});
-            if(bestGain.store) all.push({pri:1,type:'opportunity',tag:'Opportunity',title:bestGain.store.id+' \u2014 Biggest Improver',
-                text:'Jumped from '+bestGain.mg+' to '+bestGain.cg+' overall (Mar → Apr). What\u2019s working here that we can replicate?'});
+            if(bestGain.store && bestGain.delta>0){
+                const v=[
+                    'Jumped from '+bestGain.mg+' to '+bestGain.cg+' overall since March. Go find out who deserves credit and spread it.',
+                    bestGain.mg+' \u2192 '+bestGain.cg+' overall. Someone finally read the email \u2014 what changed?',
+                    'Climbed '+bestGain.mg+' \u2192 '+bestGain.cg+'. The rest of the group wants to know what they\u2019re drinking.',
+                    'Up '+bestGain.mg+' \u2192 '+bestGain.cg+' overall. Whatever they did, get it on paper before they forget.'
+                ];
+                all.push({pri:1,type:'opportunity',tag:'Opportunity',title:bestGain.store.id+' \u2014 Biggest Improver',text:pick(v,bestGain.store.id+'gain')});
+            }
             // Overall declines (high priority)
             alertStores.forEach(s=>{const c=calc(s.current),m=calc(s.march);
-                if(gn(c.ov)<gn(m.ov)) all.push({pri:0,type:'watch',tag:'Watch',title:s.id+' \u2014 Overall declined ('+m.ov+' \u2192 '+c.ov+')',
-                    text:'What\u2019s driving the drop from March? Review recent call recordings.'});
+                if(gn(c.ov)<gn(m.ov)){
+                    const v=[
+                        'Slipped '+m.ov+' \u2192 '+c.ov+' since March. Pull recent recordings before the pattern locks in.',
+                        'What the hell is happening over there? '+m.ov+' \u2192 '+c.ov+' in 30 days.',
+                        m.ov+' in March, '+c.ov+' now. Time for a phone check-in with the GM.',
+                        'Declined '+m.ov+' \u2192 '+c.ov+'. If nobody\u2019s flagged it internally, that\u2019s its own problem.',
+                        'Quietly slid from '+m.ov+' to '+c.ov+'. Is anyone listening to calls this month?'
+                    ];
+                    all.push({pri:0,type:'watch',tag:'Watch',title:s.id+' \u2014 Overall declined ('+m.ov+' \u2192 '+c.ov+')',text:pick(v,s.id+'decl')});
+                }
             });
             // Big Set swings (Mar → Apr)
             alertStores.forEach(s=>{const d=s.current.set-s.march.set;
-                if(d>=10) all.push({pri:2,type:'opportunity',tag:'Opportunity',title:s.id+' \u2014 Set % surged +'+d.toFixed(0)+' pts',
-                    text:s.march.set+'% \u2192 '+s.current.set+'% (Mar → Apr). What changed in their approach?'});
-                if(d<=-8) all.push({pri:1,type:'watch',tag:'Watch',title:s.id+' \u2014 Set % fell '+Math.abs(d).toFixed(0)+' pts',
-                    text:s.march.set+'% \u2192 '+s.current.set+'% (Mar → Apr). Losing the close on the phone?'});
+                if(d>=10){
+                    const v=[
+                        s.march.set+'% \u2192 '+s.current.set+'%. Something clicked \u2014 find out what.',
+                        'Up '+d.toFixed(0)+' pts on Set%. That\u2019s not luck. Who\u2019s running the phones?',
+                        s.march.set+'% to '+s.current.set+'% in a month. Lock it in before the wheels come off.',
+                        'Set% moved '+d.toFixed(0)+' pts. Ask the top setter to demo at next huddle.'
+                    ];
+                    all.push({pri:2,type:'opportunity',tag:'Opportunity',title:s.id+' \u2014 Set % surged +'+d.toFixed(0)+' pts',text:pick(v,s.id+'setup')});
+                }
+                if(d<=-8){
+                    const v=[
+                        s.march.set+'% \u2192 '+s.current.set+'%. Something broke in the last 30 days. Pull 3 unconverted calls.',
+                        'Set% off a cliff: '+s.march.set+'% \u2192 '+s.current.set+'%. What changed in the scripts?',
+                        'Lost '+Math.abs(d).toFixed(0)+' pts on Set%. Listen to calls together and make the team name what they hear.',
+                        s.march.set+'% down to '+s.current.set+'% \u2014 losing the close on the phone.'
+                    ];
+                    all.push({pri:1,type:'watch',tag:'Watch',title:s.id+' \u2014 Set % fell '+Math.abs(d).toFixed(0)+' pts',text:pick(v,s.id+'setdn')});
+                }
             });
-            // Live Convos drops (Mar → Apr)
+            // Live Convos drops (Mar → Apr) — framed as list/timing, per Laura
             alertStores.forEach(s=>{const d=s.current.live-s.march.live;
-                if(d<=-3) all.push({pri:2,type:'watch',tag:'Watch',title:s.id+' \u2014 Live Convos dropped '+d.toFixed(1)+' pts',
-                    text:s.march.live+'% \u2192 '+s.current.live+'% (Mar → Apr). Staffing issue or effort declining?'});
+                if(d<=-3){
+                    const v=[
+                        s.march.live+'% \u2192 '+s.current.live+'%. Lists or timing \u2014 who\'s pulling the number down?',
+                        'Live Convos off '+Math.abs(d).toFixed(1)+' pts. Are we calling dead leads or calling at the wrong hours?',
+                        s.march.live+'% dropped to '+s.current.live+'% on Live. Usually a list problem, not a skill one. Who\u2019s at the bottom?',
+                        'Outbound connect rate slid to '+s.current.live+'%. Pull call-time data \u2014 is someone dialing the graveyard shift?'
+                    ];
+                    all.push({pri:2,type:'watch',tag:'Watch',title:s.id+' \u2014 Live Convos dropped '+d.toFixed(1)+' pts',text:pick(v,s.id+'livedn')});
+                }
+            });
+            // NEW: Appt% crossed the 10% line (outbound pitch win)
+            alertStores.forEach(s=>{
+                if(s.current.appt>=10 && s.march.appt<10){
+                    const v=[
+                        'Appt% broke 10%: '+s.march.appt+'% \u2192 '+s.current.appt+'%. Outbound pitch is working.',
+                        'Outbound conversion above benchmark now ('+s.current.appt+'%). Ask the top rep to demo the pitch.',
+                        s.march.appt+'% up to '+s.current.appt+'% on Appt. Someone figured out the hook \u2014 who?'
+                    ];
+                    all.push({pri:2,type:'opportunity',tag:'Opportunity',title:s.id+' \u2014 Appt% crossed 10%',text:pick(v,s.id+'apptup')});
+                }
+            });
+            // NEW: RI just hit A-grade (inbound volume/capture)
+            alertStores.forEach(s=>{
+                const c=calc(s.current),m=calc(s.march);
+                if(c.rg==='A' && gn(m.rg)<4){
+                    const v=[
+                        'RI at '+s.current.req+'% (A). Phones are humming \u2014 what changed?',
+                        'Inbound firing at A-grade ('+s.current.req+'%). Go shake someone\u2019s hand before they leave.',
+                        'RI hit A ('+s.current.req+'%). Bottle the process before it drifts back to B.'
+                    ];
+                    all.push({pri:2,type:'opportunity',tag:'Opportunity',title:s.id+' \u2014 RI hit A-grade',text:pick(v,s.id+'rianm')});
+                }
+            });
+            // NEW: Stuck in the red — bottom overall stores need eyes
+            const ranked=[...alertStores].sort((a,b)=>calc(a.current).ovS-calc(b.current).ovS);
+            ranked.slice(0,1).forEach(s=>{
+                const c=calc(s.current);
+                if(gn(c.ov)<=1.0){
+                    const v=[
+                        'Sitting at '+c.ov+' overall. Someone needs to ride a morning of calls with a struggling rep.',
+                        'Bottom of the enterprise ('+c.ov+'). The report won\'t fix itself \u2014 get on site.',
+                        c.ov+' overall and not moving. What\'s the GM\'s plan this week?'
+                    ];
+                    all.push({pri:0,type:'watch',tag:'Watch',title:s.id+' \u2014 Bottom of the board ('+c.ov+')',text:pick(v,s.id+'bot')});
+                }
             });
             // Regional gap
             const ws=D.stores.filter(s=>s.region==='West'),es=D.stores.filter(s=>s.region==='East');
             const wS=(ws.map(s=>s.current.set).reduce((a,b)=>a+b,0)/ws.length).toFixed(1);
             const eS=(es.map(s=>s.current.set).reduce((a,b)=>a+b,0)/es.length).toFixed(1);
-            if(Math.abs(wS-eS)>5) all.push({pri:3,type:'question',tag:'Question',title:'Set % gap: West '+wS+'% vs East '+eS+'%',
-                text:'Is one region using a different script or framework?'});
+            if(Math.abs(wS-eS)>5){
+                const leader=(+wS>+eS)?'West':'East';
+                const v=[
+                    leader+' is running a different playbook. What script are they using that the other side isn\'t?',
+                    'Set% gap of '+Math.abs(wS-eS).toFixed(1)+' pts. Is someone holding out on a better pitch?',
+                    leader+' ahead by '+Math.abs(wS-eS).toFixed(1)+' pts on Set%. Coincidence or pattern?'
+                ];
+                all.push({pri:3,type:'question',tag:'Question',title:'Set % gap: West '+wS+'% vs East '+eS+'%',text:pick(v,'regional')});
+            }
             // Derby activity recommendations
             const SCORECARD_URL='https://anderson-scorecard.vercel.app';
             const DERBY_URL='https://ringderby.vercel.app';
@@ -1732,12 +1816,14 @@
             // General Derby reminder
             all.push({pri:5,type:'system',tag:'',title:'Derby Reminder',
                 text:'Ring Ring Derby is live! <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">View Derby Scoreboard</a> | <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a>'});
-            // Sort by priority and cap at 4, ensuring at least 1 per region
+            // Sort by priority, then flex count by how much is actually happening
             all.sort((a,b)=>a.pri-b.pri);
             const westIds=new Set(D.stores.filter(s=>s.region==='West').map(s=>s.id));
-            const result=[], MAX=4;
+            // Flex MAX: 4 on quiet days, up to 7 when there's a lot to surface
+            const nonDerby=all.filter(m=>m.type!=='derby'&&m.type!=='system').length;
+            const MAX=Math.min(7, Math.max(4, nonDerby));
+            const result=[];
             let hasWest=false, hasEast=false;
-            // First pass: fill up to MAX, tracking regions
             for(const m of all){
                 if(result.length>=MAX) break;
                 result.push(m);
@@ -1805,15 +1891,28 @@
                 const sv=vals(setArr), rv=vals(riArr);
                 const setDelta=sv.length>=2?sv[sv.length-1]-sv[0]:0;
                 const riDelta=rv.length>=2?rv[rv.length-1]-rv[0]:0;
-                // Talking points
-                const win='<strong>Lead with the win</strong> \u2014 '+best.label+' at '+best.val+'% ('+best.g+'). Name it by metric, not by grade: "Your '+best.label.toLowerCase()+' number is where we want the whole building to be." Ask what\'s driving it so you can spread it.';
-                const gap='<strong>Name the gap</strong> \u2014 '+worst.label+' at '+worst.val+'% ('+worst.g+'). Don\'t soften it. Ask: "What\'s different about the calls we convert vs. the ones we don\'t?" Then shut up and let them answer.';
+                // Win — metric-specific
+                let winCoach;
+                if(best.k==='req') winCoach='RI at '+best.val+'% ('+best.g+'). Inbound capture is working. Ask what changed \u2014 routing, phone training, ad mix \u2014 and figure out what to bottle.';
+                else if(best.k==='set') winCoach='Set% at '+best.val+'% ('+best.g+'). The inbound team is closing on the phone. Ask top setters to walk through how they\'re asking for the appointment at the next huddle.';
+                else if(best.k==='live') winCoach='Live% at '+best.val+'% ('+best.g+'). Outbound connect rate is strong \u2014 lists and timing are right. Ask who\'s working the best lead sources and make that the standard.';
+                else winCoach='Appt% at '+best.val+'% ('+best.g+'). When they get people live on outbound, they\'re booking. Ask the top rep to demo their pitch \u2014 the bottom half should borrow it directly.';
+                const win='<strong>Lead with the win</strong> \u2014 '+winCoach;
+                // Gap — metric-specific, reflects what the number actually means
+                let gapCoach;
+                if(worst.k==='req') gapCoach='RI at '+worst.val+'% ('+worst.g+') usually means sales opps are getting miscoded. Pull 10 recent "info" or "service" calls and see how many should have been sales requests. This one\'s a BDC/routing fix more than a rep fix.';
+                else if(worst.k==='set') gapCoach='Set% at '+worst.val+'% ('+worst.g+') means people are calling ready to buy and hanging up without an appointment. Pull 3 unconverted RI calls from this week and listen \u2014 did we actually ask for the appointment, or just answer questions?';
+                else if(worst.k==='live') gapCoach='Live% at '+worst.val+'% ('+worst.g+') is a list-and-timing problem, not a skill problem \u2014 we may not be calling the right people. Ask: who\'s pulling the number down? Look at their call times and how old the leads are they\'re working.';
+                else gapCoach='Appt% at '+worst.val+'% ('+worst.g+') means they\'re getting people live and not booking. That\'s pitch. Who on the team is converting at 10%+ on outbound? Pair the bottom two reps with them for a week of shadow calls.';
+                const gap='<strong>Name the gap</strong> \u2014 '+gapCoach;
+                // Push — concrete next move based on the trend
                 let push;
-                if(riDelta>=10) push='<strong>The push</strong> \u2014 RI climbed '+rv[0]+'% \u2192 '+rv[rv.length-1]+'% since Jan. Volume is there. Frame it as: "Leads aren\'t the problem anymore. The question is what we\'re doing with the ones we get."';
-                else if(setDelta<=-5) push='<strong>The push</strong> \u2014 Set% dropped '+sv[0]+'% \u2192 '+sv[sv.length-1]+'% since Jan. Something shifted. Pull 3 recent calls that didn\'t set, listen together, and ask the team what they hear.';
-                else if(setDelta>=5) push='<strong>The push</strong> \u2014 Set% up '+sv[0]+'% \u2192 '+sv[sv.length-1]+'% since Jan. Momentum is real. Ask what changed \u2014 then get them to commit to locking it in through month-end.';
-                else if(gn(c.ov)>=3.0) push='<strong>The push</strong> \u2014 Solid across the board. Ask: "What\'s one thing that would move us from '+c.ov+' to A?" Force them to name it.';
-                else push='<strong>The push</strong> \u2014 Numbers are stuck. Ask: "If you could change one thing about how we handle calls this week, what would it be?" Listen for the real answer.';
+                if(riDelta>=10 && setDelta<3) push='<strong>The push</strong> \u2014 RI up '+rv[0]+'% \u2192 '+rv[rv.length-1]+'% but Set% is flat. All that volume isn\'t converting. Ask: are our best closers on the phone at peak RI hours, or are those calls going to whoever picks up?';
+                else if(riDelta>=10 && setDelta>=3) push='<strong>The push</strong> \u2014 RI up '+rv[0]+'% \u2192 '+rv[rv.length-1]+'% and Set% following. Staffing/routing is working. Ask what specifically changed in the last 30 days and lock it in for May.';
+                else if(setDelta<=-5) push='<strong>The push</strong> \u2014 Set% dropped '+sv[0]+'% \u2192 '+sv[sv.length-1]+'% since Jan. Pick 3 unconverted RI calls from the past week, listen together, and ask the team what they hear. Don\'t tell them \u2014 make them name it.';
+                else if(setDelta>=5) push='<strong>The push</strong> \u2014 Set% up '+sv[0]+'% \u2192 '+sv[sv.length-1]+'% since Jan. Find out what changed (script, staffing, schedule) and get commitment to hold it through month-end.';
+                else if(gn(c.ov)>=3.0) push='<strong>The push</strong> \u2014 Grades are solid. Pick '+worst.label+' specifically and ask: "What would it take to move this from '+worst.g+' to a B?" Make them name the barrier, not you.';
+                else push='<strong>The push</strong> \u2014 Numbers are flat. Ride calls with one struggling rep for a morning. You\'ll spot the problem faster than any report will.';
                 const fmt=(mv,cv)=>mv!=null?mv+'% \u2192 '+cv+'%':cv+'%';
                 let resp='<strong>'+s.id+'</strong> \u2014 '+s.name+'<br>'+
                     'Overall <strong>'+c.ov+'</strong> ('+trend+' '+m.ov+' in Mar)<br><br>'+
