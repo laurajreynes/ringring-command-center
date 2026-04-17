@@ -1788,17 +1788,41 @@
             // Find store by ID or partial name
             const matchStore=D.stores.find(s=>ql.includes(s.id.toLowerCase())||ql.includes(s.name.toLowerCase().split(' ').pop()));
             if(matchStore){
-                const c=calc(matchStore.current),m=calc(matchStore.march);
-                const trend=gn(c.ov)>gn(m.ov)?'improved':gn(c.ov)<gn(m.ov)?'declined':'held steady';
-                let resp = '<strong>'+matchStore.id+'</strong> ('+matchStore.name+')<br>'+
-                    'Overall: <strong>'+c.ov+'</strong> (Mar: '+m.ov+') \u2014 '+trend+'<br>'+
-                    'RI: '+matchStore.current.req+'% ('+c.rg+') | Set: '+matchStore.current.set+'% ('+c.sg+')<br>'+
-                    'Live: '+matchStore.current.live+'% ('+c.lg+') | Appt: '+matchStore.current.appt+'% ('+c.ag+')<br>'+
-                    'Inbound: '+c.ib+' | Outbound: '+c.ob;
-                // Add monthly trend sparkline
-                const sv=TRENDS.set[matchStore.id], rv=TRENDS.ri[matchStore.id];
-                if(sv) resp+='<br><br><strong>Set% trend:</strong> '+TRENDS.months.map((mo,i)=>sv[i]!==null?mo+': '+sv[i]+'%':'').filter(Boolean).join(' → ');
-                if(rv) resp+='<br><strong>RI% trend:</strong> '+TRENDS.months.map((mo,i)=>rv[i]!==null?mo+': '+rv[i]+'%':'').filter(Boolean).join(' → ');
+                const s=matchStore;
+                const c=calc(s.current),m=calc(s.march);
+                const trend=gn(c.ov)>gn(m.ov)?'improved from':gn(c.ov)<gn(m.ov)?'slipped from':'held at';
+                // Rank metrics by grade to find best/worst
+                const mg=[
+                    {k:'req',label:'RI',val:s.current.req,g:c.rg,gv:gn(c.rg)},
+                    {k:'set',label:'Set',val:s.current.set,g:c.sg,gv:gn(c.sg)},
+                    {k:'live',label:'Live',val:s.current.live,g:c.lg,gv:gn(c.lg)},
+                    {k:'appt',label:'Appt',val:s.current.appt,g:c.ag,gv:gn(c.ag)}
+                ];
+                const best=[...mg].sort((a,b)=>b.gv-a.gv)[0];
+                const worst=[...mg].sort((a,b)=>a.gv-b.gv)[0];
+                const setArr=TRENDS.set[s.id], riArr=TRENDS.ri[s.id];
+                const vals=a=>a?a.filter(v=>v!==null):[];
+                const sv=vals(setArr), rv=vals(riArr);
+                const setDelta=sv.length>=2?sv[sv.length-1]-sv[0]:0;
+                const riDelta=rv.length>=2?rv[rv.length-1]-rv[0]:0;
+                // Talking points
+                const win='<strong>Lead with the win</strong> \u2014 '+best.label+' at '+best.val+'% ('+best.g+'). Name it by metric, not by grade: "Your '+best.label.toLowerCase()+' number is where we want the whole building to be." Ask what\'s driving it so you can spread it.';
+                const gap='<strong>Name the gap</strong> \u2014 '+worst.label+' at '+worst.val+'% ('+worst.g+'). Don\'t soften it. Ask: "What\'s different about the calls we convert vs. the ones we don\'t?" Then shut up and let them answer.';
+                let push;
+                if(riDelta>=10) push='<strong>The push</strong> \u2014 RI climbed '+rv[0]+'% \u2192 '+rv[rv.length-1]+'% since Jan. Volume is there. Frame it as: "Leads aren\'t the problem anymore. The question is what we\'re doing with the ones we get."';
+                else if(setDelta<=-5) push='<strong>The push</strong> \u2014 Set% dropped '+sv[0]+'% \u2192 '+sv[sv.length-1]+'% since Jan. Something shifted. Pull 3 recent calls that didn\'t set, listen together, and ask the team what they hear.';
+                else if(setDelta>=5) push='<strong>The push</strong> \u2014 Set% up '+sv[0]+'% \u2192 '+sv[sv.length-1]+'% since Jan. Momentum is real. Ask what changed \u2014 then get them to commit to locking it in through month-end.';
+                else if(gn(c.ov)>=3.0) push='<strong>The push</strong> \u2014 Solid across the board. Ask: "What\'s one thing that would move us from '+c.ov+' to A?" Force them to name it.';
+                else push='<strong>The push</strong> \u2014 Numbers are stuck. Ask: "If you could change one thing about how we handle calls this week, what would it be?" Listen for the real answer.';
+                let resp='<strong>'+s.id+'</strong> \u2014 '+s.name+'<br>'+
+                    'Overall <strong>'+c.ov+'</strong> ('+trend+' '+m.ov+' in Mar)<br><br>'+
+                    '<strong>1.</strong> '+win+'<br><br>'+
+                    '<strong>2.</strong> '+gap+'<br><br>'+
+                    '<strong>3.</strong> '+push+'<br><br>'+
+                    '<em>Numbers to have handy:</em><br>'+
+                    'RI '+s.current.req+'% ('+c.rg+') \u00b7 Set '+s.current.set+'% ('+c.sg+') \u00b7 Live '+s.current.live+'% ('+c.lg+') \u00b7 Appt '+s.current.appt+'% ('+c.ag+')';
+                if(setArr) resp+='<br>Set%: '+TRENDS.months.map((mo,i)=>setArr[i]!==null?mo+' '+setArr[i]+'%':'').filter(Boolean).join(' \u2192 ');
+                if(riArr) resp+='<br>RI%: '+TRENDS.months.map((mo,i)=>riArr[i]!==null?mo+' '+riArr[i]+'%':'').filter(Boolean).join(' \u2192 ');
                 return resp;
             }
             // Best/top/highest
