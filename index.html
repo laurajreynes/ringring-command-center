@@ -594,9 +594,58 @@
         .focus-btn.ob { border-color:#f97316; color:#c2410c; }
         .focus-btn.ob:hover { background:#f97316; color:#fff; }
         .focus-bar .fb-hint { color:#4d7c0f; font-style:italic; margin-left:auto; font-size:11px; }
-        .focus-region-prompt { padding:60px 24px; text-align:center; color:#475569; }
-        .focus-region-prompt .frp-big { font-size:14px; font-weight:600; color:#1a1a2e; margin-bottom:8px; }
-        .focus-region-prompt .frp-small { font-size:12px; color:#6b7280; }
+        .focus-region-prompt { padding:40px 24px 48px; text-align:center; color:#475569; }
+        .focus-region-prompt .frp-eyebrow { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#16a34a; font-weight:700; margin-bottom:8px; animation:fadeSlideDown 0.4s ease-out; }
+        .focus-region-prompt .frp-big { font-size:26px; font-weight:800; color:#1a1a2e; margin-bottom:8px; letter-spacing:-0.5px; animation:fadeSlideDown 0.5s ease-out; }
+        .focus-region-prompt .frp-small { font-size:13px; color:#6b7280; margin-bottom:28px; animation:fadeSlideDown 0.6s ease-out; }
+        .frp-cards { display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; max-width:720px; margin:0 auto; }
+        .frp-card { background:#fff; border:2px solid #e2e8f0; border-radius:14px; padding:20px 16px 18px; cursor:pointer; transition:all 0.25s cubic-bezier(.22,.9,.3,1.4); position:relative; overflow:hidden; text-align:left; font-family:inherit; animation:fadeSlideUp 0.5s ease-out backwards; }
+        .frp-card:nth-child(1){ animation-delay:0.05s; }
+        .frp-card:nth-child(2){ animation-delay:0.15s; }
+        .frp-card:nth-child(3){ animation-delay:0.25s; }
+        .frp-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg, var(--c1,#0ea5e9) 0%, var(--c2,#6366f1) 100%); opacity:0; transition:opacity 0.25s; }
+        .frp-card > * { position:relative; z-index:1; }
+        .frp-card:hover { transform:translateY(-4px) scale(1.02); border-color:var(--c1,#0ea5e9); box-shadow:0 12px 32px rgba(14,165,233,0.25); }
+        .frp-card:hover::before { opacity:0.08; }
+        .frp-card:active { transform:translateY(-1px) scale(0.99); }
+        .frp-card .frc-icon { font-size:38px; line-height:1; margin-bottom:10px; display:inline-block; transition:transform 0.3s; }
+        .frp-card:hover .frc-icon { transform:scale(1.15) rotate(-6deg); }
+        .frp-card .frc-title { font-size:17px; font-weight:800; color:#1a1a2e; margin-bottom:2px; letter-spacing:-0.3px; }
+        .frp-card .frc-count { font-size:11px; font-weight:700; color:var(--c1,#0ea5e9); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px; }
+        .frp-card .frc-stores { font-size:10.5px; color:#6b7280; line-height:1.4; }
+        .frp-card .frc-arrow { position:absolute; top:16px; right:16px; font-size:18px; color:#cbd5e1; transition:all 0.25s; }
+        .frp-card:hover .frc-arrow { color:var(--c1,#0ea5e9); transform:translateX(3px); }
+        @keyframes fadeSlideDown { from{opacity:0;transform:translateY(-8px);} to{opacity:1;transform:translateY(0);} }
+        @keyframes fadeSlideUp { from{opacity:0;transform:translateY(16px);} to{opacity:1;transform:translateY(0);} }
+
+        /* MOBILE RESPONSIVE — Focus mode */
+        @media (max-width: 768px) {
+            .focus-bar { flex-wrap:wrap; gap:8px; padding:10px 14px; }
+            .focus-bar .fb-label { flex-basis:100%; margin-bottom:2px; }
+            .focus-bar .fb-hint { display:none; }
+            .focus-btn { flex:1; min-width:0; padding:8px 10px; font-size:11px; text-align:center; }
+            .focus-overlay { padding:0; }
+            .focus-panel { border-radius:0; min-height:100vh; max-width:100%; }
+            .focus-hdr { padding:14px 16px; }
+            .focus-hdr h2 { font-size:15px; }
+            .focus-hdr .fh-sub { font-size:10px; }
+            .focus-region-picker { padding:10px 14px; overflow-x:auto; white-space:nowrap; flex-wrap:nowrap; -webkit-overflow-scrolling:touch; }
+            .focus-region-picker .fr-chip { flex-shrink:0; }
+            .focus-body { padding:14px 14px 24px; }
+            .focus-region-prompt { padding:28px 16px 36px; }
+            .focus-region-prompt .frp-big { font-size:20px; }
+            .focus-region-prompt .frp-small { font-size:12px; margin-bottom:20px; }
+            .frp-cards { grid-template-columns:1fr; gap:10px; max-width:100%; }
+            .frp-card { padding:16px 14px; }
+            .frp-card .frc-icon { font-size:30px; margin-bottom:6px; }
+            .frp-card .frc-title { font-size:15px; }
+            .focus-summary-grid { grid-template-columns:repeat(2,1fr); gap:8px; }
+            .fsm-box { padding:8px 10px; }
+            .fsm-box .fsm-val { font-size:18px; }
+            .focus-tbl { font-size:10.5px; display:block; overflow-x:auto; white-space:nowrap; }
+            .focus-tbl th, .focus-tbl td { padding:6px 8px; }
+            .focus-priority, .focus-strength { padding:10px 12px; font-size:11.5px; }
+        }
 
         /* FOCUS OVERLAY */
         .focus-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.75); z-index:10000; overflow-y:auto; padding:24px; }
@@ -2380,14 +2429,42 @@
             const isIB = mode === 'ib';
             document.getElementById('focusTitle').textContent = isIB ? 'Inbound Focus' : 'Outbound Focus';
             document.getElementById('focusSub').textContent = (isIB
-                ? 'Request In% + Set% — inbound answering + booking the appointment'
-                : 'Live Convos% + Appt% — outbound connecting + securing the appointment')
-                + ' · Pick a region to begin';
+                ? 'Request In% + Set% — who\'s answering, who\'s booking'
+                : 'Live Convos% + Appt% — who\'s connecting, who\'s closing')
+                + ' · Step 1: pick a region';
             document.querySelectorAll('.focus-region-picker .fr-chip').forEach(c=>c.classList.remove('active'));
+            const westStores = D.stores.filter(s=>s.region==='West');
+            const eastStores = D.stores.filter(s=>s.region==='East');
+            const westNames = westStores.map(s=>s.id).join(' · ');
+            const eastNames = eastStores.map(s=>s.id).join(' · ');
             document.getElementById('focusBody').innerHTML = `
                 <div class="focus-region-prompt">
-                    <div class="frp-big">Which region are you zeroing in on?</div>
-                    <div class="frp-small">Pick <strong>East</strong>, <strong>West</strong>, or <strong>All regions</strong> above to pull the focused view.</div>
+                    <div class="frp-eyebrow">${isIB ? '&#128222; Inbound' : '&#128241; Outbound'} &middot; Step 1 of 2</div>
+                    <div class="frp-big">Where are we zeroing in?</div>
+                    <div class="frp-small">Pick a region and I'll pull the focused view — rankings, training priorities, the whole deal.</div>
+                    <div class="frp-cards">
+                        <button class="frp-card" style="--c1:#059669;--c2:#10b981;" onclick="setFocusRegion('West')">
+                            <span class="frc-arrow">&rarr;</span>
+                            <div class="frc-icon">&#127956;&#65039;</div>
+                            <div class="frc-count">${westStores.length} stores &middot; Upstate</div>
+                            <div class="frc-title">West</div>
+                            <div class="frc-stores">${westNames}</div>
+                        </button>
+                        <button class="frp-card" style="--c1:#0284c7;--c2:#0ea5e9;" onclick="setFocusRegion('East')">
+                            <span class="frc-arrow">&rarr;</span>
+                            <div class="frc-icon">&#127958;&#65039;</div>
+                            <div class="frc-count">${eastStores.length} stores &middot; Coastal</div>
+                            <div class="frc-title">East</div>
+                            <div class="frc-stores">${eastNames}</div>
+                        </button>
+                        <button class="frp-card" style="--c1:#7c3aed;--c2:#a855f7;" onclick="setFocusRegion('All')">
+                            <span class="frc-arrow">&rarr;</span>
+                            <div class="frc-icon">&#127758;</div>
+                            <div class="frc-count">${D.stores.length} stores &middot; Enterprise</div>
+                            <div class="frc-title">All regions</div>
+                            <div class="frc-stores">Everyone in one view</div>
+                        </button>
+                    </div>
                 </div>`;
             document.getElementById('focusOverlay').classList.add('active');
         }
