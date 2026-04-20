@@ -1682,7 +1682,7 @@
             // Day-seeded picker — phrasing varies day to day but stays stable within a day
             const today=new Date();
             const daySeed=today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate();
-            const hash=k=>(k||'').split('').reduce((a,c)=>a+c.charCodeAt(0),0);
+            const hash=k=>(k||'').split('').reduce((a,c,i)=>a+c.charCodeAt(0)*(i+1),0);
             const pick=(arr,key)=>arr[(daySeed+hash(key))%arr.length];
             // Biggest improver (Mar → Apr)
             let bestGain={store:null,delta:-99};
@@ -1697,24 +1697,31 @@
                 ];
                 all.push({pri:1,type:'opportunity',tag:'Opportunity',title:bestGain.store.id+' \u2014 Biggest Improver',text:pick(v,bestGain.store.id+'gain')});
             }
-            // Overall declines (high priority) — identify which side (inbound/outbound/both) is dragging
+            // Overall declines (high priority) — each variant references the weak side naturally
             alertStores.forEach(s=>{const c=calc(s.current),m=calc(s.march);
                 if(gn(c.ov)<gn(m.ov)){
                     const ibDown=gn(c.ib)<gn(m.ib);
                     const obDown=gn(c.ob)<gn(m.ob);
-                    let side='', sideTag='';
-                    if(ibDown && obDown){ side='<strong>Both sides down</strong> \u2014 Inbound '+m.ib+'\u2192'+c.ib+', Outbound '+m.ob+'\u2192'+c.ob+'. '; sideTag=' (IB+OB)'; }
-                    else if(ibDown){ side='<strong>Inbound</strong> is the drag \u2014 '+m.ib+'\u2192'+c.ib+' (Outbound '+m.ob+'\u2192'+c.ob+'). '; sideTag=' (IB)'; }
-                    else if(obDown){ side='<strong>Outbound</strong> is the drag \u2014 '+m.ob+'\u2192'+c.ob+' (Inbound '+m.ib+'\u2192'+c.ib+'). '; sideTag=' (OB)'; }
-                    const v=[
-                        side+'Slipped '+m.ov+' \u2192 '+c.ov+' since March. Pull 5 recordings from the weak side this week \u2014 look for the hook and the ask.',
-                        side+'What the hell is happening over there? '+m.ov+' \u2192 '+c.ov+' in 30 days.',
-                        side+m.ov+' \u2192 '+c.ov+'. Run a scorecard this week before the pattern locks in.',
-                        side+'Declined '+m.ov+' \u2192 '+c.ov+'. Run a scorecard \u2014 find out what the phones actually sound like.',
-                        side+'Quietly slid '+m.ov+' \u2192 '+c.ov+'. Pull individual rep grades on the weak side and find who\'s dragging the average.',
-                        side+m.ov+' down to '+c.ov+'. Pull the last 10 unconverted calls and see what they have in common.'
-                    ];
-                    all.push({pri:0,type:'watch',tag:'Watch',title:s.id+' \u2014 Overall declined ('+m.ov+' \u2192 '+c.ov+')'+sideTag,text:pick(v,s.id+'decl')});
+                    const v=[];
+                    // Variant 1: metric-specific opener
+                    if(ibDown&&obDown) v.push('Both sides down \u2014 IB '+m.ib+'\u2192'+c.ib+', OB '+m.ob+'\u2192'+c.ob+'. Pick the weaker and start there, this week.');
+                    else if(ibDown) v.push('Inbound slipped '+m.ib+'\u2192'+c.ib+'. Call guide check \u2014 are they hooking the trade and asking for the appointment?');
+                    else if(obDown) v.push('Outbound slid '+m.ob+'\u2192'+c.ob+'. Pull individual Live% and Appt% \u2014 find who\'s dragging it.');
+                    // Variant 2: humor/exasperation
+                    v.push('What the hell is happening over there? '+m.ov+' \u2192 '+c.ov+' in 30 days.');
+                    // Variant 3: action-first
+                    if(ibDown&&obDown) v.push('Scorecard this week \u2014 both sides slipping. Don\'t let this become a habit.');
+                    else if(ibDown) v.push('Scorecard the inbound calls. Listen for the hook and the ask \u2014 that\'s where '+m.ov+'\u2192'+c.ov+' is coming from.');
+                    else if(obDown) v.push('Pull rep-level outbound grades. Is their organizer caught up? Are they touching unsold showroom traffic?');
+                    // Variant 4: quietly slid
+                    v.push('Quietly slid '+m.ov+' \u2192 '+c.ov+'. Pull individual rep grades on the '+(ibDown&&!obDown?'inbound':obDown&&!ibDown?'outbound':'weaker')+' side \u2014 one or two people are usually doing most of the damage.');
+                    // Variant 5: diagnostic
+                    if(ibDown&&obDown) v.push(m.ov+' \u2192 '+c.ov+'. Both sides took a hit. Pull the last 10 unconverted calls and see what they have in common.');
+                    else if(ibDown) v.push(m.ov+' \u2192 '+c.ov+'. Inbound is the story \u2014 are reps still following the call guide when customers ask for info or out-the-door pricing?');
+                    else if(obDown) v.push(m.ov+' \u2192 '+c.ov+'. Outbound\'s where it slid \u2014 bad list kills this number every time. Who is getting fed what?');
+                    // Variant 6: the 30-day frame
+                    v.push('30 days ago this store was '+m.ov+'. Today it\'s '+c.ov+'. '+(ibDown&&obDown?'Both sides need attention.':ibDown?'Inbound needs the attention.':'Outbound needs the attention.'));
+                    all.push({pri:0,type:'watch',tag:'Watch',title:s.id+' \u2014 Overall declined ('+m.ov+' \u2192 '+c.ov+')',text:pick(v,s.id+'decl')});
                 }
             });
             // Big Set swings (Mar → Apr)
