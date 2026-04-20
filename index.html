@@ -585,15 +585,18 @@
         .staff-apr-click * { pointer-events:none; }
 
         /* FOCUS MODE BAR */
-        .focus-bar { display:flex; gap:10px; align-items:center; padding:10px 20px; background:linear-gradient(90deg,#fef3c7,#fef9e7); border-bottom:1px solid #fde68a; font-size:12px; }
-        .focus-bar .fb-label { font-weight:700; color:#92400e; text-transform:uppercase; letter-spacing:0.4px; font-size:10px; }
-        .focus-btn { background:#fff; border:1.5px solid #f59e0b; color:#92400e; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; transition:all 0.15s; }
-        .focus-btn:hover { background:#fbbf24; color:#78350f; transform:translateY(-1px); }
+        .focus-bar { display:flex; gap:10px; align-items:center; padding:10px 20px; background:linear-gradient(90deg,#dcfce7,#ecfdf5); border-bottom:1px solid #bbf7d0; font-size:12px; }
+        .focus-bar .fb-label { font-weight:700; color:#166534; text-transform:uppercase; letter-spacing:0.4px; font-size:10px; }
+        .focus-btn { background:#fff; border:1.5px solid #16a34a; color:#166534; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; transition:all 0.15s; }
+        .focus-btn:hover { background:#16a34a; color:#fff; transform:translateY(-1px); }
         .focus-btn.ib { border-color:#0ea5e9; color:#0369a1; }
         .focus-btn.ib:hover { background:#0ea5e9; color:#fff; }
         .focus-btn.ob { border-color:#f97316; color:#c2410c; }
         .focus-btn.ob:hover { background:#f97316; color:#fff; }
-        .focus-bar .fb-hint { color:#78716c; font-style:italic; margin-left:auto; font-size:11px; }
+        .focus-bar .fb-hint { color:#4d7c0f; font-style:italic; margin-left:auto; font-size:11px; }
+        .focus-region-prompt { padding:60px 24px; text-align:center; color:#475569; }
+        .focus-region-prompt .frp-big { font-size:14px; font-weight:600; color:#1a1a2e; margin-bottom:8px; }
+        .focus-region-prompt .frp-small { font-size:12px; color:#6b7280; }
 
         /* FOCUS OVERLAY */
         .focus-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.75); z-index:10000; overflow-y:auto; padding:24px; }
@@ -644,19 +647,19 @@
         </div>
     </div>
 
+    <div class="focus-bar">
+        <span class="fb-label">Focus Mode:</span>
+        <button class="focus-btn ib" onclick="openFocus('ib')">I ONLY care about Inbound</button>
+        <button class="focus-btn ob" onclick="openFocus('ob')">I ONLY care about Outbound</button>
+        <span class="fb-hint">One channel, one region, crystal-clear training priorities</span>
+    </div>
+
     <div class="summary-strip">
         <div class="summary-item"><div class="num">17</div><div class="lbl">Stores</div></div>
         <div class="summary-item"><div class="num num-green" id="improvedCount">0</div><div class="lbl">Improved</div></div>
         <div class="summary-item"><div class="num num-red" id="declinedCount">0</div><div class="lbl">Declined</div></div>
         <div class="summary-item"><div class="num num-amber" id="steadyCount">0</div><div class="lbl">Steady</div></div>
         <div class="summary-item" style="margin-left:auto;"><div class="lbl" id="currentDate" style="color:#6b7280;">—</div></div>
-    </div>
-
-    <div class="focus-bar">
-        <span class="fb-label">Focus Mode:</span>
-        <button class="focus-btn ib" onclick="openFocus('ib')">I ONLY care about Inbound</button>
-        <button class="focus-btn ob" onclick="openFocus('ob')">I ONLY care about Outbound</button>
-        <span class="fb-hint">One channel, one region, crystal-clear training priorities</span>
     </div>
 
     <div class="focus-overlay" id="focusOverlay" onclick="if(event.target===this)closeFocus()">
@@ -2370,17 +2373,28 @@
         // ============================================
         // FOCUS MODE (Inbound-only / Outbound-only w/ region filter)
         // ============================================
-        let focusState = { mode:null, region:'All' };
+        let focusState = { mode:null, region:null };
         function openFocus(mode){
             focusState.mode = mode;
-            focusState.region = 'All';
-            const overlay = document.getElementById('focusOverlay');
-            overlay.classList.add('active');
-            renderFocus();
+            focusState.region = null;
+            const isIB = mode === 'ib';
+            document.getElementById('focusTitle').textContent = isIB ? 'Inbound Focus' : 'Outbound Focus';
+            document.getElementById('focusSub').textContent = (isIB
+                ? 'Request In% + Set% — inbound answering + booking the appointment'
+                : 'Live Convos% + Appt% — outbound connecting + securing the appointment')
+                + ' · Pick a region to begin';
+            document.querySelectorAll('.focus-region-picker .fr-chip').forEach(c=>c.classList.remove('active'));
+            document.getElementById('focusBody').innerHTML = `
+                <div class="focus-region-prompt">
+                    <div class="frp-big">Which region are you zeroing in on?</div>
+                    <div class="frp-small">Pick <strong>East</strong>, <strong>West</strong>, or <strong>All regions</strong> above to pull the focused view.</div>
+                </div>`;
+            document.getElementById('focusOverlay').classList.add('active');
         }
         function closeFocus(){
             document.getElementById('focusOverlay').classList.remove('active');
             focusState.mode = null;
+            focusState.region = null;
         }
         function setFocusRegion(r){
             focusState.region = r;
@@ -2388,7 +2402,7 @@
         }
         function renderFocus(){
             const {mode, region} = focusState;
-            if(!mode) return;
+            if(!mode || !region) return;
             const isIB = mode === 'ib';
             const title = isIB ? 'Inbound Focus' : 'Outbound Focus';
             const sub = isIB
