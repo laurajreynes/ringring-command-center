@@ -867,6 +867,7 @@
             // Redraw charts when their tab becomes visible (canvas needs non-zero dimensions)
             if(tab==='trends') setTimeout(drawTrendChart,50);
             if(tab==='obtrends') setTimeout(drawOBTrendChart,50);
+            if(tab==='baseline') setTimeout(drawCombinedTrendChart,50);
         }
 
         // ============================================
@@ -1637,8 +1638,19 @@
                 return h;
             }
 
-            p.innerHTML='<p style="font-size:12px;color:#64748b;padding:6px 0;">Starting point = pre-Ring Ring / initial benchmark period. Compare it to where each store sits today. Click any row to see trends.</p>'+baseTable(west,'West','west')+baseTable(east,'East','east')+execSummary();
+            // Combined Enterprise Trend — Inbound GPA vs Outbound GPA (Y-axis 0-4)
+            const combinedHTML = `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;margin:12px 0;">
+                <h4 style="font-size:13px;color:#475569;margin:0 0 6px 0;font-weight:700;">Enterprise Trend — Inbound vs Outbound (Grade)</h4>
+                <canvas id="combinedTrendCanvas" width="900" height="220" style="width:100%;height:220px;display:block;"></canvas>
+                <div style="display:flex;gap:14px;margin-top:6px;font-size:11px;color:#64748b;">
+                    <div style="display:flex;align-items:center;gap:6px;"><div style="width:18px;height:3px;background:#0ea5e9;border-radius:2px;"></div>Inbound grade</div>
+                    <div style="display:flex;align-items:center;gap:6px;"><div style="width:18px;height:3px;background:#f97316;border-radius:2px;"></div>Outbound grade</div>
+                </div>
+            </div>`;
+
+            p.innerHTML='<p style="font-size:12px;color:#64748b;padding:6px 0;">Starting point = pre-Ring Ring / initial benchmark period. Compare it to where each store sits today. Click any row to see trends.</p>'+combinedHTML+baseTable(west,'West','west')+baseTable(east,'East','east')+execSummary();
             baseExpandedId = null;
+            drawCombinedTrendChart();
         }
 
         function renderSummary(){
@@ -2354,16 +2366,6 @@
                 <strong>East</strong> (${eastStores.length} stores): ${eJan!==null?eJan.toFixed(1):'—'}% (Jan) → <strong>${eApr!==null?eApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${eD>=0?'#16a34a':'#dc2626'}">${eD>=0?'+':''}${eD.toFixed(1)}</strong></p>
             </div>`;
 
-            // Combined Enterprise Trend — Inbound GPA vs Outbound GPA (Y-axis 0-4)
-            let combinedHTML = `<div class="trends-chart-wrap" style="margin-bottom:14px;">
-                <h4 style="font-size:13px;color:#475569;margin:0 0 6px 0;font-weight:700;">Enterprise Trend — Inbound vs Outbound (Grade)</h4>
-                <canvas id="combinedTrendCanvas" width="900" height="220"></canvas>
-                <div class="trends-chart-legend">
-                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#0ea5e9;"></div>Inbound grade</div>
-                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#f97316;"></div>Outbound grade</div>
-                </div>
-            </div>`;
-
             // Chart — Group Avg, West, East lines
             let chartHTML = `<div class="trends-chart-wrap">
                 <canvas id="trendCanvas" width="900" height="260"></canvas>
@@ -2451,10 +2453,9 @@
                     </div>
                     <span style="font-size:11px;color:#6b7280;">Jan – Apr 2026 YTD | Monthly CRISP Data</span>
                 </div>
-                ${execHTML}${combinedHTML}${chartHTML}${moversHTML}${hmHTML}`;
+                ${execHTML}${chartHTML}${moversHTML}${hmHTML}`;
 
             drawTrendChart();
-            drawCombinedTrendChart();
         }
 
         // ============================================
