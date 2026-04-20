@@ -1704,7 +1704,7 @@
                         'Slipped '+m.ov+' \u2192 '+c.ov+' since March. Pull 5 recordings from this week \u2014 look for the hook and the ask.',
                         'What the hell is happening over there? '+m.ov+' \u2192 '+c.ov+' in 30 days.',
                         m.ov+' \u2192 '+c.ov+'. Run a scorecard this week before the pattern locks in.',
-                        'Declined '+m.ov+' \u2192 '+c.ov+'. Time for a mystery shop \u2014 find out what the phones actually sound like.',
+                        'Declined '+m.ov+' \u2192 '+c.ov+'. Run a scorecard \u2014 find out what the phones actually sound like.',
                         'Quietly slid '+m.ov+' \u2192 '+c.ov+'. Schedule an in-person Ring Ring before May starts.',
                         m.ov+' down to '+c.ov+'. Pull the last 10 unconverted RI calls and see what they have in common.'
                     ];
@@ -1725,23 +1725,24 @@
                 if(d<=-8){
                     const v=[
                         s.march.set+'% \u2192 '+s.current.set+'%. Pull 3 unconverted RI calls \u2014 are we hooking the trade? Asking more than once?',
-                        'Set% off a cliff: '+s.march.set+'% \u2192 '+s.current.set+'%. Mystery shop this store before month-end.',
+                        'Set% off a cliff: '+s.march.set+'% \u2192 '+s.current.set+'%. Run a scorecard this week and listen for the ask.',
                         'Lost '+Math.abs(d).toFixed(0)+' pts on Set%. Listen to 5 calls with the team and make them name what they hear.',
                         s.march.set+'% down to '+s.current.set+'%. Schedule a Ring Ring in person \u2014 phones are saying something reports can\'t.',
-                        'Set% dropped '+Math.abs(d).toFixed(0)+' pts. Look at which reps own the slide and pair them with a top setter.'
+                        'Set% dropped '+Math.abs(d).toFixed(0)+' pts. Which specific reps own the slide? Scorecard their calls \u2014 this is call guide, not the whole team.'
                     ];
                     all.push({pri:1,type:'watch',tag:'Watch',title:s.id+' \u2014 Set % fell '+Math.abs(d).toFixed(0)+' pts',text:pick(v,s.id+'setdn')});
                 }
             });
-            // Live Convos drops (Mar → Apr) — list/timing framing, varied actions
+            // Live Convos drops (Mar → Apr) — usually list quality, small chance timing
             alertStores.forEach(s=>{const d=s.current.live-s.march.live;
                 if(d<=-3){
                     const v=[
-                        s.march.live+'% \u2192 '+s.current.live+'%. Pull individual rep Live% \u2014 who\'s dragging the average?',
-                        'Live Convos off '+Math.abs(d).toFixed(1)+' pts. Check list age and call times on the bottom 3 reps.',
-                        s.march.live+'% dropped to '+s.current.live+'%. Usually a list problem \u2014 look at lead source mix this month.',
-                        'Outbound connect rate slid to '+s.current.live+'%. Pull the call-time histogram \u2014 is someone dialing the graveyard shift?',
-                        s.march.live+'% \u2192 '+s.current.live+'%. Run a list-quality audit before blaming the pitch.'
+                        s.march.live+'% \u2192 '+s.current.live+'%. Pull individual Live% \u2014 one rep usually drags this. Is their organizer caught up?',
+                        'Live Convos off '+Math.abs(d).toFixed(1)+' pts. Are they working unsold showroom traffic or just old internet leads?',
+                        s.march.live+'% dropped to '+s.current.live+'%. Bad list = bad Live%. Look at the list, not the pitch.',
+                        'Outbound connect rate slid to '+s.current.live+'%. Check whose organizer is current and whose isn\'t.',
+                        s.march.live+'% \u2192 '+s.current.live+'%. Audit lead sources and unsold follow-ups \u2014 we can\'t connect with people we\'re not calling.',
+                        'Live at '+s.current.live+'% and we\'re not calling the right people. Unsold showroom from last week \u2014 is anyone touching those?'
                     ];
                     all.push({pri:2,type:'watch',tag:'Watch',title:s.id+' \u2014 Live Convos dropped '+d.toFixed(1)+' pts',text:pick(v,s.id+'livedn')});
                 }
@@ -1769,18 +1770,24 @@
                     all.push({pri:2,type:'opportunity',tag:'Opportunity',title:s.id+' \u2014 RI hit A-grade',text:pick(v,s.id+'rianm')});
                 }
             });
-            // Stuck in the red — bottom overall store
+            // Stuck in the red — bottom overall store. Chronic = stuck at low for months; we get more exasperated.
             const ranked=[...alertStores].sort((a,b)=>calc(a.current).ovS-calc(b.current).ovS);
             ranked.slice(0,1).forEach(s=>{
-                const c=calc(s.current);
+                const c=calc(s.current),m=calc(s.march),b=calc(s.baseline);
+                const chronic=gn(c.ov)<=1.0 && gn(m.ov)<=1.0 && gn(b.ov)<=2.0; // baseline was weak AND Mar was weak AND Apr still weak
                 if(gn(c.ov)<=1.0){
-                    const v=[
+                    const v=chronic?[
+                        'Still at '+c.ov+'. Still. What the hell is happening over there? Pull individual rep grades \u2014 someone has to be sinking it.',
+                        c.ov+' in April. Was '+m.ov+' in March. Was '+b.ov+' at baseline. This is chronic \u2014 find the one or two reps dragging the average and scorecard their calls, now.',
+                        'Enterprise bottom '+c.ov+' and has not budged. If the weakest rep walked out tomorrow, what happens to the store grade? That tells you where to start.',
+                        c.ov+' and flat. Don\'t scorecard the store \u2014 scorecard the worst rep. One person is usually doing most of the damage.'
+                    ]:[
                         'Sitting at '+c.ov+' overall. Ride a morning of live calls with one rep \u2014 you\'ll spot it faster than any report.',
-                        'Bottom of the enterprise ('+c.ov+'). Time for an in-person Ring Ring.',
-                        c.ov+' overall and not moving. Mystery shop this week and see what we actually sound like.',
-                        'Stuck at '+c.ov+'. Run a full scorecard and pair the weakest rep with the strongest for a week.'
+                        'Bottom of the enterprise ('+c.ov+'). Pull individual rep grades and find the weak link.',
+                        c.ov+' overall and not moving. Run a scorecard this week and see what the phones actually sound like.',
+                        'Stuck at '+c.ov+'. Pull rep-level data \u2014 one or two people are probably doing most of the damage.'
                     ];
-                    all.push({pri:0,type:'watch',tag:'Watch',title:s.id+' \u2014 Bottom of the board ('+c.ov+')',text:pick(v,s.id+'bot')});
+                    all.push({pri:0,type:'watch',tag:'Watch',title:s.id+' \u2014 Bottom of the board ('+c.ov+')'+(chronic?' — chronic':''),text:pick(v,s.id+'bot')});
                 }
             });
             // Regional gap
@@ -1802,21 +1809,37 @@
             alertStores.forEach(s=>{
                 const c=calc(s.current),m=calc(s.march);
                 const weakMetrics=[];
-                if(c.rg==='F'||c.rg==='D'||c.sg==='F'||c.sg==='D') weakMetrics.push('inbound');
-                if(c.lg==='F'||c.lg==='D'||c.ag==='F'||c.ag==='D') weakMetrics.push('outbound');
-                if(gn(c.ov)<gn(m.ov)){
+                const inboundWeak=c.rg==='F'||c.rg==='D'||c.sg==='F'||c.sg==='D';
+                const outboundWeak=c.lg==='F'||c.lg==='D'||c.ag==='F'||c.ag==='D';
+                if(inboundWeak) weakMetrics.push('inbound');
+                if(outboundWeak) weakMetrics.push('outbound');
+                // Manager Ring Ring is primarily an inbound play — recommend when inbound is soft + overall declined
+                if(gn(c.ov)<gn(m.ov) && inboundWeak){
                     all.push({pri:1,type:'derby',tag:'Derby',title:s.id+' — Manager Ring Ring Session (5 pts)',
-                        text:'Overall declined '+m.ov+' → '+c.ov+' (Mar → Apr). Attending a Manager Ring Ring session earns the most Derby points. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
+                        text:'Overall declined '+m.ov+' → '+c.ov+' (Mar → Apr) with weak inbound. Manager Ring Ring is primarily an inbound play \u2014 get it booked. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
+                } else if(gn(c.ov)<gn(m.ov) && outboundWeak){
+                    all.push({pri:1,type:'derby',tag:'Derby',title:s.id+' — Pull rep-level outbound',
+                        text:'Overall declined '+m.ov+' → '+c.ov+' (Mar → Apr) and outbound is the drag. Pull individual rep Live%/Appt% \u2014 find the one or two people pulling the average down and scorecard their calls. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
                 } else if(weakMetrics.length>0){
-                    all.push({pri:2,type:'derby',tag:'Derby',title:s.id+' — Mystery Shop recommended (1 pt)',
-                        text:'Weak '+weakMetrics.join(' & ')+' metrics. A mystery shop can identify coaching gaps. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
+                    all.push({pri:2,type:'derby',tag:'Derby',title:s.id+' — Scorecard recommended (1 pt)',
+                        text:'Weak '+weakMetrics.join(' & ')+' metrics. Scorecard surfaces whether it\'s call guide, pitch, or list. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
                 }
             });
-            // Stores with no recent Derby activity suggestion (encourage Call Pairs for mid-range stores)
+            // Yellow-zone stores → find the weak link
             const midStores=alertStores.filter(s=>{const c=calc(s.current);return gColor(c.ov)==='yellow';});
             if(midStores.length>0){
-                all.push({pri:3,type:'derby',tag:'Derby',title:midStores.length+' yellow stores — Call Pairs (3 pts each)',
-                    text:midStores.map(s=>s.id).join(', ')+' are in the yellow zone. Call Pairs can push them green. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
+                const ywv=[
+                    midStores.length+' yellow stores — find the weak link',
+                    midStores.length+' stores stuck in yellow — who\'s dragging the average?',
+                    midStores.length+' yellow stores — pull individual rep grades'
+                ];
+                const ywt=[
+                    midStores.map(s=>s.id).join(', ')+' are stuck in yellow. One or two reps are usually sinking the store average \u2014 pull individual grades and scorecard the bottom of the list.',
+                    midStores.map(s=>s.id).join(', ')+' in the yellow zone. Find the specific people dragging the number down and scorecard their calls \u2014 don\'t paint the whole team with one brush.',
+                    midStores.map(s=>s.id).join(', ')+' holding in yellow. Pull rep-level data and find the weak link. If the bottom rep walked out tomorrow, what happens to the store grade?'
+                ];
+                all.push({pri:3,type:'derby',tag:'Derby',title:pick(ywv,'yw-t'),
+                    text:pick(ywt,'yw-b')+' <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
             }
             // General Derby reminder
             all.push({pri:5,type:'system',tag:'',title:'Derby Reminder',
@@ -1905,19 +1928,23 @@
                 const win='<strong>Lead with the win</strong> \u2014 '+winCoach;
                 // Gap — metric-specific, reflects what the number actually means
                 let gapCoach;
-                if(worst.k==='req') gapCoach='RI at '+worst.val+'% ('+worst.g+') usually means sales opps are getting miscoded. Pull 10 recent "info" or "service" calls and see how many should have been sales requests. This one\'s a BDC/routing fix more than a rep fix.';
-                else if(worst.k==='set') gapCoach='Set% at '+worst.val+'% ('+worst.g+') means people are calling ready to buy and hanging up without an appointment. Pull 3 unconverted RI calls from this week and listen \u2014 did we actually ask for the appointment, or just answer questions?';
-                else if(worst.k==='live') gapCoach='Live% at '+worst.val+'% ('+worst.g+') is a list-and-timing problem, not a skill problem \u2014 we may not be calling the right people. Ask: who\'s pulling the number down? Look at their call times and how old the leads are they\'re working.';
-                else gapCoach='Appt% at '+worst.val+'% ('+worst.g+') means they\'re getting people live and not booking. That\'s pitch. Who on the team is converting at 10%+ on outbound? Pair the bottom two reps with them for a week of shadow calls.';
+                if(worst.k==='req') gapCoach='RI at '+worst.val+'% ('+worst.g+') means reps aren\'t asking for the appointment. First question: are they following the call guide? Then: which reps specifically are lower than the rest, and which call types are tripping them up (out-the-door price asks, info requests)? They still need to ask for the appointment even when the customer is asking for info.';
+                else if(worst.k==='set') gapCoach='Set% at '+worst.val+'% ('+worst.g+') means people are calling ready and hanging up without an appointment. This is call guide again \u2014 hook the trade, ask more than once, give them a reason to come in. Which reps have the lowest set rate? Review their calls specifically.';
+                else if(worst.k==='live') gapCoach='Live% at '+worst.val+'% ('+worst.g+') means we\'re not reaching people. Who are they calling? Is their organizer caught up? Are they following up with unsold showroom traffic? Bad list kills this number every time \u2014 tiny chance it\'s timing. Find the rep dragging the average and look at their list, not their effort.';
+                else gapCoach='Appt% at '+worst.val+'% ('+worst.g+') means they\'re getting people live and not booking. Pull individual rep Appt% \u2014 which one or two people are pulling the average down? Scorecard their outbound calls specifically.';
                 const gap='<strong>Name the gap</strong> \u2014 '+gapCoach;
                 // Push — content-level questions, not staffing abstractions
+                // Chronic = low baseline AND low March AND still low = hasn't moved over months. Time for exasperation.
+                const b=calc(s.baseline);
+                const chronic=gn(c.ov)<=2.0 && gn(m.ov)<=2.0 && gn(b.ov)<=2.3;
                 let push;
-                if(riDelta>=10 && setDelta<3) push='<strong>The push</strong> \u2014 RI up '+rv[0]+'% \u2192 '+rv[rv.length-1]+'% but Set% is flat. Listen to 3 calls with the team. Are we hooking the trade? Asking for the appointment more than once? Giving them a real reason to come in?';
+                if(chronic) push='<strong>The push</strong> \u2014 Baseline was '+b.ov+', March was '+m.ov+', April is '+c.ov+'. This isn\'t a bad week, it\'s a pattern. Stop scorecarding the store and start scorecarding people. Pull individual rep grades \u2014 who is the single worst performer? If they walked out tomorrow, what happens to the store grade? That tells you where to start.';
+                else if(riDelta>=10 && setDelta<3) push='<strong>The push</strong> \u2014 RI up '+rv[0]+'% \u2192 '+rv[rv.length-1]+'% but Set% is flat. Call guide check: are they hooking the trade, asking for the appointment more than once, giving them a reason to come in? Which reps have the lowest set rate \u2014 listen to their calls.';
                 else if(riDelta>=10 && setDelta>=3) push='<strong>The push</strong> \u2014 RI up '+rv[0]+'% \u2192 '+rv[rv.length-1]+'% and Set% keeping pace. Pull 2 recent converted calls and use them for a team huddle \u2014 lock the language in before month-end.';
-                else if(setDelta<=-5) push='<strong>The push</strong> \u2014 Set% dropped '+sv[0]+'% \u2192 '+sv[sv.length-1]+'% since Jan. Pick 3 unconverted RI calls this week. Listen for: did we hook the trade? Did we ask for the appointment more than once? Did we give them a reason to come in?';
+                else if(setDelta<=-5) push='<strong>The push</strong> \u2014 Set% dropped '+sv[0]+'% \u2192 '+sv[sv.length-1]+'% since Jan. This is the call guide \u2014 are they hooking the trade, asking for the appointment more than once, giving a reason to come in? Find the reps with the lowest set rate and listen to their calls.';
                 else if(setDelta>=5) push='<strong>The push</strong> \u2014 Set% up '+sv[0]+'% \u2192 '+sv[sv.length-1]+'% since Jan. Pull a recent strong call and play it at the next huddle so everyone hears the ask and the hook.';
-                else if(gn(c.ov)>=3.0) push='<strong>The push</strong> \u2014 Grades are solid. Pick '+worst.label+' and run a mystery shop or scorecard this week \u2014 find the gap between "good" and "A" before they plateau.';
-                else push='<strong>The push</strong> \u2014 Numbers are stuck. Schedule an in-person Ring Ring session and sit with the team during live calls. Reports won\'t tell you what the phones will.';
+                else if(gn(c.ov)>=3.0) push='<strong>The push</strong> \u2014 Grades are solid. Pick '+worst.label+' and scorecard a handful of calls this week \u2014 find the gap between "good" and "A" before they plateau.';
+                else push='<strong>The push</strong> \u2014 Numbers are stuck. Pull individual rep grades and scorecard the bottom of the list \u2014 don\'t paint the whole team with one brush.';
                 const fmt=(mv,cv)=>mv!=null?mv+'% \u2192 '+cv+'%':cv+'%';
                 let resp='<strong>'+s.id+'</strong> \u2014 '+s.name+'<br>'+
                     'Overall <strong>'+c.ov+'</strong> ('+trend+' '+m.ov+' in Mar)<br><br>'+
@@ -2006,25 +2033,26 @@
                 D.stores.forEach(s=>{const col=gColor(calc(s.current).ov);if(col==='green')g++;else if(col==='yellow')y++;else r++;});
                 return '<strong>'+g+'</strong> green (A/A-/B+), <strong>'+y+'</strong> yellow (B through C), <strong>'+r+'</strong> red (C- and below)';
             }
-            // Derby / scorecard / mystery shop / call pairs
-            if(ql.match(/derby|scorecard|mystery shop|call pair|manager session|activity|points/)){
+            // Derby / scorecard / activities
+            if(ql.match(/derby|scorecard|manager session|activity|points|low performer|pulling down/)){
                 const SCORECARD_URL='https://anderson-scorecard.vercel.app';
                 const DERBY_URL='https://ringderby.vercel.app';
                 const recs=[];
-                // Declined stores → Manager Session (5 pts)
+                // Declined stores with inbound issues → Manager Ring Ring (5 pts, inbound-primary)
                 const declined=D.stores.filter(s=>gn(calc(s.current).ov)<gn(calc(s.march).ov));
-                if(declined.length) recs.push('<strong>Manager Ring Ring Session (5 pts)</strong> recommended for: '+declined.map(s=>s.id).join(', ')+' — overall grade declined, attending earns max Derby points');
-                // Stores with F/D metrics → Mystery Shop (1 pt)
+                const inboundDeclined=declined.filter(s=>{const c=calc(s.current);return gn(c.rg)<3.0||gn(c.sg)<3.0;});
+                if(inboundDeclined.length) recs.push('<strong>Manager Ring Ring Session (5 pts)</strong> for: '+inboundDeclined.map(s=>s.id).join(', ')+' \u2014 inbound declined (RI/Set). Manager Ring Ring is primarily an inbound play.');
+                // Stores with F/D metrics → Scorecard (1 pt)
                 const weak=D.stores.filter(s=>{const c=calc(s.current);return c.rg==='F'||c.rg==='D'||c.sg==='F'||c.sg==='D'||c.lg==='F'||c.lg==='D'||c.ag==='F'||c.ag==='D';});
-                const shopStores=weak.filter(s=>!declined.includes(s));
-                if(shopStores.length) recs.push('<strong>Mystery Shop (1 pt)</strong> recommended for: '+shopStores.map(s=>s.id).join(', ')+' — failing metrics need diagnosis');
-                // Yellow stores → Call Pairs (3 pts)
-                const yellow=D.stores.filter(s=>gColor(calc(s.current).ov)==='yellow'&&!declined.includes(s)&&!shopStores.includes(s));
-                if(yellow.length) recs.push('<strong>Call Pairs (3 pts)</strong> recommended for: '+yellow.map(s=>s.id).join(', ')+' — yellow zone, push toward green');
-                if(!recs.length) recs.push('All stores are performing well! Consider Call Pairs to maintain momentum.');
+                const shopStores=weak.filter(s=>!inboundDeclined.includes(s));
+                if(shopStores.length) recs.push('<strong>Scorecard (1 pt)</strong> for: '+shopStores.map(s=>s.id).join(', ')+' \u2014 failing metrics. Scorecard will surface whether it\'s call guide, pitch, or list.');
+                // Yellow stores → find low performers
+                const yellow=D.stores.filter(s=>gColor(calc(s.current).ov)==='yellow'&&!inboundDeclined.includes(s)&&!shopStores.includes(s));
+                if(yellow.length) recs.push('<strong>Find the weak link</strong> at: '+yellow.map(s=>s.id).join(', ')+' \u2014 yellow zone. Pull individual rep grades. One or two people are usually sinking the store average \u2014 scorecard their calls specifically.');
+                if(!recs.length) recs.push('All stores performing. If you want to stay sharp: pick the lowest-graded rep at any store and scorecard a few of their calls.');
                 return recs.join('<br><br>')+'<br><br><a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">View Derby Board</a>';
             }
-            return 'Try asking about a specific store (e.g. "How is Acura doing?"), rankings ("Who has the best set %?"), comparisons ("West vs East"), status ("Who improved?"), or Derby activities ("Which stores need a mystery shop?").';
+            return 'Try asking about a specific store (e.g. "How is Acura doing?"), rankings ("Who has the best set %?"), comparisons ("West vs East"), status ("Who improved?"), or Derby activities ("Which stores need a scorecard?").';
         }
 
         // ============================================
