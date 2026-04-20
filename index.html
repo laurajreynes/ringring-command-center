@@ -583,6 +583,52 @@
         .staff-apr-click:hover .detail-bar-fill-inner { filter:brightness(1.15); }
         .staff-apr-click .detail-bar-label { text-decoration:underline; text-underline-offset:2px; }
         .staff-apr-click * { pointer-events:none; }
+
+        /* FOCUS MODE BAR */
+        .focus-bar { display:flex; gap:10px; align-items:center; padding:10px 20px; background:linear-gradient(90deg,#fef3c7,#fef9e7); border-bottom:1px solid #fde68a; font-size:12px; }
+        .focus-bar .fb-label { font-weight:700; color:#92400e; text-transform:uppercase; letter-spacing:0.4px; font-size:10px; }
+        .focus-btn { background:#fff; border:1.5px solid #f59e0b; color:#92400e; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; transition:all 0.15s; }
+        .focus-btn:hover { background:#fbbf24; color:#78350f; transform:translateY(-1px); }
+        .focus-btn.ib { border-color:#0ea5e9; color:#0369a1; }
+        .focus-btn.ib:hover { background:#0ea5e9; color:#fff; }
+        .focus-btn.ob { border-color:#f97316; color:#c2410c; }
+        .focus-btn.ob:hover { background:#f97316; color:#fff; }
+        .focus-bar .fb-hint { color:#78716c; font-style:italic; margin-left:auto; font-size:11px; }
+
+        /* FOCUS OVERLAY */
+        .focus-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.75); z-index:10000; overflow-y:auto; padding:24px; }
+        .focus-overlay.active { display:block; }
+        .focus-panel { background:#fff; border-radius:12px; max-width:1100px; margin:0 auto; box-shadow:0 25px 75px rgba(0,0,0,0.4); overflow:hidden; }
+        .focus-hdr { padding:18px 24px; border-bottom:1px solid #e5e7eb; display:flex; justify-content:space-between; align-items:center; background:linear-gradient(90deg,#1a1a2e,#16213e); color:#fff; }
+        .focus-hdr h2 { font-size:18px; font-weight:700; margin:0; letter-spacing:0.2px; }
+        .focus-hdr .fh-sub { font-size:11px; color:#cbd5e1; margin-top:2px; font-weight:400; }
+        .focus-hdr .close-btn { background:rgba(255,255,255,0.15); border:none; color:#fff; font-size:22px; cursor:pointer; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+        .focus-hdr .close-btn:hover { background:rgba(255,255,255,0.3); }
+        .focus-region-picker { padding:12px 24px; background:#f8fafc; border-bottom:1px solid #e5e7eb; display:flex; gap:8px; align-items:center; font-size:12px; }
+        .focus-region-picker .frp-label { font-weight:600; color:#475569; text-transform:uppercase; letter-spacing:0.3px; font-size:10px; }
+        .fr-chip { background:#fff; border:1.5px solid #cbd5e1; color:#475569; padding:5px 14px; border-radius:16px; font-size:11px; font-weight:600; cursor:pointer; font-family:inherit; }
+        .fr-chip:hover { border-color:#0ea5e9; color:#0369a1; }
+        .fr-chip.active { background:#0ea5e9; border-color:#0ea5e9; color:#fff; }
+        .focus-body { padding:20px 24px 28px; }
+        .focus-section { margin-bottom:22px; }
+        .focus-section h3 { font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#475569; margin:0 0 10px 0; font-weight:700; border-bottom:2px solid #e2e8f0; padding-bottom:6px; }
+        .focus-summary-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin-bottom:8px; }
+        .fsm-box { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px; }
+        .fsm-box .fsm-lbl { font-size:9px; text-transform:uppercase; letter-spacing:0.4px; color:#6b7280; font-weight:600; margin-bottom:4px; }
+        .fsm-box .fsm-val { font-size:22px; font-weight:700; color:#1a1a2e; }
+        .fsm-box .fsm-sub { font-size:10px; color:#6b7280; margin-top:2px; }
+        .focus-tbl { width:100%; border-collapse:collapse; font-size:12px; }
+        .focus-tbl th { text-align:left; padding:7px 10px; border-bottom:2px solid #cbd5e1; font-size:10px; text-transform:uppercase; letter-spacing:0.3px; color:#475569; font-weight:700; background:#f8fafc; }
+        .focus-tbl td { padding:7px 10px; border-bottom:1px solid #f0f0f0; }
+        .focus-tbl tr:hover td { background:#f9fafb; }
+        .focus-tbl .num { text-align:right; font-variant-numeric:tabular-nums; }
+        .focus-tbl .grade-pill { display:inline-block; padding:2px 7px; border-radius:10px; font-weight:700; font-size:10px; min-width:24px; text-align:center; }
+        .focus-priority { background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%); border-left:4px solid #f59e0b; border-radius:6px; padding:12px 14px; margin-bottom:8px; font-size:12px; color:#78350f; }
+        .focus-priority strong { color:#92400e; font-weight:700; }
+        .focus-priority .fp-title { font-size:11px; text-transform:uppercase; letter-spacing:0.4px; font-weight:700; color:#92400e; margin-bottom:4px; }
+        .focus-strength { background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%); border-left:4px solid #16a34a; border-radius:6px; padding:12px 14px; margin-bottom:8px; font-size:12px; color:#14532d; }
+        .focus-strength strong { color:#166534; }
+        .focus-strength .fp-title { font-size:11px; text-transform:uppercase; letter-spacing:0.4px; font-weight:700; color:#166534; margin-bottom:4px; }
     </style>
 </head>
 <body>
@@ -604,6 +650,32 @@
         <div class="summary-item"><div class="num num-red" id="declinedCount">0</div><div class="lbl">Declined</div></div>
         <div class="summary-item"><div class="num num-amber" id="steadyCount">0</div><div class="lbl">Steady</div></div>
         <div class="summary-item" style="margin-left:auto;"><div class="lbl" id="currentDate" style="color:#6b7280;">—</div></div>
+    </div>
+
+    <div class="focus-bar">
+        <span class="fb-label">Focus Mode:</span>
+        <button class="focus-btn ib" onclick="openFocus('ib')">I ONLY care about Inbound</button>
+        <button class="focus-btn ob" onclick="openFocus('ob')">I ONLY care about Outbound</button>
+        <span class="fb-hint">One channel, one region, crystal-clear training priorities</span>
+    </div>
+
+    <div class="focus-overlay" id="focusOverlay" onclick="if(event.target===this)closeFocus()">
+        <div class="focus-panel">
+            <div class="focus-hdr">
+                <div>
+                    <h2 id="focusTitle">Focus</h2>
+                    <div class="fh-sub" id="focusSub"></div>
+                </div>
+                <button class="close-btn" onclick="closeFocus()">&times;</button>
+            </div>
+            <div class="focus-region-picker">
+                <span class="frp-label">Region:</span>
+                <button class="fr-chip" data-reg="All" onclick="setFocusRegion('All')">All regions</button>
+                <button class="fr-chip" data-reg="East" onclick="setFocusRegion('East')">East</button>
+                <button class="fr-chip" data-reg="West" onclick="setFocusRegion('West')">West</button>
+            </div>
+            <div class="focus-body" id="focusBody"></div>
+        </div>
     </div>
 
     <div class="tab-nav">
@@ -658,23 +730,23 @@
     <script>
         const D = {
             stores: [
-                { id:'SAS', name:'Fred Anderson Subaru', region:'West', baseline:{req:66.8,set:37.8,live:17.5,appt:8.2}, current:{req:86,set:38,live:15.5,appt:7.8}, ytd:{req:65.0,set:37.0,live:16.5,appt:9.2} },
-                { id:'TAS', name:'Fred Anderson Toyota of Asheville', region:'West', baseline:{req:55.3,set:26.5,live:12.7,appt:10.3}, current:{req:61,set:28,live:16.2,appt:11.3}, ytd:{req:56.0,set:26.0,live:16.2,appt:10.8} },
-                { id:'NAS', name:'Fred Anderson Nissan of Asheville', region:'West', baseline:{req:63.8,set:42.3,live:18.9,appt:8.5}, current:{req:68,set:34,live:18.1,appt:10.6}, ytd:{req:63.0,set:38.0,live:16.8,appt:11.0} },
-                { id:'KGR', name:'Fred Anderson Kia of Greer', region:'West', baseline:{req:62.7,set:38.2,live:14.2,appt:10.2}, current:{req:76,set:52,live:14.5,appt:12.0}, ytd:{req:69.0,set:46.0,live:14.7,appt:12.1} },
-                { id:'TGR', name:'Fred Anderson Toyota of Greer', region:'West', baseline:{req:57.0,set:32.8,live:17.4,appt:7.3}, current:{req:52,set:43,live:13.0,appt:9.2}, ytd:{req:55.0,set:34.0,live:14.8,appt:10.1} },
-                { id:'CGR', name:'Fred Anderson Chevy Buick GMC Cadillac', region:'West', baseline:{req:51.3,set:25.7,live:16.6,appt:6.3}, current:{req:58,set:40,live:20.6,appt:9.4}, ytd:{req:52.0,set:28.0,live:18.9,appt:9.6} },
-                { id:'HGR', name:'Fred Anderson Hyundai', region:'West', baseline:{req:63.5,set:38.3,live:10.4,appt:10.6}, current:{req:59,set:44,live:13.6,appt:10.7}, ytd:{req:63.0,set:32.0,live:12.7,appt:11.9} },
-                { id:'GGR', name:'Genesis of Greer', region:'West', baseline:{req:65.3,set:33.2,live:12.6,appt:10.7}, current:{req:63,set:45,live:9.0,appt:11.5}, ytd:{req:61.0,set:33.0,live:9.8,appt:12.1} },
-                { id:'AGV', name:'Fred Anderson Acura', region:'West', baseline:{req:59.5,set:32.2,live:14.9,appt:9.1}, current:{req:66,set:39,live:15.0,appt:11.2}, ytd:{req:59.0,set:39.0,live:16.4,appt:12.1} },
-                { id:'KGV', name:'Fred Anderson Kia of Greenville', region:'West', baseline:{req:60.3,set:32.3,live:13.1,appt:8.9}, current:{req:64,set:36,live:18.0,appt:11.4}, ytd:{req:61.0,set:32.0,live:15.9,appt:12.5} },
-                { id:'HGV', name:'Fred Anderson Honda of Greenville', region:'West', baseline:{req:68.5,set:40.5,live:16.3,appt:9.3}, current:{req:62,set:40,live:14.2,appt:10.3}, ytd:{req:65.0,set:40.0,live:15.4,appt:11.3} },
-                { id:'TRA', name:'Fred Anderson Toyota of Raleigh', region:'East', baseline:{req:68.2,set:41.0,live:13.1,appt:10.3}, current:{req:68,set:39,live:13.4,appt:10.4}, ytd:{req:67.0,set:38.0,live:14.2,appt:12.9} },
-                { id:'KRA', name:'Fred Anderson Kia of Raleigh', region:'East', baseline:{req:66.3,set:42.7,live:19.7,appt:7.5}, current:{req:59,set:50,live:12.5,appt:6.9}, ytd:{req:67.0,set:42.0,live:13.6,appt:10.2} },
-                { id:'NRA', name:'Fred Anderson Nissan of Raleigh', region:'East', baseline:{req:66.0,set:43.3,live:16.4,appt:8.5}, current:{req:64,set:39,live:15.8,appt:8.8}, ytd:{req:64.0,set:41.0,live:15.9,appt:11.8} },
-                { id:'TSA', name:'Fred Anderson Toyota of Sanford', region:'East', baseline:{req:62.0,set:34.3,live:17.9,appt:7.9}, current:{req:62,set:36,live:16.4,appt:8.2}, ytd:{req:62.0,set:36.0,live:16.6,appt:10.6} },
-                { id:'TCH', name:'Fred Anderson Toyota of Charleston', region:'East', baseline:{req:72.5,set:30.3,live:13.6,appt:7.6}, current:{req:65,set:30,live:12.1,appt:6.8}, ytd:{req:69.0,set:31.0,live:13.4,appt:8.7} },
-                { id:'TCC', name:'Fred Anderson Toyota of Cape Coral', region:'East', baseline:{req:86,set:79,live:0,appt:0}, current:{req:78,set:69,live:34.8,appt:11.0}, ytd:{req:84.0,set:72.0,live:34.8,appt:11.0} }
+                { id:'SAS', name:'Fred Anderson Subaru', region:'West', baseline:{req:66.8,set:37.8,live:17.5,appt:8.2}, current:{req:78,set:37,live:15.5,appt:7.8}, ytd:{req:67.5,set:35.2,live:16.5,appt:9.2} },
+                { id:'TAS', name:'Fred Anderson Toyota of Asheville', region:'West', baseline:{req:55.3,set:26.5,live:12.7,appt:10.3}, current:{req:59,set:26,live:16.2,appt:11.3}, ytd:{req:56.0,set:25.8,live:16.2,appt:10.8} },
+                { id:'NAS', name:'Fred Anderson Nissan of Asheville', region:'West', baseline:{req:63.8,set:42.3,live:18.9,appt:8.5}, current:{req:71,set:36,live:18.1,appt:10.6}, ytd:{req:64.0,set:38.2,live:16.8,appt:11.0} },
+                { id:'KGR', name:'Fred Anderson Kia of Greer', region:'West', baseline:{req:62.7,set:38.2,live:14.2,appt:10.2}, current:{req:69,set:51,live:14.5,appt:12.0}, ytd:{req:72.5,set:47.8,live:14.7,appt:12.1} },
+                { id:'TGR', name:'Fred Anderson Toyota of Greer', region:'West', baseline:{req:57.0,set:32.8,live:17.4,appt:7.3}, current:{req:55,set:39,live:13.0,appt:9.2}, ytd:{req:55.8,set:33.8,live:14.8,appt:10.1} },
+                { id:'CGR', name:'Fred Anderson Chevy Buick GMC Cadillac', region:'West', baseline:{req:51.3,set:25.7,live:16.6,appt:6.3}, current:{req:57,set:36,live:20.6,appt:9.4}, ytd:{req:53.5,set:29.5,live:18.9,appt:9.6} },
+                { id:'HGR', name:'Fred Anderson Hyundai', region:'West', baseline:{req:63.5,set:38.3,live:10.4,appt:10.6}, current:{req:63,set:42,live:13.6,appt:10.7}, ytd:{req:63.2,set:33.8,live:12.7,appt:11.9} },
+                { id:'GGR', name:'Genesis of Greer', region:'West', baseline:{req:65.3,set:33.2,live:12.6,appt:10.7}, current:{req:66,set:38,live:9.0,appt:11.5}, ytd:{req:59.8,set:36.5,live:9.8,appt:12.1} },
+                { id:'AGV', name:'Fred Anderson Acura', region:'West', baseline:{req:59.5,set:32.2,live:14.9,appt:9.1}, current:{req:64,set:33,live:15.0,appt:11.2}, ytd:{req:62.0,set:40.0,live:16.4,appt:12.1} },
+                { id:'KGV', name:'Fred Anderson Kia of Greenville', region:'West', baseline:{req:60.3,set:32.3,live:13.1,appt:8.9}, current:{req:62,set:42,live:18.0,appt:11.4}, ytd:{req:64.0,set:36.0,live:15.9,appt:12.5} },
+                { id:'HGV', name:'Fred Anderson Honda of Greenville', region:'West', baseline:{req:68.5,set:40.5,live:16.3,appt:9.3}, current:{req:59,set:41,live:14.2,appt:10.3}, ytd:{req:63.0,set:40.0,live:15.4,appt:11.3} },
+                { id:'TRA', name:'Fred Anderson Toyota of Raleigh', region:'East', baseline:{req:68.2,set:41.0,live:13.1,appt:10.3}, current:{req:68,set:39,live:13.4,appt:10.4}, ytd:{req:66.8,set:38.5,live:14.2,appt:12.9} },
+                { id:'KRA', name:'Fred Anderson Kia of Raleigh', region:'East', baseline:{req:66.3,set:42.7,live:19.7,appt:7.5}, current:{req:68,set:48,live:12.5,appt:6.9}, ytd:{req:69.5,set:41.0,live:13.6,appt:10.2} },
+                { id:'NRA', name:'Fred Anderson Nissan of Raleigh', region:'East', baseline:{req:66.0,set:43.3,live:16.4,appt:8.5}, current:{req:63,set:40,live:15.8,appt:8.8}, ytd:{req:63.8,set:40.8,live:15.9,appt:11.8} },
+                { id:'TSA', name:'Fred Anderson Toyota of Sanford', region:'East', baseline:{req:62.0,set:34.3,live:17.9,appt:7.9}, current:{req:64,set:40,live:16.4,appt:8.2}, ytd:{req:62.5,set:37.8,live:16.6,appt:10.6} },
+                { id:'TCH', name:'Fred Anderson Toyota of Charleston', region:'East', baseline:{req:72.5,set:30.3,live:13.6,appt:7.6}, current:{req:73,set:28,live:12.1,appt:6.8}, ytd:{req:70.0,set:29.2,live:13.4,appt:8.7} },
+                { id:'TCC', name:'Fred Anderson Toyota of Cape Coral', region:'East', baseline:{req:86,set:79,live:0,appt:0}, current:{req:69,set:53,live:34.8,appt:11.0}, ytd:{req:69.0,set:53.0,live:34.8,appt:11.0} }
             ]
         };
 
@@ -702,20 +774,20 @@
         const TRENDS = {
             months: ['Jan','Feb','Mar','Apr'],
             ri: {
-                'SAS':[61,64,67,86],'TAS':[52,53,60,61],'NAS':[64,58,63,68],
-                'KRA':[63,75,72,59],'TSA':[64,65,57,62],'TCH':[69,70,68,65],
-                'NRA':[63,66,63,64],'KGV':[59,70,65,64],'HGV':[60,67,66,62],
-                'AGV':[54,61,69,66],'CGR':[50,56,51,58],'KGR':[72,72,77,76],
-                'GGR':[61,51,61,63],'HGR':[57,70,63,59],'TGR':[51,58,59,52],
-                'TRA':[63,66,70,68],'TCC':[null,null,null,78]
+                'SAS':[61,64,67,78],'TAS':[52,53,60,59],'NAS':[64,58,63,71],
+                'KRA':[63,75,72,68],'TSA':[64,65,57,64],'TCH':[69,70,68,73],
+                'NRA':[63,66,63,63],'KGV':[59,70,65,62],'HGV':[60,67,66,59],
+                'AGV':[54,61,69,64],'CGR':[50,56,51,57],'KGR':[72,72,77,69],
+                'GGR':[61,51,61,66],'HGR':[57,70,63,63],'TGR':[51,58,59,55],
+                'TRA':[63,66,70,68],'TCC':[null,null,null,69]
             },
             set: {
-                'SAS':[37,39,28,38],'TAS':[24,23,30,28],'NAS':[37,39,41,34],
-                'KRA':[42,36,38,50],'TSA':[34,32,45,36],'TCH':[31,27,31,30],
-                'NRA':[38,41,44,39],'KGV':[33,34,35,36],'HGV':[37,39,43,40],
-                'AGV':[35,46,46,39],'CGR':[23,33,26,40],'KGR':[37,48,55,52],
-                'GGR':[36,42,30,45],'HGR':[20,34,39,44],'TGR':[31,32,33,43],
-                'TRA':[38,36,41,39],'TCC':[null,null,null,69]
+                'SAS':[37,39,28,37],'TAS':[24,23,30,26],'NAS':[37,39,41,36],
+                'KRA':[42,36,38,48],'TSA':[34,32,45,40],'TCH':[31,27,31,28],
+                'NRA':[38,41,44,40],'KGV':[33,34,35,42],'HGV':[37,39,43,41],
+                'AGV':[35,46,46,33],'CGR':[23,33,26,36],'KGR':[37,48,55,51],
+                'GGR':[36,42,30,38],'HGR':[20,34,39,42],'TGR':[31,32,33,39],
+                'TRA':[38,36,41,39],'TCC':[null,null,null,53]
             }
         };
 
@@ -2294,6 +2366,193 @@
         function closeSpotlight() {
             document.getElementById('spotlightOverlay').classList.remove('active');
         }
+
+        // ============================================
+        // FOCUS MODE (Inbound-only / Outbound-only w/ region filter)
+        // ============================================
+        let focusState = { mode:null, region:'All' };
+        function openFocus(mode){
+            focusState.mode = mode;
+            focusState.region = 'All';
+            const overlay = document.getElementById('focusOverlay');
+            overlay.classList.add('active');
+            renderFocus();
+        }
+        function closeFocus(){
+            document.getElementById('focusOverlay').classList.remove('active');
+            focusState.mode = null;
+        }
+        function setFocusRegion(r){
+            focusState.region = r;
+            renderFocus();
+        }
+        function renderFocus(){
+            const {mode, region} = focusState;
+            if(!mode) return;
+            const isIB = mode === 'ib';
+            const title = isIB ? 'Inbound Focus' : 'Outbound Focus';
+            const sub = isIB
+                ? 'Request In% + Set% — inbound answering + booking the appointment'
+                : 'Live Convos% + Appt% — outbound connecting + securing the appointment';
+            document.getElementById('focusTitle').textContent = title;
+            document.getElementById('focusSub').textContent = sub + ' · ' + (region==='All'?'All regions':region + ' region');
+            // update region chip active state
+            document.querySelectorAll('.focus-region-picker .fr-chip').forEach(c=>{
+                c.classList.toggle('active', c.dataset.reg === region);
+            });
+            // filter stores
+            let pool = D.stores.slice();
+            if(region !== 'All') pool = pool.filter(s => s.region === region);
+            // compute channel grade for each
+            const scored = pool.map(s => {
+                const g = calc(s.current);
+                const gb = calc(s.baseline);
+                const channelLetter = isIB ? g.ib : g.ob;
+                const channelScoreNum = isIB ? g.iS : g.oS;
+                const baselineScore = isIB ? (gn(gb.rg)+gn(gb.sg))/2 : gn(gb.lg)*0.6+gn(gb.ag)*0.4;
+                const delta = channelScoreNum - baselineScore;
+                return {
+                    s, g, gb, ch:channelLetter, chN:channelScoreNum, base:baselineScore, delta,
+                    primary: isIB ? s.current.req : s.current.live,
+                    secondary: isIB ? s.current.set : s.current.appt,
+                    primaryG: isIB ? g.rg : g.lg,
+                    secondaryG: isIB ? g.sg : g.ag,
+                    primaryBench: isIB ? BENCH.req : BENCH.live,
+                    secondaryBench: isIB ? BENCH.set : BENCH.appt,
+                    primaryLabel: isIB ? 'RI%' : 'Live%',
+                    secondaryLabel: isIB ? 'Set%' : 'Appt%'
+                };
+            });
+            scored.sort((a,b)=>b.chN - a.chN);
+            // group summary
+            const avgScore = scored.reduce((a,x)=>a+x.chN,0)/scored.length;
+            const avgLetter = s2g(avgScore);
+            const avgPrimary = scored.reduce((a,x)=>a+x.primary,0)/scored.length;
+            const avgSecondary = scored.reduce((a,x)=>a+x.secondary,0)/scored.length;
+            const improved = scored.filter(x=>x.delta >= 0.3).length;
+            const declined = scored.filter(x=>x.delta <= -0.3).length;
+            const top = scored[0], bottom = scored[scored.length-1];
+            // training priorities: stores with lowest channel grade AND biggest gap to benchmark
+            const priorities = scored.slice().reverse().slice(0,3).map(x => {
+                const pGap = x.primaryBench - x.primary;
+                const sGap = x.secondaryBench - x.secondary;
+                const biggerGap = pGap > sGap ? {label:x.primaryLabel, val:x.primary, bench:x.primaryBench, gap:pGap, key:isIB?'req':'live'} : {label:x.secondaryLabel, val:x.secondary, bench:x.secondaryBench, gap:sGap, key:isIB?'set':'appt'};
+                return {x, biggerGap, pGap, sGap};
+            });
+            // strengths: top 2
+            const strengths = scored.slice(0,2);
+            // trend (month-over-month Apr vs Mar)
+            const trendData = scored.map(x => {
+                const prim = isIB ? TRENDS.ri[x.s.id] : OB_TRENDS.live[x.s.id];
+                const sec = isIB ? TRENDS.set[x.s.id] : OB_TRENDS.appt[x.s.id];
+                const mar = prim && prim[2]!=null && sec && sec[2]!=null ? (gn(gg(prim[2], isIB?'req':'live')) + gn(gg(sec[2], isIB?'set':'appt'))) / 2 : null;
+                return {id:x.s.id, mar, apr:x.chN, diff: mar!=null ? x.chN - mar : null};
+            });
+            // Build summary grid
+            const summaryHTML = `
+                <div class="focus-summary-grid">
+                    <div class="fsm-box"><div class="fsm-lbl">Group Grade</div><div class="fsm-val" style="color:${gradeColor(avgLetter)};">${avgLetter}</div><div class="fsm-sub">${scored.length} store${scored.length===1?'':'s'} · avg ${avgScore.toFixed(2)} GPA</div></div>
+                    <div class="fsm-box"><div class="fsm-lbl">Avg ${isIB?'RI%':'Live%'}</div><div class="fsm-val">${avgPrimary.toFixed(1)}%</div><div class="fsm-sub">Bench: ${isIB?BENCH.req:BENCH.live}%</div></div>
+                    <div class="fsm-box"><div class="fsm-lbl">Avg ${isIB?'Set%':'Appt%'}</div><div class="fsm-val">${avgSecondary.toFixed(1)}%</div><div class="fsm-sub">Bench: ${isIB?BENCH.set:BENCH.appt}%</div></div>
+                    <div class="fsm-box"><div class="fsm-lbl">Improved vs baseline</div><div class="fsm-val" style="color:#16a34a;">${improved}</div><div class="fsm-sub">Declined: ${declined}</div></div>
+                    <div class="fsm-box"><div class="fsm-lbl">Top performer</div><div class="fsm-val" style="font-size:16px;">${top.s.id} · ${top.ch}</div><div class="fsm-sub">${top.s.name.replace('Fred Anderson ','')}</div></div>
+                    <div class="fsm-box"><div class="fsm-lbl">Bottom</div><div class="fsm-val" style="font-size:16px;">${bottom.s.id} · ${bottom.ch}</div><div class="fsm-sub">${bottom.s.name.replace('Fred Anderson ','')}</div></div>
+                </div>`;
+            // Ranking table
+            let tableRows = scored.map((x, idx) => {
+                const td = trendData[idx];
+                const arrow = td.diff==null ? '—' : td.diff >= 0.2 ? '<span style="color:#16a34a;">&#9650; +'+td.diff.toFixed(2)+'</span>' : td.diff <= -0.2 ? '<span style="color:#dc2626;">&#9660; '+td.diff.toFixed(2)+'</span>' : '<span style="color:#6b7280;">&#8213; '+td.diff.toFixed(2)+'</span>';
+                const deltaStr = x.delta>=0 ? '+'+x.delta.toFixed(2) : x.delta.toFixed(2);
+                const deltaColor = x.delta>=0.3?'#16a34a':x.delta<=-0.3?'#dc2626':'#6b7280';
+                return `<tr>
+                    <td><strong>${x.s.id}</strong> <span style="color:#6b7280;font-size:11px;">${x.s.name.replace('Fred Anderson ','').replace('Fred Anderson','')}</span></td>
+                    <td><span class="grade-pill" style="background:${gradeColor(x.ch)}20;color:${gradeColor(x.ch)};">${x.ch}</span></td>
+                    <td class="num">${x.primary.toFixed(0)}% <span style="color:#9ca3af;font-size:10px;">(${x.primaryG})</span></td>
+                    <td class="num">${x.secondary.toFixed(0)}% <span style="color:#9ca3af;font-size:10px;">(${x.secondaryG})</span></td>
+                    <td class="num">${arrow}</td>
+                    <td class="num" style="color:${deltaColor};font-weight:600;">${deltaStr}</td>
+                </tr>`;
+            }).join('');
+            const tableHTML = `
+                <table class="focus-tbl">
+                    <thead><tr>
+                        <th>Store</th>
+                        <th>${isIB?'Inbound':'Outbound'} Grade</th>
+                        <th style="text-align:right;">${isIB?'RI%':'Live%'}</th>
+                        <th style="text-align:right;">${isIB?'Set%':'Appt%'}</th>
+                        <th style="text-align:right;">Mar → Apr</th>
+                        <th style="text-align:right;">vs Start</th>
+                    </tr></thead>
+                    <tbody>${tableRows}</tbody>
+                </table>`;
+            // Training priorities (tone: Laura, blunt, trainer-focused)
+            const priorityHTML = priorities.map(p => {
+                const {x, biggerGap} = p;
+                let coach = '';
+                if(isIB){
+                    if(biggerGap.key==='req'){
+                        coach = `Phones aren't getting answered. Before scorecards — are they staffing the window? Are the right people on the BDR queue? Pull the missed-call log by hour before next session.`;
+                    } else {
+                        coach = `They're answering but not booking. That's a scorecard/call guide issue — sit next to the weakest 2-3 reps for a Manager Ring Ring Session on asking for the appointment.`;
+                    }
+                } else {
+                    if(biggerGap.key==='live'){
+                        coach = `They're dialing into a wall. Check the list quality — are they working organizer follow-ups and unsold showroom traffic, or just aged leads nobody will pick up?`;
+                    } else {
+                        coach = `Live conversations are happening but closing to appointment is soft. Listen to 5 outbound calls per person — odds are they're not using the call guide at the set step.`;
+                    }
+                }
+                return `<div class="focus-priority">
+                    <div class="fp-title">Priority: ${x.s.id} — ${x.s.name.replace('Fred Anderson ','')}</div>
+                    <strong>${biggerGap.label} at ${biggerGap.val}%</strong> vs ${biggerGap.bench}% bench (gap: ${biggerGap.gap.toFixed(1)} pts). Channel grade: ${x.ch}.
+                    <div style="margin-top:6px;">${coach}</div>
+                </div>`;
+            }).join('');
+            // Strengths
+            const strengthHTML = strengths.map(x => {
+                const isAbove = x.primary >= x.primaryBench || x.secondary >= x.secondaryBench;
+                const aboveNote = x.primary >= x.primaryBench && x.secondary >= x.secondaryBench
+                    ? 'Both metrics above bench.'
+                    : x.primary >= x.primaryBench
+                        ? `${x.primaryLabel} above bench (${x.primary}% vs ${x.primaryBench}%).`
+                        : x.secondary >= x.secondaryBench
+                            ? `${x.secondaryLabel} above bench (${x.secondary}% vs ${x.secondaryBench}%).`
+                            : `Leading the group but not at bench yet.`;
+                return `<div class="focus-strength">
+                    <div class="fp-title">Strength: ${x.s.id} — ${x.s.name.replace('Fred Anderson ','')}</div>
+                    Grade <strong>${x.ch}</strong>. ${aboveNote} Use as the benchmark example when coaching ${isIB?'inbound':'outbound'} at other stores.
+                </div>`;
+            }).join('');
+            // Compose body
+            document.getElementById('focusBody').innerHTML = `
+                <div class="focus-section">
+                    <h3>Where ${region==='All'?'the group':region} stands — ${isIB?'Inbound':'Outbound'}</h3>
+                    ${summaryHTML}
+                </div>
+                <div class="focus-section">
+                    <h3>Store ranking (${isIB?'Inbound':'Outbound'})</h3>
+                    ${tableHTML}
+                </div>
+                <div class="focus-section">
+                    <h3>Training priorities — tackle these first</h3>
+                    ${priorityHTML || '<div style="color:#6b7280;font-size:12px;">No stores flagged.</div>'}
+                </div>
+                <div class="focus-section">
+                    <h3>Strengths to lean on</h3>
+                    ${strengthHTML || '<div style="color:#6b7280;font-size:12px;">No strengths identified in this slice.</div>'}
+                </div>`;
+        }
+        function gradeColor(g){
+            if(g.startsWith('A')) return '#16a34a';
+            if(g.startsWith('B')) return '#0284c7';
+            if(g.startsWith('C')) return '#ca8a04';
+            if(g.startsWith('D')) return '#ea580c';
+            return '#dc2626';
+        }
+        // Close focus on Esc
+        document.addEventListener('keydown', e => {
+            if(e.key === 'Escape' && focusState.mode) closeFocus();
+        });
 
         // ============================================
         // INBOUND TRENDS
