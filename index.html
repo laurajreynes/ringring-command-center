@@ -1684,6 +1684,19 @@
             const daySeed=today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate();
             const hash=k=>(k||'').split('').reduce((a,c,i)=>a+c.charCodeAt(0)*(i+1),0);
             const pick=(arr,key)=>arr[(daySeed+hash(key))%arr.length];
+            // Per-render dedupe: within a single category, ensure no two stores get the same variant back-to-back
+            const used={};
+            const pickUnique=(arr,key,category)=>{
+                if(!used[category]) used[category]=new Set();
+                const n=arr.length;
+                let idx=(daySeed+hash(key))%n;
+                let tries=0;
+                while(used[category].has(idx) && tries<n){ idx=(idx+1)%n; tries++; }
+                used[category].add(idx);
+                // If we've used them all, reset for further wraps
+                if(used[category].size>=n) used[category].clear();
+                return arr[idx];
+            };
             // Biggest improver (Mar → Apr)
             let bestGain={store:null,delta:-99};
             alertStores.forEach(s=>{const c=calc(s.current),m=calc(s.march),d=c.ovS-m.ovS;if(d>bestGain.delta)bestGain={store:s,delta:d,cg:c.ov,mg:m.ov};});
@@ -1721,7 +1734,7 @@
                     else if(obDown) v.push(m.ov+' \u2192 '+c.ov+'. Outbound\'s where it slid \u2014 bad list kills this number every time. Who is getting fed what?');
                     // Variant 6: the 30-day frame
                     v.push('30 days ago this store was '+m.ov+'. Today it\'s '+c.ov+'. '+(ibDown&&obDown?'Both sides need attention.':ibDown?'Inbound needs the attention.':'Outbound needs the attention.'));
-                    all.push({pri:0,type:'watch',tag:'Watch',title:s.id+' \u2014 Overall declined ('+m.ov+' \u2192 '+c.ov+')',text:pick(v,s.id+'decl')});
+                    all.push({pri:0,type:'watch',tag:'Watch',title:s.id+' \u2014 Overall declined ('+m.ov+' \u2192 '+c.ov+')',text:pickUnique(v,s.id+'decl','decl')});
                 }
             });
             // Big Set swings (Mar → Apr)
@@ -1733,7 +1746,7 @@
                         s.march.set+'% to '+s.current.set+'% in a month. Ask the top setter to walk the team through their hook.',
                         'Set% moved '+d.toFixed(0)+' pts. Get a Ring Ring on the books so other stores can borrow it.'
                     ];
-                    all.push({pri:2,type:'opportunity',tag:'Opportunity',title:s.id+' \u2014 Set % surged +'+d.toFixed(0)+' pts',text:pick(v,s.id+'setup')});
+                    all.push({pri:2,type:'opportunity',tag:'Opportunity',title:s.id+' \u2014 Set % surged +'+d.toFixed(0)+' pts',text:pickUnique(v,s.id+'setup','setup')});
                 }
                 if(d<=-8){
                     const v=[
@@ -1743,7 +1756,7 @@
                         s.march.set+'% down to '+s.current.set+'%. Schedule a Ring Ring in person \u2014 phones are saying something reports can\'t.',
                         'Set% dropped '+Math.abs(d).toFixed(0)+' pts. Which specific reps own the slide? Scorecard their calls \u2014 this is call guide, not the whole team.'
                     ];
-                    all.push({pri:1,type:'watch',tag:'Watch',title:s.id+' \u2014 Set % fell '+Math.abs(d).toFixed(0)+' pts',text:pick(v,s.id+'setdn')});
+                    all.push({pri:1,type:'watch',tag:'Watch',title:s.id+' \u2014 Set % fell '+Math.abs(d).toFixed(0)+' pts',text:pickUnique(v,s.id+'setdn','setdn')});
                 }
             });
             // Live Convos drops (Mar → Apr) — usually list quality, small chance timing
@@ -1757,7 +1770,7 @@
                         s.march.live+'% \u2192 '+s.current.live+'%. Audit lead sources and unsold follow-ups \u2014 we can\'t connect with people we\'re not calling.',
                         'Live at '+s.current.live+'% and we\'re not calling the right people. Unsold showroom from last week \u2014 is anyone touching those?'
                     ];
-                    all.push({pri:2,type:'watch',tag:'Watch',title:s.id+' \u2014 Live Convos dropped '+d.toFixed(1)+' pts',text:pick(v,s.id+'livedn')});
+                    all.push({pri:2,type:'watch',tag:'Watch',title:s.id+' \u2014 Live Convos dropped '+d.toFixed(1)+' pts',text:pickUnique(v,s.id+'livedn','livedn')});
                 }
             });
             // Appt% crossed the 10% line
@@ -1768,7 +1781,7 @@
                         'Outbound conversion above benchmark ('+s.current.appt+'%). Pull a clip and send it around the enterprise.',
                         s.march.appt+'% up to '+s.current.appt+'% on Appt. Run a scorecard and find the language that\u2019s working.'
                     ];
-                    all.push({pri:2,type:'opportunity',tag:'Opportunity',title:s.id+' \u2014 Appt% crossed 10%',text:pick(v,s.id+'apptup')});
+                    all.push({pri:2,type:'opportunity',tag:'Opportunity',title:s.id+' \u2014 Appt% crossed 10%',text:pickUnique(v,s.id+'apptup','apptup')});
                 }
             });
             // RI just hit A-grade
@@ -1780,7 +1793,7 @@
                         'Inbound firing at A-grade ('+s.current.req+'%). Ask BDC what\u2019s different before it drifts.',
                         'RI hit A ('+s.current.req+'%). Schedule a Ring Ring while the phones are ringing.'
                     ];
-                    all.push({pri:2,type:'opportunity',tag:'Opportunity',title:s.id+' \u2014 RI hit A-grade',text:pick(v,s.id+'rianm')});
+                    all.push({pri:2,type:'opportunity',tag:'Opportunity',title:s.id+' \u2014 RI hit A-grade',text:pickUnique(v,s.id+'rianm','rianm')});
                 }
             });
             // Stuck in the red — bottom overall store. Chronic = stuck at low for months; we get more exasperated.
@@ -2872,13 +2885,21 @@
         function renderAll(){renderDates();renderStores();renderAlerts();renderCoaching();renderRegions();renderTrends();renderOBTrends();renderBaseline();renderDataEntry();renderSummary();renderInsights();}
         // Most-improved-of-the-week firework on page load
         function showMostImprovedFirework(){
-            // Biggest Mar → Apr grade gain (used as "last week's" movement for now)
+            // Biggest Mar → Apr grade gain
             let top={store:null, delta:-99};
             D.stores.filter(s=>s.id!=='TCC').forEach(s=>{
                 const d=calc(s.current).ovS-calc(s.march).ovS;
-                if(d>top.delta) top={store:s, delta:d, cg:calc(s.current).ov, mg:calc(s.march).ov};
+                if(d>top.delta) top={store:s, delta:d, c:calc(s.current), m:calc(s.march)};
             });
             if(!top.store || top.delta<=0) return;
+            // What drove the jump? inbound vs outbound GPA delta
+            const ibD=gn(top.c.ib)-gn(top.m.ib);
+            const obD=gn(top.c.ob)-gn(top.m.ob);
+            let driver;
+            if(ibD>0 && obD>0 && Math.abs(ibD-obD)<0.3) driver='Led by inbound + outbound';
+            else if(ibD>obD) driver='Led by inbound ('+top.m.ib+' \u2192 '+top.c.ib+')';
+            else if(obD>ibD) driver='Led by outbound ('+top.m.ob+' \u2192 '+top.c.ob+')';
+            else driver='Across the board';
             const overlay=document.createElement('div');
             overlay.id='fireworkOverlay';
             overlay.style.cssText='position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999;pointer-events:none;background:radial-gradient(circle at center, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 70%);opacity:0;transition:opacity 0.4s ease;';
@@ -2888,8 +2909,9 @@
                     <div style="background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);border:3px solid #f59e0b;border-radius:18px;padding:22px 38px;box-shadow:0 20px 60px rgba(0,0,0,0.25);">
                         <div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#92400e;font-weight:700;margin-bottom:6px;">Most Improved This Week</div>
                         <div style="font-size:32px;font-weight:800;color:#78350f;margin-bottom:4px;">${top.store.id}</div>
-                        <div style="font-size:14px;color:#78350f;margin-bottom:8px;">${top.store.name}</div>
-                        <div style="font-size:18px;font-weight:700;color:#15803d;">${top.mg} \u2192 ${top.cg}</div>
+                        <div style="font-size:14px;color:#78350f;margin-bottom:10px;">${top.store.name}</div>
+                        <div style="font-size:18px;font-weight:700;color:#15803d;margin-bottom:6px;">${top.m.ov} \u2192 ${top.c.ov}</div>
+                        <div style="font-size:12px;font-weight:600;color:#92400e;font-style:italic;">${driver}</div>
                     </div>
                 </div>
                 <canvas id="fwCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></canvas>
