@@ -613,7 +613,7 @@
         <button class="tab-btn" onclick="switchTab('regions',this)">Regions</button>
         <button class="tab-btn" onclick="switchTab('trends',this)">Inbound Trends</button>
         <button class="tab-btn" onclick="switchTab('obtrends',this)">Outbound Trends</button>
-        <button class="tab-btn" onclick="switchTab('baseline',this)">Baseline Ref</button>
+        <button class="tab-btn" onclick="switchTab('baseline',this)">Progress Since Start</button>
         <button class="tab-btn" onclick="switchTab('entry',this)">Data Entry</button>
     </div>
 
@@ -1421,7 +1421,7 @@
                 '</div>';
             }
             let h='<div style="padding:6px 0;">';
-            h+='<div style="font-size:10px;text-transform:uppercase;color:#475569;letter-spacing:0.5px;margin-bottom:5px;font-weight:700;">Baseline → Current (Apr)</div>';
+            h+='<div style="font-size:10px;text-transform:uppercase;color:#475569;letter-spacing:0.5px;margin-bottom:5px;font-weight:700;">Start → Current (Apr)</div>';
             h+='<div style="display:flex;flex-wrap:wrap;gap:2px;margin-bottom:10px;">';
             h+=pill('Overall',b.ov,c.ov)+pill('Inbound',b.ib,c.ib)+pill('Outbound',b.ob,c.ob);
             h+='</div>';
@@ -1448,7 +1448,7 @@
             const west=D.stores.filter(s=>s.region==='West'), east=D.stores.filter(s=>s.region==='East');
             const allStores=D.stores.filter(s=>s.id!=='TCC');
             function baseTable(stores,label,cls){
-                let h='<div class="region-section"><div class="region-header region-'+cls+'-hdr"><h3>'+label+' Region — Baseline Reference</h3></div>';
+                let h='<div class="region-section"><div class="region-header region-'+cls+'-hdr"><h3>'+label+' Region — Progress Since Start</h3></div>';
                 h+='<table class="stores-table"><thead><tr><th style="width:22px;"></th><th class="left">Store</th><th>RI %</th><th>Set %</th><th>Inbound</th><th>Live %</th><th>Appt %</th><th>Outbound</th><th>Overall</th></tr></thead><tbody>';
                 stores.forEach(s=>{
                     const b=calc(s.baseline), c=calc(s.current);
@@ -1521,7 +1521,7 @@
                 }
 
                 let h='<div style="margin-top:24px;">';
-                h+='<h3 style="font-size:15px;font-weight:700;color:#1e293b;margin:0 0 16px 0;border-bottom:2px solid #e2e8f0;padding-bottom:8px;">Executive Summary — Baseline to Current</h3>';
+                h+='<h3 style="font-size:15px;font-weight:700;color:#1e293b;margin:0 0 16px 0;border-bottom:2px solid #e2e8f0;padding-bottom:8px;">Executive Summary — Progress Since Start</h3>';
 
                 // === ROW 1: Grade overview cards ===
                 h+='<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">';
@@ -1567,7 +1567,7 @@
                 h+='<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">';
                 // Wins column
                 h+='<div style="flex:1;min-width:280px;padding:14px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0;">';
-                h+='<div style="font-size:12px;font-weight:700;color:#15803d;margin-bottom:10px;">Wins Since Baseline</div>';
+                h+='<div style="font-size:12px;font-weight:700;color:#15803d;margin-bottom:10px;">Wins Since Start</div>';
                 if(improved.length){
                     improved.forEach(s=>{
                         const b2=calc(s.baseline), c2=calc(s.current);
@@ -1637,7 +1637,7 @@
                 return h;
             }
 
-            p.innerHTML='<p style="font-size:12px;color:#64748b;padding:6px 0;">Baseline grades represent the starting point (pre-Ring Ring or initial benchmark period). Click any row to see trends.</p>'+baseTable(west,'West','west')+baseTable(east,'East','east')+execSummary();
+            p.innerHTML='<p style="font-size:12px;color:#64748b;padding:6px 0;">Starting point = pre-Ring Ring / initial benchmark period. Compare it to where each store sits today. Click any row to see trends.</p>'+baseTable(west,'West','west')+baseTable(east,'East','east')+execSummary();
             baseExpandedId = null;
         }
 
@@ -1697,18 +1697,24 @@
                 ];
                 all.push({pri:1,type:'opportunity',tag:'Opportunity',title:bestGain.store.id+' \u2014 Biggest Improver',text:pick(v,bestGain.store.id+'gain')});
             }
-            // Overall declines (high priority)
+            // Overall declines (high priority) — identify which side (inbound/outbound/both) is dragging
             alertStores.forEach(s=>{const c=calc(s.current),m=calc(s.march);
                 if(gn(c.ov)<gn(m.ov)){
+                    const ibDown=gn(c.ib)<gn(m.ib);
+                    const obDown=gn(c.ob)<gn(m.ob);
+                    let side='', sideTag='';
+                    if(ibDown && obDown){ side='<strong>Both sides down</strong> \u2014 Inbound '+m.ib+'\u2192'+c.ib+', Outbound '+m.ob+'\u2192'+c.ob+'. '; sideTag=' (IB+OB)'; }
+                    else if(ibDown){ side='<strong>Inbound</strong> is the drag \u2014 '+m.ib+'\u2192'+c.ib+' (Outbound '+m.ob+'\u2192'+c.ob+'). '; sideTag=' (IB)'; }
+                    else if(obDown){ side='<strong>Outbound</strong> is the drag \u2014 '+m.ob+'\u2192'+c.ob+' (Inbound '+m.ib+'\u2192'+c.ib+'). '; sideTag=' (OB)'; }
                     const v=[
-                        'Slipped '+m.ov+' \u2192 '+c.ov+' since March. Pull 5 recordings from this week \u2014 look for the hook and the ask.',
-                        'What the hell is happening over there? '+m.ov+' \u2192 '+c.ov+' in 30 days.',
-                        m.ov+' \u2192 '+c.ov+'. Run a scorecard this week before the pattern locks in.',
-                        'Declined '+m.ov+' \u2192 '+c.ov+'. Run a scorecard \u2014 find out what the phones actually sound like.',
-                        'Quietly slid '+m.ov+' \u2192 '+c.ov+'. Schedule an in-person Ring Ring before May starts.',
-                        m.ov+' down to '+c.ov+'. Pull the last 10 unconverted RI calls and see what they have in common.'
+                        side+'Slipped '+m.ov+' \u2192 '+c.ov+' since March. Pull 5 recordings from the weak side this week \u2014 look for the hook and the ask.',
+                        side+'What the hell is happening over there? '+m.ov+' \u2192 '+c.ov+' in 30 days.',
+                        side+m.ov+' \u2192 '+c.ov+'. Run a scorecard this week before the pattern locks in.',
+                        side+'Declined '+m.ov+' \u2192 '+c.ov+'. Run a scorecard \u2014 find out what the phones actually sound like.',
+                        side+'Quietly slid '+m.ov+' \u2192 '+c.ov+'. Pull individual rep grades on the weak side and find who\'s dragging the average.',
+                        side+m.ov+' down to '+c.ov+'. Pull the last 10 unconverted calls and see what they have in common.'
                     ];
-                    all.push({pri:0,type:'watch',tag:'Watch',title:s.id+' \u2014 Overall declined ('+m.ov+' \u2192 '+c.ov+')',text:pick(v,s.id+'decl')});
+                    all.push({pri:0,type:'watch',tag:'Watch',title:s.id+' \u2014 Overall declined ('+m.ov+' \u2192 '+c.ov+')'+sideTag,text:pick(v,s.id+'decl')});
                 }
             });
             // Big Set swings (Mar → Apr)
@@ -1844,24 +1850,37 @@
             // General Derby reminder
             all.push({pri:5,type:'system',tag:'',title:'Derby Reminder',
                 text:'Ring Ring Derby is live! <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">View Derby Scoreboard</a> | <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a>'});
-            // Sort by priority, then flex count by how much is actually happening
+            // Sort by priority. Cap at 3-4, always show at least one West and one East store.
             all.sort((a,b)=>a.pri-b.pri);
             const westIds=new Set(D.stores.filter(s=>s.region==='West').map(s=>s.id));
-            // Flex MAX: 4 on quiet days, up to 7 when there's a lot to surface
+            const storeIds=new Set(D.stores.map(s=>s.id));
+            const isStoreMsg=m=>storeIds.has(m.title.split(' ')[0]);
+            // Flex MAX: 3 on quiet days, 4 when there's more to surface
             const nonDerby=all.filter(m=>m.type!=='derby'&&m.type!=='system').length;
-            const MAX=Math.min(7, Math.max(4, nonDerby));
+            const MAX=Math.min(4, Math.max(3, nonDerby>=4?4:3));
             const result=[];
-            let hasWest=false, hasEast=false;
             for(const m of all){
                 if(result.length>=MAX) break;
                 result.push(m);
-                const sid=m.title.split(' ')[0];
-                if(westIds.has(sid)) hasWest=true; else hasEast=true;
             }
-            // If missing a region, swap last item for first from that region
+            // East/West balance — check only store-tagged messages
+            const storeMsgs=result.filter(isStoreMsg);
+            const hasWest=storeMsgs.some(m=>westIds.has(m.title.split(' ')[0]));
+            const hasEast=storeMsgs.some(m=>!westIds.has(m.title.split(' ')[0]) && isStoreMsg(m));
             if(result.length>=2){
-                if(!hasWest){const w=all.find(m=>westIds.has(m.title.split(' ')[0]));if(w&&result.indexOf(w)<0){result[result.length-1]=w;}}
-                if(!hasEast){const e=all.find(m=>!westIds.has(m.title.split(' ')[0]));if(e&&result.indexOf(e)<0){result[result.length-1]=e;}}
+                if(!hasWest){
+                    const w=all.find(m=>isStoreMsg(m) && westIds.has(m.title.split(' ')[0]));
+                    if(w && result.indexOf(w)<0){
+                        // Replace the last store-tagged message that's NOT the only East rep
+                        for(let i=result.length-1;i>=0;i--){if(isStoreMsg(result[i]) && !westIds.has(result[i].title.split(' ')[0])){result[i]=w;break;}}
+                    }
+                }
+                if(!hasEast){
+                    const e=all.find(m=>isStoreMsg(m) && !westIds.has(m.title.split(' ')[0]));
+                    if(e && result.indexOf(e)<0){
+                        for(let i=result.length-1;i>=0;i--){if(isStoreMsg(result[i]) && westIds.has(result[i].title.split(' ')[0])){result[i]=e;break;}}
+                    }
+                }
             }
             return result;
         }
@@ -2315,6 +2334,16 @@
                 <strong>East</strong> (${eastStores.length} stores): ${eJan!==null?eJan.toFixed(1):'—'}% (Jan) → <strong>${eApr!==null?eApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${eD>=0?'#16a34a':'#dc2626'}">${eD>=0?'+':''}${eD.toFixed(1)}</strong></p>
             </div>`;
 
+            // Combined Enterprise Trend — Inbound GPA vs Outbound GPA (Y-axis 0-4)
+            let combinedHTML = `<div class="trends-chart-wrap" style="margin-bottom:14px;">
+                <h4 style="font-size:13px;color:#475569;margin:0 0 6px 0;font-weight:700;">Enterprise Trend — Inbound vs Outbound (Grade)</h4>
+                <canvas id="combinedTrendCanvas" width="900" height="220"></canvas>
+                <div class="trends-chart-legend">
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#0ea5e9;"></div>Inbound grade</div>
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#f97316;"></div>Outbound grade</div>
+                </div>
+            </div>`;
+
             // Chart — Group Avg, West, East lines
             let chartHTML = `<div class="trends-chart-wrap">
                 <canvas id="trendCanvas" width="900" height="260"></canvas>
@@ -2402,9 +2431,10 @@
                     </div>
                     <span style="font-size:11px;color:#6b7280;">Jan – Apr 2026 YTD | Monthly CRISP Data</span>
                 </div>
-                ${execHTML}${chartHTML}${moversHTML}${hmHTML}`;
+                ${execHTML}${combinedHTML}${chartHTML}${moversHTML}${hmHTML}`;
 
             drawTrendChart();
+            drawCombinedTrendChart();
         }
 
         // ============================================
@@ -2623,8 +2653,9 @@
                     ctx.fillStyle='#fff'; ctx.fill();
                     ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
                     ctx.strokeStyle=color; ctx.lineWidth=2; ctx.stroke();
+                    const grade = gg(v, m);
                     ctx.fillStyle=color; ctx.font='bold 10px Helvetica Neue, Helvetica, Arial'; ctx.textAlign='center';
-                    ctx.fillText(v.toFixed(1)+'%', x, y-10);
+                    ctx.fillText(v.toFixed(1)+'% '+grade, x, y-10);
                 });
             }
 
@@ -2689,7 +2720,8 @@
             ctx.fillStyle = '#6b7280'; ctx.font = 'bold 10px Helvetica Neue, Helvetica, Arial'; ctx.textAlign = 'left';
             ctx.fillText('Bench ' + bench + '%', w-pad.right+6, benchY+4);
 
-            // Draw a line series
+            // Draw a line series (grade label appended to %)
+            const gKey = m==='ri' ? 'req' : 'set';
             function drawLine(series, color, width, dash) {
                 ctx.strokeStyle = color; ctx.lineWidth = width; ctx.setLineDash(dash||[]);
                 ctx.beginPath();
@@ -2700,7 +2732,7 @@
                     if(!started){ctx.moveTo(x,y);started=true;}else ctx.lineTo(x,y);
                 });
                 ctx.stroke(); ctx.setLineDash([]);
-                // Dots + value labels
+                // Dots + value labels (value + grade)
                 series.forEach((v,i) => {
                     if(v===null) return;
                     const x = toX(i), y = toY(v);
@@ -2708,9 +2740,10 @@
                     ctx.fillStyle='#fff'; ctx.fill();
                     ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
                     ctx.strokeStyle=color; ctx.lineWidth=2; ctx.stroke();
-                    // Value label
+                    // Value label + grade
+                    const grade = gg(v, gKey);
                     ctx.fillStyle=color; ctx.font='bold 10px Helvetica Neue, Helvetica, Arial'; ctx.textAlign='center';
-                    ctx.fillText(v.toFixed(1)+'%', x, y-10);
+                    ctx.fillText(v.toFixed(1)+'% '+grade, x, y-10);
                 });
             }
 
@@ -2720,6 +2753,101 @@
             // X axis
             ctx.fillStyle = '#6b7280'; ctx.font = '11px Helvetica Neue, Helvetica, Arial'; ctx.textAlign = 'center';
             months.forEach((mo,i) => { ctx.fillText(mo, toX(i), h-pad.bottom+18); });
+        }
+
+        function drawCombinedTrendChart() {
+            const canvas = document.getElementById('combinedTrendCanvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const dpr = window.devicePixelRatio || 1;
+            const w = canvas.clientWidth, h = canvas.clientHeight;
+            canvas.width = w * dpr; canvas.height = h * dpr;
+            ctx.scale(dpr, dpr);
+
+            const months = TRENDS.months;
+            const pad = {top:20, right:80, bottom:30, left:44};
+            const cw = w - pad.left - pad.right;
+            const ch = h - pad.top - pad.bottom;
+
+            // Compute enterprise-avg inbound and outbound GPA per month
+            function monthGPA(mi){
+                let ibSum=0, ibCount=0, obSum=0, obCount=0;
+                D.stores.forEach(s=>{
+                    const ri=(TRENDS.ri[s.id]||[])[mi];
+                    const se=(TRENDS.set[s.id]||[])[mi];
+                    const lv=(OB_TRENDS.live[s.id]||[])[mi];
+                    const ap=(OB_TRENDS.appt[s.id]||[])[mi];
+                    if(ri!=null && se!=null){
+                        const iS=(gn(gg(ri,'req'))+gn(gg(se,'set')))/2;
+                        ibSum+=iS; ibCount++;
+                    }
+                    if(lv!=null && ap!=null){
+                        const oS=gn(gg(lv,'live'))*0.6+gn(gg(ap,'appt'))*0.4;
+                        obSum+=oS; obCount++;
+                    }
+                });
+                return {ib: ibCount>0?ibSum/ibCount:null, ob: obCount>0?obSum/obCount:null};
+            }
+            const data = months.map((_,i)=>monthGPA(i));
+            const ibSeries = data.map(d=>d.ib);
+            const obSeries = data.map(d=>d.ob);
+
+            // Y-axis: 0.0 to 4.0 GPA
+            const minV = 0, maxV = 4;
+            const xStep = cw / (months.length - 1);
+            const yScale = ch / (maxV - minV);
+            const toX = i => pad.left + i * xStep;
+            const toY = v => pad.top + (maxV - v) * yScale;
+
+            // Grade reference lines (A/B/C/D/F)
+            const grades=[{v:4.0,g:'A'},{v:3.0,g:'B'},{v:2.0,g:'C'},{v:1.0,g:'D'},{v:0,g:'F'}];
+            ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=0.5;
+            grades.forEach(gr=>{
+                const y=toY(gr.v);
+                ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(w-pad.right,y); ctx.stroke();
+                ctx.fillStyle='#9ca3af'; ctx.font='10px Helvetica Neue, Helvetica, Arial'; ctx.textAlign='right';
+                ctx.fillText(gr.g, pad.left-6, y+3);
+            });
+
+            function drawLine(series, color) {
+                ctx.strokeStyle=color; ctx.lineWidth=2.5; ctx.setLineDash([]);
+                ctx.beginPath();
+                let started=false;
+                series.forEach((v,i)=>{
+                    if(v==null) return;
+                    const x=toX(i), y=toY(v);
+                    if(!started){ctx.moveTo(x,y);started=true;}else ctx.lineTo(x,y);
+                });
+                ctx.stroke();
+                series.forEach((v,i)=>{
+                    if(v==null) return;
+                    const x=toX(i), y=toY(v);
+                    ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
+                    ctx.fillStyle='#fff'; ctx.fill();
+                    ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
+                    ctx.strokeStyle=color; ctx.lineWidth=2; ctx.stroke();
+                    const lbl=s2g(v);
+                    ctx.fillStyle=color; ctx.font='bold 10px Helvetica Neue, Helvetica, Arial'; ctx.textAlign='center';
+                    ctx.fillText(lbl, x, y-10);
+                });
+            }
+            drawLine(ibSeries, '#0ea5e9');
+            drawLine(obSeries, '#f97316');
+
+            // X axis
+            ctx.fillStyle='#6b7280'; ctx.font='11px Helvetica Neue, Helvetica, Arial'; ctx.textAlign='center';
+            months.forEach((mo,i)=>{ctx.fillText(mo, toX(i), h-pad.bottom+18);});
+
+            // Right-side end labels
+            const lastI = months.length-1;
+            if(ibSeries[lastI]!=null){
+                ctx.fillStyle='#0ea5e9'; ctx.font='bold 11px Helvetica Neue, Helvetica, Arial'; ctx.textAlign='left';
+                ctx.fillText('Inbound', toX(lastI)+10, toY(ibSeries[lastI])+4);
+            }
+            if(obSeries[lastI]!=null){
+                ctx.fillStyle='#f97316'; ctx.font='bold 11px Helvetica Neue, Helvetica, Arial'; ctx.textAlign='left';
+                ctx.fillText('Outbound', toX(lastI)+10, toY(obSeries[lastI])+4);
+            }
         }
 
         function renderDates(){
@@ -2735,7 +2863,73 @@
             document.getElementById('dateRange').textContent = mo[now.getMonth()]+' MTD ('+rangeStr+')';
         }
         function renderAll(){renderDates();renderStores();renderAlerts();renderCoaching();renderRegions();renderTrends();renderOBTrends();renderBaseline();renderDataEntry();renderSummary();renderInsights();}
-        document.addEventListener('DOMContentLoaded',renderAll);
+        // Most-improved-of-the-week firework on page load
+        function showMostImprovedFirework(){
+            // Biggest Mar → Apr grade gain (used as "last week's" movement for now)
+            let top={store:null, delta:-99};
+            D.stores.filter(s=>s.id!=='TCC').forEach(s=>{
+                const d=calc(s.current).ovS-calc(s.march).ovS;
+                if(d>top.delta) top={store:s, delta:d, cg:calc(s.current).ov, mg:calc(s.march).ov};
+            });
+            if(!top.store || top.delta<=0) return;
+            const overlay=document.createElement('div');
+            overlay.id='fireworkOverlay';
+            overlay.style.cssText='position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999;pointer-events:none;background:radial-gradient(circle at center, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 70%);opacity:0;transition:opacity 0.4s ease;';
+            overlay.innerHTML=`
+                <div style="position:relative;text-align:center;transform:scale(0.6);transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1);opacity:0;" id="fwCard">
+                    <div style="font-size:68px;line-height:1;margin-bottom:8px;">\u{1F386}</div>
+                    <div style="background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);border:3px solid #f59e0b;border-radius:18px;padding:22px 38px;box-shadow:0 20px 60px rgba(0,0,0,0.25);">
+                        <div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#92400e;font-weight:700;margin-bottom:6px;">Most Improved This Week</div>
+                        <div style="font-size:32px;font-weight:800;color:#78350f;margin-bottom:4px;">${top.store.id}</div>
+                        <div style="font-size:14px;color:#78350f;margin-bottom:8px;">${top.store.name}</div>
+                        <div style="font-size:18px;font-weight:700;color:#15803d;">${top.mg} \u2192 ${top.cg}</div>
+                    </div>
+                </div>
+                <canvas id="fwCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></canvas>
+            `;
+            document.body.appendChild(overlay);
+            // Fire burst particles
+            const canvas=document.getElementById('fwCanvas');
+            canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+            const ctx=canvas.getContext('2d');
+            const cx=window.innerWidth/2, cy=window.innerHeight/2;
+            const colors=['#f59e0b','#ef4444','#3b82f6','#10b981','#a855f7','#ec4899'];
+            const particles=[];
+            for(let burst=0;burst<3;burst++){
+                setTimeout(()=>{
+                    const bx=cx+(Math.random()-0.5)*400, by=cy-120+(Math.random()-0.5)*200;
+                    for(let i=0;i<40;i++){
+                        const ang=(Math.PI*2/40)*i, spd=2+Math.random()*4;
+                        particles.push({x:bx,y:by,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,life:1,color:colors[burst%colors.length]});
+                    }
+                },burst*250);
+            }
+            function animate(){
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                particles.forEach(p=>{
+                    p.x+=p.vx; p.y+=p.vy; p.vy+=0.08; p.life-=0.015;
+                    if(p.life>0){
+                        ctx.globalAlpha=p.life; ctx.fillStyle=p.color;
+                        ctx.beginPath(); ctx.arc(p.x,p.y,3,0,Math.PI*2); ctx.fill();
+                    }
+                });
+                ctx.globalAlpha=1;
+                if(particles.some(p=>p.life>0) || particles.length===0) requestAnimationFrame(animate);
+            }
+            animate();
+            // Fade in
+            requestAnimationFrame(()=>{
+                overlay.style.opacity='1';
+                const card=document.getElementById('fwCard');
+                card.style.transform='scale(1)'; card.style.opacity='1';
+            });
+            // Fade out and remove
+            setTimeout(()=>{
+                overlay.style.opacity='0';
+                setTimeout(()=>overlay.remove(), 500);
+            }, 3500);
+        }
+        document.addEventListener('DOMContentLoaded',()=>{renderAll();setTimeout(showMostImprovedFirework,400);});
     </script>
     <div class="staff-overlay" id="staffOverlay" onclick="if(event.target===this)closeStaffModal()">
         <div class="staff-modal"></div>
