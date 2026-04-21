@@ -594,29 +594,22 @@
         .focus-btn.ob { border-color:#f97316; color:#c2410c; }
         .focus-btn.ob:hover { background:#f97316; color:#fff; }
         .focus-bar .fb-hint { color:#4d7c0f; font-style:italic; margin-left:auto; font-size:11px; }
-        .focus-region-prompt { padding:40px 24px 48px; text-align:center; color:#475569; }
-        .focus-region-prompt .frp-eyebrow { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#16a34a; font-weight:700; margin-bottom:8px; animation:fadeSlideDown 0.4s ease-out; }
-        .focus-region-prompt .frp-big { font-size:26px; font-weight:800; color:#1a1a2e; margin-bottom:8px; letter-spacing:-0.5px; animation:fadeSlideDown 0.5s ease-out; }
-        .focus-region-prompt .frp-small { font-size:13px; color:#6b7280; margin-bottom:28px; animation:fadeSlideDown 0.6s ease-out; }
-        .frp-cards { display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; max-width:720px; margin:0 auto; }
-        .frp-card { background:#fff; border:2px solid #e2e8f0; border-radius:14px; padding:20px 16px 18px; cursor:pointer; transition:all 0.25s cubic-bezier(.22,.9,.3,1.4); position:relative; overflow:hidden; text-align:left; font-family:inherit; animation:fadeSlideUp 0.5s ease-out backwards; }
+        .focus-region-prompt { padding:72px 32px 80px; display:flex; align-items:center; justify-content:center; min-height:380px; }
+        .frp-cards { display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; max-width:780px; width:100%; }
+        .frp-card { background:#fff; border:1px solid #e5e7eb; border-radius:16px; padding:36px 26px 30px; cursor:pointer; transition:all 0.3s cubic-bezier(.2,.9,.3,1); position:relative; overflow:hidden; text-align:left; font-family:inherit; animation:fadeSlideUp 0.5s ease-out backwards; min-height:180px; display:flex; flex-direction:column; justify-content:space-between; }
         .frp-card:nth-child(1){ animation-delay:0.05s; }
-        .frp-card:nth-child(2){ animation-delay:0.15s; }
-        .frp-card:nth-child(3){ animation-delay:0.25s; }
-        .frp-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg, var(--c1,#0ea5e9) 0%, var(--c2,#6366f1) 100%); opacity:0; transition:opacity 0.25s; }
+        .frp-card:nth-child(2){ animation-delay:0.12s; }
+        .frp-card:nth-child(3){ animation-delay:0.19s; }
+        .frp-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--c1,#0ea5e9); transform:scaleY(0); transform-origin:top; transition:transform 0.3s ease; }
         .frp-card > * { position:relative; z-index:1; }
-        .frp-card:hover { transform:translateY(-4px) scale(1.02); border-color:var(--c1,#0ea5e9); box-shadow:0 12px 32px rgba(14,165,233,0.25); }
-        .frp-card:hover::before { opacity:0.08; }
-        .frp-card:active { transform:translateY(-1px) scale(0.99); }
-        .frp-card .frc-icon { font-size:38px; line-height:1; margin-bottom:10px; display:inline-block; transition:transform 0.3s; }
-        .frp-card:hover .frc-icon { transform:scale(1.15) rotate(-6deg); }
-        .frp-card .frc-title { font-size:17px; font-weight:800; color:#1a1a2e; margin-bottom:2px; letter-spacing:-0.3px; }
-        .frp-card .frc-count { font-size:11px; font-weight:700; color:var(--c1,#0ea5e9); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px; }
-        .frp-card .frc-stores { font-size:10.5px; color:#6b7280; line-height:1.4; }
-        .frp-card .frc-arrow { position:absolute; top:16px; right:16px; font-size:18px; color:#cbd5e1; transition:all 0.25s; }
-        .frp-card:hover .frc-arrow { color:var(--c1,#0ea5e9); transform:translateX(3px); }
-        @keyframes fadeSlideDown { from{opacity:0;transform:translateY(-8px);} to{opacity:1;transform:translateY(0);} }
-        @keyframes fadeSlideUp { from{opacity:0;transform:translateY(16px);} to{opacity:1;transform:translateY(0);} }
+        .frp-card:hover { transform:translateY(-3px); border-color:var(--c1,#0ea5e9); box-shadow:0 14px 40px rgba(15,23,42,0.08); }
+        .frp-card:hover::before { transform:scaleY(1); }
+        .frp-card:active { transform:translateY(-1px); }
+        .frp-card .frc-region { font-size:28px; font-weight:700; color:#0f172a; letter-spacing:-0.5px; line-height:1.1; margin-bottom:4px; transition:color 0.25s; }
+        .frp-card:hover .frc-region { color:var(--c1,#0ea5e9); }
+        .frp-card .frc-meta { font-size:11px; color:#94a3b8; text-transform:uppercase; letter-spacing:1.2px; font-weight:600; margin-bottom:18px; }
+        .frp-card .frc-stores { font-size:11px; color:#64748b; line-height:1.6; letter-spacing:0.2px; }
+        @keyframes fadeSlideUp { from{opacity:0;transform:translateY(14px);} to{opacity:1;transform:translateY(0);} }
 
         /* MOBILE RESPONSIVE — Focus mode */
         @media (max-width: 768px) {
@@ -632,13 +625,11 @@
             .focus-region-picker { padding:10px 14px; overflow-x:auto; white-space:nowrap; flex-wrap:nowrap; -webkit-overflow-scrolling:touch; }
             .focus-region-picker .fr-chip { flex-shrink:0; }
             .focus-body { padding:14px 14px 24px; }
-            .focus-region-prompt { padding:28px 16px 36px; }
-            .focus-region-prompt .frp-big { font-size:20px; }
-            .focus-region-prompt .frp-small { font-size:12px; margin-bottom:20px; }
-            .frp-cards { grid-template-columns:1fr; gap:10px; max-width:100%; }
-            .frp-card { padding:16px 14px; }
-            .frp-card .frc-icon { font-size:30px; margin-bottom:6px; }
-            .frp-card .frc-title { font-size:15px; }
+            .focus-region-prompt { padding:32px 16px 40px; min-height:auto; }
+            .frp-cards { grid-template-columns:1fr; gap:12px; max-width:100%; }
+            .frp-card { padding:22px 20px 20px; min-height:auto; }
+            .frp-card .frc-region { font-size:22px; }
+            .frp-card .frc-meta { margin-bottom:12px; }
             .focus-summary-grid { grid-template-columns:repeat(2,1fr); gap:8px; }
             .fsm-box { padding:8px 10px; }
             .fsm-box .fsm-val { font-size:18px; }
@@ -737,7 +728,6 @@
         <span class="fb-label">Focus Mode:</span>
         <button class="focus-btn ib" onclick="openFocus('ib')">I ONLY care about Inbound</button>
         <button class="focus-btn ob" onclick="openFocus('ob')">I ONLY care about Outbound</button>
-        <span class="fb-hint">One channel, one region, crystal-clear training priorities</span>
     </div>
 
     <div class="summary-strip">
@@ -2468,29 +2458,20 @@
             const eastNames = eastStores.map(s=>s.id).join(' · ');
             document.getElementById('focusBody').innerHTML = `
                 <div class="focus-region-prompt">
-                    <div class="frp-eyebrow">${isIB ? '&#128222; Inbound' : '&#128241; Outbound'} &middot; Pick your slice</div>
-                    <div class="frp-big">Where are we zeroing in?</div>
-                    <div class="frp-small">Pick a region and I'll pull the focused view — rankings, training priorities, the whole deal.</div>
                     <div class="frp-cards">
-                        <button class="frp-card" style="--c1:#059669;--c2:#10b981;" onclick="setFocusRegion('West')">
-                            <span class="frc-arrow">&rarr;</span>
-                            <div class="frc-icon">&#127956;&#65039;</div>
-                            <div class="frc-count">${westStores.length} stores</div>
-                            <div class="frc-title">West</div>
+                        <button class="frp-card" style="--c1:#059669;" onclick="setFocusRegion('West')">
+                            <div class="frc-region">West</div>
+                            <div class="frc-meta">${westStores.length} stores</div>
                             <div class="frc-stores">${westNames}</div>
                         </button>
-                        <button class="frp-card" style="--c1:#0284c7;--c2:#0ea5e9;" onclick="setFocusRegion('East')">
-                            <span class="frc-arrow">&rarr;</span>
-                            <div class="frc-icon">&#127958;&#65039;</div>
-                            <div class="frc-count">${eastStores.length} stores</div>
-                            <div class="frc-title">East</div>
+                        <button class="frp-card" style="--c1:#0284c7;" onclick="setFocusRegion('East')">
+                            <div class="frc-region">East</div>
+                            <div class="frc-meta">${eastStores.length} stores</div>
                             <div class="frc-stores">${eastNames}</div>
                         </button>
-                        <button class="frp-card" style="--c1:#7c3aed;--c2:#a855f7;" onclick="setFocusRegion('All')">
-                            <span class="frc-arrow">&rarr;</span>
-                            <div class="frc-icon">&#127758;</div>
-                            <div class="frc-count">${D.stores.length} stores</div>
-                            <div class="frc-title">All regions</div>
+                        <button class="frp-card" style="--c1:#7c3aed;" onclick="setFocusRegion('All')">
+                            <div class="frc-region">All regions</div>
+                            <div class="frc-meta">${D.stores.length} stores</div>
                             <div class="frc-stores">Everyone in one view</div>
                         </button>
                     </div>
@@ -2575,18 +2556,24 @@
                     <div class="fsm-box"><div class="fsm-lbl">Bottom</div><div class="fsm-val" style="font-size:16px;">${bottom.s.id} · ${bottom.ch}</div><div class="fsm-sub">${bottom.s.name.replace('Fred Anderson ','')}</div></div>
                 </div>`;
             // Ranking table
+            function gradePair(fromG, toG, diff){
+                const arrowCol = diff == null ? '#94a3b8' : diff >= 0.2 ? '#16a34a' : diff <= -0.2 ? '#dc2626' : '#94a3b8';
+                const arrowChar = diff == null ? '&rarr;' : diff >= 0.2 ? '&#9650;' : diff <= -0.2 ? '&#9660;' : '&rarr;';
+                if(fromG == null) return `<span style="color:#94a3b8;">&mdash;</span> <span style="color:${arrowCol};">${arrowChar}</span> <strong style="color:${gradeColor(toG)};">${toG}</strong>`;
+                return `<span style="color:#94a3b8;">${fromG}</span> <span style="color:${arrowCol};font-size:10px;">${arrowChar}</span> <strong style="color:${gradeColor(toG)};">${toG}</strong>`;
+            }
             let tableRows = scored.map((x, idx) => {
                 const td = trendData[idx];
-                const arrow = td.diff==null ? '—' : td.diff >= 0.2 ? '<span style="color:#16a34a;">&#9650; +'+td.diff.toFixed(2)+'</span>' : td.diff <= -0.2 ? '<span style="color:#dc2626;">&#9660; '+td.diff.toFixed(2)+'</span>' : '<span style="color:#6b7280;">&#8213; '+td.diff.toFixed(2)+'</span>';
-                const deltaStr = x.delta>=0 ? '+'+x.delta.toFixed(2) : x.delta.toFixed(2);
-                const deltaColor = x.delta>=0.3?'#16a34a':x.delta<=-0.3?'#dc2626':'#6b7280';
+                const marGrade = td.mar != null ? s2g(td.mar) : null;
+                const aprGrade = x.ch;
+                const baseGrade = s2g(x.base);
                 return `<tr>
                     <td><strong>${x.s.id}</strong> <span style="color:#6b7280;font-size:11px;">${x.s.name.replace('Fred Anderson ','').replace('Fred Anderson','')}</span></td>
                     <td><span class="grade-pill" style="background:${gradeColor(x.ch)}20;color:${gradeColor(x.ch)};">${x.ch}</span></td>
                     <td class="num">${x.primary.toFixed(0)}% <span style="color:#9ca3af;font-size:10px;">(${x.primaryG})</span></td>
                     <td class="num">${x.secondary.toFixed(0)}% <span style="color:#9ca3af;font-size:10px;">(${x.secondaryG})</span></td>
-                    <td class="num">${arrow}</td>
-                    <td class="num" style="color:${deltaColor};font-weight:600;">${deltaStr}</td>
+                    <td class="num">${gradePair(marGrade, aprGrade, td.diff)}</td>
+                    <td class="num">${gradePair(baseGrade, aprGrade, x.delta)}</td>
                 </tr>`;
             }).join('');
             const tableHTML = `
@@ -2596,7 +2583,7 @@
                         <th>${isIB?'Inbound':'Outbound'} Grade</th>
                         <th style="text-align:right;">${isIB?'RI%':'Live%'}</th>
                         <th style="text-align:right;">${isIB?'Set%':'Appt%'}</th>
-                        <th style="text-align:right;">Mar → Apr</th>
+                        <th style="text-align:right;">Mar &rarr; Apr</th>
                         <th style="text-align:right;">vs Start</th>
                     </tr></thead>
                     <tbody>${tableRows}</tbody>
