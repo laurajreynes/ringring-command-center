@@ -675,12 +675,49 @@
         .focus-tbl tr:hover td { background:#f9fafb; }
         .focus-tbl .num { text-align:right; font-variant-numeric:tabular-nums; }
         .focus-tbl .grade-pill { display:inline-block; padding:2px 7px; border-radius:10px; font-weight:700; font-size:10px; min-width:24px; text-align:center; }
-        .focus-priority { background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%); border-left:4px solid #f59e0b; border-radius:6px; padding:12px 14px; margin-bottom:8px; font-size:12px; color:#78350f; }
-        .focus-priority strong { color:#92400e; font-weight:700; }
-        .focus-priority .fp-title { font-size:11px; text-transform:uppercase; letter-spacing:0.4px; font-weight:700; color:#92400e; margin-bottom:4px; }
-        .focus-strength { background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%); border-left:4px solid #16a34a; border-radius:6px; padding:12px 14px; margin-bottom:8px; font-size:12px; color:#14532d; }
+        /* Back-to-region switcher */
+        .focus-back { display:inline-flex; align-items:center; gap:6px; background:#f1f5f9; border:1px solid #cbd5e1; color:#475569; padding:5px 12px; border-radius:16px; font-size:11px; font-weight:600; cursor:pointer; font-family:inherit; margin-bottom:14px; transition:all 0.15s; }
+        .focus-back:hover { background:#e2e8f0; color:#1a1a2e; transform:translateX(-2px); }
+        .focus-region-badge { display:inline-block; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:700; background:#dbeafe; color:#1e40af; margin-left:8px; }
+
+        /* Trend mini-chart */
+        .focus-trend-wrap { background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:14px 16px; }
+        .focus-trend-wrap canvas { width:100%; height:200px; display:block; }
+        .focus-trend-hdr { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; font-size:11px; color:#6b7280; }
+        .focus-trend-hdr strong { font-size:13px; color:#1a1a2e; font-weight:700; }
+
+        /* Redesigned priority cards — URGENT */
+        .focus-priority { background:linear-gradient(135deg,#fff5f0 0%,#fef2f2 100%); border:1.5px solid #fecaca; border-left:5px solid #dc2626; border-radius:10px; padding:14px 16px 14px 18px; margin-bottom:10px; color:#7f1d1d; position:relative; box-shadow:0 2px 8px rgba(220,38,38,0.08); }
+        .focus-priority.sev-high { border-left-color:#dc2626; }
+        .focus-priority.sev-med { border-left-color:#f59e0b; background:linear-gradient(135deg,#fffbeb 0%,#fef9e7 100%); border-color:#fde68a; color:#78350f; }
+        .focus-priority.sev-low { border-left-color:#0ea5e9; background:linear-gradient(135deg,#f0f9ff 0%,#e0f2fe 100%); border-color:#bae6fd; color:#075985; }
+        .fp-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:8px; }
+        .fp-head-left { flex:1; min-width:0; }
+        .fp-badge { display:inline-flex; align-items:center; gap:4px; font-size:9px; text-transform:uppercase; letter-spacing:0.6px; font-weight:800; padding:3px 8px; border-radius:10px; margin-bottom:4px; }
+        .fp-badge.sev-high { background:#dc2626; color:#fff; }
+        .fp-badge.sev-med { background:#f59e0b; color:#fff; }
+        .fp-badge.sev-low { background:#0ea5e9; color:#fff; }
+        .fp-store { font-size:15px; font-weight:800; color:#1a1a2e; letter-spacing:-0.2px; }
+        .fp-store .fp-id { color:#dc2626; margin-right:6px; }
+        .focus-priority.sev-med .fp-store .fp-id { color:#b45309; }
+        .focus-priority.sev-low .fp-store .fp-id { color:#0369a1; }
+        .fp-gap-stat { text-align:right; font-variant-numeric:tabular-nums; }
+        .fp-gap-num { font-size:22px; font-weight:800; color:#dc2626; line-height:1; }
+        .focus-priority.sev-med .fp-gap-num { color:#d97706; }
+        .focus-priority.sev-low .fp-gap-num { color:#0ea5e9; }
+        .fp-gap-lbl { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; color:#6b7280; font-weight:700; margin-top:1px; }
+        .fp-stats { display:flex; gap:14px; font-size:12px; margin-bottom:8px; flex-wrap:wrap; }
+        .fp-stats .fp-stat-item { color:#6b7280; }
+        .fp-stats .fp-stat-item strong { color:#1a1a2e; font-weight:700; }
+        .fp-action { background:rgba(255,255,255,0.7); border-radius:6px; padding:8px 10px; font-size:12px; line-height:1.5; border-left:3px solid rgba(0,0,0,0.15); }
+        .fp-action-label { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; font-weight:800; color:#92400e; margin-bottom:3px; }
+        .focus-priority.sev-high .fp-action-label { color:#991b1b; }
+        .focus-priority.sev-low .fp-action-label { color:#0c4a6e; }
+
+        .focus-strength { background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%); border:1.5px solid #bbf7d0; border-left:5px solid #16a34a; border-radius:10px; padding:12px 14px; margin-bottom:8px; font-size:12px; color:#14532d; box-shadow:0 2px 8px rgba(22,163,74,0.08); }
         .focus-strength strong { color:#166534; }
-        .focus-strength .fp-title { font-size:11px; text-transform:uppercase; letter-spacing:0.4px; font-weight:700; color:#166534; margin-bottom:4px; }
+        .focus-strength .fp-title { font-size:10px; text-transform:uppercase; letter-spacing:0.5px; font-weight:800; color:#166534; margin-bottom:4px; display:flex; align-items:center; gap:5px; }
+        .focus-strength .fp-title::before { content:'\2B50'; font-size:12px; }
     </style>
 </head>
 <body>
@@ -719,12 +756,6 @@
                     <div class="fh-sub" id="focusSub"></div>
                 </div>
                 <button class="close-btn" onclick="closeFocus()">&times;</button>
-            </div>
-            <div class="focus-region-picker">
-                <span class="frp-label">Region:</span>
-                <button class="fr-chip" data-reg="All" onclick="setFocusRegion('All')">All regions</button>
-                <button class="fr-chip" data-reg="East" onclick="setFocusRegion('East')">East</button>
-                <button class="fr-chip" data-reg="West" onclick="setFocusRegion('West')">West</button>
             </div>
             <div class="focus-body" id="focusBody"></div>
         </div>
@@ -782,23 +813,23 @@
     <script>
         const D = {
             stores: [
-                { id:'SAS', name:'Fred Anderson Subaru', region:'West', baseline:{req:66.8,set:37.8,live:17.5,appt:8.2}, current:{req:78,set:37,live:15.5,appt:7.8}, ytd:{req:67.5,set:35.2,live:16.5,appt:9.2} },
-                { id:'TAS', name:'Fred Anderson Toyota of Asheville', region:'West', baseline:{req:55.3,set:26.5,live:12.7,appt:10.3}, current:{req:59,set:26,live:16.2,appt:11.3}, ytd:{req:56.0,set:25.8,live:16.2,appt:10.8} },
-                { id:'NAS', name:'Fred Anderson Nissan of Asheville', region:'West', baseline:{req:63.8,set:42.3,live:18.9,appt:8.5}, current:{req:71,set:36,live:18.1,appt:10.6}, ytd:{req:64.0,set:38.2,live:16.8,appt:11.0} },
-                { id:'KGR', name:'Fred Anderson Kia of Greer', region:'West', baseline:{req:62.7,set:38.2,live:14.2,appt:10.2}, current:{req:69,set:51,live:14.5,appt:12.0}, ytd:{req:72.5,set:47.8,live:14.7,appt:12.1} },
+                { id:'SAS', name:'Fred Anderson Subaru', region:'West', baseline:{req:66.8,set:37.8,live:17.5,appt:8.2}, current:{req:78,set:40,live:15.5,appt:7.8}, ytd:{req:67.5,set:36.0,live:16.5,appt:9.2} },
+                { id:'TAS', name:'Fred Anderson Toyota of Asheville', region:'West', baseline:{req:55.3,set:26.5,live:12.7,appt:10.3}, current:{req:58,set:26,live:16.2,appt:11.3}, ytd:{req:55.8,set:25.8,live:16.2,appt:10.8} },
+                { id:'NAS', name:'Fred Anderson Nissan of Asheville', region:'West', baseline:{req:63.8,set:42.3,live:18.9,appt:8.5}, current:{req:70,set:35,live:18.1,appt:10.6}, ytd:{req:63.8,set:38.0,live:16.8,appt:11.0} },
+                { id:'KGR', name:'Fred Anderson Kia of Greer', region:'West', baseline:{req:62.7,set:38.2,live:14.2,appt:10.2}, current:{req:69,set:50,live:14.5,appt:12.0}, ytd:{req:72.5,set:47.5,live:14.7,appt:12.1} },
                 { id:'TGR', name:'Fred Anderson Toyota of Greer', region:'West', baseline:{req:57.0,set:32.8,live:17.4,appt:7.3}, current:{req:55,set:39,live:13.0,appt:9.2}, ytd:{req:55.8,set:33.8,live:14.8,appt:10.1} },
-                { id:'CGR', name:'Fred Anderson Chevy Buick GMC Cadillac', region:'West', baseline:{req:51.3,set:25.7,live:16.6,appt:6.3}, current:{req:57,set:36,live:20.6,appt:9.4}, ytd:{req:53.5,set:29.5,live:18.9,appt:9.6} },
-                { id:'HGR', name:'Fred Anderson Hyundai', region:'West', baseline:{req:63.5,set:38.3,live:10.4,appt:10.6}, current:{req:63,set:42,live:13.6,appt:10.7}, ytd:{req:63.2,set:33.8,live:12.7,appt:11.9} },
-                { id:'GGR', name:'Genesis of Greer', region:'West', baseline:{req:65.3,set:33.2,live:12.6,appt:10.7}, current:{req:66,set:38,live:9.0,appt:11.5}, ytd:{req:59.8,set:36.5,live:9.8,appt:12.1} },
-                { id:'AGV', name:'Fred Anderson Acura', region:'West', baseline:{req:59.5,set:32.2,live:14.9,appt:9.1}, current:{req:64,set:33,live:15.0,appt:11.2}, ytd:{req:62.0,set:40.0,live:16.4,appt:12.1} },
-                { id:'KGV', name:'Fred Anderson Kia of Greenville', region:'West', baseline:{req:60.3,set:32.3,live:13.1,appt:8.9}, current:{req:62,set:42,live:18.0,appt:11.4}, ytd:{req:64.0,set:36.0,live:15.9,appt:12.5} },
-                { id:'HGV', name:'Fred Anderson Honda of Greenville', region:'West', baseline:{req:68.5,set:40.5,live:16.3,appt:9.3}, current:{req:59,set:41,live:14.2,appt:10.3}, ytd:{req:63.0,set:40.0,live:15.4,appt:11.3} },
-                { id:'TRA', name:'Fred Anderson Toyota of Raleigh', region:'East', baseline:{req:68.2,set:41.0,live:13.1,appt:10.3}, current:{req:68,set:39,live:13.4,appt:10.4}, ytd:{req:66.8,set:38.5,live:14.2,appt:12.9} },
-                { id:'KRA', name:'Fred Anderson Kia of Raleigh', region:'East', baseline:{req:66.3,set:42.7,live:19.7,appt:7.5}, current:{req:68,set:48,live:12.5,appt:6.9}, ytd:{req:69.5,set:41.0,live:13.6,appt:10.2} },
-                { id:'NRA', name:'Fred Anderson Nissan of Raleigh', region:'East', baseline:{req:66.0,set:43.3,live:16.4,appt:8.5}, current:{req:63,set:40,live:15.8,appt:8.8}, ytd:{req:63.8,set:40.8,live:15.9,appt:11.8} },
-                { id:'TSA', name:'Fred Anderson Toyota of Sanford', region:'East', baseline:{req:62.0,set:34.3,live:17.9,appt:7.9}, current:{req:64,set:40,live:16.4,appt:8.2}, ytd:{req:62.5,set:37.8,live:16.6,appt:10.6} },
-                { id:'TCH', name:'Fred Anderson Toyota of Charleston', region:'East', baseline:{req:72.5,set:30.3,live:13.6,appt:7.6}, current:{req:73,set:28,live:12.1,appt:6.8}, ytd:{req:70.0,set:29.2,live:13.4,appt:8.7} },
-                { id:'TCC', name:'Fred Anderson Toyota of Cape Coral', region:'East', baseline:{req:86,set:79,live:0,appt:0}, current:{req:69,set:53,live:34.8,appt:11.0}, ytd:{req:69.0,set:53.0,live:34.8,appt:11.0} }
+                { id:'CGR', name:'Fred Anderson Chevy Buick GMC Cadillac', region:'West', baseline:{req:51.3,set:25.7,live:16.6,appt:6.3}, current:{req:56,set:38,live:20.6,appt:9.4}, ytd:{req:53.2,set:30.0,live:18.9,appt:9.6} },
+                { id:'HGR', name:'Fred Anderson Hyundai', region:'West', baseline:{req:63.5,set:38.3,live:10.4,appt:10.6}, current:{req:62,set:44,live:13.6,appt:10.7}, ytd:{req:63.0,set:34.2,live:12.7,appt:11.9} },
+                { id:'GGR', name:'Genesis of Greer', region:'West', baseline:{req:65.3,set:33.2,live:12.6,appt:10.7}, current:{req:66,set:37,live:9.0,appt:11.5}, ytd:{req:59.8,set:36.2,live:9.8,appt:12.1} },
+                { id:'AGV', name:'Fred Anderson Acura', region:'West', baseline:{req:59.5,set:32.2,live:14.9,appt:9.1}, current:{req:63,set:32,live:15.0,appt:11.2}, ytd:{req:61.8,set:39.8,live:16.4,appt:12.1} },
+                { id:'KGV', name:'Fred Anderson Kia of Greenville', region:'West', baseline:{req:60.3,set:32.3,live:13.1,appt:8.9}, current:{req:63,set:43,live:18.0,appt:11.4}, ytd:{req:64.2,set:36.2,live:15.9,appt:12.5} },
+                { id:'HGV', name:'Fred Anderson Honda of Greenville', region:'West', baseline:{req:68.5,set:40.5,live:16.3,appt:9.3}, current:{req:58,set:43,live:14.2,appt:10.3}, ytd:{req:62.8,set:40.5,live:15.4,appt:11.3} },
+                { id:'TRA', name:'Fred Anderson Toyota of Raleigh', region:'East', baseline:{req:68.2,set:41.0,live:13.1,appt:10.3}, current:{req:68,set:38,live:13.4,appt:10.4}, ytd:{req:66.8,set:38.2,live:14.2,appt:12.9} },
+                { id:'KRA', name:'Fred Anderson Kia of Raleigh', region:'East', baseline:{req:66.3,set:42.7,live:19.7,appt:7.5}, current:{req:66,set:48,live:12.5,appt:6.9}, ytd:{req:69.0,set:41.0,live:13.6,appt:10.2} },
+                { id:'NRA', name:'Fred Anderson Nissan of Raleigh', region:'East', baseline:{req:66.0,set:43.3,live:16.4,appt:8.5}, current:{req:63,set:39,live:15.8,appt:8.8}, ytd:{req:63.8,set:40.5,live:15.9,appt:11.8} },
+                { id:'TSA', name:'Fred Anderson Toyota of Sanford', region:'East', baseline:{req:62.0,set:34.3,live:17.9,appt:7.9}, current:{req:63,set:40,live:16.4,appt:8.2}, ytd:{req:62.2,set:37.8,live:16.6,appt:10.6} },
+                { id:'TCH', name:'Fred Anderson Toyota of Charleston', region:'East', baseline:{req:72.5,set:30.3,live:13.6,appt:7.6}, current:{req:73,set:29,live:12.1,appt:6.8}, ytd:{req:70.0,set:29.5,live:13.4,appt:8.7} },
+                { id:'TCC', name:'Fred Anderson Toyota of Cape Coral', region:'East', baseline:{req:86,set:79,live:0,appt:0}, current:{req:70,set:50,live:34.8,appt:11.0}, ytd:{req:70.0,set:50.0,live:34.8,appt:11.0} }
             ]
         };
 
@@ -826,20 +857,20 @@
         const TRENDS = {
             months: ['Jan','Feb','Mar','Apr'],
             ri: {
-                'SAS':[61,64,67,78],'TAS':[52,53,60,59],'NAS':[64,58,63,71],
-                'KRA':[63,75,72,68],'TSA':[64,65,57,64],'TCH':[69,70,68,73],
-                'NRA':[63,66,63,63],'KGV':[59,70,65,62],'HGV':[60,67,66,59],
-                'AGV':[54,61,69,64],'CGR':[50,56,51,57],'KGR':[72,72,77,69],
-                'GGR':[61,51,61,66],'HGR':[57,70,63,63],'TGR':[51,58,59,55],
-                'TRA':[63,66,70,68],'TCC':[null,null,null,69]
+                'SAS':[61,64,67,78],'TAS':[52,53,60,58],'NAS':[64,58,63,70],
+                'KRA':[63,75,72,66],'TSA':[64,65,57,63],'TCH':[69,70,68,73],
+                'NRA':[63,66,63,63],'KGV':[59,70,65,63],'HGV':[60,67,66,58],
+                'AGV':[54,61,69,63],'CGR':[50,56,51,56],'KGR':[72,72,77,69],
+                'GGR':[61,51,61,66],'HGR':[57,70,63,62],'TGR':[51,58,59,55],
+                'TRA':[63,66,70,68],'TCC':[null,null,null,70]
             },
             set: {
-                'SAS':[37,39,28,37],'TAS':[24,23,30,26],'NAS':[37,39,41,36],
-                'KRA':[42,36,38,48],'TSA':[34,32,45,40],'TCH':[31,27,31,28],
-                'NRA':[38,41,44,40],'KGV':[33,34,35,42],'HGV':[37,39,43,41],
-                'AGV':[35,46,46,33],'CGR':[23,33,26,36],'KGR':[37,48,55,51],
-                'GGR':[36,42,30,38],'HGR':[20,34,39,42],'TGR':[31,32,33,39],
-                'TRA':[38,36,41,39],'TCC':[null,null,null,53]
+                'SAS':[37,39,28,40],'TAS':[24,23,30,26],'NAS':[37,39,41,35],
+                'KRA':[42,36,38,48],'TSA':[34,32,45,40],'TCH':[31,27,31,29],
+                'NRA':[38,41,44,39],'KGV':[33,34,35,43],'HGV':[37,39,43,43],
+                'AGV':[35,46,46,32],'CGR':[23,33,26,38],'KGR':[37,48,55,50],
+                'GGR':[36,42,30,37],'HGR':[20,34,39,44],'TGR':[31,32,33,39],
+                'TRA':[38,36,41,38],'TCC':[null,null,null,50]
             }
         };
 
@@ -2428,39 +2459,37 @@
             focusState.region = null;
             const isIB = mode === 'ib';
             document.getElementById('focusTitle').textContent = isIB ? 'Inbound Focus' : 'Outbound Focus';
-            document.getElementById('focusSub').textContent = (isIB
-                ? 'Request In% + Set% — who\'s answering, who\'s booking'
-                : 'Live Convos% + Appt% — who\'s connecting, who\'s closing')
-                + ' · Step 1: pick a region';
-            document.querySelectorAll('.focus-region-picker .fr-chip').forEach(c=>c.classList.remove('active'));
+            document.getElementById('focusSub').textContent = isIB
+                ? 'Request In% + Set% — did they ask for the visit, did they lock the appointment'
+                : 'Live Convos% + Appt% — did they connect with a human, did they close the appointment';
             const westStores = D.stores.filter(s=>s.region==='West');
             const eastStores = D.stores.filter(s=>s.region==='East');
             const westNames = westStores.map(s=>s.id).join(' · ');
             const eastNames = eastStores.map(s=>s.id).join(' · ');
             document.getElementById('focusBody').innerHTML = `
                 <div class="focus-region-prompt">
-                    <div class="frp-eyebrow">${isIB ? '&#128222; Inbound' : '&#128241; Outbound'} &middot; Step 1 of 2</div>
+                    <div class="frp-eyebrow">${isIB ? '&#128222; Inbound' : '&#128241; Outbound'} &middot; Pick your slice</div>
                     <div class="frp-big">Where are we zeroing in?</div>
                     <div class="frp-small">Pick a region and I'll pull the focused view — rankings, training priorities, the whole deal.</div>
                     <div class="frp-cards">
                         <button class="frp-card" style="--c1:#059669;--c2:#10b981;" onclick="setFocusRegion('West')">
                             <span class="frc-arrow">&rarr;</span>
                             <div class="frc-icon">&#127956;&#65039;</div>
-                            <div class="frc-count">${westStores.length} stores &middot; Upstate</div>
+                            <div class="frc-count">${westStores.length} stores</div>
                             <div class="frc-title">West</div>
                             <div class="frc-stores">${westNames}</div>
                         </button>
                         <button class="frp-card" style="--c1:#0284c7;--c2:#0ea5e9;" onclick="setFocusRegion('East')">
                             <span class="frc-arrow">&rarr;</span>
                             <div class="frc-icon">&#127958;&#65039;</div>
-                            <div class="frc-count">${eastStores.length} stores &middot; Coastal</div>
+                            <div class="frc-count">${eastStores.length} stores</div>
                             <div class="frc-title">East</div>
                             <div class="frc-stores">${eastNames}</div>
                         </button>
                         <button class="frp-card" style="--c1:#7c3aed;--c2:#a855f7;" onclick="setFocusRegion('All')">
                             <span class="frc-arrow">&rarr;</span>
                             <div class="frc-icon">&#127758;</div>
-                            <div class="frc-count">${D.stores.length} stores &middot; Enterprise</div>
+                            <div class="frc-count">${D.stores.length} stores</div>
                             <div class="frc-title">All regions</div>
                             <div class="frc-stores">Everyone in one view</div>
                         </button>
@@ -2483,14 +2512,10 @@
             const isIB = mode === 'ib';
             const title = isIB ? 'Inbound Focus' : 'Outbound Focus';
             const sub = isIB
-                ? 'Request In% + Set% — inbound answering + booking the appointment'
-                : 'Live Convos% + Appt% — outbound connecting + securing the appointment';
+                ? 'Request In% + Set% — did they ask for the visit, did they lock the appointment'
+                : 'Live Convos% + Appt% — did they connect with a human, did they close the appointment';
             document.getElementById('focusTitle').textContent = title;
             document.getElementById('focusSub').textContent = sub + ' · ' + (region==='All'?'All regions':region + ' region');
-            // update region chip active state
-            document.querySelectorAll('.focus-region-picker .fr-chip').forEach(c=>{
-                c.classList.toggle('active', c.dataset.reg === region);
-            });
             // filter stores
             let pool = D.stores.slice();
             if(region !== 'All') pool = pool.filter(s => s.region === region);
@@ -2576,27 +2601,53 @@
                     </tr></thead>
                     <tbody>${tableRows}</tbody>
                 </table>`;
-            // Training priorities (tone: Laura, blunt, trainer-focused)
-            const priorityHTML = priorities.map(p => {
+            // Training priorities (tone: Laura, blunt, trainer-focused, correct metric meaning)
+            const priorityHTML = priorities.map((p, rank) => {
                 const {x, biggerGap} = p;
-                let coach = '';
+                // severity based on rank + gap size
+                const sev = rank === 0 ? 'high' : rank === 1 ? 'med' : 'low';
+                const sevLabel = rank === 0 ? '&#128680; Top priority' : rank === 1 ? '&#9888;&#65039; High priority' : '&#128205; Watch closely';
+                const actionLabel = rank === 0 ? 'This Week' : 'Next Session';
+                let action = '', diagnosis = '';
                 if(isIB){
                     if(biggerGap.key==='req'){
-                        coach = `Phones aren't getting answered. Before scorecards — are they staffing the window? Are the right people on the BDR queue? Pull the missed-call log by hour before next session.`;
+                        diagnosis = `They're taking inbound calls but not asking the customer to come in. The BDR is gathering info and saying goodbye instead of pivoting to the invite.`;
+                        action = `Pull 3 answered calls per rep. Mark exactly where they should've said "let's get you in to see it" and didn't. Run it in the next Manager Ring Ring Session — play the call, pause at the miss, have them redo the line.`;
                     } else {
-                        coach = `They're answering but not booking. That's a scorecard/call guide issue — sit next to the weakest 2-3 reps for a Manager Ring Ring Session on asking for the appointment.`;
+                        diagnosis = `They're asking for the visit but the customer is wiggling out without a firm appointment. Call-guide gap at the set step — likely taking "let me check my schedule" as a no.`;
+                        action = `Sit with the weakest 2–3 reps for a Manager Ring Ring Session specifically on the set step. Two-choice close, confirm the name + time, handle the "I'll call back" without losing the appointment.`;
                     }
                 } else {
                     if(biggerGap.key==='live'){
-                        coach = `They're dialing into a wall. Check the list quality — are they working organizer follow-ups and unsold showroom traffic, or just aged leads nobody will pick up?`;
+                        diagnosis = `They're dialing into voicemails and hangups. Either the list is stale or the timing is wrong — they're not getting to actual humans.`;
+                        action = `Audit what list they're working. Organizer follow-ups and unsold showroom traffic should be the top of the queue, not aged orphans. Also check dial times — lunch and 5pm answer rates are garbage.`;
                     } else {
-                        coach = `Live conversations are happening but closing to appointment is soft. Listen to 5 outbound calls per person — odds are they're not using the call guide at the set step.`;
+                        diagnosis = `They're getting live conversations but folding before the appointment. The call guide falls apart at the set step — likely giving up on the first soft objection.`;
+                        action = `Listen to 5 outbound connects per person. Mark the moment they could've gone for the appointment and didn't. Play the best connect of the week as the benchmark at the next huddle.`;
                     }
                 }
-                return `<div class="focus-priority">
-                    <div class="fp-title">Priority: ${x.s.id} — ${x.s.name.replace('Fred Anderson ','')}</div>
-                    <strong>${biggerGap.label} at ${biggerGap.val}%</strong> vs ${biggerGap.bench}% bench (gap: ${biggerGap.gap.toFixed(1)} pts). Channel grade: ${x.ch}.
-                    <div style="margin-top:6px;">${coach}</div>
+                const atBench = biggerGap.val >= biggerGap.bench;
+                return `<div class="focus-priority sev-${sev}">
+                    <div class="fp-head">
+                        <div class="fp-head-left">
+                            <div class="fp-badge sev-${sev}">${sevLabel}</div>
+                            <div class="fp-store"><span class="fp-id">${x.s.id}</span>${x.s.name.replace('Fred Anderson ','')}</div>
+                        </div>
+                        <div class="fp-gap-stat">
+                            <div class="fp-gap-num">${atBench?'+':'-'}${Math.abs(biggerGap.gap).toFixed(1)}</div>
+                            <div class="fp-gap-lbl">pts ${atBench?'above':'below'} bench</div>
+                        </div>
+                    </div>
+                    <div class="fp-stats">
+                        <span class="fp-stat-item"><strong>${biggerGap.label}</strong> ${biggerGap.val}% (bench ${biggerGap.bench}%)</span>
+                        <span class="fp-stat-item">Channel grade <strong>${x.ch}</strong></span>
+                        <span class="fp-stat-item">vs start <strong style="color:${x.delta>=0?'#16a34a':'#dc2626'};">${x.delta>=0?'+':''}${x.delta.toFixed(2)}</strong></span>
+                    </div>
+                    <div style="font-size:12px;line-height:1.5;margin-bottom:8px;">${diagnosis}</div>
+                    <div class="fp-action">
+                        <div class="fp-action-label">&#9654; Do this ${actionLabel.toLowerCase()}</div>
+                        ${action}
+                    </div>
                 </div>`;
             }).join('');
             // Strengths
@@ -2615,23 +2666,134 @@
                 </div>`;
             }).join('');
             // Compose body
+            const regionBadgeColor = region === 'East' ? '#dbeafe' : region === 'West' ? '#dcfce7' : '#ede9fe';
+            const regionBadgeTextColor = region === 'East' ? '#1e40af' : region === 'West' ? '#166534' : '#6b21a8';
             document.getElementById('focusBody').innerHTML = `
+                <button class="focus-back" onclick="openFocus(focusState.mode)">&larr; Change region</button>
+                <span class="focus-region-badge" style="background:${regionBadgeColor};color:${regionBadgeTextColor};">${region === 'All' ? 'All regions' : region + ' region'} &middot; ${scored.length} store${scored.length===1?'':'s'}</span>
                 <div class="focus-section">
                     <h3>Where ${region==='All'?'the group':region} stands — ${isIB?'Inbound':'Outbound'}</h3>
                     ${summaryHTML}
+                </div>
+                <div class="focus-section">
+                    <h3>${isIB?'Inbound':'Outbound'} trend — Jan through Apr</h3>
+                    <div class="focus-trend-wrap">
+                        <div class="focus-trend-hdr">
+                            <span><strong>${region === 'All' ? 'Enterprise' : region + ' region'} average ${isIB?'inbound':'outbound'} GPA</strong> · month over month</span>
+                            <span style="color:#94a3b8;">A=4.0 &middot; B=3.0 &middot; C=2.0 &middot; D=1.0</span>
+                        </div>
+                        <canvas id="focusTrendCanvas" width="860" height="200"></canvas>
+                    </div>
                 </div>
                 <div class="focus-section">
                     <h3>Store ranking (${isIB?'Inbound':'Outbound'})</h3>
                     ${tableHTML}
                 </div>
                 <div class="focus-section">
-                    <h3>Training priorities — tackle these first</h3>
+                    <h3>&#128293; Training priorities &mdash; tackle these first</h3>
                     ${priorityHTML || '<div style="color:#6b7280;font-size:12px;">No stores flagged.</div>'}
                 </div>
                 <div class="focus-section">
                     <h3>Strengths to lean on</h3>
                     ${strengthHTML || '<div style="color:#6b7280;font-size:12px;">No strengths identified in this slice.</div>'}
                 </div>`;
+            // Draw trend chart
+            setTimeout(() => drawFocusTrendChart(pool, isIB), 50);
+        }
+        function drawFocusTrendChart(pool, isIB){
+            const canvas = document.getElementById('focusTrendCanvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0,0,w,h);
+            const months = ['Jan','Feb','Mar','Apr'];
+            const primArr = isIB ? TRENDS.ri : OB_TRENDS.live;
+            const secArr = isIB ? TRENDS.set : OB_TRENDS.appt;
+            const primKey = isIB ? 'req' : 'live';
+            const secKey = isIB ? 'set' : 'appt';
+            // Compute per-month group avg channel GPA
+            const series = months.map((_, i) => {
+                let sum=0, count=0;
+                pool.forEach(s => {
+                    const p = primArr[s.id], sc = secArr[s.id];
+                    if(p && p[i]!=null && sc && sc[i]!=null){
+                        const gp = gn(gg(p[i], primKey));
+                        const gs = gn(gg(sc[i], secKey));
+                        const channel = isIB ? (gp+gs)/2 : gp*0.6+gs*0.4;
+                        sum += channel; count++;
+                    }
+                });
+                return count > 0 ? sum/count : null;
+            });
+            const pad = {top:18, right:28, bottom:28, left:40};
+            const cw = w - pad.left - pad.right;
+            const ch = h - pad.top - pad.bottom;
+            const yMin = 0, yMax = 4;
+            // Gridlines at A/B/C/D/F
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 1;
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '10px -apple-system, sans-serif';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            [['A',4],['B',3],['C',2],['D',1],['F',0]].forEach(([label, val]) => {
+                const y = pad.top + ch - ((val-yMin)/(yMax-yMin)) * ch;
+                ctx.beginPath();
+                ctx.moveTo(pad.left, y);
+                ctx.lineTo(pad.left+cw, y);
+                ctx.stroke();
+                ctx.fillText(label, pad.left-6, y);
+            });
+            // X labels
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillStyle = '#64748b';
+            months.forEach((m, i) => {
+                const x = pad.left + (cw/(months.length-1)) * i;
+                ctx.fillText(m, x, pad.top+ch+6);
+            });
+            // Line
+            const channelColor = isIB ? '#0ea5e9' : '#f97316';
+            ctx.strokeStyle = channelColor;
+            ctx.lineWidth = 3;
+            ctx.lineJoin = 'round';
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            let started = false;
+            series.forEach((v, i) => {
+                if(v == null) return;
+                const x = pad.left + (cw/(months.length-1)) * i;
+                const y = pad.top + ch - ((v-yMin)/(yMax-yMin)) * ch;
+                if(!started){ ctx.moveTo(x,y); started = true; }
+                else ctx.lineTo(x,y);
+            });
+            ctx.stroke();
+            // Area fill
+            ctx.lineTo(pad.left + cw, pad.top+ch);
+            ctx.lineTo(pad.left, pad.top+ch);
+            ctx.closePath();
+            const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top+ch);
+            grad.addColorStop(0, channelColor + '30');
+            grad.addColorStop(1, channelColor + '05');
+            ctx.fillStyle = grad;
+            ctx.fill();
+            // Points + labels
+            series.forEach((v, i) => {
+                if(v == null) return;
+                const x = pad.left + (cw/(months.length-1)) * i;
+                const y = pad.top + ch - ((v-yMin)/(yMax-yMin)) * ch;
+                ctx.fillStyle = '#fff';
+                ctx.beginPath(); ctx.arc(x, y, 6, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = channelColor;
+                ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI*2); ctx.fill();
+                // Letter above
+                const grade = s2g(v);
+                ctx.fillStyle = '#1a1a2e';
+                ctx.font = 'bold 11px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+                ctx.fillText(grade, x, y-10);
+            });
         }
         function gradeColor(g){
             if(g.startsWith('A')) return '#16a34a';
