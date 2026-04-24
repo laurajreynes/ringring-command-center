@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ring Ring Daily Command Center</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230f172a'/%3E%3Cstop offset='1' stop-color='%23020617'/%3E%3C/linearGradient%3E%3CradialGradient id='glow' cx='0.5' cy='0.5' r='0.5'%3E%3Cstop offset='0' stop-color='%2310b981' stop-opacity='0.6'/%3E%3Cstop offset='1' stop-color='%2310b981' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23bg)'/%3E%3Ccircle cx='32' cy='32' r='22' fill='url(%23glow)'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%2310b981' stroke-width='1.5' stroke-opacity='0.35'/%3E%3Ccircle cx='32' cy='32' r='13' fill='none' stroke='%230ea5e9' stroke-width='1.8' stroke-opacity='0.7'/%3E%3Ccircle cx='32' cy='32' r='6' fill='none' stroke='%23f97316' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='2.5' fill='%2310b981'/%3E%3Cline x1='6' y1='32' x2='14' y2='32' stroke='%2310b981' stroke-width='1.5' stroke-opacity='0.5'/%3E%3Cline x1='50' y1='32' x2='58' y2='32' stroke='%2310b981' stroke-width='1.5' stroke-opacity='0.5'/%3E%3Cline x1='32' y1='6' x2='32' y2='14' stroke='%2310b981' stroke-width='1.5' stroke-opacity='0.5'/%3E%3Cline x1='32' y1='50' x2='32' y2='58' stroke='%2310b981' stroke-width='1.5' stroke-opacity='0.5'/%3E%3C/svg%3E">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -803,23 +804,23 @@
     <script>
         const D = {
             stores: [
-                { id:'SAS', name:'Fred Anderson Subaru', region:'West', baseline:{req:66.8,set:37.8,live:17.5,appt:8.2}, current:{req:75,set:41,live:15.9,appt:8.5}, ytd:{req:66.8,set:36.2,live:16.5,appt:9.2} },
-                { id:'TAS', name:'Fred Anderson Toyota of Asheville', region:'West', baseline:{req:55.3,set:26.5,live:12.7,appt:10.3}, current:{req:57,set:26,live:16.5,appt:10.6}, ytd:{req:55.5,set:25.8,live:16.2,appt:10.8} },
-                { id:'NAS', name:'Fred Anderson Nissan of Asheville', region:'West', baseline:{req:63.8,set:42.3,live:18.9,appt:8.5}, current:{req:68,set:36,live:18.7,appt:10.5}, ytd:{req:63.2,set:38.2,live:16.8,appt:11.0} },
-                { id:'KGR', name:'Fred Anderson Kia of Greer', region:'West', baseline:{req:62.7,set:38.2,live:14.2,appt:10.2}, current:{req:70,set:51,live:14.7,appt:12.0}, ytd:{req:72.8,set:47.8,live:14.7,appt:12.1} },
-                { id:'TGR', name:'Fred Anderson Toyota of Greer', region:'West', baseline:{req:57.0,set:32.8,live:17.4,appt:7.3}, current:{req:55,set:37,live:13.1,appt:8.8}, ytd:{req:55.8,set:33.2,live:14.8,appt:10.1} },
-                { id:'CGR', name:'Fred Anderson Chevy Buick GMC Cadillac', region:'West', baseline:{req:51.3,set:25.7,live:16.6,appt:6.3}, current:{req:57,set:37,live:20.6,appt:9.0}, ytd:{req:53.5,set:29.8,live:18.9,appt:9.6} },
-                { id:'HGR', name:'Fred Anderson Hyundai', region:'West', baseline:{req:63.5,set:38.3,live:10.4,appt:10.6}, current:{req:61,set:43,live:14.7,appt:11.9}, ytd:{req:62.8,set:34.0,live:12.7,appt:11.9} },
-                { id:'GGR', name:'Genesis of Greer', region:'West', baseline:{req:65.3,set:33.2,live:12.6,appt:10.7}, current:{req:67,set:39,live:9.2,appt:14.5}, ytd:{req:60.0,set:36.8,live:9.8,appt:12.1} },
-                { id:'AGV', name:'Fred Anderson Acura', region:'West', baseline:{req:59.5,set:32.2,live:14.9,appt:9.1}, current:{req:65,set:32,live:15.1,appt:10.3}, ytd:{req:62.2,set:39.8,live:16.4,appt:12.1} },
-                { id:'KGV', name:'Fred Anderson Kia of Greenville', region:'West', baseline:{req:60.3,set:32.3,live:13.1,appt:8.9}, current:{req:64,set:43,live:18.3,appt:10.5}, ytd:{req:64.5,set:36.2,live:15.9,appt:12.5} },
-                { id:'HGV', name:'Fred Anderson Honda of Greenville', region:'West', baseline:{req:68.5,set:40.5,live:16.3,appt:9.3}, current:{req:59,set:41,live:14.9,appt:11.0}, ytd:{req:63.0,set:40.0,live:15.4,appt:11.3} },
-                { id:'TRA', name:'Fred Anderson Toyota of Raleigh', region:'East', baseline:{req:68.2,set:41.0,live:13.1,appt:10.3}, current:{req:68,set:38,live:14.1,appt:11.0}, ytd:{req:66.8,set:38.2,live:14.2,appt:12.9} },
-                { id:'KRA', name:'Fred Anderson Kia of Raleigh', region:'East', baseline:{req:66.3,set:42.7,live:19.7,appt:7.5}, current:{req:69,set:49,live:12.8,appt:6.7}, ytd:{req:69.8,set:41.2,live:13.6,appt:10.2} },
-                { id:'NRA', name:'Fred Anderson Nissan of Raleigh', region:'East', baseline:{req:66.0,set:43.3,live:16.4,appt:8.5}, current:{req:63,set:38,live:15.5,appt:8.9}, ytd:{req:63.8,set:40.2,live:15.9,appt:11.8} },
-                { id:'TSA', name:'Fred Anderson Toyota of Sanford', region:'East', baseline:{req:62.0,set:34.3,live:17.9,appt:7.9}, current:{req:64,set:38,live:16.2,appt:8.7}, ytd:{req:62.5,set:37.2,live:16.6,appt:10.6} },
-                { id:'TCH', name:'Fred Anderson Toyota of Charleston', region:'East', baseline:{req:72.5,set:30.3,live:13.6,appt:7.6}, current:{req:72,set:29,live:12.2,appt:6.7}, ytd:{req:69.8,set:29.5,live:13.4,appt:8.7} },
-                { id:'TCC', name:'Fred Anderson Toyota of Cape Coral', region:'East', baseline:{req:86,set:79,live:0,appt:0}, current:{req:69,set:48,live:35.6,appt:10.0}, ytd:{req:69.0,set:48.0,live:35.6,appt:10.0} }
+                { id:'SAS', name:'Fred Anderson Subaru', region:'West', baseline:{req:66.8,set:37.8,live:17.5,appt:8.2}, current:{req:73,set:39,live:15.8,appt:8.9}, ytd:{req:66.2,set:35.8,live:16.6,appt:9.4} },
+                { id:'TAS', name:'Fred Anderson Toyota of Asheville', region:'West', baseline:{req:55.3,set:26.5,live:12.7,appt:10.3}, current:{req:57,set:26,live:16.9,appt:10.6}, ytd:{req:55.5,set:25.8,live:16.4,appt:10.7} },
+                { id:'NAS', name:'Fred Anderson Nissan of Asheville', region:'West', baseline:{req:63.8,set:42.3,live:18.9,appt:8.5}, current:{req:68,set:36,live:18.7,appt:10.5}, ytd:{req:63.2,set:38.2,live:16.9,appt:10.9} },
+                { id:'KGR', name:'Fred Anderson Kia of Greer', region:'West', baseline:{req:62.7,set:38.2,live:14.2,appt:10.2}, current:{req:70,set:51,live:14.9,appt:10.8}, ytd:{req:72.8,set:47.8,live:14.8,appt:11.8} },
+                { id:'TGR', name:'Fred Anderson Toyota of Greer', region:'West', baseline:{req:57.0,set:32.8,live:17.4,appt:7.3}, current:{req:55,set:36,live:13.4,appt:9.5}, ytd:{req:55.8,set:33.0,live:14.9,appt:10.2} },
+                { id:'CGR', name:'Fred Anderson Chevy Buick GMC Cadillac', region:'West', baseline:{req:51.3,set:25.7,live:16.6,appt:6.3}, current:{req:55,set:38,live:20.8,appt:9.4}, ytd:{req:53.0,set:30.0,live:18.9,appt:9.6} },
+                { id:'HGR', name:'Fred Anderson Hyundai', region:'West', baseline:{req:63.5,set:38.3,live:10.4,appt:10.6}, current:{req:60,set:42,live:14.8,appt:12.2}, ytd:{req:62.5,set:33.8,live:13.0,appt:12.3} },
+                { id:'GGR', name:'Genesis of Greer', region:'West', baseline:{req:65.3,set:33.2,live:12.6,appt:10.7}, current:{req:65,set:38,live:9.3,appt:13.2}, ytd:{req:59.5,set:36.5,live:9.9,appt:12.6} },
+                { id:'AGV', name:'Fred Anderson Acura', region:'West', baseline:{req:59.5,set:32.2,live:14.9,appt:9.1}, current:{req:65,set:33,live:15.3,appt:10.2}, ytd:{req:62.2,set:40.0,live:16.5,appt:11.8} },
+                { id:'KGV', name:'Fred Anderson Kia of Greenville', region:'West', baseline:{req:60.3,set:32.3,live:13.1,appt:8.9}, current:{req:65,set:44,live:18.4,appt:10.8}, ytd:{req:64.8,set:36.5,live:16.0,appt:12.4} },
+                { id:'HGV', name:'Fred Anderson Honda of Greenville', region:'West', baseline:{req:68.5,set:40.5,live:16.3,appt:9.3}, current:{req:60,set:41,live:14.9,appt:11.3}, ytd:{req:63.2,set:40.0,live:15.6,appt:11.6} },
+                { id:'TRA', name:'Fred Anderson Toyota of Raleigh', region:'East', baseline:{req:68.2,set:41.0,live:13.1,appt:10.3}, current:{req:66,set:39,live:14.2,appt:10.7}, ytd:{req:66.2,set:38.5,live:14.4,appt:12.9} },
+                { id:'KRA', name:'Fred Anderson Kia of Raleigh', region:'East', baseline:{req:66.3,set:42.7,live:19.7,appt:7.5}, current:{req:69,set:47,live:12.5,appt:7.4}, ytd:{req:69.8,set:40.8,live:13.6,appt:10.3} },
+                { id:'NRA', name:'Fred Anderson Nissan of Raleigh', region:'East', baseline:{req:66.0,set:43.3,live:16.4,appt:8.5}, current:{req:61,set:37,live:15.8,appt:8.9}, ytd:{req:63.2,set:40.0,live:15.9,appt:11.8} },
+                { id:'TSA', name:'Fred Anderson Toyota of Sanford', region:'East', baseline:{req:62.0,set:34.3,live:17.9,appt:7.9}, current:{req:63,set:38,live:16.2,appt:8.5}, ytd:{req:62.2,set:37.2,live:16.5,appt:10.7} },
+                { id:'TCH', name:'Fred Anderson Toyota of Charleston', region:'East', baseline:{req:72.5,set:30.3,live:13.6,appt:7.6}, current:{req:73,set:30,live:12.5,appt:6.8}, ytd:{req:70.0,set:29.8,live:13.5,appt:8.7} },
+                { id:'TCC', name:'Fred Anderson Toyota of Cape Coral', region:'East', baseline:{req:86,set:79,live:0,appt:0}, current:{req:70,set:47,live:35.8,appt:9.9}, ytd:{req:70.0,set:47.0,live:35.8,appt:9.9} }
             ]
         };
 
@@ -847,20 +848,20 @@
         const TRENDS = {
             months: ['Jan','Feb','Mar','Apr'],
             ri: {
-                'SAS':[61,64,67,75],'TAS':[52,53,60,57],'NAS':[64,58,63,68],
-                'KRA':[63,75,72,69],'TSA':[64,65,57,64],'TCH':[69,70,68,72],
-                'NRA':[63,66,63,63],'KGV':[59,70,65,64],'HGV':[60,67,66,59],
-                'AGV':[54,61,69,65],'CGR':[50,56,51,57],'KGR':[72,72,77,70],
-                'GGR':[61,51,61,67],'HGR':[57,70,63,61],'TGR':[51,58,59,55],
-                'TRA':[63,66,70,68],'TCC':[null,null,null,69]
+                'SAS':[61,64,67,73],'TAS':[52,53,60,57],'NAS':[64,58,63,68],
+                'KRA':[63,75,72,69],'TSA':[64,65,57,63],'TCH':[69,70,68,73],
+                'NRA':[63,66,63,61],'KGV':[59,70,65,65],'HGV':[60,67,66,60],
+                'AGV':[54,61,69,65],'CGR':[50,56,51,55],'KGR':[72,72,77,70],
+                'GGR':[61,51,61,65],'HGR':[57,70,63,60],'TGR':[51,58,59,55],
+                'TRA':[63,66,70,66],'TCC':[null,null,null,70]
             },
             set: {
-                'SAS':[37,39,28,41],'TAS':[24,23,30,26],'NAS':[37,39,41,36],
-                'KRA':[42,36,38,49],'TSA':[34,32,45,38],'TCH':[31,27,31,29],
-                'NRA':[38,41,44,38],'KGV':[33,34,35,43],'HGV':[37,39,43,41],
-                'AGV':[35,46,46,32],'CGR':[23,33,26,37],'KGR':[37,48,55,51],
-                'GGR':[36,42,30,39],'HGR':[20,34,39,43],'TGR':[31,32,33,37],
-                'TRA':[38,36,41,38],'TCC':[null,null,null,48]
+                'SAS':[37,39,28,39],'TAS':[24,23,30,26],'NAS':[37,39,41,36],
+                'KRA':[42,36,38,47],'TSA':[34,32,45,38],'TCH':[31,27,31,30],
+                'NRA':[38,41,44,37],'KGV':[33,34,35,44],'HGV':[37,39,43,41],
+                'AGV':[35,46,46,33],'CGR':[23,33,26,38],'KGR':[37,48,55,51],
+                'GGR':[36,42,30,38],'HGR':[20,34,39,42],'TGR':[31,32,33,36],
+                'TRA':[38,36,41,39],'TCC':[null,null,null,47]
             }
         };
 
@@ -868,26 +869,26 @@
         const OB_TRENDS = {
             months: ['Jan','Feb','Mar','Apr'],
             live: {
-                'TRA':[15.4,15.0,13.2,14.1],'TAS':[18.7,13.9,16.1,16.5],
-                'NAS':[15.2,16.0,17.9,18.7],'KRA':[13.3,16.3,12.4,12.8],
-                'TSA':[16.1,17.6,16.2,16.2],'TCH':[15.2,14.8,11.5,12.2],
-                'NRA':[15.9,16.2,15.5,15.5],'SAS':[17.9,16.9,15.7,15.9],
-                'KGV':[15.6,12.6,17.4,18.3],'HGV':[16.3,16.5,14.6,14.9],
-                'AGV':[19.5,16.6,14.6,15.1],'CGR':[16.6,18.9,19.3,20.6],
-                'KGR':[13.6,15.4,15.4,14.7],'GGR':[10.9,10.2,9.0,9.2],
-                'HGR':[12.9,10.7,13.5,14.7],'TGR':[17.8,15.5,12.8,13.1],
-                'TCC':[null,null,null,35.6]
+                'TRA':[15.4,15.0,13.2,14.2],'TAS':[18.7,13.9,16.1,16.9],
+                'NAS':[15.2,16.0,17.9,18.7],'KRA':[13.3,16.3,12.4,12.5],
+                'TSA':[16.1,17.6,16.2,16.2],'TCH':[15.2,14.8,11.5,12.5],
+                'NRA':[15.9,16.2,15.5,15.8],'SAS':[17.9,16.9,15.7,15.8],
+                'KGV':[15.6,12.6,17.4,18.4],'HGV':[16.3,16.5,14.6,14.9],
+                'AGV':[19.5,16.6,14.6,15.3],'CGR':[16.6,18.9,19.3,20.8],
+                'KGR':[13.6,15.4,15.4,14.9],'GGR':[10.9,10.2,9.0,9.3],
+                'HGR':[12.9,10.7,13.5,14.8],'TGR':[17.8,15.5,12.8,13.4],
+                'TCC':[null,null,null,35.8]
             },
             appt: {
-                'TRA':[14.6,14.8,11.7,11.0],'TAS':[10.5,9.8,11.7,10.6],
-                'NAS':[12.7,10.5,10.1,10.5],'KRA':[13.9,14.1,5.9,6.7],
-                'TSA':[12.2,13.4,8.6,8.7],'TCH':[9.5,12.2,6.3,6.7],
-                'NRA':[13.0,14.0,11.2,8.9],'SAS':[10.4,10.6,7.8,8.5],
-                'KGV':[13.9,13.8,11.0,10.5],'HGV':[13.4,12.3,9.2,11.0],
-                'AGV':[14.0,11.8,11.2,10.3],'CGR':[11.2,9.4,8.2,9.0],
-                'KGR':[12.9,11.1,12.4,12.0],'GGR':[14.0,13.7,9.3,14.5],
-                'HGR':[16.1,11.8,9.1,11.9],'TGR':[11.1,11.2,9.0,8.8],
-                'TCC':[null,null,null,10.0]
+                'TRA':[14.6,14.8,11.7,10.7],'TAS':[10.5,9.8,11.7,10.6],
+                'NAS':[12.7,10.5,10.1,10.5],'KRA':[13.9,14.1,5.9,7.4],
+                'TSA':[12.2,13.4,8.6,8.5],'TCH':[9.5,12.2,6.3,6.8],
+                'NRA':[13.0,14.0,11.2,8.9],'SAS':[10.4,10.6,7.8,8.9],
+                'KGV':[13.9,13.8,11.0,10.8],'HGV':[13.4,12.3,9.2,11.3],
+                'AGV':[14.0,11.8,11.2,10.2],'CGR':[11.2,9.4,8.2,9.4],
+                'KGR':[12.9,11.1,12.4,10.8],'GGR':[14.0,13.7,9.3,13.2],
+                'HGR':[16.1,11.8,9.1,12.2],'TGR':[11.1,11.2,9.0,9.5],
+                'TCC':[null,null,null,9.9]
             }
         };
 
