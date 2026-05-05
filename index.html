@@ -721,7 +721,7 @@
             <span>Anderson Automotive Group</span>
             <span id="dateRange">Last 30 Days</span>
             <span>CarWars: <strong id="carwarsDate"></strong></span>
-            <span class="last-updated" title="Most recent data refresh"><span class="lu-dot"></span>Updated <strong style="color:#0369a1;">May 5, 3:21 AM</strong> · May MTD (1-4) · WTD = Mon May 4</span>
+            <span class="last-updated" title="Most recent data refresh"><span class="lu-dot"></span>Updated <strong style="color:#0369a1;">May 5, 3:21 AM</strong> · April Final on display · May data in store drill-downs</span>
             <a href="https://ringderby.vercel.app" target="_blank" class="top-link derby-link">Derby Board</a>
             <a href="https://anderson-scorecard.vercel.app" target="_blank" class="top-link scorecard-link">Scorecard</a>
             <button onclick="window.print()" class="top-link" style="background:#f3f4f6;color:#374151;border:none;cursor:pointer;font-family:inherit;">Export PDF</button>
@@ -807,23 +807,23 @@
     <script>
         const D = {
             stores: [
-                { id:'SAS', name:'Fred Anderson Subaru', region:'West', baseline:{req:66.8,set:37.8,live:17.5,appt:8.2}, current:{req:53,set:50,live:13.4,appt:8.3}, ytd:{req:64.2,set:38.6,live:16.0,appt:9.2} },
-                { id:'TAS', name:'Fred Anderson Toyota of Asheville', region:'West', baseline:{req:55.3,set:26.5,live:12.7,appt:10.3}, current:{req:48,set:33,live:16.6,appt:11.0}, ytd:{req:54.2,set:27.2,live:16.4,appt:10.6} },
-                { id:'NAS', name:'Fred Anderson Nissan of Asheville', region:'West', baseline:{req:63.8,set:42.3,live:18.9,appt:8.5}, current:{req:69,set:22,live:18.3,appt:11.7}, ytd:{req:64.2,set:35.0,live:17.2,appt:11.0} },
-                { id:'KGR', name:'Fred Anderson Kia of Greer', region:'West', baseline:{req:62.7,set:38.2,live:14.2,appt:10.2}, current:{req:44,set:50,live:13.1,appt:5.0}, ytd:{req:67.2,set:47.8,live:14.5,appt:10.4} },
-                { id:'TGR', name:'Fred Anderson Toyota of Greer', region:'West', baseline:{req:57.0,set:32.8,live:17.4,appt:7.3}, current:{req:53,set:11,live:12.7,appt:8.3}, ytd:{req:55.0,set:28.4,live:14.2,appt:9.8} },
-                { id:'CGR', name:'Fred Anderson Chevy Buick GMC Cadillac', region:'West', baseline:{req:51.3,set:25.7,live:16.6,appt:6.3}, current:{req:58,set:18,live:20.1,appt:4.2}, ytd:{req:54.2,set:26.8,live:19.0,appt:8.3} },
-                { id:'HGR', name:'Fred Anderson Hyundai', region:'West', baseline:{req:63.5,set:38.3,live:10.4,appt:10.6}, current:{req:100,set:33,live:15.6,appt:12.7}, ytd:{req:70.0,set:33.8,live:13.4,appt:12.2} },
-                { id:'GGR', name:'Genesis of Greer', region:'West', baseline:{req:65.3,set:33.2,live:12.6,appt:10.7}, current:{req:20,set:0,live:7.5,appt:5.0}, ytd:{req:51.6,set:29.0,live:9.3,appt:10.9} },
-                { id:'AGV', name:'Fred Anderson Acura', region:'West', baseline:{req:59.5,set:32.2,live:14.9,appt:9.1}, current:{req:67,set:17,live:16.3,appt:13.0}, ytd:{req:63.2,set:35.4,live:16.5,appt:12.1} },
-                { id:'KGV', name:'Fred Anderson Kia of Greenville', region:'West', baseline:{req:60.3,set:32.3,live:13.1,appt:8.9}, current:{req:53,set:0,live:16.3,appt:12.0}, ytd:{req:62.8,set:28.8,live:16.0,appt:12.4} },
-                { id:'HGV', name:'Fred Anderson Honda of Greenville', region:'West', baseline:{req:68.5,set:40.5,live:16.3,appt:9.3}, current:{req:63,set:47,live:13.6,appt:10.7}, ytd:{req:63.6,set:41.2,live:15.3,appt:11.3} },
-                { id:'TRA', name:'Fred Anderson Toyota of Raleigh', region:'East', baseline:{req:68.2,set:41.0,live:13.1,appt:10.3}, current:{req:67,set:29,live:12.6,appt:8.5}, ytd:{req:66.2,set:36.8,live:14.0,appt:12.1} },
-                { id:'KRA', name:'Fred Anderson Kia of Raleigh', region:'East', baseline:{req:66.3,set:42.7,live:19.7,appt:7.5}, current:{req:67,set:38,live:11.6,appt:8.0}, ytd:{req:69.2,set:40.2,live:13.2,appt:10.0} },
-                { id:'NRA', name:'Fred Anderson Nissan of Raleigh', region:'East', baseline:{req:66.0,set:43.3,live:16.4,appt:8.5}, current:{req:50,set:25,live:14.7,appt:11.1}, ytd:{req:60.8,set:37.4,live:15.6,appt:11.7} },
-                { id:'TSA', name:'Fred Anderson Toyota of Sanford', region:'East', baseline:{req:62.0,set:34.3,live:17.9,appt:7.9}, current:{req:58,set:0,live:15.0,appt:14.8}, ytd:{req:61.4,set:30.2,live:16.1,appt:11.5} },
-                { id:'TCH', name:'Fred Anderson Toyota of Charleston', region:'East', baseline:{req:72.5,set:30.3,live:13.6,appt:7.6}, current:{req:70,set:26,live:16.9,appt:6.8}, ytd:{req:70.0,set:29.0,live:14.3,appt:8.3} },
-                { id:'TCC', name:'Fred Anderson Toyota of Cape Coral', region:'East', baseline:{req:86,set:79,live:0,appt:0}, current:{req:60,set:33,live:30.2,appt:8.5}, ytd:{req:63.5,set:36.5,live:33.0,appt:9.2} }
+                { id:'SAS', name:'Fred Anderson Subaru', region:'West', baseline:{req:66.8,set:37.8,live:17.5,appt:8.2}, current:{req:76,set:39,live:15.9,appt:9.1}, ytd:{req:64.2,set:38.6,live:16.0,appt:9.2} },
+                { id:'TAS', name:'Fred Anderson Toyota of Asheville', region:'West', baseline:{req:55.3,set:26.5,live:12.7,appt:10.3}, current:{req:58,set:26,live:16.9,appt:10.1}, ytd:{req:54.2,set:27.2,live:16.4,appt:10.6} },
+                { id:'NAS', name:'Fred Anderson Nissan of Asheville', region:'West', baseline:{req:63.8,set:42.3,live:18.9,appt:8.5}, current:{req:67,set:36,live:18.6,appt:9.9}, ytd:{req:64.2,set:35.0,live:17.2,appt:11.0} },
+                { id:'KGR', name:'Fred Anderson Kia of Greer', region:'West', baseline:{req:62.7,set:38.2,live:14.2,appt:10.2}, current:{req:71,set:49,live:14.9,appt:10.4}, ytd:{req:67.2,set:47.8,live:14.5,appt:10.4} },
+                { id:'TGR', name:'Fred Anderson Toyota of Greer', region:'West', baseline:{req:57.0,set:32.8,live:17.4,appt:7.3}, current:{req:54,set:35,live:12.3,appt:9.2}, ytd:{req:55.0,set:28.4,live:14.2,appt:9.8} },
+                { id:'CGR', name:'Fred Anderson Chevy Buick GMC Cadillac', region:'West', baseline:{req:51.3,set:25.7,live:16.6,appt:6.3}, current:{req:56,set:34,live:20.3,appt:8.3}, ytd:{req:54.2,set:26.8,live:19.0,appt:8.3} },
+                { id:'HGR', name:'Fred Anderson Hyundai', region:'West', baseline:{req:63.5,set:38.3,live:10.4,appt:10.6}, current:{req:60,set:43,live:14.1,appt:11.1}, ytd:{req:70.0,set:33.8,live:13.4,appt:12.2} },
+                { id:'GGR', name:'Genesis of Greer', region:'West', baseline:{req:65.3,set:33.2,live:12.6,appt:10.7}, current:{req:65,set:37,live:8.8,appt:12.4}, ytd:{req:51.6,set:29.0,live:9.3,appt:10.9} },
+                { id:'AGV', name:'Fred Anderson Acura', region:'West', baseline:{req:59.5,set:32.2,live:14.9,appt:9.1}, current:{req:65,set:33,live:15.7,appt:10.7}, ytd:{req:63.2,set:35.4,live:16.5,appt:12.1} },
+                { id:'KGV', name:'Fred Anderson Kia of Greenville', region:'West', baseline:{req:60.3,set:32.3,live:13.1,appt:8.9}, current:{req:67,set:42,live:17.9,appt:11.3}, ytd:{req:62.8,set:28.8,live:16.0,appt:12.4} },
+                { id:'HGV', name:'Fred Anderson Honda of Greenville', region:'West', baseline:{req:68.5,set:40.5,live:16.3,appt:9.3}, current:{req:62,set:40,live:15.6,appt:11.0}, ytd:{req:63.6,set:41.2,live:15.3,appt:11.3} },
+                { id:'TRA', name:'Fred Anderson Toyota of Raleigh', region:'East', baseline:{req:68.2,set:41.0,live:13.1,appt:10.3}, current:{req:65,set:40,live:14.0,appt:10.7}, ytd:{req:66.2,set:36.8,live:14.0,appt:12.1} },
+                { id:'KRA', name:'Fred Anderson Kia of Raleigh', region:'East', baseline:{req:66.3,set:42.7,live:19.7,appt:7.5}, current:{req:69,set:47,live:12.6,appt:8.1}, ytd:{req:69.2,set:40.2,live:13.2,appt:10.0} },
+                { id:'NRA', name:'Fred Anderson Nissan of Raleigh', region:'East', baseline:{req:66.0,set:43.3,live:16.4,appt:8.5}, current:{req:62,set:39,live:15.8,appt:9.0}, ytd:{req:60.8,set:37.4,live:15.6,appt:11.7} },
+                { id:'TSA', name:'Fred Anderson Toyota of Sanford', region:'East', baseline:{req:62.0,set:34.3,live:17.9,appt:7.9}, current:{req:63,set:40,live:15.7,appt:8.4}, ytd:{req:61.4,set:30.2,live:16.1,appt:11.5} },
+                { id:'TCH', name:'Fred Anderson Toyota of Charleston', region:'East', baseline:{req:72.5,set:30.3,live:13.6,appt:7.6}, current:{req:73,set:30,live:13.3,appt:6.7}, ytd:{req:70.0,set:29.0,live:14.3,appt:8.3} },
+                { id:'TCC', name:'Fred Anderson Toyota of Cape Coral', region:'East', baseline:{req:86,set:79,live:0,appt:0}, current:{req:67,set:40,live:35.9,appt:9.9}, ytd:{req:63.5,set:36.5,live:33.0,appt:9.2} }
             ]
         };
 
@@ -977,13 +977,19 @@ const STAFF = {
         D.stores.forEach(s=>{
             const ri=TRENDS.ri[s.id], st=TRENDS.set[s.id];
             const lv=OB_TRENDS.live[s.id], ap=OB_TRENDS.appt[s.id];
-            // Previous month = months.length-2 (Apr now that May is current)
-            const prevIdx = TRENDS.months.length-2;
+            // May = index 4 (current MTD partial)
+            s.may = {
+                req: ri&&ri[4]!=null ? ri[4] : s.current.req,
+                set: st&&st[4]!=null ? st[4] : s.current.set,
+                live: lv&&lv[4]!=null ? lv[4] : s.current.live,
+                appt: ap&&ap[4]!=null ? ap[4] : s.current.appt
+            };
+            // March = index 2
             s.march = {
-                req: ri&&ri[prevIdx]!=null ? ri[prevIdx] : s.current.req,
-                set: st&&st[prevIdx]!=null ? st[prevIdx] : s.current.set,
-                live: lv&&lv[prevIdx]!=null ? lv[prevIdx] : s.current.live,
-                appt: ap&&ap[prevIdx]!=null ? ap[prevIdx] : s.current.appt
+                req: ri&&ri[2]!=null ? ri[2] : s.current.req,
+                set: st&&st[2]!=null ? st[2] : s.current.set,
+                live: lv&&lv[2]!=null ? lv[2] : s.current.live,
+                appt: ap&&ap[2]!=null ? ap[2] : s.current.appt
             };
             // Recompute YTD as average of all available months in TRENDS
             function avg(arr){ if(!arr) return null; const v=arr.filter(x=>x!=null); return v.length?+(v.reduce((a,b)=>a+b,0)/v.length).toFixed(1):null; }
@@ -1054,7 +1060,7 @@ const STAFF = {
                     </div>
                 </div>
                 <div class="detail-bar-row"${clickAttr}>
-                    <span class="detail-bar-label">Apr</span>
+                    <span class="detail-bar-label">May</span>
                     <div class="detail-bar-track">
                         <div class="detail-bar-fill-inner ${barC(curGrade)}" style="width:${curPct}%"></div>
                         <div class="detail-bar-mark" style="left:${benchPct}%"></div>
@@ -1212,7 +1218,7 @@ const STAFF = {
 
             const sorted=sortStores(stores,label);
             sorted.forEach(store=>{
-                const c=calc(store.current), m=calc(store.march), y=calc(store.ytd);
+                const c=calc(store.current), m=calc(store.march), y=calc(store.ytd), may=calc(store.may);
                 const mOvGpa=gn(m.ov),cOvGpa=gn(c.ov);
                 const trend=cOvGpa>mOvGpa?'&#9650;':cOvGpa<mOvGpa?'&#9660;':'&mdash;';
                 const tc=cOvGpa>mOvGpa?'trend-up':cOvGpa<mOvGpa?'trend-down':'trend-neutral';
@@ -1241,22 +1247,22 @@ const STAFF = {
                 <tr class="detail-row" id="detail-${idx}"><td colspan="11">
                     <div style="font-size:11px;color:#6b7280;margin-bottom:4px;font-weight:600;">${store.name}</div>
                     <div class="detail-grid">
-                        <div class="detail-card"><div class="dl">Request In % <span style="color:#9ca3af;">bench: ${BENCH.req}%</span></div>${detailBar('',store.ytd.req,store.march.req,store.current.req,'req')}</div>
-                        <div class="detail-card"><div class="dl">Set % <span style="color:#9ca3af;">bench: ${BENCH.set}%</span></div>${detailBar('',store.ytd.set,store.march.set,store.current.set,'set')}</div>
+                        <div class="detail-card"><div class="dl">Request In % <span style="color:#9ca3af;">bench: ${BENCH.req}%</span></div>${detailBar('',store.ytd.req,store.current.req,store.may.req,'req')}</div>
+                        <div class="detail-card"><div class="dl">Set % <span style="color:#9ca3af;">bench: ${BENCH.set}%</span></div>${detailBar('',store.ytd.set,store.current.set,store.may.set,'set')}</div>
                         <div class="detail-card"><div class="dl">Inbound Grade</div>
                             <div class="detail-bar-row"><span class="detail-bar-label">YTD</span><span class="g ${gc(y.ib)}">${y.ib}</span></div>
-                            <div class="detail-bar-row"><span class="detail-bar-label">Apr</span><span class="g ${gc(m.ib)}">${m.ib}</span></div>
-                            <div class="detail-bar-row"><span class="detail-bar-label">Apr</span><span class="g ${gc(c.ib)}">${c.ib}</span>
-                                ${gn(c.ib)>gn(m.ib)?'<span class="trend-arrow trend-up" style="margin-left:4px;">&#9650;</span>':gn(c.ib)<gn(m.ib)?'<span class="trend-arrow trend-down" style="margin-left:4px;">&#9660;</span>':'<span class="trend-arrow trend-neutral" style="margin-left:4px;">&mdash;</span>'}
+                            <div class="detail-bar-row"><span class="detail-bar-label">Apr</span><span class="g ${gc(c.ib)}">${c.ib}</span></div>
+                            <div class="detail-bar-row"><span class="detail-bar-label">May</span><span class="g ${gc(may.ib)}">${may.ib}</span>
+                                ${gn(may.ib)>gn(c.ib)?'<span class="trend-arrow trend-up" style="margin-left:4px;">&#9650;</span>':gn(may.ib)<gn(c.ib)?'<span class="trend-arrow trend-down" style="margin-left:4px;">&#9660;</span>':'<span class="trend-arrow trend-neutral" style="margin-left:4px;">&mdash;</span>'}
                             </div>
                         </div>
-                        <div class="detail-card"><div class="dl">Live Convos % <span style="color:#9ca3af;">bench: ${BENCH.live}%</span></div>${detailBar('',store.ytd.live,store.march.live,store.current.live,'live',store.id)}</div>
-                        <div class="detail-card"><div class="dl">Appt Set % <span style="color:#9ca3af;">bench: ${BENCH.appt}%</span></div>${detailBar('',store.ytd.appt,store.march.appt,store.current.appt,'appt',store.id)}</div>
+                        <div class="detail-card"><div class="dl">Live Convos % <span style="color:#9ca3af;">bench: ${BENCH.live}%</span></div>${detailBar('',store.ytd.live,store.current.live,store.may.live,'live',store.id)}</div>
+                        <div class="detail-card"><div class="dl">Appt Set % <span style="color:#9ca3af;">bench: ${BENCH.appt}%</span></div>${detailBar('',store.ytd.appt,store.current.appt,store.may.appt,'appt',store.id)}</div>
                         <div class="detail-card"><div class="dl">Outbound Grade</div>
                             <div class="detail-bar-row"><span class="detail-bar-label">YTD</span><span class="g ${gc(y.ob)}">${y.ob}</span></div>
-                            <div class="detail-bar-row"><span class="detail-bar-label">Apr</span><span class="g ${gc(m.ob)}">${m.ob}</span></div>
-                            <div class="detail-bar-row staff-apr-click" onclick="event.stopPropagation();showStaffModal('${store.id}')" title="Click to see per-salesperson breakdown"><span class="detail-bar-label">Apr</span><span class="g ${gc(c.ob)}">${c.ob}</span>
-                                ${gn(c.ob)>gn(m.ob)?'<span class="trend-arrow trend-up" style="margin-left:4px;">&#9650;</span>':gn(c.ob)<gn(m.ob)?'<span class="trend-arrow trend-down" style="margin-left:4px;">&#9660;</span>':'<span class="trend-arrow trend-neutral" style="margin-left:4px;">&mdash;</span>'}
+                            <div class="detail-bar-row"><span class="detail-bar-label">Apr</span><span class="g ${gc(c.ob)}">${c.ob}</span></div>
+                            <div class="detail-bar-row staff-apr-click" onclick="event.stopPropagation();showStaffModal('${store.id}')" title="Click to see per-salesperson breakdown"><span class="detail-bar-label">May</span><span class="g ${gc(may.ob)}">${may.ob}</span>
+                                ${gn(may.ob)>gn(c.ob)?'<span class="trend-arrow trend-up" style="margin-left:4px;">&#9650;</span>':gn(may.ob)<gn(c.ob)?'<span class="trend-arrow trend-down" style="margin-left:4px;">&#9660;</span>':'<span class="trend-arrow trend-neutral" style="margin-left:4px;">&mdash;</span>'}
                             </div>
                         </div>
                     </div>
@@ -2479,7 +2485,7 @@ const STAFF = {
                 <div class="spotlight-grade-box" style="${gBg(mt.grade)}">
                     <div class="sg-label">${mt.label}</div>
                     <div class="sg-val">${mt.grade}</div>
-                    <div class="sg-pct">${mt.pct||''} ${mt.prev?'(Apr: '+mt.prev+')':''}</div>
+                    <div class="sg-pct">${mt.pct||''} ${mt.prev?'(Mar: '+mt.prev+')':''}</div>
                 </div>`).join('');
 
             // Inbound trends
