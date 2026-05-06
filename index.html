@@ -911,6 +911,26 @@ const STAFF = {
             'TCC':[]
         };
 
+        const INBOUND_STAFF = {
+            'SAS':[{n:'Jay Denman',ib:26,asked:21,booked:11},{n:'Thomas Hannon',ib:25,asked:19,booked:10},{n:'Jane-Marie Calhelha',ib:20,asked:18,booked:13},{n:'Meghan Houston',ib:9,asked:6,booked:4},{n:'Jason Apicerno',ib:9,asked:6,booked:3},{n:'Dustin Uhrig',ib:8,asked:6,booked:5},{n:'Page Pearson',ib:8,asked:6,booked:4},{n:'Avery Short',ib:6,asked:3,booked:3},{n:'Austin Root',ib:5,asked:3,booked:3},{n:'Hunter Maiers',ib:5,asked:4,booked:3},{n:'Alona Kaltovich',ib:5,asked:4,booked:0},{n:'Rikko Delgado',ib:5,asked:0,booked:0},{n:'Leslie Modlin',ib:4,asked:4,booked:2},{n:'Matthew Balducci',ib:4,asked:3,booked:2},{n:'Will Hall',ib:4,asked:3,booked:1},{n:'Nicholas Saunders',ib:3,asked:3,booked:2},{n:'MJ Fialka',ib:3,asked:1,booked:1}],
+            'TAS':[{n:'Alexa Bradley',ib:23,asked:11,booked:8},{n:'Eli Sajia',ib:21,asked:14,booked:8},{n:'Michael Marcoux',ib:21,asked:13,booked:7},{n:'Benjamin Ross',ib:20,asked:11,booked:9},{n:'Cameron Howell',ib:19,asked:16,booked:9},{n:'Jesus Varela',ib:18,asked:10,booked:5},{n:'Tor Wendel',ib:17,asked:12,booked:9},{n:'Matthew Bateman',ib:15,asked:8,booked:7},{n:'Brandon Davis',ib:13,asked:7,booked:6},{n:'Santiago Leon-Corona',ib:12,asked:4,booked:3},{n:'Warren Weitner',ib:12,asked:4,booked:3},{n:'Emily Brison',ib:11,asked:5,booked:4},{n:'Reilly Taylor',ib:10,asked:8,booked:7},{n:'Caleb Clampitt',ib:9,asked:5,booked:4},{n:'Steve Troia',ib:9,asked:7,booked:4},{n:'Andre Caldero',ib:9,asked:6,booked:3},{n:'Cameron Davis',ib:9,asked:5,booked:3},{n:'Dylan Sims',ib:7,asked:4,booked:4},{n:'Jerred Davis',ib:6,asked:4,booked:4},{n:'Kelsey Snyder',ib:6,asked:5,booked:4},{n:'Andrew Fox',ib:6,asked:3,booked:2},{n:'Gerald Rich',ib:5,asked:4,booked:4},{n:'Chris Fabian',ib:5,asked:1,booked:1},{n:'Niel Hugo',ib:5,asked:1,booked:0},{n:'Joseph Brittain',ib:4,asked:2,booked:2},{n:'Travis Worley',ib:4,asked:1,booked:1},{n:'Joshua Adams',ib:4,asked:1,booked:0},{n:'Candice Cox',ib:3,asked:2,booked:0},{n:'Scott Gray',ib:2,asked:2,booked:2},{n:'Michael Owenby',ib:2,asked:0,booked:0},{n:'Michael Price',ib:2,asked:2,booked:0},{n:'Andrew Kirchmeyer',ib:1,asked:1,booked:1},{n:'Jordan Wright',ib:1,asked:1,booked:1},{n:'Brandon Lance',ib:1,asked:0,booked:0}],
+            'NAS':[{n:'Tristan Traver',ib:24,asked:18,booked:8},{n:'Dan Mindermann',ib:18,asked:13,booked:10},{n:'Mike Masters',ib:18,asked:12,booked:7},{n:'Christopher Tercero',ib:13,asked:11,booked:10},{n:'Jay Davis',ib:8,asked:6,booked:4},{n:'Quinten Blake',ib:8,asked:4,booked:1},{n:'Zach Smith',ib:7,asked:3,booked:3},{n:'Christian Alvarado',ib:7,asked:3,booked:2},{n:'Dequavius Foster',ib:5,asked:1,booked:1},{n:'Jeff smith',ib:5,asked:3,booked:1},{n:'Noah Agne',ib:4,asked:4,booked:1},{n:'Robert Burns',ib:4,asked:2,booked:1},{n:'Caylen Dobson',ib:3,asked:1,booked:1},{n:'Jeremy Parker',ib:3,asked:1,booked:0}],
+            'KGR':[{n:'Nicholas Russell',ib:12,asked:9,booked:4},{n:'Steven Roland',ib:9,asked:4,booked:3},{n:'Wesley Shipman',ib:7,asked:3,booked:3},{n:'Daysha Thomason',ib:7,asked:3,booked:2},{n:'Jordan Campbell',ib:2,asked:1,booked:1},{n:'Charles Tebo',ib:1,asked:0,booked:0}],
+            'TGR':[{n:'Erin Girardeau',ib:36,asked:15,booked:8},{n:'Justin Ching',ib:31,asked:20,booked:11},{n:'Barbara Scholten',ib:24,asked:13,booked:6},{n:'Charles Washington',ib:24,asked:8,booked:5},{n:'Earnest Callands',ib:21,asked:11,booked:5},{n:'Samuel Sotelo',ib:18,asked:15,booked:9},{n:'Jarrid Bomar',ib:18,asked:10,booked:6},{n:'Dan Gaines',ib:14,asked:6,booked:5},{n:'Shane Morrison',ib:12,asked:7,booked:4},{n:'Ben Yoo',ib:6,asked:4,booked:3},{n:'John Diaz',ib:6,asked:2,booked:1},{n:'Jean Madrazo',ib:5,asked:2,booked:1},{n:'Dallas Beasley',ib:3,asked:2,booked:2},{n:'Emad Abdelmalik',ib:3,asked:1,booked:1},{n:'Gregory Drummond',ib:1,asked:0,booked:0},{n:'Miquese Long',ib:1,asked:0,booked:0}],
+            'CGR':[{n:'Wofford Shipman',ib:52,asked:19,booked:13},{n:'Cedric Ferguson',ib:27,asked:21,booked:9},{n:'John Karvelas',ib:24,asked:8,booked:7},{n:'Jerel Mosley',ib:21,asked:11,booked:7},{n:'Chris Morrison',ib:16,asked:10,booked:8},{n:'John Kennedy',ib:9,asked:3,booked:1},{n:'Tony Bentley',ib:8,asked:4,booked:2},{n:'Daniela Gelder',ib:2,asked:1,booked:0},{n:'Cody Taylor',ib:1,asked:0,booked:0}],
+            'HGR':[{n:'Scott Clark',ib:15,asked:8,booked:6},{n:'Rachel Hamby',ib:13,asked:8,booked:6},{n:'Michael Perez',ib:10,asked:7,booked:3},{n:'Jamaru Rodgers',ib:7,asked:5,booked:5},{n:'Tyler Winters',ib:5,asked:4,booked:3},{n:'Rick Veit',ib:4,asked:1,booked:0},{n:'Carlos Ochoa',ib:3,asked:2,booked:1}],
+            'GGR':[{n:'Gary DeFilippo',ib:16,asked:10,booked:7},{n:'Joyce Hornbeck',ib:10,asked:5,booked:4},{n:'Hamza Haveliwala',ib:8,asked:5,booked:5},{n:'Matthew Cabral',ib:8,asked:5,booked:3}],
+            'AGV':[{n:'Derrick McAlister',ib:28,asked:18,booked:11},{n:'Joshua Hind',ib:12,asked:6,booked:4},{n:'Dominic Mandella',ib:10,asked:9,booked:6},{n:'Tino Sullivan',ib:6,asked:4,booked:2},{n:'Riley Lidel',ib:5,asked:4,booked:3},{n:'Tanner Nickel',ib:4,asked:3,booked:3},{n:'James Naylor',ib:3,asked:2,booked:0},{n:'Ken Hucker',ib:2,asked:1,booked:1},{n:'Patrick Chew',ib:2,asked:1,booked:1}],
+            'KGV':[{n:'Jonathan Solis',ib:11,asked:4,booked:3},{n:'Daniel Carlton',ib:9,asked:9,booked:8},{n:'Jonas Brown',ib:9,asked:6,booked:6},{n:'Joseph Hudson',ib:8,asked:5,booked:3},{n:'Matthew Damagnez',ib:6,asked:3,booked:2},{n:'Christian Sheppard',ib:6,asked:2,booked:1},{n:'Will Turner',ib:4,asked:2,booked:2},{n:'Darius Sherman',ib:3,asked:1,booked:1},{n:'William Grey',ib:2,asked:2,booked:2},{n:'Cedraquan McDowell',ib:1,asked:1,booked:0},{n:'Elizabeth Edwards',ib:1,asked:0,booked:0},{n:'Trevor Pike',ib:1,asked:1,booked:0}],
+            'HGV':[{n:'Eli Vera',ib:15,asked:7,booked:3},{n:'Quinton Thomas',ib:12,asked:4,booked:3},{n:'Christine Brunt',ib:5,asked:3,booked:3},{n:'Angel Miguel-Hernandez',ib:5,asked:2,booked:1},{n:'Souleymane Ndiaye',ib:5,asked:4,booked:1},{n:'Amy Neill',ib:5,asked:1,booked:0},{n:'Allen Cruz',ib:4,asked:3,booked:2},{n:'Barry Karbash',ib:4,asked:3,booked:1},{n:'Nicholas Rodriguez',ib:4,asked:2,booked:1},{n:'Alex Guerrero',ib:3,asked:3,booked:1},{n:'Andrew Newton',ib:3,asked:0,booked:0},{n:'John Cawley',ib:3,asked:1,booked:0},{n:'Hamid Jahanbakhsh',ib:2,asked:1,booked:1},{n:'Zack Jones',ib:2,asked:2,booked:0},{n:'Daniel Cruz',ib:1,asked:1,booked:1},{n:'Melissa Castronova',ib:1,asked:1,booked:1},{n:'Preston Kinsey',ib:1,asked:1,booked:1},{n:'Alex Cruz Escorza',ib:1,asked:0,booked:0}],
+            'TRA':[{n:'Solomon Masika',ib:28,asked:24,booked:18},{n:'Roberto Hernandez',ib:18,asked:11,booked:6},{n:'Quan Long',ib:17,asked:8,booked:5},{n:'Skylar Dunford',ib:16,asked:8,booked:7},{n:'Ted Brooke',ib:16,asked:12,booked:7},{n:'Art livingston',ib:14,asked:5,booked:2},{n:'Adam Forrest',ib:12,asked:8,booked:5},{n:'Jaden Rodarte',ib:12,asked:4,booked:0},{n:'Joel Williams',ib:11,asked:2,booked:1},{n:'John Lafabregue',ib:11,asked:2,booked:1},{n:'Brett Boaz',ib:10,asked:8,booked:8},{n:'Tramal Turner',ib:10,asked:2,booked:1},{n:'Tristan Baisden',ib:8,asked:7,booked:3},{n:'Antonio Walker',ib:8,asked:2,booked:2},{n:'Elise DeLucia',ib:7,asked:5,booked:2},{n:'Joe Mokwa',ib:6,asked:5,booked:3},{n:'Karim Abdelshahid',ib:6,asked:4,booked:3},{n:'Jeffrey knight',ib:6,asked:2,booked:2},{n:'Brian Gorlesky',ib:5,asked:2,booked:2},{n:'Manuel Barcenas',ib:5,asked:3,booked:2},{n:'Abdulrahman Ali',ib:5,asked:3,booked:1},{n:'Wesley Matthews',ib:5,asked:3,booked:1},{n:'Bryan Harrison',ib:4,asked:1,booked:1},{n:'Dieyna Diagana',ib:4,asked:2,booked:1},{n:'Averi Bogan',ib:3,asked:1,booked:1},{n:'Charles Williams',ib:2,asked:0,booked:0},{n:'Richard LaBranche',ib:1,asked:1,booked:1},{n:'Allen Milliken-King',ib:1,asked:0,booked:0}],
+            'KRA':[{n:'Josh Clay',ib:10,asked:5,booked:2},{n:'Ted Weinstein',ib:5,asked:4,booked:4},{n:'Seungkook Jae',ib:4,asked:0,booked:0},{n:'Austin Ward',ib:3,asked:2,booked:1},{n:'Riley Willis',ib:3,asked:2,booked:0},{n:'Claybourne Bass',ib:2,asked:1,booked:1},{n:'Jeremy Poe',ib:2,asked:1,booked:1},{n:'Chad Erickson',ib:2,asked:0,booked:0},{n:'Jayneen Soliman Reyes',ib:2,asked:1,booked:0},{n:'Daniel Ortiz',ib:1,asked:1,booked:1},{n:'Paulo Morales',ib:1,asked:1,booked:1}],
+            'NRA':[{n:'John Ruggere',ib:12,asked:6,booked:3},{n:'Mark Walton',ib:8,asked:3,booked:2},{n:'Misha Danrich',ib:6,asked:3,booked:1},{n:'Kaiheem Tucker',ib:4,asked:2,booked:2},{n:'Johnny Lynch',ib:3,asked:1,booked:1},{n:'Julian Simmons',ib:3,asked:0,booked:0},{n:'Andrew Aguilar',ib:2,asked:0,booked:0},{n:'Drew Rogers',ib:2,asked:1,booked:0},{n:'Frandy Corporan',ib:2,asked:1,booked:0}],
+            'TSA':[{n:'Kay Weston',ib:22,asked:15,booked:6},{n:'Paul McCoy',ib:14,asked:6,booked:3},{n:'Rockwell Linsley',ib:11,asked:9,booked:4},{n:'Dustin Phillips',ib:11,asked:4,booked:3},{n:'David Darrow',ib:11,asked:5,booked:2},{n:'Lacy Tripp',ib:10,asked:5,booked:4},{n:'RICHARD COVINGTON',ib:7,asked:5,booked:3},{n:'Freddy Davis',ib:4,asked:0,booked:0},{n:'Oladepo Williams',ib:3,asked:1,booked:1},{n:'Dorien Harrington',ib:1,asked:0,booked:0}],
+            'TCH':[{n:'Michael Price',ib:11,asked:4,booked:1},{n:'Brandon McCall',ib:8,asked:7,booked:5},{n:'Brent Poling',ib:8,asked:6,booked:5},{n:'Andrew Huffman',ib:7,asked:7,booked:6},{n:'Elijah Mcnaughton',ib:7,asked:4,booked:3},{n:'Matthew Dieterich',ib:6,asked:3,booked:2},{n:'Justin Elrod',ib:5,asked:2,booked:1},{n:'Hector Chavarria',ib:4,asked:3,booked:2},{n:'Andrey Bredyuk',ib:3,asked:2,booked:1},{n:'Braeden Myers',ib:3,asked:1,booked:1},{n:'Casey Nordgren',ib:2,asked:1,booked:1},{n:'Anthony Casiechitty',ib:2,asked:1,booked:0},{n:'DeMarcus Craft',ib:2,asked:1,booked:0},{n:'Benjamin Longo',ib:1,asked:1,booked:1},{n:'Henry Caira',ib:1,asked:1,booked:1},{n:'Eric Peterson',ib:1,asked:0,booked:0},{n:'Jowaine Bookal',ib:1,asked:0,booked:0},{n:'Matt Gladwell',ib:1,asked:1,booked:0}],
+            'TCC':[{n:'Kelly Floyd',ib:31,asked:21,booked:13},{n:'Arlex Lacayo',ib:13,asked:7,booked:6},{n:'Miguel Medina',ib:9,asked:6,booked:4},{n:'Christian Odio',ib:9,asked:4,booked:3},{n:'Will Thermidor',ib:6,asked:3,booked:3},{n:'Cody Thompson',ib:6,asked:3,booked:2},{n:'Damian Flores',ib:6,asked:3,booked:1},{n:'Henry Rosales Guerrero',ib:5,asked:5,booked:4},{n:'Steven Herrera',ib:5,asked:2,booked:1},{n:'Peter Esposito',ib:4,asked:3,booked:3},{n:'Alain Pino',ib:3,asked:1,booked:1},{n:'D\'Marcus Anthony',ib:3,asked:2,booked:1},{n:'Jessica Dykstra',ib:3,asked:1,booked:0},{n:'Jayden Hodges',ib:2,asked:2,booked:1},{n:'Alex Coolen',ib:2,asked:0,booked:0},{n:'Kojak McKown',ib:2,asked:0,booked:0},{n:'Mario Aguilera',ib:1,asked:1,booked:1},{n:'Bailey Hilt',ib:1,asked:1,booked:0},{n:'Louis Mazzaro',ib:1,asked:1,booked:0},{n:'Sean Rowland',ib:1,asked:0,booked:0}]
+        };
+
         // Monthly trend data (Nov–Apr) — from CRISP inbound reports
         const TRENDS = {
             months: ['Jan','Feb','Mar','Apr','May'],
@@ -1230,7 +1250,7 @@ const STAFF = {
 
                 h+=`<tr>
                     <td><button class="row-expand-btn" onclick="toggleDetail(${idx},event)">&#9660;</button></td>
-                    <td class="store-name" title="${store.name}"><a href="#" onclick="event.preventDefault();event.stopPropagation();showSpotlight('${store.id}')" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px;">${store.id}</a></td>
+                    <td class="store-name" title="${store.name}"><a href="#" onclick="event.preventDefault();event.stopPropagation();showSpotlight('${store.id}')" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px;">${store.id}</a> <a href="#" onclick="event.preventDefault();event.stopPropagation();showOnePager('${store.id}')" title="Open 1-pager" style="font-size:9px;color:#0369a1;text-decoration:none;background:#f0f9ff;padding:1px 5px;border-radius:3px;font-weight:700;letter-spacing:0.3px;margin-left:3px;">1‑PG</a></td>
                     <td class="metric-cell ib-start">${miniBar(store.current.req,'req',c.rg)}</td>
                     <td class="metric-cell">${miniBar(store.current.set,'set',c.sg)}</td>
                     <td class="grade-cell">${thermo(c.ib)}</td>
@@ -1994,11 +2014,35 @@ const STAFF = {
                 ];
                 all.push({pri:1,type:'opportunity',tag:'Opportunity',title:bestGain.store.id+' \u2014 Biggest Improver',text:pick(v,bestGain.store.id+'gain')});
             }
-            // Overall declines (high priority) — gated on sample size during partial months
+            // Stuck-low alerts — stores currently at C+ or below (regardless of trend)
+            // These are the real coaching priorities, not B+ stores that slipped to B-.
             alertStores.forEach(s=>{
-                if(partialMonth) return;  // suppress decline alerts when current month has <10 days of data
+                const c=calc(s.current),m=calc(s.march);
+                if(gn(c.ov)<2.3 && gn(c.ov)>1.0){  // C+ or worse, but above the "bottom of board" alert which handles D+/D/F
+                    const declined = gn(c.ov)<gn(m.ov);
+                    const flat = gn(c.ov)===gn(m.ov);
+                    const v=[
+                        s.id+' is sitting at '+c.ov+'. Below B− means June extra training — let\'s move it up before then. Pull rep grades and start with the bottom 2.',
+                        'Stuck at '+c.ov+'. '+(declined?'Slid from '+m.ov+' last month — ':'')+'pick the one weak side (inbound or outbound) and run a scorecard this week.',
+                        c.ov+' overall and not moving the right direction. Schedule a Ring Ring — peer-store of similar size that broke through.',
+                        s.id+' grading '+c.ov+'. The June training list keeps getting shorter the more we move now. Where\'s the easiest grade to lift?'
+                    ];
+                    all.push({pri:0, type:'watch', tag:'Below B−',
+                        title:s.id+' — Sitting at '+c.ov+(declined?' (slipped from '+m.ov+')':flat?' (flat)':''),
+                        text:pickUnique(v,s.id+'below','below')});
+                }
+            });
+            // Overall declines — only flag as URGENT if landing in the C zone or worse, otherwise pri:1
+            alertStores.forEach(s=>{
+                if(partialMonth) return;
                 const c=calc(s.current),m=calc(s.march);
                 if(gn(c.ov)<gn(m.ov)){
+                    // Skip if already covered by stuck-low alert above
+                    if(gn(c.ov)<2.3 && gn(c.ov)>1.0) return;
+                    // Drops landing in B-/B/B+ are coaching opportunities, not crises. Lower priority.
+                    const landingInBzone = gn(c.ov)>=2.7;
+                    const drop = gn(m.ov)-gn(c.ov);
+                    const priority = landingInBzone && drop<0.7 ? 2 : 1;
                     const ibDown=gn(c.ib)<gn(m.ib);
                     const obDown=gn(c.ob)<gn(m.ob);
                     const v=[];
@@ -2020,7 +2064,7 @@ const STAFF = {
                     else if(obDown) v.push(m.ov+' \u2192 '+c.ov+'. Outbound\'s where it slid \u2014 bad list kills this number every time. Who is getting fed what?');
                     // Variant 6: the 30-day frame
                     v.push('30 days ago this store was '+m.ov+'. Today it\'s '+c.ov+'. '+(ibDown&&obDown?'Both sides need attention.':ibDown?'Inbound needs the attention.':'Outbound needs the attention.'));
-                    all.push({pri:0,type:'watch',tag:'Watch',title:s.id+' \u2014 Overall declined ('+m.ov+' \u2192 '+c.ov+')',text:pickUnique(v,s.id+'decl','decl')});
+                    all.push({pri:priority,type:'watch',tag:'Watch',title:s.id+' \u2014 Overall declined ('+m.ov+' \u2192 '+c.ov+')',text:pickUnique(v,s.id+'decl','decl')});
                 }
             });
             // Big Set swings (Mar → Apr)
@@ -2161,21 +2205,25 @@ const STAFF = {
             const westIds=new Set(D.stores.filter(s=>s.region==='West').map(s=>s.id));
             const storeIds=new Set(D.stores.map(s=>s.id));
             const isStoreMsg=m=>storeIds.has(m.title.split(' ')[0]);
-            // Manager engagement watchlist — surface stores where managers aren't listening
+            // Manager engagement watchlist — surface stores where managers aren't listening.
+            // GMs intentionally NOT critiqued here (they're not expected to be in call review).
+            // GSMs (General Sales Managers) ARE expected to coach — flag them when they're absent.
             if(typeof MANAGERS!=='undefined'){
                 alertStores.forEach(s=>{
                     const mgrs = MANAGERS[s.id] || [];
-                    const totL = mgrs.reduce((a,m)=>a+m.l,0);
-                    const totS = mgrs.reduce((a,m)=>a+m.s,0);
-                    const hasGM = mgrs.some(m=>m.role==='GM' && m.l>0);
+                    const coachingMgrs = mgrs.filter(m=>m.role!=='GM');  // SMs + GSMs
+                    const totL = coachingMgrs.reduce((a,m)=>a+m.l,0);
+                    const totS = coachingMgrs.reduce((a,m)=>a+m.s,0);
+                    const gsms = mgrs.filter(m=>m.role==='GSM');
+                    const gsmsListening = gsms.filter(m=>m.l>0).length;
                     // No managers listening at all
-                    if(mgrs.length===0 || totL<5){
+                    if(coachingMgrs.length===0 || totL<5){
                         all.push({pri:1,type:'watch',tag:'Coaching Gap',title:s.id+' — Manager engagement low',
-                            text:'Only '+totL+' listens MTD across all managers. The team that\'s not reviewed isn\'t coached. Pull up 5 calls together this week.'});
-                    } else if(!hasGM && mgrs.length>=2){
-                        // GM not engaged
-                        all.push({pri:2,type:'watch',tag:'Coaching Gap',title:s.id+' — GM not in calls',
-                            text:'SMs are listening ('+totL+' MTD) but the GM has 0 listens. Loop them in — the program lands harder when the GM is in the room.'});
+                            text:'Only '+totL+' listens MTD across SMs and GSMs. The team that\'s not reviewed isn\'t coached. Pull up 5 calls together this week.'});
+                    } else if(gsms.length>=1 && gsmsListening===0){
+                        // GSMs present but none engaged
+                        all.push({pri:2,type:'watch',tag:'Coaching Gap',title:s.id+' — GSM not in calls',
+                            text:'SMs are listening ('+totL+' MTD) but the GSM has 0 listens. The GSM owns coaching cadence — get them on the calls.'});
                     }
                 });
             }
@@ -2534,6 +2582,181 @@ const STAFF = {
             window.print();
             document.body.classList.remove('printing-modal');
         }
+
+        // ============================================
+        // STORE 1-PAGER — baseline → April + top coaching candidates
+        // ============================================
+        function showOnePager(storeId){
+            const store = D.stores.find(s=>s.id===storeId);
+            if(!store) return;
+            const c = calc(store.current), b = calc(store.baseline);
+            const ibStaff = (typeof INBOUND_STAFF !== 'undefined') ? (INBOUND_STAFF[storeId] || []) : [];
+            const obStaff = STAFF[storeId] || [];
+
+            // Coaching candidates — high volume + below-bar conversion
+            // Inbound: top 3 reps with IB >= median AND ask% < 60% (sorted by IB desc)
+            const ibVols = ibStaff.map(r=>r.ib).sort((a,b)=>b-a);
+            const ibThresh = ibVols[Math.min(ibVols.length-1, Math.floor(ibVols.length/2))] || 0;
+            const ibCandidates = ibStaff.filter(r=>{
+                if(r.ib < Math.max(3, ibThresh*0.6)) return false;
+                const askPct = r.ib>0 ? (r.asked/r.ib)*100 : 0;
+                return askPct < 60;
+            }).map(r=>({...r, askPct: r.ib>0 ? Math.round((r.asked/r.ib)*100) : 0,
+                        bookPct: r.asked>0 ? Math.round((r.booked/r.asked)*100) : 0}))
+              .sort((a,b)=>b.ib-a.ib).slice(0,3);
+
+            // Outbound: top 3 reps with OB volume >= median AND (live% < 15 OR appt% < 9)
+            const obVols = obStaff.map(r=>r.ob).sort((a,b)=>b-a);
+            const obThresh = obVols[Math.min(obVols.length-1, Math.floor(obVols.length/2))] || 0;
+            const obCandidates = obStaff.filter(r=>{
+                if(r.ob < Math.max(50, obThresh*0.5)) return false;
+                const live = r.ob>0 ? (r.c/r.ob)*100 : 0;
+                const appt = r.c>0 ? (r.a/r.c)*100 : 0;
+                return live<15 || appt<9;
+            }).map(r=>({...r, live: r.ob>0 ? +(r.c/r.ob*100).toFixed(1) : 0,
+                       appt: r.c>0 ? +(r.a/r.c*100).toFixed(1) : 0}))
+              .sort((a,b)=>b.ob-a.ob).slice(0,3);
+
+            // Mini sparkline: render TRENDS values as inline SVG
+            function sparkline(values, color){
+                const vs = values.filter(v=>v!==null);
+                if(vs.length<2) return '';
+                const min = Math.min(...vs), max = Math.max(...vs), range = max-min || 1;
+                const w=120, h=28;
+                const pts = values.map((v,i)=>{
+                    if(v===null) return null;
+                    const x = (i/(values.length-1))*w;
+                    const y = h - ((v-min)/range)*h;
+                    return `${x},${y}`;
+                }).filter(p=>p);
+                return `<svg width="${w}" height="${h}" style="vertical-align:middle;"><polyline points="${pts.join(' ')}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>${pts.map(p=>{const [x,y]=p.split(',');return `<circle cx="${x}" cy="${y}" r="2" fill="${color}"/>`;}).join('')}</svg>`;
+            }
+            const riTrend = TRENDS.ri[storeId] || [];
+            const setTrend = TRENDS.set[storeId] || [];
+            const liveTrend = OB_TRENDS.live[storeId] || [];
+            const apptTrend = OB_TRENDS.appt[storeId] || [];
+
+            // Delta arrows
+            function delta(b, c, isInt){
+                const d = c-b;
+                const arrow = d>0.05?'<span style="color:#15803d;">▲</span>':d<-0.05?'<span style="color:#dc2626;">▼</span>':'<span style="color:#94a3b8;">—</span>';
+                const sign = d>0?'+':'';
+                const fmt = isInt? d.toFixed(1) : d.toFixed(1);
+                return `<span style="font-weight:600;">${arrow} ${sign}${fmt}</span>`;
+            }
+            function row(label, b, c, bench, metric){
+                const bg = gg(b, metric), cg = gg(c, metric);
+                return `<tr>
+                    <td style="padding:5px 8px;color:#475569;font-weight:600;font-size:12px;">${label}</td>
+                    <td style="padding:5px 8px;font-size:12px;color:#64748b;">${b}% <span class="g ${gc(bg)}" style="font-size:10px;">${bg}</span></td>
+                    <td style="padding:5px 8px;font-size:12px;color:#1a1a2e;font-weight:600;">${c}% <span class="g ${gc(cg)}" style="font-size:10px;">${cg}</span></td>
+                    <td style="padding:5px 8px;font-size:11px;">${delta(b,c)}</td>
+                </tr>`;
+            }
+
+            // "Where to focus" auto-line
+            const ibD = gn(c.ib)-gn(b.ib);
+            const obD = gn(c.ob)-gn(b.ob);
+            let focus;
+            if(ibD>0.5 && obD>0.5) focus = 'Strong gains both sides since baseline. Hold the line and protect what\'s working.';
+            else if(ibD>obD+0.3) focus = 'Inbound is the win — outbound is where the next grade comes from.';
+            else if(obD>ibD+0.3) focus = 'Outbound carrying the program — inbound conversion is the next move.';
+            else if(ibD<-0.3 || obD<-0.3) focus = 'Slipped from baseline. Pull the rep coaching list above and run scorecards this week.';
+            else focus = 'Holding steady since baseline. Look at the rep-level list above to find the next half-grade.';
+
+            const region = store.region;
+            const html = `
+                <div class="staff-modal-hdr" style="background:#fff;">
+                    <div>
+                        <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:#94a3b8;text-transform:uppercase;">Store 1‑Pager · ${region}</div>
+                        <h3 style="font-size:18px;margin-top:2px;">${store.name}</h3>
+                    </div>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <div style="text-align:center;padding:4px 10px;background:#f8fafc;border-radius:6px;border:1px solid #e5e7eb;">
+                            <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Apr Overall</div>
+                            <div class="g ${gc(c.ov)}" style="font-size:18px;padding:0;">${c.ov}</div>
+                        </div>
+                        <button onclick="printStaffModal()" style="background:#0369a1;color:#fff;border:none;border-radius:4px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;">Print</button>
+                        <button class="close-btn" onclick="closeStaffModal()">&times;</button>
+                    </div>
+                </div>
+                <div class="staff-modal-body" style="padding:14px 22px 18px;">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+                        <!-- INBOUND -->
+                        <div style="border:1px solid #bae6fd;border-radius:8px;padding:14px;background:#f0f9ff;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                                <h4 style="font-size:12px;font-weight:700;color:#0369a1;text-transform:uppercase;letter-spacing:0.5px;">Inbound</h4>
+                                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:#0369a1;">${sparkline(setTrend,'#0369a1')}</div>
+                            </div>
+                            <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">
+                                <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:0.4px;">
+                                    <th style="padding:4px 8px;text-align:left;font-weight:600;">Metric</th>
+                                    <th style="padding:4px 8px;text-align:left;font-weight:600;">Baseline</th>
+                                    <th style="padding:4px 8px;text-align:left;font-weight:600;">April</th>
+                                    <th style="padding:4px 8px;text-align:left;font-weight:600;">Δ</th>
+                                </tr></thead>
+                                <tbody>
+                                    ${row('RI %', store.baseline.req, store.current.req, BENCH.req, 'req')}
+                                    ${row('Set %', store.baseline.set, store.current.set, BENCH.set, 'set')}
+                                </tbody>
+                            </table>
+                            <div style="font-size:10px;color:#0369a1;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Top 3 to coach — asking for the appt</div>
+                            ${ibCandidates.length ? ibCandidates.map((r,i)=>`
+                                <div style="background:#fff;border:1px solid #bae6fd;border-radius:5px;padding:7px 10px;margin-bottom:5px;font-size:12px;">
+                                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                                        <span style="font-weight:600;color:#1a1a2e;">${i+1}. ${r.n}</span>
+                                        <span style="font-size:11px;color:#dc2626;font-weight:700;">${r.askPct}% ask</span>
+                                    </div>
+                                    <div style="font-size:10px;color:#64748b;margin-top:1px;">${r.ib} inbound calls · ${r.asked} asked · ${r.booked} booked</div>
+                                </div>`).join('') : '<div style="font-size:11px;color:#64748b;font-style:italic;padding:6px 0;">Everyone\'s asking. No coaching candidates flagged.</div>'}
+                        </div>
+                        <!-- OUTBOUND -->
+                        <div style="border:1px solid #fed7aa;border-radius:8px;padding:14px;background:#fff7ed;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                                <h4 style="font-size:12px;font-weight:700;color:#c2410c;text-transform:uppercase;letter-spacing:0.5px;">Outbound</h4>
+                                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:#c2410c;">${sparkline(apptTrend,'#c2410c')}</div>
+                            </div>
+                            <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">
+                                <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:0.4px;">
+                                    <th style="padding:4px 8px;text-align:left;font-weight:600;">Metric</th>
+                                    <th style="padding:4px 8px;text-align:left;font-weight:600;">Baseline</th>
+                                    <th style="padding:4px 8px;text-align:left;font-weight:600;">April</th>
+                                    <th style="padding:4px 8px;text-align:left;font-weight:600;">Δ</th>
+                                </tr></thead>
+                                <tbody>
+                                    ${row('Live %', store.baseline.live, store.current.live, BENCH.live, 'live')}
+                                    ${row('Appt %', store.baseline.appt, store.current.appt, BENCH.appt, 'appt')}
+                                </tbody>
+                            </table>
+                            <div style="font-size:10px;color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Top 3 to coach — connect & convert</div>
+                            ${obCandidates.length ? obCandidates.map((r,i)=>`
+                                <div style="background:#fff;border:1px solid #fed7aa;border-radius:5px;padding:7px 10px;margin-bottom:5px;font-size:12px;">
+                                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                                        <span style="font-weight:600;color:#1a1a2e;">${i+1}. ${r.n}</span>
+                                        <span style="font-size:11px;color:#dc2626;font-weight:700;">${r.live<15?r.live+'% live':r.appt+'% appt'}</span>
+                                    </div>
+                                    <div style="font-size:10px;color:#64748b;margin-top:1px;">${r.ob} OB · ${r.c} connects · ${r.a} appts · live ${r.live}% · appt ${r.appt}%</div>
+                                </div>`).join('') : '<div style="font-size:11px;color:#64748b;font-style:italic;padding:6px 0;">No coaching candidates flagged.</div>'}
+                        </div>
+                    </div>
+                    <!-- Overall + Focus -->
+                    <div style="margin-top:14px;padding:12px 14px;background:#fef3c7;border:1px solid #fde68a;border-radius:8px;display:flex;justify-content:space-between;align-items:center;gap:14px;">
+                        <div>
+                            <div style="font-size:10px;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px;">Where to focus</div>
+                            <div style="font-size:13px;color:#78350f;font-weight:600;">${focus}</div>
+                        </div>
+                        <div style="text-align:right;font-size:11px;color:#92400e;">
+                            <div>Baseline: <span class="g ${gc(b.ov)}" style="font-size:10px;">${b.ov}</span> → April: <span class="g ${gc(c.ov)}" style="font-size:10px;">${c.ov}</span></div>
+                        </div>
+                    </div>
+                </div>`;
+
+            const overlay = document.getElementById('staffOverlay');
+            overlay.querySelector('.staff-modal').innerHTML = html;
+            overlay.querySelector('.staff-modal').style.maxWidth = '900px';
+            overlay.classList.add('active');
+        }
+
         document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeStaffModal(); closeSpotlight(); }});
 
         // ============================================
@@ -3322,17 +3545,25 @@ const STAFF = {
             const westSeries = months.map((_,i)=>seriesAvg(westStores,i));
             const eastSeries = months.map((_,i)=>seriesAvg(eastStores,i));
 
-            const allVals = [...westSeries,...eastSeries,bench].filter(v=>v!==null);
-            let minV = Math.floor(Math.min(...allVals)/5)*5 - 2;
-            let maxV = Math.ceil(Math.max(...allVals)/5)*5 + 3;
+            // Auto-fit y-axis to data only — exclude benchmark from range to prevent
+            // the chart from looking flat when bench is far above actual values.
+            const dataVals = [...westSeries,...eastSeries].filter(v=>v!==null);
+            const dataMin = Math.min(...dataVals), dataMax = Math.max(...dataVals);
+            const rng = dataMax - dataMin;
+            const pad_ = Math.max(2, rng*0.25);
+            let minV = Math.floor((dataMin - pad_)/2)*2;
+            let maxV = Math.ceil((dataMax + pad_)/2)*2;
+            const benchInView = (bench >= minV-1 && bench <= maxV+5);
+            if(benchInView) maxV = Math.max(maxV, Math.ceil(bench/2)*2);
 
             const xStep = cw / (months.length - 1);
             const toX = i => pad.left + i * xStep;
             const toY = v => pad.top + (maxV - v) * (ch / (maxV - minV));
 
-            // Grid
+            // Grid — adaptive step (every 2 if range tight, every 5 if wider)
+            const gridStep = (maxV - minV) <= 14 ? 2 : 5;
             ctx.strokeStyle = '#e5e7eb'; ctx.lineWidth = 0.5;
-            for(let v = Math.ceil(minV/5)*5; v <= maxV; v += 5) {
+            for(let v = Math.ceil(minV/gridStep)*gridStep; v <= maxV; v += gridStep) {
                 const y = toY(v);
                 ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(w-pad.right, y); ctx.stroke();
                 ctx.fillStyle = '#9ca3af'; ctx.font = '10px Helvetica Neue, Helvetica, Arial'; ctx.textAlign = 'right';
@@ -3405,18 +3636,26 @@ const STAFF = {
             const eastSeries = months.map((_,i)=>seriesAvg(eastStores,i));
 
             // Y range
-            const allVals = [...westSeries,...eastSeries,bench].filter(v=>v!==null);
-            let minV = Math.floor(Math.min(...allVals)/5)*5 - 2;
-            let maxV = Math.ceil(Math.max(...allVals)/5)*5 + 3;
+            // Auto-fit y-axis to data only — exclude benchmark from range to prevent
+            // the chart from looking flat when bench is far above actual values.
+            const dataVals = [...westSeries,...eastSeries].filter(v=>v!==null);
+            const dataMin = Math.min(...dataVals), dataMax = Math.max(...dataVals);
+            const rng = dataMax - dataMin;
+            const pad_ = Math.max(2, rng*0.25);
+            let minV = Math.floor((dataMin - pad_)/2)*2;
+            let maxV = Math.ceil((dataMax + pad_)/2)*2;
+            const benchInView = (bench >= minV-1 && bench <= maxV+5);
+            if(benchInView) maxV = Math.max(maxV, Math.ceil(bench/2)*2);
 
             const xStep = cw / (months.length - 1);
             const yScale = ch / (maxV - minV);
             const toX = i => pad.left + i * xStep;
             const toY = v => pad.top + (maxV - v) * yScale;
 
-            // Grid
+            // Grid — adaptive step (every 2 if range tight, every 5 if wider)
+            const gridStep = (maxV - minV) <= 14 ? 2 : 5;
             ctx.strokeStyle = '#e5e7eb'; ctx.lineWidth = 0.5;
-            for(let v = Math.ceil(minV/5)*5; v <= maxV; v += 5) {
+            for(let v = Math.ceil(minV/gridStep)*gridStep; v <= maxV; v += gridStep) {
                 const y = toY(v);
                 ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(w-pad.right, y); ctx.stroke();
                 ctx.fillStyle = '#9ca3af'; ctx.font = '10px Helvetica Neue, Helvetica, Arial'; ctx.textAlign = 'right';
@@ -3649,7 +3888,76 @@ const STAFF = {
                 setTimeout(()=>overlay.remove(), 500);
             }, 3500);
         }
-        document.addEventListener('DOMContentLoaded',()=>{renderAll();});
+        // ===== Wednesday Coaching Cadence Splash =====
+        // Surfaces stores where SMs+GSMs have 0 listens OR 0 shares since Monday.
+        // Window: Wed 3pm through end of Thursday. Once per page load. Auto-dismiss after 10s.
+        function maybeShowCoachingSplash(){
+            const now = new Date();
+            const day = now.getDay();   // 0=Sun, 3=Wed, 4=Thu
+            const hour = now.getHours();
+            const inWindow = (day===3 && hour>=15) || (day===4);
+            if(!inWindow) return;
+            if(typeof MANAGERS_WTD==='undefined') return;
+
+            // Find offending stores
+            const flagged = [];
+            D.stores.filter(s=>s.id!=='TCC').forEach(s=>{
+                const mgrs = (MANAGERS_WTD[s.id] || []).filter(m=>m.role!=='GM');  // SMs + GSMs only
+                const totL = mgrs.reduce((a,m)=>a+m.l,0);
+                const totS = mgrs.reduce((a,m)=>a+m.s,0);
+                if(totL===0 || totS===0){
+                    flagged.push({sid:s.id, name:s.name, mgrs, totL, totS,
+                        reason: totL===0 ? 'No listens since Monday' : 'No shares since Monday'});
+                }
+            });
+            if(!flagged.length) return;
+
+            // Build the splash
+            const overlay = document.createElement('div');
+            overlay.id = 'coachingSplash';
+            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(15,23,42,0.55);z-index:9998;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s ease;';
+            const panel = document.createElement('div');
+            panel.style.cssText = 'background:#fff;border-radius:14px;max-width:580px;width:92%;max-height:85vh;overflow:auto;box-shadow:0 25px 70px rgba(0,0,0,0.35);transform:scale(0.92);transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);';
+            const list = flagged.map(f=>`
+                <div onclick="document.getElementById('coachingSplash').remove();showStaffModal('${f.sid}','WTD');"
+                     style="padding:11px 14px;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:#fff;transition:background 0.15s;"
+                     onmouseover="this.style.background='#fef3c7';" onmouseout="this.style.background='#fff';">
+                    <div>
+                        <div style="font-weight:700;font-size:14px;color:#1a1a2e;">${f.sid} <span style="color:#64748b;font-weight:500;font-size:12px;">— ${f.name.replace('Fred Anderson ','').replace('Genesis of ','Genesis ')}</span></div>
+                        <div style="font-size:11px;color:#92400e;margin-top:2px;">${f.reason} · ${f.mgrs.length} mgr${f.mgrs.length===1?'':'s'}</div>
+                    </div>
+                    <div style="font-size:10px;color:#0369a1;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">View →</div>
+                </div>`).join('');
+            panel.innerHTML = `
+                <div style="padding:18px 22px 12px;border-bottom:1px solid #fde68a;background:#fffbeb;border-radius:14px 14px 0 0;">
+                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#92400e;margin-bottom:4px;">Mid-Week Coaching Check</div>
+                    <h2 style="font-size:18px;font-weight:700;color:#78350f;line-height:1.3;">${flagged.length} ${flagged.length===1?'store needs':'stores need'} attention</h2>
+                    <div style="font-size:12px;color:#92400e;margin-top:4px;">Managers haven't listened to or shared a single call since Monday. Click any store to see who's missing.</div>
+                </div>
+                <div style="padding:14px 18px;">
+                    ${list}
+                </div>
+                <div style="padding:10px 18px 14px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#94a3b8;">
+                    <span id="coachingSplashCountdown">Auto-dismissing in 10s</span>
+                    <button onclick="document.getElementById('coachingSplash').remove();" style="background:#0369a1;color:#fff;border:none;border-radius:5px;padding:6px 16px;font-size:12px;font-weight:600;cursor:pointer;">Got it</button>
+                </div>`;
+            overlay.appendChild(panel);
+            overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.remove(); });
+            document.body.appendChild(overlay);
+            requestAnimationFrame(()=>{
+                overlay.style.opacity='1';
+                panel.style.transform='scale(1)';
+            });
+            // Countdown + auto-dismiss
+            let secs = 10;
+            const cd = setInterval(()=>{
+                secs--;
+                const el = document.getElementById('coachingSplashCountdown');
+                if(el) el.textContent = `Auto-dismissing in ${secs}s`;
+                if(secs<=0){ clearInterval(cd); const o=document.getElementById('coachingSplash'); if(o) o.remove(); }
+            }, 1000);
+        }
+        document.addEventListener('DOMContentLoaded',()=>{renderAll();setTimeout(maybeShowCoachingSplash,500);});
     </script>
     <div class="staff-overlay" id="staffOverlay" onclick="if(event.target===this)closeStaffModal()">
         <div class="staff-modal"></div>
