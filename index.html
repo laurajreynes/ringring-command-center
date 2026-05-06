@@ -721,7 +721,7 @@
             <span>Anderson Automotive Group</span>
             <span id="dateRange">Last 30 Days</span>
             <span>CarWars: <strong id="carwarsDate"></strong></span>
-            <span class="last-updated" title="Most recent data refresh"><span class="lu-dot"></span>Updated <strong style="color:#0369a1;">May 5, 3:21 AM</strong> · April Final on display · May data in store drill-downs</span>
+            <span class="last-updated" title="Most recent data refresh"><span class="lu-dot"></span>Updated <strong style="color:#0369a1;">May 5, 1:00 PM</strong> · April Final + May MTD trend</span>
             <a href="https://ringderby.vercel.app" target="_blank" class="top-link derby-link">Derby Board</a>
             <a href="https://anderson-scorecard.vercel.app" target="_blank" class="top-link scorecard-link">Scorecard</a>
             <button onclick="window.print()" class="top-link" style="background:#f3f4f6;color:#374151;border:none;cursor:pointer;font-family:inherit;">Export PDF</button>
@@ -739,8 +739,12 @@
         <div class="summary-item"><div class="num num-green" id="improvedCount">0</div><div class="lbl">Improved</div></div>
         <div class="summary-item"><div class="num num-red" id="declinedCount">0</div><div class="lbl">Declined</div></div>
         <div class="summary-item"><div class="num num-amber" id="steadyCount">0</div><div class="lbl">Steady</div></div>
+        <div class="summary-item" style="border-left:1px solid #d0d5dd;padding-left:14px;margin-left:6px;"><div class="lbl" style="color:#0369a1;font-weight:700;">WEST</div><div style="font-size:12px;color:#374151;font-weight:600;" id="westSummary">—</div></div>
+        <div class="summary-item" style="border-left:1px solid #d0d5dd;padding-left:14px;"><div class="lbl" style="color:#15803d;font-weight:700;">EAST</div><div style="font-size:12px;color:#374151;font-weight:600;" id="eastSummary">—</div></div>
         <div class="summary-item" style="margin-left:auto;"><div class="lbl" id="currentDate" style="color:#6b7280;">—</div></div>
     </div>
+    <div id="storyOfDay" style="background:#fffbeb;border-bottom:1px solid #fde68a;padding:7px 20px;font-size:12px;color:#78350f;display:none;"></div>
+    <div id="juneTrainingBanner" style="background:#eef2ff;border-bottom:1px solid #c7d2fe;padding:8px 20px;font-size:12px;color:#3730a3;display:none;"></div>
 
     <div class="focus-overlay" id="focusOverlay" onclick="if(event.target===this)closeFocus()">
         <div class="focus-panel">
@@ -807,64 +811,64 @@
     <script>
         const D = {
             stores: [
-                { id:'SAS', name:'Fred Anderson Subaru', region:'West', baseline:{req:66.8,set:37.8,live:17.5,appt:8.2}, current:{req:76,set:39,live:15.9,appt:9.1}, ytd:{req:64.2,set:38.6,live:16.0,appt:9.2} },
-                { id:'TAS', name:'Fred Anderson Toyota of Asheville', region:'West', baseline:{req:55.3,set:26.5,live:12.7,appt:10.3}, current:{req:58,set:26,live:16.9,appt:10.1}, ytd:{req:54.2,set:27.2,live:16.4,appt:10.6} },
-                { id:'NAS', name:'Fred Anderson Nissan of Asheville', region:'West', baseline:{req:63.8,set:42.3,live:18.9,appt:8.5}, current:{req:67,set:36,live:18.6,appt:9.9}, ytd:{req:64.2,set:35.0,live:17.2,appt:11.0} },
-                { id:'KGR', name:'Fred Anderson Kia of Greer', region:'West', baseline:{req:62.7,set:38.2,live:14.2,appt:10.2}, current:{req:71,set:49,live:14.9,appt:10.4}, ytd:{req:67.2,set:47.8,live:14.5,appt:10.4} },
-                { id:'TGR', name:'Fred Anderson Toyota of Greer', region:'West', baseline:{req:57.0,set:32.8,live:17.4,appt:7.3}, current:{req:54,set:35,live:12.3,appt:9.2}, ytd:{req:55.0,set:28.4,live:14.2,appt:9.8} },
-                { id:'CGR', name:'Fred Anderson Chevy Buick GMC Cadillac', region:'West', baseline:{req:51.3,set:25.7,live:16.6,appt:6.3}, current:{req:56,set:34,live:20.3,appt:8.3}, ytd:{req:54.2,set:26.8,live:19.0,appt:8.3} },
-                { id:'HGR', name:'Fred Anderson Hyundai', region:'West', baseline:{req:63.5,set:38.3,live:10.4,appt:10.6}, current:{req:60,set:43,live:14.1,appt:11.1}, ytd:{req:70.0,set:33.8,live:13.4,appt:12.2} },
-                { id:'GGR', name:'Genesis of Greer', region:'West', baseline:{req:65.3,set:33.2,live:12.6,appt:10.7}, current:{req:65,set:37,live:8.8,appt:12.4}, ytd:{req:51.6,set:29.0,live:9.3,appt:10.9} },
-                { id:'AGV', name:'Fred Anderson Acura', region:'West', baseline:{req:59.5,set:32.2,live:14.9,appt:9.1}, current:{req:65,set:33,live:15.7,appt:10.7}, ytd:{req:63.2,set:35.4,live:16.5,appt:12.1} },
-                { id:'KGV', name:'Fred Anderson Kia of Greenville', region:'West', baseline:{req:60.3,set:32.3,live:13.1,appt:8.9}, current:{req:67,set:42,live:17.9,appt:11.3}, ytd:{req:62.8,set:28.8,live:16.0,appt:12.4} },
-                { id:'HGV', name:'Fred Anderson Honda of Greenville', region:'West', baseline:{req:68.5,set:40.5,live:16.3,appt:9.3}, current:{req:62,set:40,live:15.6,appt:11.0}, ytd:{req:63.6,set:41.2,live:15.3,appt:11.3} },
-                { id:'TRA', name:'Fred Anderson Toyota of Raleigh', region:'East', baseline:{req:68.2,set:41.0,live:13.1,appt:10.3}, current:{req:65,set:40,live:14.0,appt:10.7}, ytd:{req:66.2,set:36.8,live:14.0,appt:12.1} },
-                { id:'KRA', name:'Fred Anderson Kia of Raleigh', region:'East', baseline:{req:66.3,set:42.7,live:19.7,appt:7.5}, current:{req:69,set:47,live:12.6,appt:8.1}, ytd:{req:69.2,set:40.2,live:13.2,appt:10.0} },
-                { id:'NRA', name:'Fred Anderson Nissan of Raleigh', region:'East', baseline:{req:66.0,set:43.3,live:16.4,appt:8.5}, current:{req:62,set:39,live:15.8,appt:9.0}, ytd:{req:60.8,set:37.4,live:15.6,appt:11.7} },
-                { id:'TSA', name:'Fred Anderson Toyota of Sanford', region:'East', baseline:{req:62.0,set:34.3,live:17.9,appt:7.9}, current:{req:63,set:40,live:15.7,appt:8.4}, ytd:{req:61.4,set:30.2,live:16.1,appt:11.5} },
-                { id:'TCH', name:'Fred Anderson Toyota of Charleston', region:'East', baseline:{req:72.5,set:30.3,live:13.6,appt:7.6}, current:{req:73,set:30,live:13.3,appt:6.7}, ytd:{req:70.0,set:29.0,live:14.3,appt:8.3} },
-                { id:'TCC', name:'Fred Anderson Toyota of Cape Coral', region:'East', baseline:{req:86,set:79,live:0,appt:0}, current:{req:67,set:40,live:35.9,appt:9.9}, ytd:{req:63.5,set:36.5,live:33.0,appt:9.2} }
+                { id:'SAS', name:'Fred Anderson Subaru', region:'West', baseline:{req:66.8,set:37.8,live:17.5,appt:8.2}, current:{req:76,set:39,live:15.9,appt:9.1}, ytd:{req:64.6,set:39.2,live:16.1,appt:8.8} },
+                { id:'TAS', name:'Fred Anderson Toyota of Asheville', region:'West', baseline:{req:55.3,set:26.5,live:12.7,appt:10.3}, current:{req:58,set:26,live:16.9,appt:10.1}, ytd:{req:55.6,set:25.4,live:16.4,appt:10.7} },
+                { id:'NAS', name:'Fred Anderson Nissan of Asheville', region:'West', baseline:{req:63.8,set:42.3,live:18.9,appt:8.5}, current:{req:67,set:36,live:18.6,appt:9.9}, ytd:{req:62.0,set:33.2,live:17.3,appt:10.7} },
+                { id:'KGR', name:'Fred Anderson Kia of Greer', region:'West', baseline:{req:62.7,set:38.2,live:14.2,appt:10.2}, current:{req:71,set:49,live:14.9,appt:10.4}, ytd:{req:72.8,set:47.0,live:14.3,appt:10.4} },
+                { id:'TGR', name:'Fred Anderson Toyota of Greer', region:'West', baseline:{req:57.0,set:32.8,live:17.4,appt:7.3}, current:{req:54,set:35,live:12.3,appt:9.2}, ytd:{req:56.0,set:30.6,live:14.2,appt:9.7} },
+                { id:'CGR', name:'Fred Anderson Chevy Buick GMC Cadillac', region:'West', baseline:{req:51.3,set:25.7,live:16.6,appt:6.3}, current:{req:56,set:34,live:20.3,appt:8.3}, ytd:{req:54.4,set:27.6,live:18.8,appt:8.5} },
+                { id:'HGR', name:'Fred Anderson Hyundai', region:'West', baseline:{req:63.5,set:38.3,live:10.4,appt:10.6}, current:{req:60,set:43,live:14.1,appt:11.1}, ytd:{req:64.0,set:35.8,live:13.7,appt:12.6} },
+                { id:'GGR', name:'Genesis of Greer', region:'West', baseline:{req:65.3,set:33.2,live:12.6,appt:10.7}, current:{req:65,set:37,live:8.8,appt:12.4}, ytd:{req:56.8,set:32.4,live:9.3,appt:12.2} },
+                { id:'AGV', name:'Fred Anderson Acura', region:'West', baseline:{req:59.5,set:32.2,live:14.9,appt:9.1}, current:{req:65,set:33,live:15.7,appt:10.7}, ytd:{req:63.2,set:40.0,live:16.2,appt:11.9} },
+                { id:'KGV', name:'Fred Anderson Kia of Greenville', region:'West', baseline:{req:60.3,set:32.3,live:13.1,appt:8.9}, current:{req:67,set:42,live:17.9,appt:11.3}, ytd:{req:63.4,set:33.0,live:16.0,appt:12.5} },
+                { id:'HGV', name:'Fred Anderson Honda of Greenville', region:'West', baseline:{req:68.5,set:40.5,live:16.3,appt:9.3}, current:{req:62,set:40,live:15.6,appt:11.0}, ytd:{req:65.2,set:40.6,live:15.2,appt:11.1} },
+                { id:'TRA', name:'Fred Anderson Toyota of Raleigh', region:'East', baseline:{req:68.2,set:41.0,live:13.1,appt:10.3}, current:{req:65,set:40,live:14.0,appt:10.7}, ytd:{req:66.0,set:38.0,live:14.1,appt:12.4} },
+                { id:'KRA', name:'Fred Anderson Kia of Raleigh', region:'East', baseline:{req:66.3,set:42.7,live:19.7,appt:7.5}, current:{req:69,set:47,live:12.6,appt:8.1}, ytd:{req:68.4,set:39.6,live:13.2,appt:10.2} },
+                { id:'NRA', name:'Fred Anderson Nissan of Raleigh', region:'East', baseline:{req:66.0,set:43.3,live:16.4,appt:8.5}, current:{req:62,set:39,live:15.8,appt:9.0}, ytd:{req:60.8,set:39.6,live:15.9,appt:11.9} },
+                { id:'TSA', name:'Fred Anderson Toyota of Sanford', region:'East', baseline:{req:62.0,set:34.3,live:17.9,appt:7.9}, current:{req:63,set:40,live:15.7,appt:8.4}, ytd:{req:59.4,set:34.0,live:16.0,appt:11.5} },
+                { id:'TCH', name:'Fred Anderson Toyota of Charleston', region:'East', baseline:{req:72.5,set:30.3,live:13.6,appt:7.6}, current:{req:73,set:30,live:13.3,appt:6.7}, ytd:{req:70.4,set:28.4,live:14.7,appt:8.3} },
+                { id:'TCC', name:'Fred Anderson Toyota of Cape Coral', region:'East', baseline:{req:86,set:79,live:0,appt:0}, current:{req:67,set:40,live:35.9,appt:9.9}, ytd:{req:62.0,set:37.0,live:32.1,appt:9.1} }
             ]
         };
 
 const STAFF = {
-            'SAS':[{n:'Jane-Marie Calhelha',ob:118,c:21,a:2},{n:'Page Pearson',ob:107,c:10,a:0},{n:'Avery Short',ob:105,c:14,a:0},{n:'Meghan Houston',ob:64,c:2,a:0},{n:'Dustin Uhrig',ob:61,c:5,a:0},{n:'Hunter Maiers',ob:50,c:2,a:1},{n:'MJ Fialka',ob:50,c:7,a:1},{n:'Nicholas Saunders',ob:46,c:1,a:0},{n:'Thomas Hannon',ob:45,c:5,a:0},{n:'Matthew Balducci',ob:45,c:16,a:2},{n:'Jason Apicerno',ob:42,c:3,a:0},{n:'Alona Kaltovich',ob:41,c:9,a:0},{n:'Jay Denman',ob:41,c:13,a:2},{n:'Will Hall',ob:35,c:1,a:0},{n:'Austin Root',ob:21,c:2,a:1},{n:'Rikko Delgado',ob:18,c:2,a:0},{n:'Leslie Modlin',ob:15,c:8,a:1}],
-            'TAS':[{n:'Matthew Bateman',ob:107,c:15,a:1},{n:'Santiago Leon-Corona',ob:96,c:4,a:0},{n:'Cameron Davis',ob:94,c:10,a:3},{n:'Eli Sajia',ob:90,c:17,a:3},{n:'Michael Marcoux',ob:89,c:16,a:0},{n:'Kelsey Snyder',ob:85,c:22,a:0},{n:'Steve Troia',ob:83,c:15,a:1},{n:'Jerred Davis',ob:70,c:6,a:0},{n:'Travis Worley',ob:70,c:11,a:1},{n:'Michael Price',ob:69,c:16,a:5},{n:'Benjamin Ross',ob:65,c:16,a:1},{n:'Chris Fabian',ob:65,c:9,a:1},{n:'Alexa Bradley',ob:64,c:15,a:4},{n:'Candice Cox',ob:64,c:10,a:0},{n:'Cameron Howell',ob:63,c:9,a:1},{n:'Tor Wendel',ob:63,c:20,a:3},{n:'Emily Brison',ob:63,c:5,a:0},{n:'Jordan Wright',ob:62,c:7,a:0},{n:'Brandon Lance',ob:61,c:19,a:0},{n:'Gerald Rich',ob:60,c:6,a:0},{n:'Dylan Sims',ob:57,c:12,a:2},{n:'Jesus Varela',ob:56,c:2,a:0},{n:'Reilly Taylor',ob:51,c:6,a:2},{n:'Michael Owenby',ob:50,c:9,a:1},{n:'Joseph Brittain',ob:48,c:11,a:1},{n:'Caleb Clampitt',ob:47,c:10,a:3},{n:'Warren Weitner',ob:40,c:6,a:1},{n:'Joshua Adams',ob:20,c:3,a:0},{n:'Andrew Kirchmeyer',ob:15,c:1,a:0},{n:'Andre Caldero',ob:3,c:0,a:0},{n:'Scott Gray',ob:2,c:2,a:0}],
-            'NAS':[{n:'Jeff smith',ob:101,c:16,a:2},{n:'Noah Agne',ob:100,c:14,a:3},{n:'Mike Masters',ob:96,c:22,a:2},{n:'Christopher Tercero',ob:93,c:25,a:4},{n:'Owen King',ob:91,c:12,a:1},{n:'Jeremy Parker',ob:83,c:9,a:1},{n:'Caylen Dobson',ob:82,c:20,a:5},{n:'Zach Smith',ob:78,c:15,a:0},{n:'Christian Alvarado',ob:75,c:16,a:1},{n:'Dan Mindermann',ob:74,c:12,a:0},{n:'Jay Davis',ob:60,c:9,a:1},{n:'Dequavius Foster',ob:35,c:6,a:1},{n:'Quinten Blake',ob:11,c:3,a:0}],
-            'KGR':[{n:'Nicholas Russell',ob:125,c:21,a:2},{n:'Charles Tebo',ob:112,c:8,a:1},{n:'Wesley Shipman',ob:103,c:12,a:0},{n:'Daysha Thomason',ob:99,c:5,a:0},{n:'Steven Roland',ob:88,c:18,a:1},{n:'Xavier Beckers',ob:52,c:11,a:0},{n:'Jordan Campbell',ob:34,c:5,a:0}],
-            'TGR':[{n:'Samuel Sotelo',ob:107,c:20,a:1},{n:'John Diaz',ob:73,c:0,a:0},{n:'Justin Ching',ob:67,c:17,a:4},{n:'Jarrid Bomar',ob:62,c:5,a:0},{n:'Dallas Beasley',ob:62,c:2,a:0},{n:'Erin Girardeau',ob:58,c:6,a:0},{n:'Charles Washington',ob:52,c:5,a:0},{n:'Barbara Scholten',ob:52,c:8,a:0},{n:'Earnest Callands',ob:48,c:4,a:0},{n:'Joey Mims',ob:41,c:5,a:0},{n:'Abby Villafane Groos',ob:39,c:8,a:0},{n:'Gregory Drummond',ob:37,c:10,a:2},{n:'Dan Gaines',ob:33,c:5,a:2},{n:'Emad Abdelmalik',ob:30,c:1,a:0},{n:'Miquese Long',ob:28,c:4,a:0},{n:'Shane Morrison',ob:25,c:4,a:0},{n:'Ben Yoo',ob:23,c:5,a:0},{n:'Jean Madrazo',ob:22,c:0,a:0}],
-            'CGR':[{n:'Cedric Ferguson',ob:69,c:15,a:0},{n:'Jerel Mosley',ob:68,c:16,a:2},{n:'Daniela Gelder',ob:66,c:10,a:1},{n:'Wofford Shipman',ob:60,c:14,a:0},{n:'Chris Morrison',ob:58,c:11,a:0},{n:'John Karvelas',ob:45,c:6,a:0},{n:'Cody Taylor',ob:40,c:6,a:0},{n:'Tony Bentley',ob:36,c:11,a:1},{n:'John Kennedy',ob:24,c:3,a:0},{n:'Danilo Gomez',ob:6,c:3,a:0}],
-            'HGR':[{n:'Tyler Winters',ob:97,c:5,a:0},{n:'Scott Clark',ob:81,c:12,a:0},{n:'Carlos Ochoa',ob:59,c:9,a:2},{n:'Michael Perez',ob:57,c:8,a:1},{n:'Jamaru Rodgers',ob:40,c:3,a:1},{n:'Rachel Hamby',ob:40,c:10,a:3},{n:'Rick Veit',ob:31,c:16,a:1}],
-            'GGR':[{n:'Gary DeFilippo',ob:94,c:8,a:1},{n:'Hamza Haveliwala',ob:69,c:4,a:0},{n:'Matthew Cabral',ob:52,c:1,a:0},{n:'Joyce Hornbeck',ob:50,c:7,a:0},{n:'Jonathan Hudson',ob:1,c:0,a:0}],
-            'AGV':[{n:'Derrick McAlister',ob:101,c:10,a:2},{n:'Joshua Hind',ob:63,c:9,a:1},{n:'Tino Sullivan',ob:61,c:3,a:1},{n:'Patrick Chew',ob:60,c:17,a:3},{n:'Tanner Nickel',ob:55,c:11,a:1},{n:'Riley Lidel',ob:48,c:7,a:0},{n:'James Naylor',ob:43,c:11,a:2},{n:'Dominic Mandella',ob:40,c:7,a:0},{n:'Ken Hucker',ob:2,c:2,a:0}],
-            'KGV':[{n:'Christian Sheppard',ob:99,c:8,a:2},{n:'Jonathan Solis',ob:85,c:15,a:2},{n:'Trevor Pike',ob:82,c:11,a:2},{n:'Will Turner',ob:82,c:13,a:1},{n:'Darius Sherman',ob:80,c:15,a:1},{n:'Cedraquan McDowell',ob:60,c:10,a:0},{n:'Elizabeth Edwards',ob:55,c:6,a:0},{n:'William Grey',ob:52,c:4,a:1},{n:'Sophia Pack',ob:50,c:11,a:1},{n:'Joseph Hudson',ob:47,c:15,a:0},{n:'Matthew Damagnez',ob:46,c:6,a:1},{n:'Daniel Carlton',ob:41,c:13,a:3},{n:'Jonas Brown',ob:39,c:6,a:2}],
-            'HGV':[{n:'John Cawley',ob:84,c:13,a:0},{n:'Zack Jones',ob:84,c:4,a:0},{n:'Alex Guerrero',ob:80,c:12,a:1},{n:'Melissa Castronova',ob:78,c:6,a:0},{n:'Amy Neill',ob:76,c:5,a:1},{n:'Souleymane Ndiaye',ob:76,c:17,a:1},{n:'Angel Miguel-Hernandez',ob:71,c:11,a:2},{n:'Nicholas Rodriguez',ob:66,c:10,a:0},{n:'Christine Brunt',ob:64,c:14,a:3},{n:'Terry Marcum',ob:64,c:8,a:0},{n:'Allen Cruz',ob:62,c:8,a:2},{n:'Quinton Thomas',ob:61,c:13,a:3},{n:'Eli Vera',ob:60,c:9,a:2},{n:'Hamid Jahanbakhsh',ob:60,c:3,a:0},{n:'Randall Clemment',ob:56,c:5,a:0},{n:'Barry Karbash',ob:54,c:5,a:1},{n:'Preston Kinsey',ob:33,c:7,a:1},{n:'Daniel Cruz',ob:29,c:7,a:0},{n:'Michael Lella',ob:6,c:0,a:0},{n:'Jose Figueroa',ob:4,c:0,a:0},{n:'Alex Cruz Escorza',ob:2,c:2,a:0}],
-            'TRA':[{n:'Roberto Hernandez',ob:86,c:15,a:3},{n:'Dieyna Diagana',ob:82,c:13,a:2},{n:'Averi Bogan',ob:81,c:6,a:1},{n:'Brett Boaz',ob:79,c:11,a:0},{n:'Elise DeLucia',ob:79,c:8,a:1},{n:'Jeffrey knight',ob:73,c:8,a:1},{n:'Karim Abdelshahid',ob:65,c:10,a:0},{n:'Tristan Baisden',ob:65,c:6,a:0},{n:'John Lafabregue',ob:60,c:9,a:0},{n:'Joe Mokwa',ob:59,c:13,a:0},{n:'Manuel Barcenas',ob:57,c:9,a:0},{n:'Wesley Matthews',ob:55,c:3,a:0},{n:'Joel Williams',ob:51,c:3,a:0},{n:'Abdulrahman Ali',ob:51,c:3,a:1},{n:'Bryan Harrison',ob:49,c:8,a:1},{n:'Ted Brooke',ob:48,c:4,a:0},{n:'Quan Long',ob:46,c:5,a:0},{n:'Skylar Dunford',ob:44,c:8,a:1},{n:'Jaden Rodarte',ob:43,c:6,a:0},{n:'Allen Milliken-King',ob:34,c:5,a:1},{n:'Solomon Masika',ob:33,c:3,a:0},{n:'Richard LaBranche',ob:32,c:4,a:2},{n:'Tramal Turner',ob:31,c:3,a:1},{n:'Steven Bradby',ob:31,c:0,a:0},{n:'Charles Williams',ob:28,c:7,a:0},{n:'Antonio Walker',ob:23,c:1,a:0},{n:'Art livingston',ob:13,c:5,a:0},{n:'Brian Gorlesky',ob:2,c:1,a:0}],
-            'KRA':[{n:'Riley Willis',ob:225,c:28,a:3},{n:'Austin Ward',ob:126,c:19,a:1},{n:'Paulo Morales',ob:112,c:27,a:1},{n:'Quinton Joyner',ob:109,c:9,a:1},{n:'Jayneen Soliman Reyes',ob:84,c:8,a:0},{n:'Josh Clay',ob:81,c:3,a:1},{n:'Seungkook Jae',ob:81,c:9,a:1},{n:'Claybourne Bass',ob:79,c:16,a:0},{n:'Chad Erickson',ob:76,c:12,a:2},{n:'Ted Weinstein',ob:75,c:2,a:0},{n:'Yasen Salha',ob:67,c:2,a:1},{n:'Jeremy Poe',ob:66,c:2,a:0},{n:'Jonathan Buscarello',ob:1,c:0,a:0}],
-            'NRA':[{n:'Frandy Corporan',ob:83,c:13,a:1},{n:'Kaiheem Tucker',ob:63,c:12,a:3},{n:'Andrew Aguilar',ob:62,c:8,a:0},{n:'Drew Rogers',ob:58,c:10,a:2},{n:'Michaela Sanders',ob:58,c:10,a:0},{n:'Johnny Lynch',ob:52,c:3,a:0},{n:'John Ruggere',ob:49,c:4,a:1},{n:'Mark Walton',ob:5,c:3,a:0}],
-            'TSA':[{n:'Rockwell Linsley',ob:141,c:13,a:2},{n:'RICHARD COVINGTON',ob:85,c:13,a:1},{n:'Dustin Phillips',ob:83,c:6,a:0},{n:'Lacy Tripp',ob:71,c:16,a:4},{n:'David Darrow',ob:52,c:6,a:2},{n:'Dorien Harrington',ob:46,c:3,a:0},{n:'Oladepo Williams',ob:44,c:18,a:3},{n:'Paul McCoy',ob:30,c:6,a:0},{n:'Kay Weston',ob:20,c:4,a:1},{n:'Freddy Davis',ob:14,c:3,a:0}],
-            'TCH':[{n:'Brandon McCall',ob:83,c:9,a:0},{n:'Casey Nordgren',ob:80,c:15,a:1},{n:'Matt Gladwell',ob:73,c:6,a:2},{n:'Anthony Casiechitty',ob:71,c:12,a:4},{n:'Henry Caira',ob:71,c:8,a:0},{n:'Elijah Mcnaughton',ob:63,c:5,a:0},{n:'Jowaine Bookal',ob:61,c:11,a:0},{n:'Michael Price',ob:57,c:15,a:0},{n:'Justin Elrod',ob:55,c:6,a:0},{n:'Benjamin Longo',ob:49,c:13,a:0},{n:'DeMarcus Craft',ob:45,c:9,a:0},{n:'Andrew Huffman',ob:45,c:10,a:2},{n:'Arizona Steadman',ob:45,c:8,a:1},{n:'Eric Peterson',ob:40,c:7,a:0},{n:'Brent Poling',ob:38,c:9,a:0},{n:'Matthew Dieterich',ob:34,c:8,a:1},{n:'Justin Perez',ob:32,c:9,a:0},{n:'Hector Chavarria',ob:11,c:0,a:0},{n:'Braeden Myers',ob:4,c:2,a:0}],
-            'TCC':[{n:'Christian Odio',ob:31,c:14,a:0},{n:'Arlex Lacayo',ob:30,c:11,a:2},{n:'Will Thermidor',ob:28,c:5,a:0},{n:'Peter Esposito',ob:27,c:7,a:2},{n:'Steven Herrera',ob:22,c:15,a:2},{n:'Bailey Hilt',ob:21,c:5,a:2},{n:'Jayden Hodges',ob:20,c:6,a:1},{n:'Henry Rosales Guerrero',ob:19,c:4,a:0},{n:'Mario Aguilera',ob:19,c:7,a:0},{n:'Louis Mazzaro',ob:18,c:5,a:1},{n:'Charles Leigh',ob:17,c:1,a:0},{n:'D\'Marcus Anthony',ob:17,c:5,a:0},{n:'Luis Ferrer Jimenez',ob:16,c:3,a:0},{n:'Jeff Princile',ob:14,c:1,a:0},{n:'Damian Flores',ob:14,c:1,a:0},{n:'Kelly Floyd',ob:12,c:4,a:0},{n:'Miguel Medina',ob:12,c:3,a:0},{n:'Kojak McKown',ob:10,c:3,a:0},{n:'Alain Pino',ob:9,c:6,a:0},{n:'Alex Coolen',ob:8,c:3,a:0},{n:'Troy Sanchez',ob:8,c:3,a:0},{n:'Cody Thompson',ob:7,c:1,a:0},{n:'Manuel Fernandez Segui',ob:4,c:1,a:0},{n:'Sean Rowland',ob:4,c:3,a:0},{n:'Renny Ontiveros',ob:1,c:0,a:0}]
+            'SAS':[{n:'Jane-Marie Calhelha',ob:155,c:27,a:3},{n:'Avery Short',ob:139,c:15,a:0},{n:'Page Pearson',ob:107,c:10,a:0},{n:'Meghan Houston',ob:101,c:4,a:0},{n:'MJ Fialka',ob:88,c:11,a:1},{n:'Alona Kaltovich',ob:80,c:20,a:0},{n:'Hunter Maiers',ob:76,c:3,a:1},{n:'Matthew Balducci',ob:71,c:22,a:2},{n:'Thomas Hannon',ob:69,c:7,a:0},{n:'Jay Denman',ob:67,c:20,a:2},{n:'Jason Apicerno',ob:64,c:9,a:0},{n:'Dustin Uhrig',ob:61,c:5,a:0},{n:'Will Hall',ob:59,c:5,a:0},{n:'Austin Root',ob:51,c:5,a:1},{n:'Nicholas Saunders',ob:46,c:1,a:0},{n:'Leslie Modlin',ob:37,c:17,a:1},{n:'Rikko Delgado',ob:18,c:2,a:0}],
+            'TAS':[{n:'Santiago Leon-Corona',ob:126,c:6,a:0},{n:'Cameron Davis',ob:120,c:11,a:3},{n:'Michael Marcoux',ob:116,c:17,a:0},{n:'Eli Sajia',ob:111,c:23,a:4},{n:'Kelsey Snyder',ob:108,c:26,a:0},{n:'Matthew Bateman',ob:107,c:15,a:1},{n:'Steve Troia',ob:103,c:20,a:2},{n:'Emily Brison',ob:95,c:11,a:0},{n:'Chris Fabian',ob:94,c:13,a:2},{n:'Cameron Howell',ob:93,c:15,a:3},{n:'Caleb Clampitt',ob:92,c:15,a:6},{n:'Gerald Rich',ob:88,c:7,a:1},{n:'Alexa Bradley',ob:85,c:20,a:4},{n:'Tor Wendel',ob:84,c:25,a:4},{n:'Reilly Taylor',ob:82,c:11,a:2},{n:'Brandon Lance',ob:81,c:25,a:0},{n:'Michael Owenby',ob:75,c:11,a:1},{n:'Warren Weitner',ob:73,c:8,a:2},{n:'Joseph Brittain',ob:71,c:18,a:1},{n:'Jerred Davis',ob:70,c:6,a:0},{n:'Travis Worley',ob:70,c:11,a:1},{n:'Michael Price',ob:69,c:16,a:5},{n:'Jesus Varela',ob:68,c:4,a:0},{n:'Benjamin Ross',ob:65,c:16,a:1},{n:'Candice Cox',ob:64,c:10,a:0},{n:'Jordan Wright',ob:62,c:7,a:0},{n:'Dylan Sims',ob:57,c:12,a:2},{n:'Andre Caldero',ob:25,c:6,a:0},{n:'Andrew Fox',ob:25,c:4,a:0},{n:'Brandon Davis',ob:21,c:5,a:0},{n:'Joshua Adams',ob:20,c:3,a:0},{n:'Andrew Kirchmeyer',ob:15,c:1,a:0},{n:'Scott Gray',ob:4,c:3,a:1}],
+            'NAS':[{n:'Jeff smith',ob:187,c:27,a:3},{n:'Noah Agne',ob:141,c:23,a:4},{n:'Owen King',ob:135,c:17,a:3},{n:'Mike Masters',ob:132,c:34,a:2},{n:'Caylen Dobson',ob:129,c:23,a:5},{n:'Zach Smith',ob:119,c:28,a:1},{n:'Christian Alvarado',ob:119,c:24,a:1},{n:'Christopher Tercero',ob:93,c:25,a:4},{n:'Jay Davis',ob:90,c:19,a:2},{n:'Jeremy Parker',ob:83,c:9,a:1},{n:'Dan Mindermann',ob:74,c:12,a:0},{n:'Tristan Traver',ob:56,c:17,a:0},{n:'Quinten Blake',ob:43,c:7,a:1},{n:'Dequavius Foster',ob:35,c:6,a:1}],
+            'KGR':[{n:'Charles Tebo',ob:161,c:13,a:2},{n:'Wesley Shipman',ob:141,c:16,a:0},{n:'Nicholas Russell',ob:125,c:21,a:2},{n:'Daysha Thomason',ob:123,c:8,a:0},{n:'Steven Roland',ob:88,c:18,a:1},{n:'Xavier Beckers',ob:73,c:14,a:0},{n:'Jordan Campbell',ob:45,c:5,a:0},{n:'Alexis Bryant',ob:28,c:1,a:0}],
+            'TGR':[{n:'Samuel Sotelo',ob:110,c:20,a:1},{n:'John Diaz',ob:95,c:3,a:1},{n:'Dallas Beasley',ob:94,c:3,a:0},{n:'Justin Ching',ob:92,c:23,a:5},{n:'Earnest Callands',ob:79,c:10,a:1},{n:'Barbara Scholten',ob:77,c:12,a:0},{n:'Charles Washington',ob:76,c:6,a:0},{n:'Abby Villafane Groos',ob:69,c:13,a:0},{n:'Jarrid Bomar',ob:67,c:7,a:0},{n:'Gregory Drummond',ob:67,c:14,a:2},{n:'Joey Mims',ob:59,c:5,a:0},{n:'Erin Girardeau',ob:58,c:6,a:0},{n:'Emad Abdelmalik',ob:52,c:5,a:0},{n:'Shane Morrison',ob:51,c:7,a:0},{n:'Dan Gaines',ob:33,c:5,a:2},{n:'Miquese Long',ob:28,c:4,a:0},{n:'Ben Yoo',ob:26,c:5,a:0},{n:'Jean Madrazo',ob:22,c:0,a:0}],
+            'CGR':[{n:'Wofford Shipman',ob:105,c:21,a:0},{n:'Daniela Gelder',ob:97,c:14,a:1},{n:'Cedric Ferguson',ob:87,c:21,a:1},{n:'Jerel Mosley',ob:85,c:18,a:2},{n:'Cody Taylor',ob:72,c:10,a:0},{n:'Tony Bentley',ob:63,c:17,a:3},{n:'John Kennedy',ob:59,c:5,a:0},{n:'Chris Morrison',ob:58,c:11,a:0},{n:'John Karvelas',ob:45,c:6,a:0},{n:'Danilo Gomez',ob:6,c:3,a:0},{n:'Joshua Hart',ob:3,c:1,a:0}],
+            'HGR':[{n:'Tyler Winters',ob:97,c:5,a:0},{n:'Scott Clark',ob:96,c:15,a:0},{n:'Carlos Ochoa',ob:88,c:15,a:2},{n:'Michael Perez',ob:57,c:8,a:1},{n:'Rachel Hamby',ob:48,c:12,a:4},{n:'Rick Veit',ob:42,c:22,a:4},{n:'Jamaru Rodgers',ob:40,c:3,a:1}],
+            'GGR':[{n:'Gary DeFilippo',ob:107,c:8,a:1},{n:'Hamza Haveliwala',ob:91,c:6,a:1},{n:'Joyce Hornbeck',ob:74,c:10,a:0},{n:'Matthew Cabral',ob:73,c:2,a:1},{n:'Jonathan Hudson',ob:1,c:0,a:0}],
+            'AGV':[{n:'Derrick McAlister',ob:145,c:16,a:3},{n:'Tino Sullivan',ob:86,c:4,a:1},{n:'Riley Lidel',ob:73,c:9,a:0},{n:'Dominic Mandella',ob:73,c:8,a:0},{n:'Tanner Nickel',ob:70,c:14,a:1},{n:'Joshua Hind',ob:63,c:9,a:1},{n:'Patrick Chew',ob:60,c:17,a:3},{n:'James Naylor',ob:51,c:12,a:2},{n:'Ken Hucker',ob:9,c:4,a:0}],
+            'KGV':[{n:'Jonathan Solis',ob:126,c:22,a:3},{n:'Will Turner',ob:111,c:18,a:1},{n:'Trevor Pike',ob:108,c:15,a:2},{n:'Christian Sheppard',ob:101,c:8,a:2},{n:'Cedraquan McDowell',ob:82,c:12,a:0},{n:'Darius Sherman',ob:80,c:15,a:1},{n:'Elizabeth Edwards',ob:80,c:9,a:0},{n:'William Grey',ob:79,c:7,a:3},{n:'Matthew Damagnez',ob:73,c:8,a:1},{n:'Daniel Carlton',ob:65,c:22,a:6},{n:'Joseph Hudson',ob:64,c:20,a:0},{n:'Sophia Pack',ob:50,c:11,a:1},{n:'Jonas Brown',ob:39,c:6,a:2}],
+            'HGV':[{n:'John Cawley',ob:117,c:19,a:0},{n:'Souleymane Ndiaye',ob:115,c:25,a:2},{n:'Amy Neill',ob:98,c:6,a:1},{n:'Melissa Castronova',ob:98,c:8,a:0},{n:'Alex Guerrero',ob:93,c:13,a:1},{n:'Barry Karbash',ob:93,c:6,a:1},{n:'Terry Marcum',ob:90,c:11,a:0},{n:'Allen Cruz',ob:88,c:15,a:3},{n:'Zack Jones',ob:84,c:4,a:0},{n:'Christine Brunt',ob:83,c:16,a:3},{n:'Hamid Jahanbakhsh',ob:82,c:3,a:0},{n:'Angel Miguel-Hernandez',ob:81,c:11,a:2},{n:'Quinton Thomas',ob:81,c:15,a:3},{n:'Nicholas Rodriguez',ob:66,c:10,a:0},{n:'Eli Vera',ob:60,c:9,a:2},{n:'Randall Clemment',ob:56,c:5,a:0},{n:'Daniel Cruz',ob:47,c:9,a:0},{n:'Preston Kinsey',ob:39,c:8,a:1},{n:'Alex Cruz Escorza',ob:25,c:7,a:0},{n:'Jose Figueroa',ob:15,c:0,a:0},{n:'Michael Lella',ob:6,c:0,a:0}],
+            'TRA':[{n:'Elise DeLucia',ob:107,c:12,a:2},{n:'Averi Bogan',ob:107,c:8,a:1},{n:'Brett Boaz',ob:105,c:15,a:0},{n:'Tristan Baisden',ob:90,c:7,a:0},{n:'John Lafabregue',ob:89,c:13,a:0},{n:'Joe Mokwa',ob:87,c:17,a:1},{n:'Roberto Hernandez',ob:86,c:15,a:3},{n:'Dieyna Diagana',ob:82,c:13,a:2},{n:'Wesley Matthews',ob:81,c:4,a:0},{n:'Abdulrahman Ali',ob:78,c:4,a:1},{n:'Ted Brooke',ob:76,c:5,a:1},{n:'Jeffrey knight',ob:73,c:8,a:1},{n:'Jaden Rodarte',ob:69,c:10,a:1},{n:'Skylar Dunford',ob:69,c:16,a:3},{n:'Karim Abdelshahid',ob:65,c:10,a:0},{n:'Solomon Masika',ob:64,c:7,a:0},{n:'Allen Milliken-King',ob:60,c:7,a:1},{n:'Tramal Turner',ob:57,c:6,a:1},{n:'Manuel Barcenas',ob:57,c:9,a:0},{n:'Joel Williams',ob:51,c:3,a:0},{n:'Charles Williams',ob:51,c:10,a:0},{n:'Bryan Harrison',ob:50,c:9,a:2},{n:'Quan Long',ob:46,c:5,a:0},{n:'Art livingston',ob:34,c:15,a:1},{n:'Brian Gorlesky',ob:34,c:6,a:1},{n:'Richard LaBranche',ob:32,c:4,a:2},{n:'Steven Bradby',ob:31,c:0,a:0},{n:'Antonio Walker',ob:23,c:1,a:0},{n:'Carl Anderson',ob:2,c:1,a:0}],
+            'KRA':[{n:'Riley Willis',ob:234,c:29,a:3},{n:'Austin Ward',ob:157,c:27,a:1},{n:'Quinton Joyner',ob:142,c:15,a:2},{n:'Josh Clay',ob:133,c:7,a:1},{n:'Paulo Morales',ob:129,c:29,a:1},{n:'Chad Erickson',ob:115,c:16,a:3},{n:'Ted Weinstein',ob:115,c:5,a:3},{n:'Yasen Salha',ob:102,c:2,a:1},{n:'Jeremy Poe',ob:93,c:4,a:0},{n:'Claybourne Bass',ob:87,c:18,a:0},{n:'Jayneen Soliman Reyes',ob:84,c:8,a:0},{n:'Seungkook Jae',ob:81,c:9,a:1},{n:'Daniel Ortiz',ob:52,c:6,a:0},{n:'Jonathan Buscarello',ob:20,c:1,a:0}],
+            'NRA':[{n:'Frandy Corporan',ob:108,c:20,a:2},{n:'Andrew Aguilar',ob:82,c:10,a:0},{n:'Johnny Lynch',ob:81,c:6,a:1},{n:'Drew Rogers',ob:78,c:14,a:2},{n:'John Ruggere',ob:70,c:7,a:1},{n:'Kaiheem Tucker',ob:63,c:12,a:3},{n:'Michaela Sanders',ob:58,c:10,a:0},{n:'Mark Walton',ob:23,c:10,a:2},{n:'Keith Woodward',ob:6,c:2,a:0},{n:'Del-Carlos Harrington',ob:5,c:0,a:0}],
+            'TSA':[{n:'Rockwell Linsley',ob:141,c:13,a:2},{n:'RICHARD COVINGTON',ob:116,c:15,a:1},{n:'Dustin Phillips',ob:113,c:9,a:2},{n:'Lacy Tripp',ob:92,c:23,a:4},{n:'Dorien Harrington',ob:66,c:3,a:0},{n:'Paul McCoy',ob:66,c:9,a:1},{n:'Oladepo Williams',ob:62,c:23,a:3},{n:'David Darrow',ob:52,c:6,a:2},{n:'Kay Weston',ob:20,c:4,a:1},{n:'Freddy Davis',ob:17,c:3,a:0}],
+            'TCH':[{n:'Henry Caira',ob:98,c:13,a:0},{n:'Matt Gladwell',ob:95,c:7,a:2},{n:'Elijah Mcnaughton',ob:89,c:9,a:0},{n:'Casey Nordgren',ob:85,c:18,a:2},{n:'Brandon McCall',ob:85,c:10,a:0},{n:'Michael Price',ob:75,c:26,a:2},{n:'Anthony Casiechitty',ob:71,c:12,a:4},{n:'DeMarcus Craft',ob:68,c:12,a:0},{n:'Eric Peterson',ob:65,c:14,a:0},{n:'Jowaine Bookal',ob:61,c:11,a:0},{n:'Arizona Steadman',ob:56,c:12,a:1},{n:'Benjamin Longo',ob:56,c:17,a:1},{n:'Justin Elrod',ob:55,c:6,a:0},{n:'Justin Perez',ob:53,c:14,a:0},{n:'Matthew Dieterich',ob:53,c:13,a:1},{n:'Brent Poling',ob:49,c:12,a:0},{n:'Andrew Huffman',ob:45,c:10,a:2},{n:'Hector Chavarria',ob:11,c:0,a:0},{n:'Braeden Myers',ob:4,c:2,a:0}],
+            'TCC':[{n:'Christian Odio',ob:39,c:17,a:0},{n:'Will Thermidor',ob:38,c:5,a:0},{n:'Arlex Lacayo',ob:36,c:13,a:2},{n:'Peter Esposito',ob:33,c:8,a:2},{n:'Luis Ferrer Jimenez',ob:32,c:4,a:0},{n:'D\'Marcus Anthony',ob:29,c:11,a:2},{n:'Steven Herrera',ob:27,c:17,a:2},{n:'Bailey Hilt',ob:26,c:5,a:2},{n:'Mario Aguilera',ob:26,c:10,a:0},{n:'Louis Mazzaro',ob:25,c:8,a:1},{n:'Jayden Hodges',ob:25,c:7,a:1},{n:'Jeff Princile',ob:20,c:3,a:0},{n:'Henry Rosales Guerrero',ob:19,c:4,a:0},{n:'Charles Leigh',ob:18,c:1,a:0},{n:'Kelly Floyd',ob:17,c:5,a:0},{n:'Miguel Medina',ob:17,c:4,a:0},{n:'Kojak McKown',ob:16,c:4,a:0},{n:'Damian Flores',ob:14,c:1,a:0},{n:'Alex Coolen',ob:13,c:4,a:0},{n:'Cody Thompson',ob:12,c:1,a:0},{n:'Alain Pino',ob:9,c:6,a:0},{n:'Sean Rowland',ob:8,c:3,a:0},{n:'Troy Sanchez',ob:8,c:3,a:0},{n:'Manuel Fernandez Segui',ob:4,c:1,a:0},{n:'Jessica Dykstra',ob:1,c:0,a:0},{n:'Renny Ontiveros',ob:1,c:0,a:0}]
         };
 
         const STAFF_WTD = {
-            'SAS':[{n:'Jane-Marie Calhelha',ob:81,c:16,a:2},{n:'Avery Short',ob:53,c:8,a:0},{n:'Meghan Houston',ob:46,c:1,a:0},{n:'Page Pearson',ob:46,c:3,a:0},{n:'Dustin Uhrig',ob:43,c:4,a:0},{n:'Nicholas Saunders',ob:39,c:1,a:0},{n:'Jason Apicerno',ob:38,c:3,a:0},{n:'Will Hall',ob:35,c:1,a:0},{n:'MJ Fialka',ob:33,c:3,a:0},{n:'Jay Denman',ob:31,c:9,a:1},{n:'Alona Kaltovich',ob:26,c:7,a:0},{n:'Hunter Maiers',ob:26,c:0,a:0},{n:'Matthew Balducci',ob:26,c:8,a:0},{n:'Thomas Hannon',ob:17,c:2,a:0},{n:'Rikko Delgado',ob:10,c:1,a:0}],
-            'TAS':[{n:'Santiago Leon-Corona',ob:64,c:3,a:0},{n:'Matthew Bateman',ob:63,c:7,a:0},{n:'Cameron Davis',ob:63,c:7,a:3},{n:'Jordan Wright',ob:62,c:7,a:0},{n:'Kelsey Snyder',ob:60,c:17,a:0},{n:'Steve Troia',ob:59,c:8,a:0},{n:'Michael Marcoux',ob:57,c:10,a:0},{n:'Travis Worley',ob:45,c:8,a:1},{n:'Chris Fabian',ob:45,c:4,a:1},{n:'Eli Sajia',ob:44,c:8,a:1},{n:'Michael Price',ob:44,c:7,a:1},{n:'Tor Wendel',ob:42,c:13,a:1},{n:'Brandon Lance',ob:41,c:12,a:0},{n:'Benjamin Ross',ob:41,c:11,a:1},{n:'Jerred Davis',ob:40,c:3,a:0},{n:'Alexa Bradley',ob:40,c:10,a:3},{n:'Candice Cox',ob:39,c:8,a:0},{n:'Warren Weitner',ob:36,c:3,a:1},{n:'Emily Brison',ob:33,c:4,a:0},{n:'Cameron Howell',ob:31,c:2,a:0},{n:'Gerald Rich',ob:30,c:4,a:0},{n:'Reilly Taylor',ob:30,c:2,a:1},{n:'Jesus Varela',ob:29,c:2,a:0},{n:'Michael Owenby',ob:25,c:4,a:1},{n:'Dylan Sims',ob:24,c:4,a:2},{n:'Caleb Clampitt',ob:24,c:6,a:2},{n:'Joseph Brittain',ob:21,c:6,a:0},{n:'Joshua Adams',ob:20,c:3,a:0},{n:'Andrew Kirchmeyer',ob:3,c:0,a:0},{n:'Andre Caldero',ob:3,c:0,a:0},{n:'Scott Gray',ob:1,c:1,a:0}],
-            'NAS':[{n:'Jeff smith',ob:69,c:10,a:0},{n:'Noah Agne',ob:68,c:10,a:2},{n:'Owen King',ob:63,c:9,a:1},{n:'Mike Masters',ob:62,c:15,a:2},{n:'Christopher Tercero',ob:60,c:18,a:3},{n:'Jeremy Parker',ob:53,c:5,a:0},{n:'Caylen Dobson',ob:52,c:12,a:4},{n:'Zach Smith',ob:35,c:7,a:0},{n:'Christian Alvarado',ob:35,c:6,a:0},{n:'Dan Mindermann',ob:31,c:5,a:0},{n:'Jay Davis',ob:30,c:4,a:0},{n:'Quinten Blake',ob:11,c:3,a:0}],
-            'KGR':[{n:'Charles Tebo',ob:76,c:4,a:0},{n:'Steven Roland',ob:60,c:15,a:1},{n:'Daysha Thomason',ob:58,c:4,a:0},{n:'Nicholas Russell',ob:57,c:9,a:1},{n:'Wesley Shipman',ob:52,c:10,a:0},{n:'Xavier Beckers',ob:29,c:8,a:0},{n:'Jordan Campbell',ob:27,c:3,a:0}],
-            'TGR':[{n:'John Diaz',ob:73,c:0,a:0},{n:'Jarrid Bomar',ob:40,c:4,a:0},{n:'Earnest Callands',ob:39,c:3,a:0},{n:'Justin Ching',ob:38,c:11,a:2},{n:'Gregory Drummond',ob:33,c:10,a:2},{n:'Erin Girardeau',ob:32,c:4,a:0},{n:'Dallas Beasley',ob:31,c:1,a:0},{n:'Barbara Scholten',ob:27,c:5,a:0},{n:'Abby Villafane Groos',ob:23,c:4,a:0},{n:'Joey Mims',ob:21,c:5,a:0},{n:'Charles Washington',ob:20,c:0,a:0},{n:'Miquese Long',ob:15,c:2,a:0},{n:'Samuel Sotelo',ob:5,c:2,a:1},{n:'Dan Gaines',ob:1,c:1,a:1}],
-            'CGR':[{n:'Daniela Gelder',ob:56,c:6,a:0},{n:'Cedric Ferguson',ob:45,c:8,a:0},{n:'John Karvelas',ob:45,c:6,a:0},{n:'Jerel Mosley',ob:36,c:5,a:1},{n:'Chris Morrison',ob:30,c:5,a:0},{n:'John Kennedy',ob:13,c:0,a:0},{n:'Cody Taylor',ob:5,c:2,a:0},{n:'Tony Bentley',ob:2,c:2,a:0}],
-            'HGR':[{n:'Tyler Winters',ob:64,c:5,a:0},{n:'Scott Clark',ob:58,c:8,a:0},{n:'Jamaru Rodgers',ob:40,c:3,a:1},{n:'Carlos Ochoa',ob:38,c:8,a:2},{n:'Michael Perez',ob:35,c:6,a:1},{n:'Rachel Hamby',ob:33,c:6,a:2},{n:'Rick Veit',ob:19,c:9,a:0}],
-            'GGR':[{n:'Hamza Haveliwala',ob:53,c:2,a:0},{n:'Gary DeFilippo',ob:52,c:3,a:0},{n:'Matthew Cabral',ob:32,c:1,a:0},{n:'Joyce Hornbeck',ob:30,c:3,a:0},{n:'Jonathan Hudson',ob:1,c:0,a:0}],
-            'AGV':[{n:'Derrick McAlister',ob:42,c:5,a:1},{n:'Dominic Mandella',ob:40,c:7,a:0},{n:'Tino Sullivan',ob:36,c:1,a:0},{n:'Joshua Hind',ob:33,c:6,a:1},{n:'Riley Lidel',ob:30,c:3,a:0},{n:'James Naylor',ob:28,c:4,a:1},{n:'Tanner Nickel',ob:28,c:4,a:1},{n:'Patrick Chew',ob:27,c:5,a:2}],
-            'KGV':[{n:'Will Turner',ob:55,c:8,a:1},{n:'Christian Sheppard',ob:47,c:1,a:0},{n:'Jonathan Solis',ob:43,c:11,a:1},{n:'Cedraquan McDowell',ob:35,c:3,a:0},{n:'Sophia Pack',ob:34,c:6,a:1},{n:'Elizabeth Edwards',ob:29,c:4,a:0},{n:'Darius Sherman',ob:25,c:5,a:0},{n:'Trevor Pike',ob:22,c:2,a:1},{n:'Matthew Damagnez',ob:21,c:1,a:0},{n:'Joseph Hudson',ob:21,c:4,a:0},{n:'William Grey',ob:19,c:3,a:0},{n:'Daniel Carlton',ob:18,c:8,a:2},{n:'Jonas Brown',ob:13,c:1,a:0}],
-            'HGV':[{n:'Alex Guerrero',ob:75,c:11,a:1},{n:'Zack Jones',ob:64,c:3,a:0},{n:'John Cawley',ob:57,c:6,a:0},{n:'Hamid Jahanbakhsh',ob:50,c:2,a:0},{n:'Angel Miguel-Hernandez',ob:49,c:5,a:2},{n:'Melissa Castronova',ob:49,c:4,a:0},{n:'Amy Neill',ob:48,c:3,a:1},{n:'Barry Karbash',ob:46,c:3,a:1},{n:'Souleymane Ndiaye',ob:42,c:12,a:0},{n:'Nicholas Rodriguez',ob:41,c:5,a:0},{n:'Christine Brunt',ob:41,c:7,a:1},{n:'Allen Cruz',ob:41,c:4,a:2},{n:'Randall Clemment',ob:36,c:2,a:0},{n:'Quinton Thomas',ob:36,c:5,a:1},{n:'Eli Vera',ob:35,c:4,a:0},{n:'Terry Marcum',ob:35,c:2,a:0},{n:'Preston Kinsey',ob:18,c:3,a:1},{n:'Daniel Cruz',ob:7,c:3,a:0},{n:'Alex Cruz Escorza',ob:2,c:2,a:0}],
-            'TRA':[{n:'Roberto Hernandez',ob:61,c:13,a:2},{n:'Dieyna Diagana',ob:57,c:7,a:1},{n:'Averi Bogan',ob:54,c:6,a:1},{n:'Elise DeLucia',ob:53,c:5,a:0},{n:'Brett Boaz',ob:50,c:6,a:0},{n:'Abdulrahman Ali',ob:50,c:3,a:1},{n:'Ted Brooke',ob:48,c:4,a:0},{n:'Bryan Harrison',ob:47,c:6,a:0},{n:'Karim Abdelshahid',ob:40,c:4,a:0},{n:'Tristan Baisden',ob:40,c:2,a:0},{n:'John Lafabregue',ob:35,c:4,a:0},{n:'Jeffrey knight',ob:34,c:6,a:1},{n:'Manuel Barcenas',ob:32,c:4,a:0},{n:'Wesley Matthews',ob:28,c:1,a:0},{n:'Joel Williams',ob:24,c:2,a:0},{n:'Quan Long',ob:21,c:3,a:0},{n:'Jaden Rodarte',ob:17,c:2,a:0},{n:'Skylar Dunford',ob:15,c:4,a:0},{n:'Richard LaBranche',ob:14,c:1,a:0},{n:'Joe Mokwa',ob:9,c:3,a:0},{n:'Steven Bradby',ob:7,c:0,a:0},{n:'Antonio Walker',ob:5,c:1,a:0},{n:'Allen Milliken-King',ob:2,c:2,a:0},{n:'Brian Gorlesky',ob:2,c:1,a:0},{n:'Art livingston',ob:2,c:2,a:0}],
-            'KRA':[{n:'Josh Clay',ob:81,c:3,a:1},{n:'Riley Willis',ob:73,c:4,a:0},{n:'Austin Ward',ob:67,c:8,a:1},{n:'Quinton Joyner',ob:52,c:3,a:0},{n:'Claybourne Bass',ob:51,c:9,a:0},{n:'Paulo Morales',ob:50,c:13,a:1},{n:'Jeremy Poe',ob:45,c:0,a:0},{n:'Yasen Salha',ob:32,c:1,a:1},{n:'Jayneen Soliman Reyes',ob:27,c:2,a:0},{n:'Seungkook Jae',ob:26,c:5,a:1},{n:'Chad Erickson',ob:26,c:7,a:1},{n:'Ted Weinstein',ob:13,c:2,a:0}],
-            'NRA':[{n:'Kaiheem Tucker',ob:63,c:12,a:3},{n:'Frandy Corporan',ob:43,c:7,a:1},{n:'John Ruggere',ob:41,c:3,a:1},{n:'Andrew Aguilar',ob:40,c:4,a:0},{n:'Michaela Sanders',ob:38,c:7,a:0},{n:'Drew Rogers',ob:37,c:4,a:1},{n:'Johnny Lynch',ob:30,c:3,a:0}],
-            'TSA':[{n:'Rockwell Linsley',ob:69,c:8,a:2},{n:'Dustin Phillips',ob:60,c:6,a:0},{n:'RICHARD COVINGTON',ob:54,c:8,a:1},{n:'Lacy Tripp',ob:45,c:8,a:2},{n:'Dorien Harrington',ob:35,c:2,a:0},{n:'David Darrow',ob:21,c:2,a:1},{n:'Kay Weston',ob:19,c:4,a:1},{n:'Oladepo Williams',ob:18,c:8,a:3}],
-            'TCH':[{n:'Brandon McCall',ob:70,c:7,a:0},{n:'Casey Nordgren',ob:63,c:8,a:0},{n:'Jowaine Bookal',ob:61,c:11,a:0},{n:'Anthony Casiechitty',ob:59,c:7,a:2},{n:'Matt Gladwell',ob:48,c:4,a:1},{n:'Michael Price',ob:48,c:11,a:0},{n:'Elijah Mcnaughton',ob:47,c:3,a:0},{n:'Henry Caira',ob:44,c:4,a:0},{n:'Justin Elrod',ob:35,c:4,a:0},{n:'Andrew Huffman',ob:35,c:7,a:1},{n:'Arizona Steadman',ob:32,c:5,a:1},{n:'Justin Perez',ob:32,c:9,a:0},{n:'Benjamin Longo',ob:31,c:7,a:0},{n:'Brent Poling',ob:20,c:5,a:0},{n:'DeMarcus Craft',ob:20,c:4,a:0},{n:'Eric Peterson',ob:15,c:0,a:0},{n:'Hector Chavarria',ob:11,c:0,a:0},{n:'Matthew Dieterich',ob:10,c:2,a:1},{n:'Braeden Myers',ob:4,c:2,a:0}],
-            'TCC':[{n:'Arlex Lacayo',ob:30,c:11,a:2},{n:'Christian Odio',ob:22,c:11,a:0},{n:'Will Thermidor',ob:22,c:5,a:0},{n:'Peter Esposito',ob:18,c:5,a:1},{n:'Jayden Hodges',ob:15,c:5,a:1},{n:'Steven Herrera',ob:15,c:8,a:1},{n:'Henry Rosales Guerrero',ob:13,c:3,a:0},{n:'Bailey Hilt',ob:13,c:1,a:0},{n:'Louis Mazzaro',ob:12,c:4,a:1},{n:'Charles Leigh',ob:11,c:1,a:0},{n:'Mario Aguilera',ob:10,c:5,a:0},{n:'Alex Coolen',ob:8,c:3,a:0},{n:'Damian Flores',ob:8,c:0,a:0},{n:'D\'Marcus Anthony',ob:8,c:3,a:0},{n:'Jeff Princile',ob:7,c:1,a:0},{n:'Miguel Medina',ob:7,c:2,a:0},{n:'Cody Thompson',ob:7,c:1,a:0},{n:'Luis Ferrer Jimenez',ob:6,c:1,a:0},{n:'Kelly Floyd',ob:6,c:2,a:0},{n:'Alain Pino',ob:4,c:3,a:0},{n:'Troy Sanchez',ob:4,c:1,a:0},{n:'Kojak McKown',ob:3,c:2,a:0},{n:'Manuel Fernandez Segui',ob:1,c:0,a:0}]
+            'SAS':[{n:'Jane-Marie Calhelha',ob:118,c:22,a:3},{n:'Avery Short',ob:87,c:9,a:0},{n:'Meghan Houston',ob:83,c:3,a:0},{n:'MJ Fialka',ob:71,c:7,a:0},{n:'Alona Kaltovich',ob:65,c:18,a:0},{n:'Jason Apicerno',ob:60,c:9,a:0},{n:'Will Hall',ob:59,c:5,a:0},{n:'Jay Denman',ob:57,c:16,a:1},{n:'Hunter Maiers',ob:52,c:1,a:0},{n:'Matthew Balducci',ob:52,c:14,a:0},{n:'Page Pearson',ob:46,c:3,a:0},{n:'Dustin Uhrig',ob:43,c:4,a:0},{n:'Thomas Hannon',ob:41,c:4,a:0},{n:'Nicholas Saunders',ob:39,c:1,a:0},{n:'Austin Root',ob:30,c:3,a:0},{n:'Leslie Modlin',ob:22,c:9,a:0},{n:'Rikko Delgado',ob:10,c:1,a:0}],
+            'TAS':[{n:'Santiago Leon-Corona',ob:94,c:5,a:0},{n:'Cameron Davis',ob:89,c:8,a:3},{n:'Michael Marcoux',ob:84,c:11,a:0},{n:'Kelsey Snyder',ob:83,c:21,a:0},{n:'Steve Troia',ob:79,c:13,a:1},{n:'Chris Fabian',ob:74,c:8,a:2},{n:'Warren Weitner',ob:69,c:5,a:2},{n:'Caleb Clampitt',ob:69,c:11,a:5},{n:'Eli Sajia',ob:65,c:14,a:2},{n:'Emily Brison',ob:65,c:10,a:0},{n:'Tor Wendel',ob:63,c:18,a:2},{n:'Matthew Bateman',ob:63,c:7,a:0},{n:'Jordan Wright',ob:62,c:7,a:0},{n:'Reilly Taylor',ob:61,c:7,a:1},{n:'Alexa Bradley',ob:61,c:15,a:3},{n:'Cameron Howell',ob:61,c:8,a:2},{n:'Brandon Lance',ob:61,c:18,a:0},{n:'Gerald Rich',ob:58,c:5,a:1},{n:'Michael Owenby',ob:50,c:6,a:1},{n:'Travis Worley',ob:45,c:8,a:1},{n:'Michael Price',ob:44,c:7,a:1},{n:'Joseph Brittain',ob:44,c:13,a:0},{n:'Jesus Varela',ob:41,c:4,a:0},{n:'Benjamin Ross',ob:41,c:11,a:1},{n:'Jerred Davis',ob:40,c:3,a:0},{n:'Candice Cox',ob:39,c:8,a:0},{n:'Andre Caldero',ob:25,c:6,a:0},{n:'Andrew Fox',ob:25,c:4,a:0},{n:'Dylan Sims',ob:24,c:4,a:2},{n:'Brandon Davis',ob:21,c:5,a:0},{n:'Joshua Adams',ob:20,c:3,a:0},{n:'Scott Gray',ob:3,c:2,a:1},{n:'Andrew Kirchmeyer',ob:3,c:0,a:0}],
+            'NAS':[{n:'Jeff smith',ob:155,c:21,a:1},{n:'Noah Agne',ob:109,c:19,a:3},{n:'Owen King',ob:107,c:14,a:3},{n:'Caylen Dobson',ob:99,c:15,a:4},{n:'Mike Masters',ob:98,c:27,a:2},{n:'Christian Alvarado',ob:79,c:14,a:0},{n:'Zach Smith',ob:76,c:20,a:1},{n:'Christopher Tercero',ob:60,c:18,a:3},{n:'Jay Davis',ob:60,c:14,a:1},{n:'Tristan Traver',ob:56,c:17,a:0},{n:'Jeremy Parker',ob:53,c:5,a:0},{n:'Quinten Blake',ob:43,c:7,a:1},{n:'Dan Mindermann',ob:31,c:5,a:0}],
+            'KGR':[{n:'Charles Tebo',ob:125,c:9,a:1},{n:'Wesley Shipman',ob:90,c:14,a:0},{n:'Daysha Thomason',ob:82,c:7,a:0},{n:'Steven Roland',ob:60,c:15,a:1},{n:'Nicholas Russell',ob:57,c:9,a:1},{n:'Xavier Beckers',ob:50,c:11,a:0},{n:'Jordan Campbell',ob:38,c:3,a:0},{n:'Alexis Bryant',ob:28,c:1,a:0}],
+            'TGR':[{n:'John Diaz',ob:95,c:3,a:1},{n:'Earnest Callands',ob:70,c:9,a:1},{n:'Gregory Drummond',ob:63,c:14,a:2},{n:'Justin Ching',ob:63,c:17,a:3},{n:'Dallas Beasley',ob:63,c:2,a:0},{n:'Abby Villafane Groos',ob:53,c:9,a:0},{n:'Barbara Scholten',ob:52,c:9,a:0},{n:'Jarrid Bomar',ob:45,c:6,a:0},{n:'Charles Washington',ob:44,c:1,a:0},{n:'Joey Mims',ob:39,c:5,a:0},{n:'Erin Girardeau',ob:32,c:4,a:0},{n:'Shane Morrison',ob:26,c:3,a:0},{n:'Emad Abdelmalik',ob:22,c:4,a:0},{n:'Miquese Long',ob:15,c:2,a:0},{n:'Samuel Sotelo',ob:8,c:2,a:1},{n:'Ben Yoo',ob:3,c:0,a:0},{n:'Dan Gaines',ob:1,c:1,a:1}],
+            'CGR':[{n:'Daniela Gelder',ob:87,c:10,a:0},{n:'Cedric Ferguson',ob:63,c:14,a:1},{n:'Jerel Mosley',ob:53,c:7,a:1},{n:'John Kennedy',ob:48,c:2,a:0},{n:'John Karvelas',ob:45,c:6,a:0},{n:'Wofford Shipman',ob:45,c:7,a:0},{n:'Cody Taylor',ob:37,c:6,a:0},{n:'Chris Morrison',ob:30,c:5,a:0},{n:'Tony Bentley',ob:29,c:8,a:2},{n:'Joshua Hart',ob:3,c:1,a:0}],
+            'HGR':[{n:'Scott Clark',ob:73,c:11,a:0},{n:'Carlos Ochoa',ob:67,c:14,a:2},{n:'Tyler Winters',ob:64,c:5,a:0},{n:'Rachel Hamby',ob:41,c:8,a:3},{n:'Jamaru Rodgers',ob:40,c:3,a:1},{n:'Michael Perez',ob:35,c:6,a:1},{n:'Rick Veit',ob:30,c:15,a:3}],
+            'GGR':[{n:'Hamza Haveliwala',ob:75,c:4,a:1},{n:'Gary DeFilippo',ob:65,c:3,a:0},{n:'Joyce Hornbeck',ob:54,c:6,a:0},{n:'Matthew Cabral',ob:53,c:2,a:1},{n:'Jonathan Hudson',ob:1,c:0,a:0}],
+            'AGV':[{n:'Derrick McAlister',ob:86,c:11,a:2},{n:'Dominic Mandella',ob:73,c:8,a:0},{n:'Tino Sullivan',ob:61,c:2,a:0},{n:'Riley Lidel',ob:55,c:5,a:0},{n:'Tanner Nickel',ob:43,c:7,a:1},{n:'James Naylor',ob:36,c:5,a:1},{n:'Joshua Hind',ob:33,c:6,a:1},{n:'Patrick Chew',ob:27,c:5,a:2},{n:'Ken Hucker',ob:7,c:2,a:0}],
+            'KGV':[{n:'Will Turner',ob:84,c:13,a:1},{n:'Jonathan Solis',ob:84,c:18,a:2},{n:'Cedraquan McDowell',ob:57,c:5,a:0},{n:'Elizabeth Edwards',ob:54,c:7,a:0},{n:'Christian Sheppard',ob:49,c:1,a:0},{n:'Trevor Pike',ob:48,c:6,a:1},{n:'Matthew Damagnez',ob:48,c:3,a:0},{n:'William Grey',ob:46,c:6,a:2},{n:'Daniel Carlton',ob:42,c:17,a:5},{n:'Joseph Hudson',ob:38,c:9,a:0},{n:'Sophia Pack',ob:34,c:6,a:1},{n:'Darius Sherman',ob:25,c:5,a:0},{n:'Jonas Brown',ob:13,c:1,a:0}],
+            'HGV':[{n:'John Cawley',ob:90,c:12,a:0},{n:'Alex Guerrero',ob:88,c:12,a:1},{n:'Barry Karbash',ob:85,c:4,a:1},{n:'Souleymane Ndiaye',ob:81,c:20,a:1},{n:'Hamid Jahanbakhsh',ob:72,c:2,a:0},{n:'Amy Neill',ob:70,c:4,a:1},{n:'Melissa Castronova',ob:69,c:6,a:0},{n:'Allen Cruz',ob:67,c:11,a:3},{n:'Zack Jones',ob:64,c:3,a:0},{n:'Terry Marcum',ob:61,c:5,a:0},{n:'Christine Brunt',ob:60,c:9,a:1},{n:'Angel Miguel-Hernandez',ob:59,c:5,a:2},{n:'Quinton Thomas',ob:56,c:7,a:1},{n:'Nicholas Rodriguez',ob:41,c:5,a:0},{n:'Randall Clemment',ob:36,c:2,a:0},{n:'Eli Vera',ob:35,c:4,a:0},{n:'Alex Cruz Escorza',ob:25,c:7,a:0},{n:'Daniel Cruz',ob:25,c:5,a:0},{n:'Preston Kinsey',ob:24,c:4,a:1},{n:'Jose Figueroa',ob:11,c:0,a:0}],
+            'TRA':[{n:'Elise DeLucia',ob:81,c:9,a:1},{n:'Averi Bogan',ob:80,c:8,a:1},{n:'Abdulrahman Ali',ob:77,c:4,a:1},{n:'Brett Boaz',ob:76,c:10,a:0},{n:'Ted Brooke',ob:76,c:5,a:1},{n:'Tristan Baisden',ob:65,c:3,a:0},{n:'John Lafabregue',ob:64,c:8,a:0},{n:'Roberto Hernandez',ob:61,c:13,a:2},{n:'Dieyna Diagana',ob:57,c:7,a:1},{n:'Wesley Matthews',ob:54,c:2,a:0},{n:'Bryan Harrison',ob:48,c:7,a:1},{n:'Jaden Rodarte',ob:43,c:6,a:1},{n:'Karim Abdelshahid',ob:40,c:4,a:0},{n:'Skylar Dunford',ob:40,c:12,a:2},{n:'Joe Mokwa',ob:37,c:7,a:1},{n:'Brian Gorlesky',ob:34,c:6,a:1},{n:'Jeffrey knight',ob:34,c:6,a:1},{n:'Manuel Barcenas',ob:32,c:4,a:0},{n:'Solomon Masika',ob:31,c:4,a:0},{n:'Allen Milliken-King',ob:28,c:4,a:0},{n:'Tramal Turner',ob:26,c:3,a:0},{n:'Joel Williams',ob:24,c:2,a:0},{n:'Charles Williams',ob:23,c:3,a:0},{n:'Art livingston',ob:23,c:12,a:1},{n:'Quan Long',ob:21,c:3,a:0},{n:'Richard LaBranche',ob:14,c:1,a:0},{n:'Steven Bradby',ob:7,c:0,a:0},{n:'Antonio Walker',ob:5,c:1,a:0},{n:'Carl Anderson',ob:2,c:1,a:0}],
+            'KRA':[{n:'Josh Clay',ob:133,c:7,a:1},{n:'Austin Ward',ob:98,c:16,a:1},{n:'Quinton Joyner',ob:85,c:9,a:1},{n:'Riley Willis',ob:82,c:5,a:0},{n:'Jeremy Poe',ob:72,c:2,a:0},{n:'Paulo Morales',ob:67,c:15,a:1},{n:'Yasen Salha',ob:67,c:1,a:1},{n:'Chad Erickson',ob:65,c:11,a:2},{n:'Claybourne Bass',ob:59,c:11,a:0},{n:'Ted Weinstein',ob:53,c:5,a:3},{n:'Daniel Ortiz',ob:52,c:6,a:0},{n:'Jayneen Soliman Reyes',ob:27,c:2,a:0},{n:'Seungkook Jae',ob:26,c:5,a:1},{n:'Jonathan Buscarello',ob:19,c:1,a:0}],
+            'NRA':[{n:'Frandy Corporan',ob:68,c:14,a:2},{n:'Kaiheem Tucker',ob:63,c:12,a:3},{n:'John Ruggere',ob:62,c:6,a:1},{n:'Andrew Aguilar',ob:60,c:6,a:0},{n:'Johnny Lynch',ob:59,c:6,a:1},{n:'Drew Rogers',ob:57,c:8,a:1},{n:'Michaela Sanders',ob:38,c:7,a:0},{n:'Mark Walton',ob:18,c:7,a:2},{n:'Keith Woodward',ob:6,c:2,a:0},{n:'Del-Carlos Harrington',ob:5,c:0,a:0}],
+            'TSA':[{n:'Dustin Phillips',ob:90,c:9,a:2},{n:'RICHARD COVINGTON',ob:85,c:10,a:1},{n:'Rockwell Linsley',ob:69,c:8,a:2},{n:'Lacy Tripp',ob:66,c:15,a:2},{n:'Dorien Harrington',ob:55,c:2,a:0},{n:'Paul McCoy',ob:36,c:3,a:1},{n:'Oladepo Williams',ob:36,c:13,a:3},{n:'David Darrow',ob:21,c:2,a:1},{n:'Kay Weston',ob:19,c:4,a:1},{n:'Freddy Davis',ob:3,c:0,a:0}],
+            'TCH':[{n:'Elijah Mcnaughton',ob:73,c:7,a:0},{n:'Brandon McCall',ob:72,c:8,a:0},{n:'Henry Caira',ob:71,c:9,a:0},{n:'Matt Gladwell',ob:70,c:5,a:1},{n:'Casey Nordgren',ob:68,c:11,a:1},{n:'Michael Price',ob:66,c:22,a:2},{n:'Jowaine Bookal',ob:61,c:11,a:0},{n:'Anthony Casiechitty',ob:59,c:7,a:2},{n:'Justin Perez',ob:53,c:14,a:0},{n:'Arizona Steadman',ob:43,c:9,a:1},{n:'DeMarcus Craft',ob:43,c:7,a:0},{n:'Eric Peterson',ob:40,c:7,a:0},{n:'Benjamin Longo',ob:38,c:11,a:1},{n:'Justin Elrod',ob:35,c:4,a:0},{n:'Andrew Huffman',ob:35,c:7,a:1},{n:'Brent Poling',ob:31,c:8,a:0},{n:'Matthew Dieterich',ob:29,c:7,a:1},{n:'Hector Chavarria',ob:11,c:0,a:0},{n:'Braeden Myers',ob:4,c:2,a:0}],
+            'TCC':[{n:'Arlex Lacayo',ob:36,c:13,a:2},{n:'Will Thermidor',ob:32,c:5,a:0},{n:'Christian Odio',ob:30,c:14,a:0},{n:'Peter Esposito',ob:24,c:6,a:1},{n:'Luis Ferrer Jimenez',ob:22,c:2,a:0},{n:'D\'Marcus Anthony',ob:20,c:9,a:2},{n:'Steven Herrera',ob:20,c:10,a:1},{n:'Jayden Hodges',ob:20,c:6,a:1},{n:'Louis Mazzaro',ob:19,c:7,a:1},{n:'Bailey Hilt',ob:18,c:1,a:0},{n:'Mario Aguilera',ob:17,c:8,a:0},{n:'Jeff Princile',ob:13,c:3,a:0},{n:'Henry Rosales Guerrero',ob:13,c:3,a:0},{n:'Alex Coolen',ob:13,c:4,a:0},{n:'Miguel Medina',ob:12,c:3,a:0},{n:'Charles Leigh',ob:12,c:1,a:0},{n:'Cody Thompson',ob:12,c:1,a:0},{n:'Kelly Floyd',ob:11,c:3,a:0},{n:'Kojak McKown',ob:9,c:3,a:0},{n:'Damian Flores',ob:8,c:0,a:0},{n:'Alain Pino',ob:4,c:3,a:0},{n:'Sean Rowland',ob:4,c:0,a:0},{n:'Troy Sanchez',ob:4,c:1,a:0},{n:'Manuel Fernandez Segui',ob:1,c:0,a:0},{n:'Jessica Dykstra',ob:1,c:0,a:0}]
         };
 
         const MANAGERS = {
@@ -911,20 +915,20 @@ const STAFF = {
         const TRENDS = {
             months: ['Jan','Feb','Mar','Apr','May'],
             ri: {
-                'SAS':[61,64,67,76,53],'TAS':[52,53,60,58,48],'NAS':[64,58,63,67,69],
-                'KGR':[72,72,77,71,44],'TGR':[51,58,59,54,53],'CGR':[50,56,51,56,58],
-                'HGR':[57,70,63,60,100],'GGR':[61,51,61,65,20],'AGV':[54,61,69,65,67],
-                'KGV':[59,70,65,67,53],'HGV':[60,67,66,62,63],'TRA':[63,66,70,65,67],
-                'KRA':[63,75,72,69,67],'NRA':[63,66,63,62,50],'TSA':[64,65,57,63,58],
-                'TCH':[69,70,68,73,70],'TCC':[null,null,null,67,60]
+                'SAS':[61,64,67,76,55],'TAS':[52,53,60,58,55],'NAS':[64,58,63,67,58],
+                'KGR':[72,72,77,71,72],'TGR':[51,58,59,54,58],'CGR':[50,56,51,56,59],
+                'HGR':[57,70,63,60,70],'GGR':[61,51,61,65,46],'AGV':[54,61,69,65,67],
+                'KGV':[59,70,65,67,56],'HGV':[60,67,66,62,71],'TRA':[63,66,70,65,66],
+                'KRA':[63,75,72,69,63],'NRA':[63,66,63,62,50],'TSA':[64,65,57,63,48],
+                'TCH':[69,70,68,73,72],'TCC':[null,null,null,67,57]
             },
             set: {
-                'SAS':[37,39,28,39,50],'TAS':[24,23,30,26,33],'NAS':[37,39,41,36,22],
-                'KGR':[37,48,55,49,50],'TGR':[31,32,33,35,11],'CGR':[23,33,26,34,18],
-                'HGR':[20,34,39,43,33],'GGR':[36,42,30,37,0],'AGV':[35,46,46,33,17],
-                'KGV':[33,34,35,42,0],'HGV':[37,39,43,40,47],'TRA':[38,36,41,40,29],
-                'KRA':[42,36,38,47,38],'NRA':[38,41,44,39,25],'TSA':[34,32,45,40,0],
-                'TCH':[31,27,31,30,26],'TCC':[null,null,null,40,33]
+                'SAS':[37,39,28,39,53],'TAS':[24,23,30,26,24],'NAS':[37,39,41,36,13],
+                'KGR':[37,48,55,49,46],'TGR':[31,32,33,35,22],'CGR':[23,33,26,34,22],
+                'HGR':[20,34,39,43,43],'GGR':[36,42,30,37,17],'AGV':[35,46,46,33,40],
+                'KGV':[33,34,35,42,21],'HGV':[37,39,43,40,44],'TRA':[38,36,41,40,35],
+                'KRA':[42,36,38,47,35],'NRA':[38,41,44,39,36],'TSA':[34,32,45,40,19],
+                'TCH':[31,27,31,30,23],'TCC':[null,null,null,40,34]
             }
         };
 
@@ -932,20 +936,20 @@ const STAFF = {
         const OB_TRENDS = {
             months: ['Jan','Feb','Mar','Apr','May'],
             live: {
-                'SAS':[17.9,16.9,15.7,15.9,13.4],'TAS':[18.7,13.9,16.1,16.9,16.6],'NAS':[15.2,16.0,17.9,18.6,18.3],
-                'KGR':[13.6,15.4,15.4,14.9,13.1],'TGR':[17.8,15.5,12.8,12.3,12.7],'CGR':[16.6,18.9,19.3,20.3,20.1],
-                'HGR':[12.9,10.7,13.5,14.1,15.6],'GGR':[10.9,10.2,9.0,8.8,7.5],'AGV':[19.5,16.6,14.6,15.7,16.3],
-                'KGV':[15.6,12.6,17.4,17.9,16.3],'HGV':[16.3,16.5,14.6,15.6,13.6],'TRA':[15.4,15.0,13.2,14.0,12.6],
-                'KRA':[13.3,16.3,12.4,12.6,11.6],'NRA':[15.9,16.2,15.5,15.8,14.7],'TSA':[16.1,17.6,16.2,15.7,15.0],
-                'TCH':[15.2,14.8,11.5,13.3,16.9],'TCC':[null,null,null,35.9,30.2]
+                'SAS':[17.9,16.9,15.7,15.9,14.2],'TAS':[18.7,13.9,16.1,16.9,16.4],'NAS':[15.2,16.0,17.9,18.6,18.9],
+                'KGR':[13.6,15.4,15.4,14.9,12.2],'TGR':[17.8,15.5,12.8,12.3,12.8],'CGR':[16.6,18.9,19.3,20.3,18.7],
+                'HGR':[12.9,10.7,13.5,14.1,17.1],'GGR':[10.9,10.2,9.0,8.8,7.5],'AGV':[19.5,16.6,14.6,15.7,14.8],
+                'KGV':[15.6,12.6,17.4,17.9,16.4],'HGV':[16.3,16.5,14.6,15.6,13.2],'TRA':[15.4,15.0,13.2,14.0,12.9],
+                'KRA':[13.3,16.3,12.4,12.6,11.4],'NRA':[15.9,16.2,15.5,15.8,15.9],'TSA':[16.1,17.6,16.2,15.7,14.5],
+                'TCH':[15.2,14.8,11.5,13.3,18.6],'TCC':[null,null,null,35.9,28.3]
             },
             appt: {
-                'SAS':[10.4,10.6,7.8,9.1,8.3],'TAS':[10.5,9.8,11.7,10.1,11.0],'NAS':[12.7,10.5,10.1,9.9,11.7],
-                'KGR':[12.9,11.1,12.4,10.4,5.0],'TGR':[11.1,11.2,9.0,9.2,8.3],'CGR':[11.2,9.4,8.2,8.3,4.2],
-                'HGR':[16.1,11.8,9.1,11.1,12.7],'GGR':[14.0,13.7,9.3,12.4,5.0],'AGV':[14.0,11.8,11.2,10.7,13.0],
-                'KGV':[13.9,13.8,11.0,11.3,12.0],'HGV':[13.4,12.3,9.2,11.0,10.7],'TRA':[14.6,14.8,11.7,10.7,8.5],
-                'KRA':[13.9,14.1,5.9,8.1,8.0],'NRA':[13.0,14.0,11.2,9.0,11.1],'TSA':[12.2,13.4,8.6,8.4,14.8],
-                'TCH':[9.5,12.2,6.3,6.7,6.8],'TCC':[null,null,null,9.9,8.5]
+                'SAS':[10.4,10.6,7.8,9.1,6.0],'TAS':[10.5,9.8,11.7,10.1,11.5],'NAS':[12.7,10.5,10.1,9.9,10.3],
+                'KGR':[12.9,11.1,12.4,10.4,5.2],'TGR':[11.1,11.2,9.0,9.2,8.1],'CGR':[11.2,9.4,8.2,8.3,5.5],
+                'HGR':[16.1,11.8,9.1,11.1,15.0],'GGR':[14.0,13.7,9.3,12.4,11.5],'AGV':[14.0,11.8,11.2,10.7,11.8],
+                'KGV':[13.9,13.8,11.0,11.3,12.7],'HGV':[13.4,12.3,9.2,11.0,9.5],'TRA':[14.6,14.8,11.7,10.7,10.0],
+                'KRA':[13.9,14.1,5.9,8.1,9.1],'NRA':[13.0,14.0,11.2,9.0,12.1],'TSA':[12.2,13.4,8.6,8.4,14.8],
+                'TCH':[9.5,12.2,6.3,6.7,6.9],'TCC':[null,null,null,9.9,8.3]
             }
         };
 
@@ -1870,6 +1874,56 @@ const STAFF = {
             document.getElementById('declinedCount').textContent=dec;
             document.getElementById('steadyCount').textContent=ste;
             document.getElementById('currentDate').textContent=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+
+            // East / West summary
+            const real = D.stores.filter(s=>s.id!=='TCC');
+            function regionStats(stores){
+                const gpa = stores.reduce((a,s)=>a+calc(s.current).ovS,0)/stores.length;
+                const up = stores.filter(s=>calc(s.current).ovS>calc(s.march).ovS).length;
+                return {gpa, up, total:stores.length};
+            }
+            const w = regionStats(real.filter(s=>s.region==='West'));
+            const e = regionStats(real.filter(s=>s.region==='East'));
+            const fmtRegion = r=>`${s2g(r.gpa)} avg · ${r.up}/${r.total} improving`;
+            document.getElementById('westSummary').textContent = fmtRegion(w);
+            document.getElementById('eastSummary').textContent = fmtRegion(e);
+
+            // Story of the day — pick one interesting fact
+            renderStoryOfDay();
+
+            // June training banner
+            renderJuneTrainingBanner();
+        }
+
+        function renderStoryOfDay(){
+            const el=document.getElementById('storyOfDay');
+            const real = D.stores.filter(s=>s.id!=='TCC');
+            const stories = [];
+            // Biggest mover Mar→Apr
+            const movers = real.map(s=>({s, d:calc(s.current).ovS-calc(s.march).ovS}));
+            movers.sort((a,b)=>b.d-a.d);
+            const top = movers[0], bot = movers[movers.length-1];
+            if(top.d>=0.3) stories.push(`<strong>${top.s.id}</strong> is the biggest improver Mar → Apr — ${calc(top.s.march).ov} → ${calc(top.s.current).ov}.`);
+            if(bot.d<=-0.3) stories.push(`<strong>${bot.s.id}</strong> gave up the most ground Mar → Apr — ${calc(bot.s.march).ov} → ${calc(bot.s.current).ov}.`);
+            // Stores at A on appt
+            const aAppt = real.filter(s=>calc(s.current).ag==='A' || calc(s.current).ag==='A-');
+            if(aAppt.length>=8) stories.push(`${aAppt.length} of 16 stores grade A or A− on outbound Appt% — same calls converting more often.`);
+            // Manager activity
+            const totalListens = (typeof MANAGERS!=='undefined') ? Object.values(MANAGERS).flat().reduce((a,m)=>a+m.l,0) : 0;
+            if(totalListens>500) stories.push(`Managers reviewed <strong>${totalListens.toLocaleString()}</strong> calls so far this month — coaching engagement holding strong.`);
+            if(!stories.length){ el.style.display='none'; return; }
+            const today=new Date();
+            const idx=(today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate()) % stories.length;
+            el.innerHTML = '<span style="font-weight:700;letter-spacing:0.4px;text-transform:uppercase;font-size:10px;color:#92400e;">Today</span> &nbsp; ' + stories[idx];
+            el.style.display='block';
+        }
+
+        function renderJuneTrainingBanner(){
+            const el=document.getElementById('juneTrainingBanner');
+            const below = D.stores.filter(s=>s.id!=='TCC').filter(s=>calc(s.current).ovS<2.7).map(s=>s.id);
+            if(!below.length){ el.style.display='none'; return; }
+            el.innerHTML = `<span style="font-weight:700;letter-spacing:0.4px;text-transform:uppercase;font-size:10px;color:#3730a3;">June Training</span> &nbsp; ${below.length} stores under B− overall and required for June extra training: <strong>${below.join(', ')}</strong>`;
+            el.style.display='block';
         }
 
         function recalculateGrades(){
@@ -1900,9 +1954,17 @@ const STAFF = {
 
         function generateInsights(){
             const all=[];
-            const alertStores = D.stores.filter(s=>s.id!=='TCC');
+            // Exclude TCC (just joined) and TAS (handled separately, plan in flight)
+            const alertStores = D.stores.filter(s=>s.id!=='TCC' && s.id!=='TAS');
             // Day-seeded picker — phrasing varies day to day but stays stable within a day
             const today=new Date();
+            // Run-rate gate: decline alerts only fire when current month has ≥10 days of data
+            // Today's date.getDate() = day of month. If TRENDS.months has just added the current month,
+            // the latest entry's confidence depends on how many days of the month have passed.
+            // For now, we treat April as "current" (locked, full month) so this gate is permissive.
+            // Switch to: const partialMonth = (currentMonth === thisCalendarMonth) && (today.getDate() < 10);
+            // For Apr-locked dashboard, partialMonth is false → all decline alerts allowed.
+            const partialMonth = false;  // April Final is locked & complete; flip to date-aware when current=May
             const daySeed=today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate();
             const hash=k=>(k||'').split('').reduce((a,c,i)=>a+c.charCodeAt(0)*(i+1),0);
             const pick=(arr,key)=>arr[(daySeed+hash(key))%arr.length];
@@ -1932,8 +1994,10 @@ const STAFF = {
                 ];
                 all.push({pri:1,type:'opportunity',tag:'Opportunity',title:bestGain.store.id+' \u2014 Biggest Improver',text:pick(v,bestGain.store.id+'gain')});
             }
-            // Overall declines (high priority) — each variant references the weak side naturally
-            alertStores.forEach(s=>{const c=calc(s.current),m=calc(s.march);
+            // Overall declines (high priority) — gated on sample size during partial months
+            alertStores.forEach(s=>{
+                if(partialMonth) return;  // suppress decline alerts when current month has <10 days of data
+                const c=calc(s.current),m=calc(s.march);
                 if(gn(c.ov)<gn(m.ov)){
                     const ibDown=gn(c.ib)<gn(m.ib);
                     const obDown=gn(c.ob)<gn(m.ob);
@@ -2097,9 +2161,26 @@ const STAFF = {
             const westIds=new Set(D.stores.filter(s=>s.region==='West').map(s=>s.id));
             const storeIds=new Set(D.stores.map(s=>s.id));
             const isStoreMsg=m=>storeIds.has(m.title.split(' ')[0]);
-            // Flex MAX: 3 on quiet days, 4 when there's more to surface
-            const nonDerby=all.filter(m=>m.type!=='derby'&&m.type!=='system').length;
-            const MAX=Math.min(4, Math.max(3, nonDerby>=4?4:3));
+            // Manager engagement watchlist — surface stores where managers aren't listening
+            if(typeof MANAGERS!=='undefined'){
+                alertStores.forEach(s=>{
+                    const mgrs = MANAGERS[s.id] || [];
+                    const totL = mgrs.reduce((a,m)=>a+m.l,0);
+                    const totS = mgrs.reduce((a,m)=>a+m.s,0);
+                    const hasGM = mgrs.some(m=>m.role==='GM' && m.l>0);
+                    // No managers listening at all
+                    if(mgrs.length===0 || totL<5){
+                        all.push({pri:1,type:'watch',tag:'Coaching Gap',title:s.id+' — Manager engagement low',
+                            text:'Only '+totL+' listens MTD across all managers. The team that\'s not reviewed isn\'t coached. Pull up 5 calls together this week.'});
+                    } else if(!hasGM && mgrs.length>=2){
+                        // GM not engaged
+                        all.push({pri:2,type:'watch',tag:'Coaching Gap',title:s.id+' — GM not in calls',
+                            text:'SMs are listening ('+totL+' MTD) but the GM has 0 listens. Loop them in — the program lands harder when the GM is in the room.'});
+                    }
+                });
+            }
+            // Cap notifications at 3 (set by user — keep it focused)
+            const MAX=3;
             const result=[];
             for(const m of all){
                 if(result.length>=MAX) break;
@@ -3568,7 +3649,7 @@ const STAFF = {
                 setTimeout(()=>overlay.remove(), 500);
             }, 3500);
         }
-        document.addEventListener('DOMContentLoaded',()=>{renderAll();setTimeout(showMostImprovedFirework,400);});
+        document.addEventListener('DOMContentLoaded',()=>{renderAll();});
     </script>
     <div class="staff-overlay" id="staffOverlay" onclick="if(event.target===this)closeStaffModal()">
         <div class="staff-modal"></div>
