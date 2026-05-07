@@ -2660,10 +2660,9 @@ const STAFF = {
             // Delta arrows
             function delta(b, c, isInt){
                 const d = c-b;
-                const arrow = d>0.05?'<span style="color:#15803d;">▲</span>':d<-0.05?'<span style="color:#dc2626;">▼</span>':'<span style="color:#94a3b8;">—</span>';
-                const sign = d>0?'+':'';
-                const fmt = isInt? d.toFixed(1) : d.toFixed(1);
-                return `<span style="font-weight:600;">${arrow} ${sign}${fmt}</span>`;
+                if(d>0.05) return '<span style="color:#15803d;font-weight:700;">▲</span>';
+                if(d<-0.05) return '<span style="color:#dc2626;font-weight:700;">▼</span>';
+                return '<span style="color:#94a3b8;font-weight:700;">—</span>';
             }
             function row(label, b, c, bench, metric){
                 const bg = gg(b, metric), cg = gg(c, metric);
