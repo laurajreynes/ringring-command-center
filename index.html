@@ -2711,9 +2711,9 @@ const STAFF = {
             const ibD = gn(c.ib)-gn(b.ib);
             const obD = gn(c.ob)-gn(b.ob);
             let focus;
-            if(ibD>0.5 && obD>0.5) focus = 'Strong gains both sides since baseline. Hold the line and protect what\'s working.';
-            else if(ibD>obD+0.3) focus = 'Inbound is the win — outbound is where the next grade comes from.';
-            else if(obD>ibD+0.3) focus = 'Outbound carrying the program — inbound conversion is the next move.';
+            if(ibD>0.5 && obD>0.5) focus = 'Both sides improving — hold the line.';
+            else if(ibD>obD+0.3) focus = 'Inbound improving, outbound has big opportunity.';
+            else if(obD>ibD+0.3) focus = 'Outbound improving, inbound has big opportunity.';
             else if(ibD<-0.3 || obD<-0.3) focus = 'Slipped from baseline. Pull the rep coaching list above and run scorecards this week.';
             else focus = 'Holding steady since baseline. Look at the rep-level list above to find the next half-grade.';
 
@@ -2737,9 +2737,15 @@ const STAFF = {
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
                         <!-- INBOUND -->
                         <div style="border:1px solid #bae6fd;border-radius:8px;padding:14px;background:#f0f9ff;">
-                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-                                <h4 style="font-size:12px;font-weight:700;color:#0369a1;text-transform:uppercase;letter-spacing:0.5px;">Inbound</h4>
-                                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:#0369a1;">${sparkline(setTrend,'#0369a1')}</div>
+                            <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:8px;">
+                                <div>
+                                    <h4 style="font-size:14px;font-weight:700;color:#0369a1;text-transform:uppercase;letter-spacing:0.5px;">Inbound</h4>
+                                    <div style="font-size:10px;color:#94a3b8;margin-top:2px;">Bench: <strong style="color:#475569;">80% RI</strong> · <strong style="color:#475569;">45% Set</strong></div>
+                                </div>
+                                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
+                                    ${sparkline(setTrend,'#0369a1')}
+                                    <div style="font-size:9px;color:#94a3b8;letter-spacing:0.3px;">Set% · Jan→Apr</div>
+                                </div>
                             </div>
                             <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">
                                 <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:0.4px;">
@@ -2755,19 +2761,22 @@ const STAFF = {
                             </table>
                             <div style="font-size:10px;color:#0369a1;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Top 3 to coach — asking for the appt</div>
                             ${ibCandidates.length ? ibCandidates.map((r,i)=>`
-                                <div style="background:#fff;border:1px solid #bae6fd;border-radius:5px;padding:7px 10px;margin-bottom:5px;font-size:12px;">
-                                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                                        <span style="font-weight:600;color:#1a1a2e;">${i+1}. ${r.n}</span>
-                                        <span style="font-size:11px;color:#dc2626;font-weight:700;">${r.askPct}% ask</span>
-                                    </div>
-                                    <div style="font-size:10px;color:#64748b;margin-top:1px;">${r.ib} inbound calls · ${r.asked} asked · ${r.booked} booked</div>
+                                <div style="background:#fff;border:1px solid #bae6fd;border-radius:5px;padding:9px 12px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;">
+                                    <span style="font-weight:600;color:#1a1a2e;font-size:13px;">${i+1}. ${r.n}</span>
+                                    <span style="font-size:13px;color:#dc2626;font-weight:700;">${r.askPct}% ask</span>
                                 </div>`).join('') : '<div style="font-size:11px;color:#64748b;font-style:italic;padding:6px 0;">Everyone\'s asking. No coaching candidates flagged.</div>'}
                         </div>
                         <!-- OUTBOUND -->
                         <div style="border:1px solid #fed7aa;border-radius:8px;padding:14px;background:#fff7ed;">
-                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-                                <h4 style="font-size:12px;font-weight:700;color:#c2410c;text-transform:uppercase;letter-spacing:0.5px;">Outbound</h4>
-                                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:#c2410c;">${sparkline(apptTrend,'#c2410c')}</div>
+                            <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:8px;">
+                                <div>
+                                    <h4 style="font-size:14px;font-weight:700;color:#c2410c;text-transform:uppercase;letter-spacing:0.5px;">Outbound</h4>
+                                    <div style="font-size:10px;color:#94a3b8;margin-top:2px;">Bench: <strong style="color:#475569;">20% Live</strong> · <strong style="color:#475569;">10% Appt</strong></div>
+                                </div>
+                                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
+                                    ${sparkline(apptTrend,'#c2410c')}
+                                    <div style="font-size:9px;color:#94a3b8;letter-spacing:0.3px;">Appt% · Jan→Apr</div>
+                                </div>
                             </div>
                             <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">
                                 <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:0.4px;">
@@ -2783,12 +2792,9 @@ const STAFF = {
                             </table>
                             <div style="font-size:10px;color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Top 3 to coach — connect & convert</div>
                             ${obCandidates.length ? obCandidates.map((r,i)=>`
-                                <div style="background:#fff;border:1px solid #fed7aa;border-radius:5px;padding:7px 10px;margin-bottom:5px;font-size:12px;">
-                                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                                        <span style="font-weight:600;color:#1a1a2e;">${i+1}. ${r.n}</span>
-                                        <span style="font-size:11px;color:#dc2626;font-weight:700;">${r.live<15?r.live+'% live':r.appt+'% appt'}</span>
-                                    </div>
-                                    <div style="font-size:10px;color:#64748b;margin-top:1px;">${r.ob} OB · ${r.c} connects · ${r.a} appts · live ${r.live}% · appt ${r.appt}%</div>
+                                <div style="background:#fff;border:1px solid #fed7aa;border-radius:5px;padding:9px 12px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;">
+                                    <span style="font-weight:600;color:#1a1a2e;font-size:13px;">${i+1}. ${r.n}</span>
+                                    <span style="font-size:13px;color:#dc2626;font-weight:700;">${r.live<15?r.live+'% live':r.appt+'% appt'}</span>
                                 </div>`).join('') : '<div style="font-size:11px;color:#64748b;font-style:italic;padding:6px 0;">No coaching candidates flagged.</div>'}
                         </div>
                     </div>
