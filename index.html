@@ -2614,14 +2614,47 @@ const STAFF = {
             const obStaff = STAFF[storeId] || [];
 
             // Coaching candidates
-            // Inbound: VOLUME-FIRST — sort by IB volume desc, filter to ask<70 OR set<40
-            const ibCandidates = ibStaff.map(r=>{
-                const askPct = r.ib>0 ? Math.round((r.asked/r.ib)*100) : 0;
-                const setPct = r.ib>0 ? Math.round((r.booked/r.ib)*100) : 0;
-                return {...r, askPct, setPct};
-            }).filter(r=>r.ib>=5 && (r.askPct<70 || r.setPct<40))
-              .sort((a,b)=>b.ib-a.ib)
-              .slice(0,3);
+            // Inbound: per-store hand-curated overrides; auto fallback = volume-first below benchmark.
+            const INBOUND_OVERRIDES = {
+                'SAS': ['Meghan Houston', 'Jason Apicerno', 'Avery Short'],
+                'TAS': ['Alexa Bradley', 'Santiago Leon-Corona', 'Warren Weitner'],
+                'NAS': ['Dequavius Foster', 'Zach Smith', 'Christian Alvarado'],
+                'KGR': ['Steven Roland', 'Wesley Shipman', 'Daysha Thomason'],
+                'TGR': ['Erin Girardeau', 'Charles Washington', 'Barbara Scholten'],
+                'CGR': ['Wofford Shipman', 'John Karvelas', 'Jerel Mosley'],
+                'HGR': ['Scott Clark'],
+                'GGR': ['Joyce Hornbeck'],
+                'AGV': ['Joshua Hind'],
+                'KGV': ['Jonathan Solis', 'Christian Sheppard', 'Matthew Damagnez'],
+                'HGV': ['Quinton Thomas', 'Eli Vera', 'Amy Neill'],
+                'TRA': ['Quan Long', 'Art livingston', 'Jaden Rodarte'],
+                'KRA': ['Josh Clay', 'Seungkook Jae', 'Riley Willis'],
+                'NRA': ['Mark Walton', 'John Ruggere', 'Misha Danrich'],
+                'TSA': ['Paul McCoy', 'Dustin Phillips', 'David Darrow'],
+                'TCH': ['Michael Price', 'Justin Elrod', 'Matthew Dieterich'],
+            };
+            const INBOUND_FOOTNOTES = {
+                'KRA': 'Inbound calls thinly distributed — coaching focus is outbound.'
+            };
+            let ibCandidates;
+            if(INBOUND_OVERRIDES[storeId]){
+                const byName = {};
+                ibStaff.forEach(r=>{ byName[r.n.toLowerCase()] = r; });
+                ibCandidates = INBOUND_OVERRIDES[storeId].map(name=>byName[name.toLowerCase()]).filter(r=>r).map(r=>{
+                    const askPct = r.ib>0 ? Math.round((r.asked/r.ib)*100) : 0;
+                    const setPct = r.ib>0 ? Math.round((r.booked/r.ib)*100) : 0;
+                    return {...r, askPct, setPct};
+                });
+            } else {
+                // Fallback: volume-first below benchmark
+                ibCandidates = ibStaff.map(r=>{
+                    const askPct = r.ib>0 ? Math.round((r.asked/r.ib)*100) : 0;
+                    const setPct = r.ib>0 ? Math.round((r.booked/r.ib)*100) : 0;
+                    return {...r, askPct, setPct};
+                }).filter(r=>r.ib>=5 && (r.askPct<70 || r.setPct<40))
+                  .sort((a,b)=>b.ib-a.ib)
+                  .slice(0,3);
+            }
 
             // Outbound: 20% live, 10% appt benchmark.
             // Leverage = OB × live_shortfall + connects × appt_shortfall × 2 (each appt worth more)
