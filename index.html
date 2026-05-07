@@ -1270,7 +1270,7 @@ const STAFF = {
 
                 h+=`<tr>
                     <td><button class="row-expand-btn" onclick="toggleDetail(${idx},event)">&#9660;</button></td>
-                    <td class="store-name" title="${store.name}"><a href="#" onclick="event.preventDefault();event.stopPropagation();showSpotlight('${store.id}')" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px;">${store.id}</a> <a href="#" onclick="event.preventDefault();event.stopPropagation();showOnePager('${store.id}')" title="Open 1-pager" style="font-size:9px;color:#0369a1;text-decoration:none;background:#f0f9ff;padding:1px 5px;border-radius:3px;font-weight:700;letter-spacing:0.3px;margin-left:3px;">1‑PG</a></td>
+                    <td class="store-name" title="${store.name}"><a href="#" onclick="event.preventDefault();event.stopPropagation();showOnePager('${store.id}')" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px;">${store.id}</a></td>
                     <td class="metric-cell ib-start">${miniBar(store.current.req,'req',c.rg)}</td>
                     <td class="metric-cell">${miniBar(store.current.set,'set',c.sg)}</td>
                     <td class="grade-cell">${thermo(c.ib)}</td>
