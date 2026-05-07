@@ -2613,17 +2613,14 @@ const STAFF = {
             const ibStaff = (typeof INBOUND_STAFF !== 'undefined') ? (INBOUND_STAFF[storeId] || []) : [];
             const obStaff = STAFF[storeId] || [];
 
-            // Coaching candidates — leverage = volume × shortfall from benchmark
-            // Inbound benchmarks: 70% ask, 40% set (booked/IB). Min 5 IB calls.
+            // Coaching candidates
+            // Inbound: VOLUME-FIRST — sort by IB volume desc, filter to ask<70 OR set<40
             const ibCandidates = ibStaff.map(r=>{
                 const askPct = r.ib>0 ? Math.round((r.asked/r.ib)*100) : 0;
                 const setPct = r.ib>0 ? Math.round((r.booked/r.ib)*100) : 0;
-                const askShort = Math.max(0, 70-askPct);
-                const setShort = Math.max(0, 40-setPct);
-                const leverage = r.ib * Math.max(askShort, setShort);
-                return {...r, askPct, setPct, askShort, setShort, leverage};
-            }).filter(r=>r.ib>=5 && r.leverage>0)
-              .sort((a,b)=>b.leverage-a.leverage)
+                return {...r, askPct, setPct};
+            }).filter(r=>r.ib>=5 && (r.askPct<70 || r.setPct<40))
+              .sort((a,b)=>b.ib-a.ib)
               .slice(0,3);
 
             // Outbound: 20% live, 10% appt benchmark.
@@ -2700,7 +2697,7 @@ const STAFF = {
                             <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Apr Overall</div>
                             <div class="g ${gc(c.ov)}" style="font-size:18px;padding:0;">${c.ov}</div>
                         </div>
-                        <button onclick="printStaffModal()" style="background:#0369a1;color:#fff;border:none;border-radius:4px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;">Print</button>
+                        <a href="pdfs/${storeId}_April_Phones.pdf" target="_blank" style="background:#0369a1;color:#fff;border:none;border-radius:4px;padding:6px 14px;font-size:11px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;">Print 1-Pager</a>
                         <button class="close-btn" onclick="closeStaffModal()">&times;</button>
                     </div>
                 </div>
