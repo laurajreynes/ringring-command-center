@@ -129,6 +129,8 @@
         .may-grade-arrow.trend-up { color:#15803d; }
         .may-grade-arrow.trend-down { color:#dc2626; }
         .may-grade-arrow.trend-neutral { color:#94a3b8; }
+        .plan-chip { display:inline-block; margin-left:6px; padding:2px 7px; border-radius:4px; background:#0d2748; color:#fff !important; font-size:9px; font-weight:800; letter-spacing:0.5px; text-decoration:none !important; vertical-align:1px; }
+        .plan-chip:hover { background:#1e40af; }
 
         .stores-table thead .group-label { font-size: 10px; font-weight: 700; letter-spacing: 0.6px; padding: 3px 6px; }
         .group-ib { background: #f0f9ff; color: #0369a1; }
@@ -730,7 +732,7 @@
             <span>Anderson Automotive Group</span>
             <span id="dateRange">Last 30 Days</span>
             <span>CarWars: <strong id="carwarsDate"></strong></span>
-            <span class="last-updated" title="Most recent data refresh"><span class="lu-dot"></span>Updated <strong style="color:#0369a1;">Tue May 19, 9:00 AM</strong> · April Final + May MTD · WTD Mon→Tue · 6 West stores have action plans</span>
+            <span class="last-updated" title="Most recent data refresh"><span class="lu-dot"></span>Updated <strong style="color:#0369a1;">Tue May 19, 9:00 AM</strong></span>
             <a href="https://ringderby.vercel.app" target="_blank" class="top-link derby-link">Derby Board</a>
             <a href="https://anderson-scorecard.vercel.app" target="_blank" class="top-link scorecard-link">Scorecard</a>
             <button onclick="window.print()" class="top-link" style="background:#f3f4f6;color:#374151;border:none;cursor:pointer;font-family:inherit;">Export PDF</button>
@@ -1276,7 +1278,7 @@ const OB_TRENDS = {
 
                 h+=`<tr>
                     <td><button class="row-expand-btn" onclick="toggleDetail(${idx},event)">&#9660;</button></td>
-                    <td class="store-name" title="${store.name}"><a href="#" onclick="event.preventDefault();event.stopPropagation();showOnePager('${store.id}')" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px;">${store.id}</a></td>
+                    <td class="store-name" title="${store.name}"><a href="#" onclick="event.preventDefault();event.stopPropagation();showOnePager('${store.id}')" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px;">${store.id}</a>${HAS_ACTION_PLAN.has(store.id) ? `<a href="${store.id}_west.pdf" target="_blank" onclick="event.stopPropagation();" class="plan-chip" title="View Action Plan PDF">PLAN</a>` : ''}</td>
                     <td class="metric-cell ib-start">${miniBar(store.current.req,'req',c.rg)}</td>
                     <td class="metric-cell">${miniBar(store.current.set,'set',c.sg)}</td>
                     <td class="grade-cell">${thermo(c.ib)}</td>
@@ -2663,8 +2665,8 @@ const OB_TRENDS = {
 
             // Outbound: 20% live, 10% appt benchmark.
             // Leverage = OB × live_shortfall + connects × appt_shortfall × 2 (each appt worth more)
-            // Min 100 OB. Use APRIL_OUTBOUND (April-final per-rep) — current STAFF holds May MTD.
-            const obSrc = (typeof APRIL_OUTBOUND !== 'undefined') ? (APRIL_OUTBOUND[storeId] || []) : obStaff;
+            // Min 50 OB (lower threshold mid-month). Use STAFF (May MTD per-rep).
+            const obSrc = STAFF[storeId] || [];
             const obCandidates = obSrc.map(r=>{
                 const live = r.ob>0 ? +(r.c/r.ob*100).toFixed(1) : 0;
                 const appt = r.c>0 ? +(r.a/r.c*100).toFixed(1) : 0;
@@ -2672,7 +2674,7 @@ const OB_TRENDS = {
                 const apptShort = Math.max(0, 10-appt);
                 const leverage = r.ob*liveShort + r.c*apptShort*2;
                 return {...r, live, appt, liveShort, apptShort, leverage};
-            }).filter(r=>r.ob>=100 && r.leverage>0)
+            }).filter(r=>r.ob>=50 && r.leverage>0)
               .sort((a,b)=>b.leverage-a.leverage)
               .slice(0,3);
 
@@ -2731,7 +2733,7 @@ const OB_TRENDS = {
                     </div>
                     <div style="display:flex;gap:8px;align-items:center;">
                         <div style="text-align:center;padding:4px 10px;background:#f8fafc;border-radius:6px;border:1px solid #e5e7eb;">
-                            <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Apr Overall</div>
+                            <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">May MTD Overall</div>
                             <div class="g ${gc(c.ov)}" style="font-size:18px;padding:0;">${c.ov}</div>
                         </div>
                         ${HAS_ACTION_PLAN.has(storeId) ? `<a href="${storeId}_west.pdf" target="_blank" style="background:#0d2748;color:#fff;border:none;border-radius:4px;padding:6px 14px;font-size:11px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;">View Action Plan</a>` : ''}
@@ -2749,14 +2751,14 @@ const OB_TRENDS = {
                                 </div>
                                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
                                     ${sparkline(setTrend,'#0369a1')}
-                                    <div style="font-size:9px;color:#94a3b8;letter-spacing:0.3px;">Set% · Jan→Apr</div>
+                                    <div style="font-size:9px;color:#94a3b8;letter-spacing:0.3px;">Set% · Jan→May</div>
                                 </div>
                             </div>
                             <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">
                                 <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:0.4px;">
                                     <th style="padding:4px 8px;text-align:left;font-weight:600;">Metric</th>
                                     <th style="padding:4px 8px;text-align:left;font-weight:600;">Baseline</th>
-                                    <th style="padding:4px 8px;text-align:left;font-weight:600;">April</th>
+                                    <th style="padding:4px 8px;text-align:left;font-weight:600;">May MTD</th>
                                     <th style="padding:4px 8px;text-align:left;font-weight:600;">Δ</th>
                                 </tr></thead>
                                 <tbody>
@@ -2780,14 +2782,14 @@ const OB_TRENDS = {
                                 </div>
                                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
                                     ${sparkline(apptTrend,'#c2410c')}
-                                    <div style="font-size:9px;color:#94a3b8;letter-spacing:0.3px;">Appt% · Jan→Apr</div>
+                                    <div style="font-size:9px;color:#94a3b8;letter-spacing:0.3px;">Appt% · Jan→May</div>
                                 </div>
                             </div>
                             <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">
                                 <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:0.4px;">
                                     <th style="padding:4px 8px;text-align:left;font-weight:600;">Metric</th>
                                     <th style="padding:4px 8px;text-align:left;font-weight:600;">Baseline</th>
-                                    <th style="padding:4px 8px;text-align:left;font-weight:600;">April</th>
+                                    <th style="padding:4px 8px;text-align:left;font-weight:600;">May MTD</th>
                                     <th style="padding:4px 8px;text-align:left;font-weight:600;">Δ</th>
                                 </tr></thead>
                                 <tbody>
@@ -2810,7 +2812,7 @@ const OB_TRENDS = {
                             <div style="font-size:13px;color:#78350f;font-weight:600;">${focus}</div>
                         </div>
                         <div style="text-align:right;font-size:11px;color:#92400e;">
-                            <div>Baseline: <span class="g ${gc(b.ov)}" style="font-size:10px;">${b.ov}</span> → April: <span class="g ${gc(c.ov)}" style="font-size:10px;">${c.ov}</span></div>
+                            <div>Baseline: <span class="g ${gc(b.ov)}" style="font-size:10px;">${b.ov}</span> → May MTD: <span class="g ${gc(c.ov)}" style="font-size:10px;">${c.ov}</span></div>
                         </div>
                     </div>
                 </div>`;
