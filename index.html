@@ -1100,8 +1100,8 @@ const OB_TRENDS = {
         function thermo(grade) {
             const pct = gpaPercent(grade);
             return `<div class="thermo-wrap">
-                <div class="thermo"><div class="thermo-fill ${thermoC(grade)}" style="height:${pct}%"></div></div>
-                <span class="g ${gc(grade)}">${grade}</span>
+                <div class="thermo" style="height:36px;"><div class="thermo-fill ${thermoC(grade)}" style="height:${pct}%"></div></div>
+                <span class="g ${gc(grade)}" style="font-size:18px;padding:3px 9px;border-radius:5px;">${grade}</span>
             </div>`;
         }
 
