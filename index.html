@@ -1080,6 +1080,34 @@ const OB_TRENDS = {
 
         function gColor(g){const n=gn(g);if(n>=3.3)return'green';if(n>=1.7)return'yellow';return'red';}
         function gc(g){return'g-'+gColor(g);}
+
+        // Find the single most efficient metric move to push overall GPA >= targetS, using the grade scale.
+        // Returns {key,label,fromPct,toPct,fromGrade,toGrade,steps,pp} or null if no single metric gets there.
+        const METRIC_LABELS = { req:'RI%', set:'Set%', live:'Live%', appt:'Appt%' };
+        function pathToGrade(cur, targetS){
+            const idxOf = (k,grade)=> GS[k].findIndex(s=>s.g===grade);
+            let best = null;
+            for(const k of ['req','set','live','appt']){
+                const curVal = cur[k], curGrade = gg(curVal,k);
+                const bands = [...GS[k]].reverse(); // ascending by threshold
+                for(const band of bands){
+                    if(band.m <= curVal) continue;            // only higher bands
+                    const trial = {...cur, [k]: band.m};
+                    if(calc(trial).ovS >= targetS - 1e-9){
+                        const steps = idxOf(k,curGrade) - idxOf(k,band.g);
+                        const cand = { key:k, label:METRIC_LABELS[k], fromPct:curVal, toPct:band.m,
+                                       fromGrade:curGrade, toGrade:band.g, steps, pp:+(band.m-curVal).toFixed(1) };
+                        // prefer fewest grade-steps, then weakest current lever (lowest GPA), then smallest pp
+                        const better = !best || cand.steps<best.steps ||
+                            (cand.steps===best.steps && gn(cand.fromGrade)<gn(best.fromGrade)) ||
+                            (cand.steps===best.steps && gn(cand.fromGrade)===gn(best.fromGrade) && cand.pp<best.pp);
+                        if(better) best = cand;
+                        break; // first (smallest) qualifying band for this metric
+                    }
+                }
+            }
+            return best;
+        }
         function barC(g){return'bar-'+gColor(g);}
         function thermoC(g){return'thermo-'+gColor(g);}
         function sn(n){return n.replace('Fred Anderson ','').replace('Genesis of ','Genesis ').replace('Toyota of Cape Coral','Cape Coral');}
@@ -2746,15 +2774,30 @@ const OB_TRENDS = {
                 </tr>`;
             }
 
-            // "Where to focus" auto-line
-            const ibD = gn(c.ib)-gn(b.ib);
-            const obD = gn(c.ob)-gn(b.ob);
+            // "Where to focus" — the single most efficient lever to reach the next grade line, using the scale.
+            const fp = v => (Math.round(v*10)/10).toString();
+            const GRADE_BOUNDS = [2.3,2.7,3.0,3.3,3.7]; // B-, B, B+, A-, A
             let focus;
-            if(ibD>0.5 && obD>0.5) focus = 'Both sides improving — hold the line.';
-            else if(ibD>obD+0.3) focus = 'Inbound improving, outbound has big opportunity.';
-            else if(obD>ibD+0.3) focus = 'Outbound improving, inbound has big opportunity.';
-            else if(ibD<-0.3 || obD<-0.3) focus = 'Slipped from baseline. Pull the rep coaching list above and run scorecards this week.';
-            else focus = 'Holding steady since baseline. Look at the rep-level list above to find the next half-grade.';
+            if(c.ovS < 2.3){
+                const p = pathToGrade(store.current, 2.3);
+                if(p && p.steps<=2){
+                    focus = `<strong>To reach B−:</strong> lift ${p.label} from ${fp(p.fromPct)}% to ${fp(p.toPct)}% (${p.fromGrade} → ${p.toGrade}). That single move clears the June training line.`;
+                } else {
+                    // Too far for one lever — name the two weakest metrics to work.
+                    const weak = ['req','set','live','appt']
+                        .map(k=>({label:METRIC_LABELS[k], pct:store.current[k], g:gg(store.current[k],k)}))
+                        .sort((a,b)=>gn(a.g)-gn(b.g)).slice(0,2);
+                    focus = `<strong>To reach B−:</strong> too far for one move — start with the weakest two: ${weak[0].label} (${fp(weak[0].pct)}%, ${weak[0].g}) and ${weak[1].label} (${fp(weak[1].pct)}%, ${weak[1].g}).`;
+                }
+            } else {
+                const next = GRADE_BOUNDS.find(t=>t>c.ovS+1e-9);
+                const p = next ? pathToGrade(store.current, next) : null;
+                if(p){
+                    focus = `<strong>Clear of the B− line.</strong> Next rung — ${s2g(next)}: lift ${p.label} ${fp(p.fromPct)}% → ${fp(p.toPct)}% (${p.fromGrade} → ${p.toGrade}).`;
+                } else {
+                    focus = `<strong>Clear of the B− line.</strong> Grading ${c.ov} — hold the gains and keep the rep lists moving.`;
+                }
+            }
 
             const region = store.region;
             const html = `
