@@ -995,7 +995,7 @@ const OB_TRENDS = {
         const BENCH = { req: 80, set: 45, live: 20, appt: 10 };
         // Stores with published action plan PDFs (deployed alongside index.html).
         // File naming: {STORE}_{region}.pdf  (e.g. SAS_west.pdf, TRA_east.pdf)
-        const HAS_ACTION_PLAN = new Set(['AGV','CGR','HGV','KGR','KGV','TGR','NAS','SAS','TAS','TRA']);
+        const HAS_ACTION_PLAN = new Set(['AGV','CGR','HGV','KGR','KGV','TGR','NAS','SAS','TAS','TRA','HGR','GGR','KRA','NRA','TCH','TSA']);
         const planPdf = s => `${s.id}_${s.region.toLowerCase()}.pdf`;
 
         // Benched reps — force to zeros across all blocks, render in red.
@@ -2775,10 +2775,16 @@ const OB_TRENDS = {
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
                         <!-- INBOUND -->
                         <div style="border:1px solid #bae6fd;border-radius:8px;padding:14px;background:#f0f9ff;">
-                            <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:8px;">
-                                <div>
-                                    <h4 style="font-size:14px;font-weight:700;color:#0369a1;text-transform:uppercase;letter-spacing:0.5px;">Inbound</h4>
-                                    <div style="font-size:10px;color:#94a3b8;margin-top:2px;">Bench: <strong style="color:#475569;">80% RI</strong> · <strong style="color:#475569;">45% Set</strong></div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                                <div style="display:flex;align-items:center;gap:13px;">
+                                    <div style="text-align:center;">
+                                        <div style="font-size:8.5px;font-weight:800;color:#0369a1;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:3px;">Inbound</div>
+                                        <div class="g ${gc(c.ib)}" style="font-size:40px;line-height:0.9;padding:8px 16px;border-radius:11px;font-weight:800;display:inline-block;">${c.ib}</div>
+                                    </div>
+                                    <div>
+                                        <h4 style="font-size:13px;font-weight:700;color:#0369a1;text-transform:uppercase;letter-spacing:0.5px;">Inbound Grade</h4>
+                                        <div style="font-size:10px;color:#94a3b8;margin-top:2px;">Bench: <strong style="color:#475569;">80% RI</strong> · <strong style="color:#475569;">45% Set</strong></div>
+                                    </div>
                                 </div>
                                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
                                     ${sparkline(setTrend,'#0369a1')}
@@ -2806,10 +2812,16 @@ const OB_TRENDS = {
                         </div>
                         <!-- OUTBOUND -->
                         <div style="border:1px solid #fed7aa;border-radius:8px;padding:14px;background:#fff7ed;">
-                            <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:8px;">
-                                <div>
-                                    <h4 style="font-size:14px;font-weight:700;color:#c2410c;text-transform:uppercase;letter-spacing:0.5px;">Outbound</h4>
-                                    <div style="font-size:10px;color:#94a3b8;margin-top:2px;">Bench: <strong style="color:#475569;">20% Live</strong> · <strong style="color:#475569;">10% Appt</strong></div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                                <div style="display:flex;align-items:center;gap:13px;">
+                                    <div style="text-align:center;">
+                                        <div style="font-size:8.5px;font-weight:800;color:#c2410c;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:3px;">Outbound</div>
+                                        <div class="g ${gc(c.ob)}" style="font-size:40px;line-height:0.9;padding:8px 16px;border-radius:11px;font-weight:800;display:inline-block;">${c.ob}</div>
+                                    </div>
+                                    <div>
+                                        <h4 style="font-size:13px;font-weight:700;color:#c2410c;text-transform:uppercase;letter-spacing:0.5px;">Outbound Grade</h4>
+                                        <div style="font-size:10px;color:#94a3b8;margin-top:2px;">Bench: <strong style="color:#475569;">20% Live</strong> · <strong style="color:#475569;">10% Appt</strong></div>
+                                    </div>
                                 </div>
                                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
                                     ${sparkline(apptTrend,'#c2410c')}
