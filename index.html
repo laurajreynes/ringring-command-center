@@ -995,7 +995,7 @@ const OB_TRENDS = {
         const BENCH = { req: 80, set: 45, live: 20, appt: 10 };
         // Stores with published action plan PDFs (deployed alongside index.html).
         // File naming: {STORE}_{region}.pdf  (e.g. SAS_west.pdf, TRA_east.pdf)
-        const HAS_ACTION_PLAN = new Set(['AGV','CGR','HGV','KGR','KGV','TGR','NAS','SAS','TAS','TRA','HGR','GGR','KRA','NRA','TCH','TSA']);
+        const HAS_ACTION_PLAN = new Set(['AGV','CGR','HGV','KGR','KGV','TGR','NAS','SAS','TAS','TRA','HGR','GGR','KRA','NRA','TCH','TSA','TCC']);
         const planPdf = s => `${s.id}_${s.region.toLowerCase()}.pdf`;
 
         // Benched reps — force to zeros across all blocks, render in red.
