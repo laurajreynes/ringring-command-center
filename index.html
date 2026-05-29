@@ -10,8 +10,8 @@
 
         body {
             font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-            background: #eef1f5;
-            color: #2d3142;
+            background: #fafafa;
+            color: #0a0a0a;
             font-size: 13px;
             line-height: 1.5;
         }
@@ -19,7 +19,7 @@
         /* TOP BAR */
         .top-bar {
             background: #fff;
-            border-bottom: 2px solid #d0d5dd;
+            border-bottom: 2px solid #fafafa;
             padding: 8px 20px;
             display: flex;
             justify-content: space-between;
@@ -27,22 +27,22 @@
         }
 
         .top-bar h1 { font-size: 15px; font-weight: 700; color: #1a1a2e; }
-        .top-bar h1 span { color: #0369a1; }
+        .top-bar h1 span { color: #0a0a0a; }
 
         .top-bar-meta { display: flex; gap: 16px; font-size: 11px; color: #6b7280; align-items: center; }
         .top-bar-meta strong { color: #374151; }
-        .last-updated { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border-radius: 4px; background: #f0f9ff; color: #0369a1; font-size: 10px; font-weight: 600; letter-spacing: 0.2px; }
+        .last-updated { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border-radius: 4px; background: #f5f5f5; color: #0a0a0a; font-size: 10px; font-weight: 600; letter-spacing: 0.2px; }
         .last-updated .lu-dot { width: 6px; height: 6px; border-radius: 50%; background: #10b981; box-shadow: 0 0 0 2px rgba(16,185,129,0.2); }
         .top-link { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 0.3px; }
         .derby-link { background: #dbeafe; color: #1d4ed8; }
-        .derby-link:hover { background: #bfdbfe; }
-        .scorecard-link { background: #dcfce7; color: #15803d; }
-        .scorecard-link:hover { background: #bbf7d0; }
+        .derby-link:hover { background: #e5e5e5; }
+        .scorecard-link { background: rgba(45,139,40,0.10); color: #1a5e16; }
+        .scorecard-link:hover { background: rgba(45,139,40,0.10); }
 
         /* SUMMARY STRIP */
         .summary-strip {
             background: #fff;
-            border-bottom: 1px solid #d0d5dd;
+            border-bottom: 1px solid #fafafa;
             padding: 6px 20px;
             display: flex;
             gap: 20px;
@@ -52,14 +52,14 @@
         .summary-item { display: flex; align-items: center; gap: 5px; }
         .summary-item .num { font-size: 18px; font-weight: 700; line-height: 1; }
         .summary-item .lbl { color: #6b7280; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .num-green { color: #16a34a; }
-        .num-red { color: #dc2626; }
-        .num-amber { color: #eab308; }
+        .num-green { color: #2D8B28; }
+        .num-red { color: #D40000; }
+        .num-amber { color: #8a6b00; }
 
         /* TAB NAV */
         .tab-nav {
             background: #fff;
-            border-bottom: 1px solid #d0d5dd;
+            border-bottom: 1px solid #fafafa;
             padding: 0 20px;
             display: flex;
         }
@@ -84,15 +84,15 @@
         .region-header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 5px 10px; border-radius: 6px 6px 0 0;
-            border: 1px solid #d0d5dd; border-bottom: none;
+            border: 1px solid #fafafa; border-bottom: none;
         }
 
-        .region-west-hdr { background: #f0f9ff; }
-        .region-east-hdr { background: #f0fdf4; }
+        .region-west-hdr { background: #f5f5f5; }
+        .region-east-hdr { background: rgba(45,139,40,0.10); }
 
         .region-header h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
-        .region-west-hdr h3 { color: #0369a1; }
-        .region-east-hdr h3 { color: #15803d; }
+        .region-west-hdr h3 { color: #0a0a0a; }
+        .region-east-hdr h3 { color: #1a5e16; }
 
         .region-summary { display: flex; gap: 12px; font-size: 11px; color: #6b7280; }
         .region-summary strong { color: #374151; }
@@ -100,49 +100,49 @@
         /* TABLE */
         .stores-table {
             width: 100%; border-collapse: collapse; background: #fff;
-            border: 1px solid #d0d5dd; border-top: none;
+            border: 1px solid #fafafa; border-top: none;
             border-radius: 0 0 6px 6px; overflow: hidden;
         }
 
         .stores-table th {
-            background: #f9fafb; padding: 5px 6px; text-align: center;
+            background: #fafafa; padding: 5px 6px; text-align: center;
             font-weight: 700; font-size: 10px; text-transform: uppercase;
             letter-spacing: 0.4px; color: #6b7280;
-            border-bottom: 2px solid #d0d5dd; white-space: nowrap;
+            border-bottom: 2px solid #fafafa; white-space: nowrap;
         }
 
         .stores-table th.left { text-align: left; }
         .stores-table th.sortable { cursor: pointer; user-select: none; }
-        .stores-table th.sortable:hover { background: #eef1f5; }
+        .stores-table th.sortable:hover { background: #fafafa; }
         .sort-arrow { font-size: 8px; margin-left: 2px; color: #9ca3af; }
-        .sort-arrow.active { color: #0369a1; }
+        .sort-arrow.active { color: #0a0a0a; }
 
-        .stores-table th.ib-start, .stores-table td.ib-start { border-left: 2px solid #0369a1; }
-        .stores-table th.ob-start, .stores-table td.ob-start { border-left: 2px solid #15803d; }
-        .stores-table th.ov-col, .stores-table td.ov-col { border-left: 2px solid #d0d5dd; }
-        .stores-table th.may-col, .stores-table td.may-col { border-left: 2px solid #0d2748; background:#f8fafc; }
+        .stores-table th.ib-start, .stores-table td.ib-start { border-left: 2px solid #0a0a0a; }
+        .stores-table th.ob-start, .stores-table td.ob-start { border-left: 2px solid #1a5e16; }
+        .stores-table th.ov-col, .stores-table td.ov-col { border-left: 2px solid #fafafa; }
+        .stores-table th.may-col, .stores-table td.may-col { border-left: 2px solid #0a0a0a; background:#fafafa; }
         .may-grade-big { display:inline-flex; align-items:center; justify-content:center; min-width:48px; padding:6px 10px; border-radius:6px; font-weight:800; font-size:22px; line-height:1; }
-        .may-grade-big.g-green { background:#2D8B28; color:#fff; }
-        .may-grade-big.g-yellow { background:#FFA500; color:#fff; }
-        .may-grade-big.g-red { background:#E13E2C; color:#fff; }
+        .may-grade-big.g-green { background:rgba(45,139,40,0.18); color:#1a5e16; }
+        .may-grade-big.g-yellow { background:rgba(255,215,16,0.34); color:#8a6b00; }
+        .may-grade-big.g-red { background:rgba(212,0,0,0.15); color:#a00000; }
         .may-grade-arrow { font-size:11px; margin-left:6px; font-weight:700; vertical-align:1px; }
-        .may-grade-arrow.trend-up { color:#15803d; }
-        .may-grade-arrow.trend-down { color:#dc2626; }
+        .may-grade-arrow.trend-up { color:#1a5e16; }
+        .may-grade-arrow.trend-down { color:#D40000; }
         .may-grade-arrow.trend-neutral { color:#94a3b8; }
-        .plan-chip { display:inline-block; margin-left:6px; padding:2px 7px; border-radius:4px; background:#0d2748; color:#fff !important; font-size:9px; font-weight:800; letter-spacing:0.5px; text-decoration:none !important; vertical-align:1px; }
-        .plan-chip:hover { background:#1e40af; }
+        .plan-chip { display:inline-block; margin-left:6px; padding:2px 7px; border-radius:4px; background:#0a0a0a; color:#fff !important; font-size:9px; font-weight:800; letter-spacing:0.5px; text-decoration:none !important; vertical-align:1px; }
+        .plan-chip:hover { background:#0a0a0a; }
 
         .stores-table thead .group-label { font-size: 10px; font-weight: 700; letter-spacing: 0.6px; padding: 3px 6px; }
-        .group-ib { background: #f0f9ff; color: #0369a1; }
-        .group-ob { background: #f0fdf4; color: #15803d; }
-        .group-ov { background: #f9fafb; color: #374151; }
+        .group-ib { background: #f5f5f5; color: #0a0a0a; }
+        .group-ob { background: rgba(45,139,40,0.10); color: #1a5e16; }
+        .group-ov { background: #fafafa; color: #374151; }
 
         .stores-table tbody tr { border-bottom: 1px solid #e5e7eb; transition: background 0.1s; }
-        .stores-table tbody tr:hover { background: #f9fafb; }
+        .stores-table tbody tr:hover { background: #fafafa; }
         .stores-table tbody tr:last-child { border-bottom: none; }
         .stores-table td { padding: 4px 6px; vertical-align: middle; }
 
-        .store-name { font-weight: 600; color: #1e293b; font-size: 12px; white-space: nowrap; text-align: left; }
+        .store-name { font-weight: 600; color: #0a0a0a; font-size: 12px; white-space: nowrap; text-align: left; }
 
         .metric-cell { text-align: center; padding: 3px 4px !important; }
 
@@ -150,7 +150,7 @@
         .mini-bar-wrap {
             position: relative;
             height: 22px;
-            background: #f1f5f9;
+            background: #fafafa;
             border-radius: 3px;
             overflow: hidden;
             min-width: 70px;
@@ -178,20 +178,20 @@
             font-weight: 700;
             line-height: 22px;
             text-align: center;
-            color: #1e293b;
+            color: #0a0a0a;
         }
 
-        .bar-green { background: rgba(45,139,40,0.32); }
-        .bar-yellow { background: rgba(255,165,0,0.32); }
-        .bar-red { background: rgba(225,62,44,0.28); }
+        .bar-green { background: rgba(45,139,40,0.28); }
+        .bar-yellow { background: rgba(255,215,16,0.45); }
+        .bar-red { background: rgba(212,0,0,0.22); }
 
         .mg { font-size: 10px; margin-top: 1px; text-align: center; }
 
         /* GRADE BADGE */
         .g { display: inline-block; padding: 1px 5px; border-radius: 3px; font-weight: 700; font-size: 11px; }
-        .g-green { background: rgba(45,139,40,0.14); color: #1f6d24; }
-        .g-yellow { background: rgba(255,165,0,0.18); color: #9a4a07; }
-        .g-red { background: rgba(225,62,44,0.14); color: #b8281c; }
+        .g-green { background: rgba(45,139,40,0.14); color: #1a5e16; }
+        .g-yellow { background: rgba(255,215,16,0.28); color: #8a6b00; }
+        .g-red { background: rgba(212,0,0,0.12); color: #a00000; }
 
         /* GRADE THERMOMETER */
         .thermo-wrap {
@@ -217,15 +217,15 @@
             transition: height 0.3s;
         }
 
-        .thermo-green { background: #16a34a; }
-        .thermo-yellow { background: #eab308; }
-        .thermo-red { background: #dc2626; }
+        .thermo-green { background: #2D8B28; }
+        .thermo-yellow { background: #8a6b00; }
+        .thermo-red { background: #D40000; }
 
         .grade-cell { text-align: center; white-space: nowrap; }
 
         .trend-arrow { font-size: 10px; font-weight: 700; margin-left: 2px; }
-        .trend-up { color: #16a34a; }
-        .trend-down { color: #dc2626; }
+        .trend-up { color: #2D8B28; }
+        .trend-down { color: #D40000; }
         .trend-neutral { color: #9ca3af; }
         .arrow-sep { color: #9ca3af; font-size: 10px; margin: 0 1px; }
 
@@ -239,7 +239,7 @@
 
         .detail-row { display: none; }
         .detail-row.expanded { display: table-row; }
-        .detail-row td { background: #f9fafb; padding: 8px; border-top: 1px solid #e5e7eb; }
+        .detail-row td { background: #fafafa; padding: 8px; border-top: 1px solid #e5e7eb; }
 
         .detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
 
@@ -254,7 +254,7 @@
         }
         .detail-bar-label { width: 32px; color: #6b7280; font-weight: 500; flex-shrink: 0; }
         .detail-bar-track {
-            flex: 1; height: 14px; background: #f1f5f9; border-radius: 2px; position: relative; overflow: hidden;
+            flex: 1; height: 14px; background: #fafafa; border-radius: 2px; position: relative; overflow: hidden;
         }
         .detail-bar-fill-inner {
             position: absolute; top: 0; left: 0; bottom: 0; border-radius: 2px;
@@ -278,17 +278,17 @@
         .progress-donut-row { display: flex; align-items: center; gap: 14px; }
         .progress-donut { position: relative; width: 56px; height: 56px; flex-shrink: 0; }
         .progress-donut svg { width: 56px; height: 56px; transform: rotate(-90deg); }
-        .progress-donut-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 14px; font-weight: 700; color: #1e293b; }
+        .progress-donut-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 14px; font-weight: 700; color: #0a0a0a; }
         .progress-stats { display: flex; flex-direction: column; gap: 2px; font-size: 11px; }
         .progress-stats .ps-row { display: flex; align-items: center; gap: 4px; }
         .ps-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-        .ps-dot-green { background: #16a34a; }
-        .ps-dot-yellow { background: #eab308; }
-        .ps-dot-red { background: #dc2626; }
+        .ps-dot-green { background: #2D8B28; }
+        .ps-dot-yellow { background: #8a6b00; }
+        .ps-dot-red { background: #D40000; }
         .progress-grade-bar { display: flex; height: 6px; border-radius: 3px; overflow: hidden; margin-top: 6px; }
-        .pgb-green { background: #16a34a; }
-        .pgb-yellow { background: #eab308; }
-        .pgb-red { background: #dc2626; }
+        .pgb-green { background: #2D8B28; }
+        .pgb-yellow { background: #8a6b00; }
+        .pgb-red { background: #D40000; }
 
         /* DETAIL GRADE TREND */
         .detail-grade-trend { display: flex; align-items: center; gap: 3px; margin-top: 2px; }
@@ -296,34 +296,34 @@
         /* ALERTS */
         .region-group-header { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 6px 10px; margin-top: 10px; border-radius: 5px 5px 0 0; }
         .region-group-header:first-child { margin-top: 0; }
-        .region-group-header.west-hdr { background: #f0f9ff; color: #0369a1; border-left: 3px solid #0369a1; }
-        .region-group-header.east-hdr { background: #f0fdf4; color: #15803d; border-left: 3px solid #15803d; }
+        .region-group-header.west-hdr { background: #f5f5f5; color: #0a0a0a; border-left: 3px solid #0a0a0a; }
+        .region-group-header.east-hdr { background: rgba(45,139,40,0.10); color: #1a5e16; border-left: 3px solid #1a5e16; }
         .alert-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 6px; margin-bottom: 8px; }
         .alert-tile { padding: 7px 10px; border-radius: 6px; border-left: 3px solid; font-size: 12px; transition: box-shadow 0.15s, transform 0.1s; }
         .alert-tile:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); transform: translateY(-1px); }
-        .alert-tile.critical { background: #fff; border-color: #dc2626; }
-        .alert-tile.high { background: #fff; border-color: #f59e0b; }
+        .alert-tile.critical { background: #fff; border-color: #D40000; }
+        .alert-tile.high { background: #fff; border-color: #FFD710; }
         .alert-tile.medium { background: #fff; border-color: #6366f1; }
-        .alert-tile h4 { font-size: 12px; font-weight: 600; color: #1e293b; margin-bottom: 1px; }
+        .alert-tile h4 { font-size: 12px; font-weight: 600; color: #0a0a0a; margin-bottom: 1px; }
         .alert-tile p { color: #6b7280; font-size: 11px; }
-        .alert-detail-panel { background: #f8fafc; border-radius: 6px; padding: 10px; }
+        .alert-detail-panel { background: #fafafa; border-radius: 6px; padding: 10px; }
 
         /* COACHING */
         .coaching-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 8px; }
         .coaching-card {
-            background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px;
+            background: #fff; border: 1px solid #fafafa; border-radius: 8px; padding: 12px 14px;
             cursor: pointer; transition: box-shadow 0.15s, transform 0.1s;
         }
         .coaching-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); transform: translateY(-1px); }
         .coaching-card-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .coaching-card-hdr h4 { font-size: 13px; font-weight: 700; color: #1e293b; margin: 0; }
+        .coaching-card-hdr h4 { font-size: 13px; font-weight: 700; color: #0a0a0a; margin: 0; }
         .coaching-card-hdr .cc-grade { font-size: 16px; font-weight: 800; }
         .coaching-card-hdr .cc-arrow { font-size: 10px; margin-left: 2px; }
         .cc-issues { display: flex; flex-direction: column; gap: 5px; }
         .cc-issue { display: flex; align-items: center; gap: 8px; font-size: 12px; }
         .cc-tag { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; flex-shrink: 0; }
-        .cc-tag-ib { background: #eff6ff; color: #2563eb; }
-        .cc-tag-ob { background: #faf5ff; color: #7c3aed; }
+        .cc-tag-ib { background: #fafafa; color: #0a0a0a; }
+        .cc-tag-ob { background: #faf5ff; color: #0a0a0a; }
         .cc-metric { font-weight: 600; color: #334155; }
         .cc-val { color: #64748b; }
         .cc-action { font-size: 11px; color: #94a3b8; margin-top: 6px; }
@@ -331,13 +331,13 @@
         /* REGION COMPARE */
         .region-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .rc-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; padding: 10px; border-top: 3px solid; }
-        .rc-west { border-top-color: #0369a1; }
-        .rc-east { border-top-color: #15803d; }
-        .rc-card h3 { font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 6px; }
+        .rc-west { border-top-color: #0a0a0a; }
+        .rc-east { border-top-color: #1a5e16; }
+        .rc-card h3 { font-size: 13px; font-weight: 600; color: #0a0a0a; margin-bottom: 6px; }
         .rc-row { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #f3f4f6; font-size: 12px; }
         .rc-row:last-child { border-bottom: none; }
         .rc-row .rc-label { color: #6b7280; }
-        .rc-row .rc-val { font-weight: 600; color: #1e293b; }
+        .rc-row .rc-val { font-weight: 600; color: #0a0a0a; }
 
         /* DATA ENTRY */
         .entry-region { margin-bottom: 14px; }
@@ -345,8 +345,8 @@
             font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
             margin-bottom: 6px; padding: 4px 8px; border-radius: 4px; border: 1px solid #e5e7eb;
         }
-        .entry-region.west h3 { background: #f0f9ff; color: #0369a1; }
-        .entry-region.east h3 { background: #f0fdf4; color: #15803d; }
+        .entry-region.west h3 { background: #f5f5f5; color: #0a0a0a; }
+        .entry-region.east h3 { background: rgba(45,139,40,0.10); color: #1a5e16; }
 
         .entry-source-label {
             font-size: 11px; font-weight: 600; color: #374151;
@@ -358,31 +358,31 @@
         .entry-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 4px; }
 
         .entry-item { background: #fff; border: 1px solid #e5e7eb; border-radius: 4px; padding: 5px 7px; }
-        .entry-item label { font-size: 11px; font-weight: 600; color: #1e293b; display: block; margin-bottom: 2px; }
+        .entry-item label { font-size: 11px; font-weight: 600; color: #0a0a0a; display: block; margin-bottom: 2px; }
         .entry-item .inputs { display: grid; gap: 3px; }
         .entry-item .inputs.two-col { grid-template-columns: 1fr 1fr; }
         .entry-item .input-wrap { display: flex; align-items: center; gap: 3px; }
         .entry-item .input-wrap .il { font-size: 9px; color: #6b7280; text-transform: uppercase; width: 28px; flex-shrink: 0; }
         .entry-item input {
-            background: #f9fafb; border: 1px solid #d0d5dd; color: #1e293b;
+            background: #fafafa; border: 1px solid #fafafa; color: #0a0a0a;
             padding: 3px 5px; border-radius: 3px; font-size: 12px; font-family: inherit; text-align: center; width: 100%;
         }
-        .entry-item input:focus { outline: none; border-color: #0369a1; }
+        .entry-item input:focus { outline: none; border-color: #0a0a0a; }
 
         .button-group { display: flex; gap: 6px; margin-top: 8px; }
         button.btn {
             padding: 5px 12px; border: none; border-radius: 4px;
             font-weight: 600; cursor: pointer; font-size: 12px; font-family: inherit;
         }
-        .btn-green { background: #16a34a; color: #fff; }
-        .btn-green:hover { background: #15803d; }
-        .btn-blue { background: #0369a1; color: #fff; }
+        .btn-green { background: #2D8B28; color: #fff; }
+        .btn-green:hover { background: #1a5e16; }
+        .btn-blue { background: #0a0a0a; color: #fff; }
         .btn-blue:hover { background: #075985; }
         .btn-gray { background: #e5e7eb; color: #374151; }
         .btn-gray:hover { background: #d1d5db; }
 
         .success-message {
-            background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d;
+            background: rgba(45,139,40,0.10); border: 1px solid rgba(45,139,40,0.10); color: #1a5e16;
             padding: 5px 10px; border-radius: 4px; margin-bottom: 6px; font-size: 12px; display: none;
         }
         .success-message.show { display: block; }
@@ -391,13 +391,13 @@
         .chat-fab {
             position: fixed; bottom: 20px; right: 20px; z-index: 1000;
             width: 52px; height: 52px; border-radius: 50%; border: none;
-            background: #0369a1; color: #fff; font-size: 22px; cursor: pointer;
+            background: #0a0a0a; color: #fff; font-size: 22px; cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center;
             transition: transform 0.2s, background 0.2s;
         }
         .chat-fab:hover { background: #075985; transform: scale(1.05); }
         .chat-fab .badge {
-            position: absolute; top: -2px; right: -2px; background: #dc2626; color: #fff;
+            position: absolute; top: -2px; right: -2px; background: #D40000; color: #fff;
             font-size: 10px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
         }
@@ -409,7 +409,7 @@
         }
         .chat-panel.open { display: flex; }
         .chat-header {
-            background: #0369a1; color: #fff; padding: 10px 14px;
+            background: #0a0a0a; color: #fff; padding: 10px 14px;
             display: flex; justify-content: space-between; align-items: center;
         }
         .chat-header h3 { font-size: 13px; font-weight: 700; }
@@ -426,48 +426,48 @@
             border-top: 1px solid #e5e7eb; padding: 8px 10px; display: flex; gap: 6px;
         }
         .chat-input {
-            flex: 1; border: 1px solid #d0d5dd; border-radius: 6px; padding: 7px 10px;
-            font-size: 12px; font-family: inherit; color: #1e293b; outline: none;
+            flex: 1; border: 1px solid #fafafa; border-radius: 6px; padding: 7px 10px;
+            font-size: 12px; font-family: inherit; color: #0a0a0a; outline: none;
         }
-        .chat-input:focus { border-color: #0369a1; }
+        .chat-input:focus { border-color: #0a0a0a; }
         .chat-input::placeholder { color: #9ca3af; }
         .chat-send {
-            background: #0369a1; border: none; color: #fff; border-radius: 6px; padding: 0 12px;
+            background: #0a0a0a; border: none; color: #fff; border-radius: 6px; padding: 0 12px;
             font-size: 13px; cursor: pointer; font-family: inherit;
         }
         .chat-send:hover { background: #075985; }
-        .chat-msg.user { background: #0369a1; color: #fff; align-self: flex-end; border: none; }
+        .chat-msg.user { background: #0a0a0a; color: #fff; align-self: flex-end; border: none; }
         .chat-msg.user p { color: #e0f2fe; }
-        .chat-msg.answer { background: #f8fafc; border: 1px solid #e2e8f0; align-self: flex-start; }
+        .chat-msg.answer { background: #fafafa; border: 1px solid #fafafa; align-self: flex-start; }
         .chat-msg.answer p { color: #374151; }
         .chat-msg {
             padding: 8px 10px; border-radius: 8px; font-size: 12px; line-height: 1.4;
             max-width: 95%;
         }
         .chat-msg.system {
-            background: #f0f9ff; border: 1px solid #bae6fd; align-self: flex-start;
+            background: #f5f5f5; border: 1px solid #e5e5e5; align-self: flex-start;
         }
         .chat-msg.opportunity {
-            background: #f0fdf4; border: 1px solid #bbf7d0; align-self: flex-start;
+            background: rgba(45,139,40,0.10); border: 1px solid rgba(45,139,40,0.10); align-self: flex-start;
         }
         .chat-msg.question {
-            background: #fffbeb; border: 1px solid #fde68a; align-self: flex-start;
+            background: #fafafa; border: 1px solid rgba(255,215,16,0.40); align-self: flex-start;
         }
         .chat-msg.watch {
-            background: #fef2f2; border: 1px solid #fecaca; align-self: flex-start;
+            background: #fafafa; border: 1px solid rgba(212,0,0,0.20); align-self: flex-start;
         }
         .chat-msg .msg-tag {
             display: inline-block; padding: 1px 5px; border-radius: 3px; font-size: 9px;
             font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 3px;
         }
-        .msg-tag.opp { background: #dcfce7; color: #15803d; }
-        .msg-tag.quest { background: rgba(234,179,8,0.15); color: #a16207; }
-        .msg-tag.wtch { background: #fecaca; color: #dc2626; }
-        .chat-msg.derby { background: #f0f9ff; border: 1px solid #bae6fd; align-self: flex-start; }
-        .msg-tag.drby { background: #bae6fd; color: #0369a1; }
-        .chat-msg h4 { font-size: 12px; font-weight: 600; color: #1e293b; margin-bottom: 2px; }
+        .msg-tag.opp { background: rgba(45,139,40,0.10); color: #1a5e16; }
+        .msg-tag.quest { background: rgba(234,179,8,0.15); color: #8a6b00; }
+        .msg-tag.wtch { background: rgba(212,0,0,0.20); color: #D40000; }
+        .chat-msg.derby { background: #f5f5f5; border: 1px solid #e5e5e5; align-self: flex-start; }
+        .msg-tag.drby { background: #e5e5e5; color: #0a0a0a; }
+        .chat-msg h4 { font-size: 12px; font-weight: 600; color: #0a0a0a; margin-bottom: 2px; }
         .chat-msg p { font-size: 11px; color: #4b5563; }
-        .chat-msg .data-point { font-weight: 600; color: #1e293b; }
+        .chat-msg .data-point { font-weight: 600; color: #0a0a0a; }
         @media (max-width: 480px) {
             .chat-panel { width: calc(100vw - 24px); right: 12px; bottom: 74px; max-height: 60vh; }
             .chat-fab { bottom: 14px; right: 14px; width: 46px; height: 46px; font-size: 20px; }
@@ -523,11 +523,11 @@
 
         /* INBOUND TRENDS */
         .trends-header { display:flex; gap:12px; align-items:center; margin-bottom:12px; flex-wrap:wrap; }
-        .trends-toggle { display:flex; gap:0; border:1px solid #d0d5dd; border-radius:6px; overflow:hidden; }
+        .trends-toggle { display:flex; gap:0; border:1px solid #fafafa; border-radius:6px; overflow:hidden; }
         .trends-toggle button { padding:8px 20px; font-size:12px; font-weight:600; border:none; cursor:pointer; background:#fff; color:#6b7280; transition:all 0.15s; }
-        .trends-toggle button.active { background:#0369a1; color:#fff; }
-        .trends-exec { background:#f0f9ff; border:1px solid #bae6fd; border-radius:8px; padding:12px 16px; margin-bottom:14px; }
-        .trends-exec h4 { font-size:12px; font-weight:700; color:#0369a1; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.3px; }
+        .trends-toggle button.active { background:#0a0a0a; color:#fff; }
+        .trends-exec { background:#f5f5f5; border:1px solid #e5e5e5; border-radius:8px; padding:12px 16px; margin-bottom:14px; }
+        .trends-exec h4 { font-size:12px; font-weight:700; color:#0a0a0a; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.3px; }
         .trends-exec p { font-size:12px; color:#374151; line-height:1.6; margin:0; }
         .trends-exec strong { color:#1a1a2e; }
         .trends-movers { display:flex; gap:12px; margin-bottom:14px; }
@@ -535,8 +535,8 @@
         .trends-mover-card h5 { font-size:10px; text-transform:uppercase; letter-spacing:0.4px; color:#6b7280; margin-bottom:8px; font-weight:600; }
         .trends-mover-item { display:flex; justify-content:space-between; align-items:center; padding:3px 0; font-size:12px; }
         .trends-mover-item .store-name { font-weight:600; color:#1a1a2e; }
-        .trends-mover-item .delta-up { font-weight:700; color:#16a34a; }
-        .trends-mover-item .delta-down { font-weight:700; color:#dc2626; }
+        .trends-mover-item .delta-up { font-weight:700; color:#2D8B28; }
+        .trends-mover-item .delta-down { font-weight:700; color:#D40000; }
         .trends-mover-item .vals { font-size:10px; color:#9ca3af; }
         .trends-chart-wrap { background:#fff; border:1px solid #e5e7eb; border-radius:8px; padding:16px; margin-bottom:14px; }
         .trends-chart-wrap canvas { width:100%; height:260px; }
@@ -544,7 +544,7 @@
         .trends-chart-legend-item { display:flex; align-items:center; gap:5px; }
         .trends-chart-legend-line { width:24px; height:3px; border-radius:2px; }
         .heatmap { width:100%; border-collapse:collapse; font-size:11px; background:#fff; border:1px solid #e5e7eb; border-radius:8px; overflow:hidden; }
-        .heatmap th { text-align:center; padding:7px 8px; border-bottom:2px solid #d0d5dd; font-size:10px; text-transform:uppercase; letter-spacing:0.3px; color:#6b7280; font-weight:600; background:#f9fafb; }
+        .heatmap th { text-align:center; padding:7px 8px; border-bottom:2px solid #fafafa; font-size:10px; text-transform:uppercase; letter-spacing:0.3px; color:#6b7280; font-weight:600; background:#fafafa; }
         .heatmap th:first-child { text-align:left; }
         .heatmap td { padding:5px 6px; border-bottom:1px solid #f0f0f0; text-align:center; font-weight:600; font-variant-numeric:tabular-nums; }
         .heatmap td:first-child { text-align:left; font-weight:400; }
@@ -553,7 +553,7 @@
         .heatmap .sparkline { display:flex; align-items:center; gap:1px; height:20px; }
         .sparkline-bar { width:6px; border-radius:1px; min-height:2px; }
         .heatmap .change-cell { font-weight:700; font-size:11px; }
-        .heatmap .avg-row td { font-weight:700; background:#f0f9ff !important; border-top:2px solid #d0d5dd; }
+        .heatmap .avg-row td { font-weight:700; background:#f5f5f5 !important; border-top:2px solid #fafafa; }
 
         /* STAFF DRILL-DOWN MODAL */
         .staff-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.45); z-index:9999; justify-content:center; align-items:center; }
@@ -568,9 +568,9 @@
         .staff-summary .ss-box { background:#f3f4f6; border-radius:6px; padding:6px 12px; font-size:11px; }
         .staff-summary .ss-box strong { font-size:16px; display:block; color:#1a1a2e; }
         .staff-tbl { width:100%; border-collapse:collapse; font-size:11px; }
-        .staff-tbl th { text-align:left; padding:5px 8px; border-bottom:2px solid #d0d5dd; font-size:10px; text-transform:uppercase; letter-spacing:0.3px; color:#6b7280; font-weight:600; }
+        .staff-tbl th { text-align:left; padding:5px 8px; border-bottom:2px solid #fafafa; font-size:10px; text-transform:uppercase; letter-spacing:0.3px; color:#6b7280; font-weight:600; }
         .staff-tbl td { padding:4px 8px; border-bottom:1px solid #f0f0f0; }
-        .staff-tbl tr:hover td { background:#f9fafb; }
+        .staff-tbl tr:hover td { background:#fafafa; }
         .staff-tbl .num { text-align:right; font-variant-numeric:tabular-nums; }
         /* STORE SPOTLIGHT MODAL */
         .spotlight-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.45); z-index:9998; justify-content:center; align-items:center; }
@@ -599,14 +599,14 @@
         .staff-apr-click * { pointer-events:none; }
 
         /* FOCUS MODE BAR */
-        .focus-bar { display:flex; gap:10px; align-items:center; padding:10px 20px; background:linear-gradient(90deg,#dcfce7,#ecfdf5); border-bottom:1px solid #bbf7d0; font-size:12px; }
-        .focus-bar .fb-label { font-weight:700; color:#166534; text-transform:uppercase; letter-spacing:0.4px; font-size:10px; }
-        .focus-btn { background:#fff; border:1.5px solid #16a34a; color:#166534; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; transition:all 0.15s; }
-        .focus-btn:hover { background:#16a34a; color:#fff; transform:translateY(-1px); }
-        .focus-btn.ib { border-color:#0ea5e9; color:#0369a1; }
-        .focus-btn.ib:hover { background:#0ea5e9; color:#fff; }
-        .focus-btn.ob { border-color:#f97316; color:#c2410c; }
-        .focus-btn.ob:hover { background:#f97316; color:#fff; }
+        .focus-bar { display:flex; gap:10px; align-items:center; padding:10px 20px; background:linear-gradient(90deg,rgba(45,139,40,0.10),rgba(45,139,40,0.10)); border-bottom:1px solid rgba(45,139,40,0.10); font-size:12px; }
+        .focus-bar .fb-label { font-weight:700; color:#1a5e16; text-transform:uppercase; letter-spacing:0.4px; font-size:10px; }
+        .focus-btn { background:#fff; border:1.5px solid #2D8B28; color:#1a5e16; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; transition:all 0.15s; }
+        .focus-btn:hover { background:#2D8B28; color:#fff; transform:translateY(-1px); }
+        .focus-btn.ib { border-color:#0a0a0a; color:#0a0a0a; }
+        .focus-btn.ib:hover { background:#0a0a0a; color:#fff; }
+        .focus-btn.ob { border-color:#D40000; color:#D40000; }
+        .focus-btn.ob:hover { background:#D40000; color:#fff; }
         .focus-bar .fb-hint { color:#4d7c0f; font-style:italic; margin-left:auto; font-size:11px; }
         .focus-region-prompt { padding:72px 32px 80px; display:flex; align-items:center; justify-content:center; min-height:380px; }
         .frp-cards { display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; max-width:780px; width:100%; }
@@ -614,13 +614,13 @@
         .frp-card:nth-child(1){ animation-delay:0.05s; }
         .frp-card:nth-child(2){ animation-delay:0.12s; }
         .frp-card:nth-child(3){ animation-delay:0.19s; }
-        .frp-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--c1,#0ea5e9); transform:scaleY(0); transform-origin:top; transition:transform 0.3s ease; }
+        .frp-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--c1,#0a0a0a); transform:scaleY(0); transform-origin:top; transition:transform 0.3s ease; }
         .frp-card > * { position:relative; z-index:1; }
-        .frp-card:hover { transform:translateY(-3px); border-color:var(--c1,#0ea5e9); box-shadow:0 14px 40px rgba(15,23,42,0.08); }
+        .frp-card:hover { transform:translateY(-3px); border-color:var(--c1,#0a0a0a); box-shadow:0 14px 40px rgba(15,23,42,0.08); }
         .frp-card:hover::before { transform:scaleY(1); }
         .frp-card:active { transform:translateY(-1px); }
         .frp-card .frc-region { font-size:28px; font-weight:700; color:#0f172a; letter-spacing:-0.5px; line-height:1.1; margin-bottom:4px; transition:color 0.25s; }
-        .frp-card:hover .frc-region { color:var(--c1,#0ea5e9); }
+        .frp-card:hover .frc-region { color:var(--c1,#0a0a0a); }
         .frp-card .frc-meta { font-size:11px; color:#94a3b8; text-transform:uppercase; letter-spacing:1.2px; font-weight:600; margin-bottom:18px; }
         .frp-card .frc-stores { font-size:11px; color:#64748b; line-height:1.6; letter-spacing:0.2px; }
         @keyframes fadeSlideUp { from{opacity:0;transform:translateY(14px);} to{opacity:1;transform:translateY(0);} }
@@ -658,70 +658,70 @@
         .focus-panel { background:#fff; border-radius:12px; max-width:1100px; margin:0 auto; box-shadow:0 25px 75px rgba(0,0,0,0.4); overflow:hidden; }
         .focus-hdr { padding:18px 24px; border-bottom:1px solid #e5e7eb; display:flex; justify-content:space-between; align-items:center; background:linear-gradient(90deg,#1a1a2e,#16213e); color:#fff; }
         .focus-hdr h2 { font-size:18px; font-weight:700; margin:0; letter-spacing:0.2px; }
-        .focus-hdr .fh-sub { font-size:11px; color:#cbd5e1; margin-top:2px; font-weight:400; }
+        .focus-hdr .fh-sub { font-size:11px; color:#e5e5e5; margin-top:2px; font-weight:400; }
         .focus-hdr .close-btn { background:rgba(255,255,255,0.15); border:none; color:#fff; font-size:22px; cursor:pointer; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
         .focus-hdr .close-btn:hover { background:rgba(255,255,255,0.3); }
-        .focus-region-picker { padding:12px 24px; background:#f8fafc; border-bottom:1px solid #e5e7eb; display:flex; gap:8px; align-items:center; font-size:12px; }
+        .focus-region-picker { padding:12px 24px; background:#fafafa; border-bottom:1px solid #e5e7eb; display:flex; gap:8px; align-items:center; font-size:12px; }
         .focus-region-picker .frp-label { font-weight:600; color:#475569; text-transform:uppercase; letter-spacing:0.3px; font-size:10px; }
-        .fr-chip { background:#fff; border:1.5px solid #cbd5e1; color:#475569; padding:5px 14px; border-radius:16px; font-size:11px; font-weight:600; cursor:pointer; font-family:inherit; }
-        .fr-chip:hover { border-color:#0ea5e9; color:#0369a1; }
-        .fr-chip.active { background:#0ea5e9; border-color:#0ea5e9; color:#fff; }
+        .fr-chip { background:#fff; border:1.5px solid #e5e5e5; color:#475569; padding:5px 14px; border-radius:16px; font-size:11px; font-weight:600; cursor:pointer; font-family:inherit; }
+        .fr-chip:hover { border-color:#0a0a0a; color:#0a0a0a; }
+        .fr-chip.active { background:#0a0a0a; border-color:#0a0a0a; color:#fff; }
         .focus-body { padding:20px 24px 28px; }
         .focus-section { margin-bottom:22px; }
-        .focus-section h3 { font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#475569; margin:0 0 10px 0; font-weight:700; border-bottom:2px solid #e2e8f0; padding-bottom:6px; }
+        .focus-section h3 { font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#475569; margin:0 0 10px 0; font-weight:700; border-bottom:2px solid #fafafa; padding-bottom:6px; }
         .focus-summary-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin-bottom:8px; }
-        .fsm-box { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px; }
+        .fsm-box { background:#fafafa; border:1px solid #fafafa; border-radius:8px; padding:10px 12px; }
         .fsm-box .fsm-lbl { font-size:9px; text-transform:uppercase; letter-spacing:0.4px; color:#6b7280; font-weight:600; margin-bottom:4px; }
         .fsm-box .fsm-val { font-size:22px; font-weight:700; color:#1a1a2e; }
         .fsm-box .fsm-sub { font-size:10px; color:#6b7280; margin-top:2px; }
         .focus-tbl { width:100%; border-collapse:collapse; font-size:12px; }
-        .focus-tbl th { text-align:left; padding:7px 10px; border-bottom:2px solid #cbd5e1; font-size:10px; text-transform:uppercase; letter-spacing:0.3px; color:#475569; font-weight:700; background:#f8fafc; }
+        .focus-tbl th { text-align:left; padding:7px 10px; border-bottom:2px solid #e5e5e5; font-size:10px; text-transform:uppercase; letter-spacing:0.3px; color:#475569; font-weight:700; background:#fafafa; }
         .focus-tbl td { padding:7px 10px; border-bottom:1px solid #f0f0f0; }
-        .focus-tbl tr:hover td { background:#f9fafb; }
+        .focus-tbl tr:hover td { background:#fafafa; }
         .focus-tbl .num { text-align:right; font-variant-numeric:tabular-nums; }
         .focus-tbl .grade-pill { display:inline-block; padding:2px 7px; border-radius:10px; font-weight:700; font-size:10px; min-width:24px; text-align:center; }
         /* Back-to-region switcher */
-        .focus-back { display:inline-flex; align-items:center; gap:6px; background:#f1f5f9; border:1px solid #cbd5e1; color:#475569; padding:5px 12px; border-radius:16px; font-size:11px; font-weight:600; cursor:pointer; font-family:inherit; margin-bottom:14px; transition:all 0.15s; }
-        .focus-back:hover { background:#e2e8f0; color:#1a1a2e; transform:translateX(-2px); }
-        .focus-region-badge { display:inline-block; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:700; background:#dbeafe; color:#1e40af; margin-left:8px; }
+        .focus-back { display:inline-flex; align-items:center; gap:6px; background:#fafafa; border:1px solid #e5e5e5; color:#475569; padding:5px 12px; border-radius:16px; font-size:11px; font-weight:600; cursor:pointer; font-family:inherit; margin-bottom:14px; transition:all 0.15s; }
+        .focus-back:hover { background:#fafafa; color:#1a1a2e; transform:translateX(-2px); }
+        .focus-region-badge { display:inline-block; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:700; background:#dbeafe; color:#0a0a0a; margin-left:8px; }
 
         /* Trend mini-chart */
-        .focus-trend-wrap { background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:14px 16px; }
+        .focus-trend-wrap { background:#fff; border:1px solid #fafafa; border-radius:10px; padding:14px 16px; }
         .focus-trend-wrap canvas { width:100%; height:200px; display:block; }
         .focus-trend-hdr { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; font-size:11px; color:#6b7280; }
         .focus-trend-hdr strong { font-size:13px; color:#1a1a2e; font-weight:700; }
 
         /* Redesigned priority cards — URGENT */
-        .focus-priority { background:linear-gradient(135deg,#fff5f0 0%,#fef2f2 100%); border:1.5px solid #fecaca; border-left:5px solid #dc2626; border-radius:10px; padding:14px 16px 14px 18px; margin-bottom:10px; color:#7f1d1d; position:relative; box-shadow:0 2px 8px rgba(220,38,38,0.08); }
-        .focus-priority.sev-high { border-left-color:#dc2626; }
-        .focus-priority.sev-med { border-left-color:#f59e0b; background:linear-gradient(135deg,#fffbeb 0%,#fef9e7 100%); border-color:#fde68a; color:#78350f; }
-        .focus-priority.sev-low { border-left-color:#0ea5e9; background:linear-gradient(135deg,#f0f9ff 0%,#e0f2fe 100%); border-color:#bae6fd; color:#075985; }
+        .focus-priority { background:linear-gradient(135deg,#fff5f0 0%,#fafafa 100%); border:1.5px solid rgba(212,0,0,0.20); border-left:5px solid #D40000; border-radius:10px; padding:14px 16px 14px 18px; margin-bottom:10px; color:#a00000; position:relative; box-shadow:0 2px 8px rgba(220,38,38,0.08); }
+        .focus-priority.sev-high { border-left-color:#D40000; }
+        .focus-priority.sev-med { border-left-color:#FFD710; background:linear-gradient(135deg,#fafafa 0%,#fef9e7 100%); border-color:rgba(255,215,16,0.40); color:#8a6b00; }
+        .focus-priority.sev-low { border-left-color:#0a0a0a; background:linear-gradient(135deg,#f5f5f5 0%,#e0f2fe 100%); border-color:#e5e5e5; color:#075985; }
         .fp-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:8px; }
         .fp-head-left { flex:1; min-width:0; }
         .fp-badge { display:inline-flex; align-items:center; gap:4px; font-size:9px; text-transform:uppercase; letter-spacing:0.6px; font-weight:800; padding:3px 8px; border-radius:10px; margin-bottom:4px; }
-        .fp-badge.sev-high { background:#dc2626; color:#fff; }
-        .fp-badge.sev-med { background:#f59e0b; color:#fff; }
-        .fp-badge.sev-low { background:#0ea5e9; color:#fff; }
+        .fp-badge.sev-high { background:#D40000; color:#fff; }
+        .fp-badge.sev-med { background:#FFD710; color:#fff; }
+        .fp-badge.sev-low { background:#0a0a0a; color:#fff; }
         .fp-store { font-size:15px; font-weight:800; color:#1a1a2e; letter-spacing:-0.2px; }
-        .fp-store .fp-id { color:#dc2626; margin-right:6px; }
+        .fp-store .fp-id { color:#D40000; margin-right:6px; }
         .focus-priority.sev-med .fp-store .fp-id { color:#b45309; }
-        .focus-priority.sev-low .fp-store .fp-id { color:#0369a1; }
+        .focus-priority.sev-low .fp-store .fp-id { color:#0a0a0a; }
         .fp-gap-stat { text-align:right; font-variant-numeric:tabular-nums; }
-        .fp-gap-num { font-size:22px; font-weight:800; color:#dc2626; line-height:1; }
-        .focus-priority.sev-med .fp-gap-num { color:#d97706; }
-        .focus-priority.sev-low .fp-gap-num { color:#0ea5e9; }
+        .fp-gap-num { font-size:22px; font-weight:800; color:#D40000; line-height:1; }
+        .focus-priority.sev-med .fp-gap-num { color:#FFD710; }
+        .focus-priority.sev-low .fp-gap-num { color:#0a0a0a; }
         .fp-gap-lbl { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; color:#6b7280; font-weight:700; margin-top:1px; }
         .fp-stats { display:flex; gap:14px; font-size:12px; margin-bottom:8px; flex-wrap:wrap; }
         .fp-stats .fp-stat-item { color:#6b7280; }
         .fp-stats .fp-stat-item strong { color:#1a1a2e; font-weight:700; }
         .fp-action { background:rgba(255,255,255,0.7); border-radius:6px; padding:8px 10px; font-size:12px; line-height:1.5; border-left:3px solid rgba(0,0,0,0.15); }
-        .fp-action-label { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; font-weight:800; color:#92400e; margin-bottom:3px; }
-        .focus-priority.sev-high .fp-action-label { color:#991b1b; }
+        .fp-action-label { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; font-weight:800; color:#8a6b00; margin-bottom:3px; }
+        .focus-priority.sev-high .fp-action-label { color:#a00000; }
         .focus-priority.sev-low .fp-action-label { color:#0c4a6e; }
 
-        .focus-strength { background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%); border:1.5px solid #bbf7d0; border-left:5px solid #16a34a; border-radius:10px; padding:12px 14px; margin-bottom:8px; font-size:12px; color:#14532d; box-shadow:0 2px 8px rgba(22,163,74,0.08); }
-        .focus-strength strong { color:#166534; }
-        .focus-strength .fp-title { font-size:10px; text-transform:uppercase; letter-spacing:0.5px; font-weight:800; color:#166534; margin-bottom:4px; display:flex; align-items:center; gap:5px; }
+        .focus-strength { background:linear-gradient(135deg,rgba(45,139,40,0.10) 0%,rgba(45,139,40,0.10) 100%); border:1.5px solid rgba(45,139,40,0.10); border-left:5px solid #2D8B28; border-radius:10px; padding:12px 14px; margin-bottom:8px; font-size:12px; color:#1a5e16; box-shadow:0 2px 8px rgba(22,163,74,0.08); }
+        .focus-strength strong { color:#1a5e16; }
+        .focus-strength .fp-title { font-size:10px; text-transform:uppercase; letter-spacing:0.5px; font-weight:800; color:#1a5e16; margin-bottom:4px; display:flex; align-items:center; gap:5px; }
         .focus-strength .fp-title::before { content:'\2B50'; font-size:12px; }
     </style>
 </head>
@@ -732,7 +732,7 @@
             <span>Anderson Automotive Group</span>
             <span id="dateRange">Last 30 Days</span>
             <span>CarWars: <strong id="carwarsDate"></strong></span>
-            <span class="last-updated" title="Most recent data refresh"><span class="lu-dot"></span>Updated <strong style="color:#0369a1;">Fri May 29, 9:47 AM</strong></span>
+            <span class="last-updated" title="Most recent data refresh"><span class="lu-dot"></span>Updated <strong style="color:#0a0a0a;">Fri May 29, 9:47 AM</strong></span>
             <a href="https://anderson-scorecard.vercel.app" target="_blank" class="top-link scorecard-link">Scorecard</a>
             <button onclick="window.print()" class="top-link" style="background:#f3f4f6;color:#374151;border:none;cursor:pointer;font-family:inherit;">Export PDF</button>
         </div>
@@ -753,8 +753,8 @@
         <div class="summary-item" style="display:none;"><div style="font-size:12px;" id="eastSummary">—</div></div>
         <div class="summary-item" style="display:none;"><div class="lbl" id="currentDate">—</div></div>
     </div>
-    <div id="storyOfDay" style="background:#fffbeb;border-bottom:1px solid #fde68a;padding:7px 20px;font-size:12px;color:#78350f;display:none;"></div>
-    <div id="juneTrainingBanner" style="background:#eef2ff;border-bottom:1px solid #c7d2fe;padding:8px 20px;font-size:12px;color:#3730a3;display:none;"></div>
+    <div id="storyOfDay" style="background:#fafafa;border-bottom:1px solid rgba(255,215,16,0.40);padding:7px 20px;font-size:12px;color:#8a6b00;display:none;"></div>
+    <div id="juneTrainingBanner" style="background:#eef2ff;border-bottom:1px solid #e5e5e5;padding:8px 20px;font-size:12px;color:#0a0a0a;display:none;"></div>
 
     <div class="focus-overlay" id="focusOverlay" onclick="if(event.target===this)closeFocus()">
         <div class="focus-panel">
@@ -1233,10 +1233,10 @@ const OB_TRENDS = {
             const yOff=-(gLen);
             const rOff=-(gLen+yLen);
             return `<svg viewBox="0 0 56 56">
-                <circle cx="28" cy="28" r="${r}" fill="none" stroke="#f1f5f9" stroke-width="8"/>
-                ${gLen>0?`<circle cx="28" cy="28" r="${r}" fill="none" stroke="#16a34a" stroke-width="8" stroke-dasharray="${gLen} ${circ-gLen}" stroke-dashoffset="${gOff}"/>`:''}
-                ${yLen>0?`<circle cx="28" cy="28" r="${r}" fill="none" stroke="#eab308" stroke-width="8" stroke-dasharray="${yLen} ${circ-yLen}" stroke-dashoffset="${yOff}"/>`:''}
-                ${rLen>0?`<circle cx="28" cy="28" r="${r}" fill="none" stroke="#dc2626" stroke-width="8" stroke-dasharray="${rLen} ${circ-rLen}" stroke-dashoffset="${rOff}"/>`:''}
+                <circle cx="28" cy="28" r="${r}" fill="none" stroke="#fafafa" stroke-width="8"/>
+                ${gLen>0?`<circle cx="28" cy="28" r="${r}" fill="none" stroke="#2D8B28" stroke-width="8" stroke-dasharray="${gLen} ${circ-gLen}" stroke-dashoffset="${gOff}"/>`:''}
+                ${yLen>0?`<circle cx="28" cy="28" r="${r}" fill="none" stroke="#8a6b00" stroke-width="8" stroke-dasharray="${yLen} ${circ-yLen}" stroke-dashoffset="${yOff}"/>`:''}
+                ${rLen>0?`<circle cx="28" cy="28" r="${r}" fill="none" stroke="#D40000" stroke-width="8" stroke-dasharray="${rLen} ${circ-rLen}" stroke-dashoffset="${rOff}"/>`:''}
             </svg>`;
         }
 
@@ -1285,8 +1285,8 @@ const OB_TRENDS = {
             const west=D.stores.filter(s=>s.region==='West'), east=D.stores.filter(s=>s.region==='East');
             const strip=`<div class="progress-strip">
                 ${progressCard('All 17 Stores', D.stores, '#374151', 'region-west')}
-                ${progressCard('West Region', west, '#0369a1', 'region-west')}
-                ${progressCard('East Region', east, '#15803d', 'region-east')}
+                ${progressCard('West Region', west, '#0a0a0a', 'region-west')}
+                ${progressCard('East Region', east, '#1a5e16', 'region-east')}
             </div>`;
             el.innerHTML=strip+regionTable(west,'West','west')+regionTable(east,'East','east');
         }
@@ -1422,9 +1422,9 @@ const OB_TRENDS = {
             // Build grade breakdown
             function gradePill(label, grade, pct) {
                 const col = gColor(grade);
-                const bg = col==='green'?'#ecfdf5':col==='yellow'?'#eff6ff':'#fef2f2';
-                const fg = col==='green'?'#059669':col==='yellow'?'#2563eb':'#dc2626';
-                const border = col==='green'?'#bbf7d0':col==='yellow'?'#bfdbfe':'#fecaca';
+                const bg = col==='green'?'rgba(45,139,40,0.10)':col==='yellow'?'#fafafa':'#fafafa';
+                const fg = col==='green'?'#2D8B28':col==='yellow'?'#0a0a0a':'#D40000';
+                const border = col==='green'?'rgba(45,139,40,0.10)':col==='yellow'?'#e5e5e5':'rgba(212,0,0,0.20)';
                 return '<div style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:8px;background:'+bg+';border:1px solid '+border+';margin:2px;">'+
                     '<span style="font-size:11px;font-weight:500;color:#64748b;">'+label+'</span>'+
                     '<span style="font-weight:800;color:'+fg+';font-size:15px;line-height:1;">'+grade+'</span>'+
@@ -1475,9 +1475,9 @@ const OB_TRENDS = {
 
             // Draw mini charts after DOM update
             setTimeout(() => {
-                drawAlertMiniChart('alert-chart-ib-'+sid, TRENDS.ri[sid], TRENDS.set[sid], 'RI%', 'Set%', '#2563eb', '#f97316', TRENDS.months);
+                drawAlertMiniChart('alert-chart-ib-'+sid, TRENDS.ri[sid], TRENDS.set[sid], 'RI%', 'Set%', '#0a0a0a', '#D40000', TRENDS.months);
                 if(type==='declined' || type==='critical') {
-                    drawAlertMiniChart('alert-chart-ob-'+sid, OB_TRENDS.live[sid], OB_TRENDS.appt[sid], 'Live%', 'Appt%', '#2563eb', '#f97316', OB_TRENDS.months);
+                    drawAlertMiniChart('alert-chart-ob-'+sid, OB_TRENDS.live[sid], OB_TRENDS.appt[sid], 'Live%', 'Appt%', '#0a0a0a', '#D40000', OB_TRENDS.months);
                 }
             }, 30);
         }
@@ -1514,7 +1514,7 @@ const OB_TRENDS = {
             ctx.fillStyle = '#fff'; ctx.fillRect(0,0,w,h);
 
             // Grid
-            ctx.strokeStyle = '#f1f5f9'; ctx.lineWidth = 1;
+            ctx.strokeStyle = '#fafafa'; ctx.lineWidth = 1;
             for(let v = Math.ceil(minV/10)*10; v <= maxV; v += 10) {
                 const y = toY(v);
                 ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(w-pad.right, y); ctx.stroke();
@@ -1591,11 +1591,11 @@ const OB_TRENDS = {
             const west=D.stores.filter(s=>s.region==='West'), east=D.stores.filter(s=>s.region==='East');
             const wAlerts=getAlertsForStores(west), eAlerts=getAlertsForStores(east);
             const p=document.getElementById('alertsPanel');
-            if(!wAlerts.length&&!eAlerts.length){p.innerHTML='<p style="color:#16a34a;padding:8px;">All stores within acceptable ranges.</p>';return;}
+            if(!wAlerts.length&&!eAlerts.length){p.innerHTML='<p style="color:#2D8B28;padding:8px;">All stores within acceptable ranges.</p>';return;}
 
             function alertTile(a) {
                 return '<div class="alert-tile '+a.sev+'" onclick="toggleAlertDetail(\''+a.sid+'\',\''+a.type+'\')" style="cursor:pointer;">'+
-                    '<h4>'+a.title+' <span style="font-size:9px;color:#b0b8c4;font-weight:400;margin-left:4px;">↓ details</span></h4>'+
+                    '<h4>'+a.title+' <span style="font-size:9px;color:#e5e5e5;font-weight:400;margin-left:4px;">↓ details</span></h4>'+
                     '<p>'+a.desc+'</p>'+
                     '<div class="alert-detail-panel" id="alert-detail-'+a.sid+'" style="display:none;margin-top:10px;"></div>'+
                 '</div>';
@@ -1603,9 +1603,9 @@ const OB_TRENDS = {
 
             let h='';
             h+='<div class="region-group-header west-hdr">West Region ('+wAlerts.length+' alert'+(wAlerts.length!==1?'s':'')+')</div>';
-            h+=wAlerts.length?'<div class="alert-tiles">'+wAlerts.map(alertTile).join('')+'</div>':'<p style="color:#16a34a;padding:6px 10px;font-size:12px;">All West stores within acceptable ranges.</p>';
+            h+=wAlerts.length?'<div class="alert-tiles">'+wAlerts.map(alertTile).join('')+'</div>':'<p style="color:#2D8B28;padding:6px 10px;font-size:12px;">All West stores within acceptable ranges.</p>';
             h+='<div class="region-group-header east-hdr">East Region ('+eAlerts.length+' alert'+(eAlerts.length!==1?'s':'')+')</div>';
-            h+=eAlerts.length?'<div class="alert-tiles">'+eAlerts.map(alertTile).join('')+'</div>':'<p style="color:#16a34a;padding:6px 10px;font-size:12px;">All East stores within acceptable ranges.</p>';
+            h+=eAlerts.length?'<div class="alert-tiles">'+eAlerts.map(alertTile).join('')+'</div>':'<p style="color:#2D8B28;padding:6px 10px;font-size:12px;">All East stores within acceptable ranges.</p>';
             p.innerHTML=h;
             alertExpandedId = null;
         }
@@ -1635,14 +1635,14 @@ const OB_TRENDS = {
             return cards.slice(0,3);
         }
         function renderCoachingCard(card){
-            const gc_=gn(card.ovGrade)>=3.3?'#059669':gn(card.ovGrade)>=1.7?'#2563eb':'#dc2626';
+            const gc_=gn(card.ovGrade)>=3.3?'#2D8B28':gn(card.ovGrade)>=1.7?'#0a0a0a':'#D40000';
             let h='<div class="coaching-card" onclick="showSpotlight(\''+card.sid+'\')">';
             h+='<div class="coaching-card-hdr"><h4>'+card.sid+'</h4><span class="cc-grade" style="color:'+gc_+'">'+card.ovGrade+' <span class="cc-arrow">→</span></span></div>';
             h+='<div class="cc-issues">';
             card.issues.forEach(iss=>{
                 const tagCls=iss.tag==='ib'?'cc-tag-ib':'cc-tag-ob';
                 const tagLabel=iss.tag==='ib'?'INBOUND':'OUTBOUND';
-                const gCol=gn(iss.grade)>=3.3?'#059669':gn(iss.grade)>=1.7?'#2563eb':'#dc2626';
+                const gCol=gn(iss.grade)>=3.3?'#2D8B28':gn(iss.grade)>=1.7?'#0a0a0a':'#D40000';
                 h+='<div class="cc-issue"><span class="cc-tag '+tagCls+'">'+tagLabel+'</span><span class="cc-metric">'+iss.metric+'</span><span class="cc-val">'+iss.val+' <span style="color:'+gCol+';font-weight:700;">'+iss.grade+'</span></span></div>';
             });
             h+='</div>';
@@ -1654,12 +1654,12 @@ const OB_TRENDS = {
             const west=D.stores.filter(s=>s.region==='West'), east=D.stores.filter(s=>s.region==='East');
             const wCards=getCoachingForStores(west), eCards=getCoachingForStores(east);
             const p=document.getElementById('coachingPanel');
-            if(!wCards.length&&!eCards.length){p.innerHTML='<p style="color:#16a34a;padding:8px;">All stores performing well — no coaching actions needed.</p>';return;}
+            if(!wCards.length&&!eCards.length){p.innerHTML='<p style="color:#2D8B28;padding:8px;">All stores performing well — no coaching actions needed.</p>';return;}
             let h='';
             h+='<div class="region-group-header west-hdr">West Region'+( wCards.length?' ('+wCards.length+' store'+(wCards.length!==1?'s':'')+'  need attention)':'' )+'</div>';
-            h+=wCards.length?'<div class="coaching-tiles">'+wCards.map(renderCoachingCard).join('')+'</div>':'<p style="color:#16a34a;padding:6px 10px;font-size:12px;">All West stores performing well.</p>';
+            h+=wCards.length?'<div class="coaching-tiles">'+wCards.map(renderCoachingCard).join('')+'</div>':'<p style="color:#2D8B28;padding:6px 10px;font-size:12px;">All West stores performing well.</p>';
             h+='<div class="region-group-header east-hdr">East Region'+( eCards.length?' ('+eCards.length+' store'+(eCards.length!==1?'s':'')+'  need attention)':'' )+'</div>';
-            h+=eCards.length?'<div class="coaching-tiles">'+eCards.map(renderCoachingCard).join('')+'</div>':'<p style="color:#16a34a;padding:6px 10px;font-size:12px;">All East stores performing well.</p>';
+            h+=eCards.length?'<div class="coaching-tiles">'+eCards.map(renderCoachingCard).join('')+'</div>':'<p style="color:#2D8B28;padding:6px 10px;font-size:12px;">All East stores performing well.</p>';
             p.innerHTML=h;
         }
 
@@ -1728,10 +1728,10 @@ const OB_TRENDS = {
             const b=calc(s.baseline), c=calc(s.current);
             // Grade comparison: baseline → current
             function pill(label, bg, cg) {
-                const bCol=gn(bg)>=3.3?'#059669':gn(bg)>=1.7?'#2563eb':'#dc2626';
-                const cCol=gn(cg)>=3.3?'#059669':gn(cg)>=1.7?'#2563eb':'#dc2626';
-                const arrow=gn(cg)>gn(bg)?'<span style="color:#059669;font-size:10px;"> ▲</span>':gn(cg)<gn(bg)?'<span style="color:#dc2626;font-size:10px;"> ▼</span>':'<span style="color:#94a3b8;font-size:10px;"> —</span>';
-                return '<div style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;background:#f8fafc;border:1px solid #e2e8f0;margin:2px;">'+
+                const bCol=gn(bg)>=3.3?'#2D8B28':gn(bg)>=1.7?'#0a0a0a':'#D40000';
+                const cCol=gn(cg)>=3.3?'#2D8B28':gn(cg)>=1.7?'#0a0a0a':'#D40000';
+                const arrow=gn(cg)>gn(bg)?'<span style="color:#2D8B28;font-size:10px;"> ▲</span>':gn(cg)<gn(bg)?'<span style="color:#D40000;font-size:10px;"> ▼</span>':'<span style="color:#94a3b8;font-size:10px;"> —</span>';
+                return '<div style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;background:#fafafa;border:1px solid #fafafa;margin:2px;">'+
                     '<span style="font-size:10px;color:#64748b;">'+label+'</span>'+
                     '<span style="font-weight:700;color:'+bCol+';font-size:13px;">'+bg+'</span>'+
                     '<span style="color:#94a3b8;font-size:10px;">→</span>'+
@@ -1757,8 +1757,8 @@ const OB_TRENDS = {
             h+='</div></div>';
             el.innerHTML = h;
             setTimeout(()=>{
-                drawAlertMiniChart('base-chart-ib-'+sid, TRENDS.ri[sid], TRENDS.set[sid], 'RI%', 'Set%', '#2563eb', '#f97316', TRENDS.months);
-                drawAlertMiniChart('base-chart-ob-'+sid, OB_TRENDS.live[sid], OB_TRENDS.appt[sid], 'Live%', 'Appt%', '#2563eb', '#f97316', OB_TRENDS.months);
+                drawAlertMiniChart('base-chart-ib-'+sid, TRENDS.ri[sid], TRENDS.set[sid], 'RI%', 'Set%', '#0a0a0a', '#D40000', TRENDS.months);
+                drawAlertMiniChart('base-chart-ob-'+sid, OB_TRENDS.live[sid], OB_TRENDS.appt[sid], 'Live%', 'Appt%', '#0a0a0a', '#D40000', OB_TRENDS.months);
             }, 30);
         }
         function renderBaseline(){
@@ -1782,7 +1782,7 @@ const OB_TRENDS = {
                     h+='<td class="grade-cell"><span class="g '+gc(b.ob)+'">'+b.ob+'</span></td>';
                     h+='<td class="grade-cell"><span class="g '+gc(b.ov)+'">'+b.ov+'</span> → <span class="g '+gc(c.ov)+'">'+c.ov+'</span>'+arrow+'</td>';
                     h+='</tr>';
-                    h+='<tr class="base-detail-row" id="base-row-'+s.id+'" style="display:none;"><td colspan="9" style="background:#f9fafb;padding:8px;border-top:1px solid #e5e7eb;"><div class="base-detail-panel" id="base-detail-'+s.id+'" style="background:#f8fafc;border-radius:6px;padding:10px;"></div></td></tr>';
+                    h+='<tr class="base-detail-row" id="base-row-'+s.id+'" style="display:none;"><td colspan="9" style="background:#fafafa;padding:8px;border-top:1px solid #e5e7eb;"><div class="base-detail-panel" id="base-detail-'+s.id+'" style="background:#fafafa;border-radius:6px;padding:10px;"></div></td></tr>';
                 });
                 h+='</tbody></table></div>';
                 return h;
@@ -1828,49 +1828,49 @@ const OB_TRENDS = {
                 // Helper: metric card
                 function mCard(label,bv,cv,bench,unit){
                     const diff=+(cv-bv).toFixed(1);
-                    const col=diff>0?'#059669':diff<0?'#dc2626':'#64748b';
+                    const col=diff>0?'#2D8B28':diff<0?'#D40000':'#64748b';
                     const pctOfBench=bench?Math.round(cv/bench*100):null;
-                    return '<div style="flex:1;min-width:130px;padding:10px 12px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;">'+
+                    return '<div style="flex:1;min-width:130px;padding:10px 12px;background:#fafafa;border-radius:6px;border:1px solid #fafafa;">'+
                         '<div style="font-size:9px;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin-bottom:3px;">'+label+'</div>'+
-                        '<div style="font-size:20px;font-weight:800;color:#1e293b;">'+cv+unit+'</div>'+
+                        '<div style="font-size:20px;font-weight:800;color:#0a0a0a;">'+cv+unit+'</div>'+
                         '<div style="font-size:11px;color:'+col+';font-weight:600;">'+( diff>0?'+':'')+diff+unit+' from baseline</div>'+
                         (pctOfBench?'<div style="font-size:10px;color:#94a3b8;margin-top:2px;">'+pctOfBench+'% of benchmark ('+bench+unit+')</div>':'')+
                     '</div>';
                 }
 
                 let h='<div style="margin-top:24px;">';
-                h+='<h3 style="font-size:15px;font-weight:700;color:#1e293b;margin:0 0 16px 0;border-bottom:2px solid #e2e8f0;padding-bottom:8px;">Executive Summary — Progress Since Start</h3>';
+                h+='<h3 style="font-size:15px;font-weight:700;color:#0a0a0a;margin:0 0 16px 0;border-bottom:2px solid #fafafa;padding-bottom:8px;">Executive Summary — Progress Since Start</h3>';
 
                 // === ROW 1: Grade overview cards ===
                 h+='<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">';
                 // Overall
-                const ovArrow=avgCurOv>avgBaseOv?'<span style="color:#059669;"> ▲</span>':avgCurOv<avgBaseOv?'<span style="color:#dc2626;"> ▼</span>':'';
-                h+='<div style="flex:1.5;min-width:180px;padding:14px;background:linear-gradient(135deg,#f8fafc,#f1f5f9);border-radius:8px;border:1px solid #e2e8f0;">';
+                const ovArrow=avgCurOv>avgBaseOv?'<span style="color:#2D8B28;"> ▲</span>':avgCurOv<avgBaseOv?'<span style="color:#D40000;"> ▼</span>':'';
+                h+='<div style="flex:1.5;min-width:180px;padding:14px;background:linear-gradient(135deg,#fafafa,#fafafa);border-radius:8px;border:1px solid #fafafa;">';
                 h+='<div style="font-size:9px;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;">Group Overall</div>';
-                h+='<div style="font-size:28px;font-weight:800;margin:2px 0;"><span class="g '+gc(s2g(avgBaseOv))+'">'+s2g(avgBaseOv)+'</span> <span style="color:#cbd5e1;font-size:18px;">→</span> <span class="g '+gc(s2g(avgCurOv))+'">'+s2g(avgCurOv)+'</span>'+ovArrow+'</div>';
+                h+='<div style="font-size:28px;font-weight:800;margin:2px 0;"><span class="g '+gc(s2g(avgBaseOv))+'">'+s2g(avgBaseOv)+'</span> <span style="color:#e5e5e5;font-size:18px;">→</span> <span class="g '+gc(s2g(avgCurOv))+'">'+s2g(avgCurOv)+'</span>'+ovArrow+'</div>';
                 h+='<div style="font-size:11px;color:#64748b;">'+improved.length+' improved · '+declined.length+' declined · '+steady.length+' steady</div>';
                 h+='</div>';
                 // Inbound
-                const ibArrow=avgCurIB>avgBaseIB?'<span style="color:#059669;"> ▲</span>':'<span style="color:#dc2626;"> ▼</span>';
-                h+='<div style="flex:1;min-width:140px;padding:14px;background:#eff6ff;border-radius:8px;border:1px solid #bfdbfe;">';
+                const ibArrow=avgCurIB>avgBaseIB?'<span style="color:#2D8B28;"> ▲</span>':'<span style="color:#D40000;"> ▼</span>';
+                h+='<div style="flex:1;min-width:140px;padding:14px;background:#fafafa;border-radius:8px;border:1px solid #e5e5e5;">';
                 h+='<div style="font-size:9px;text-transform:uppercase;color:#3b82f6;letter-spacing:0.5px;">Inbound</div>';
                 h+='<div style="font-size:22px;font-weight:800;margin:2px 0;"><span class="g '+gc(s2g(avgBaseIB))+'">'+s2g(avgBaseIB)+'</span> <span style="color:#93c5fd;font-size:14px;">→</span> <span class="g '+gc(s2g(avgCurIB))+'">'+s2g(avgCurIB)+'</span>'+ibArrow+'</div>';
                 h+='<div style="font-size:11px;color:#64748b;">RI +'+( avgC('req')-avgB('req')).toFixed(1)+' pts · Set +'+( avgC('set')-avgB('set')).toFixed(1)+' pts</div>';
                 h+='</div>';
                 // Outbound
-                const obArrow=avgCurOB>avgBaseOB?'<span style="color:#059669;"> ▲</span>':'<span style="color:#dc2626;"> ▼</span>';
+                const obArrow=avgCurOB>avgBaseOB?'<span style="color:#2D8B28;"> ▲</span>':'<span style="color:#D40000;"> ▼</span>';
                 h+='<div style="flex:1;min-width:140px;padding:14px;background:#faf5ff;border-radius:8px;border:1px solid #d8b4fe;">';
-                h+='<div style="font-size:9px;text-transform:uppercase;color:#7c3aed;letter-spacing:0.5px;">Outbound</div>';
+                h+='<div style="font-size:9px;text-transform:uppercase;color:#0a0a0a;letter-spacing:0.5px;">Outbound</div>';
                 h+='<div style="font-size:22px;font-weight:800;margin:2px 0;"><span class="g '+gc(s2g(avgBaseOB))+'">'+s2g(avgBaseOB)+'</span> <span style="color:#c4b5fd;font-size:14px;">→</span> <span class="g '+gc(s2g(avgCurOB))+'">'+s2g(avgCurOB)+'</span>'+obArrow+'</div>';
                 h+='<div style="font-size:11px;color:#64748b;">Live '+(avgC('live')-avgB('live')>0?'+':'')+(avgC('live')-avgB('live')).toFixed(1)+' pts · Appt '+(avgC('appt')-avgB('appt')>0?'+':'')+(avgC('appt')-avgB('appt')).toFixed(1)+' pts</div>';
                 h+='</div>';
                 // Store health
-                h+='<div style="flex:0.8;min-width:120px;padding:14px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;text-align:center;">';
+                h+='<div style="flex:0.8;min-width:120px;padding:14px;background:#fafafa;border-radius:8px;border:1px solid #fafafa;text-align:center;">';
                 h+='<div style="font-size:9px;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;margin-bottom:4px;">Store Health</div>';
                 h+='<div style="font-size:13px;line-height:1.8;">';
-                h+='<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#16a34a;margin-right:3px;"></span><strong>'+greenStores+'</strong> green <span style="color:#94a3b8;font-size:10px;">(was '+greenBase+')</span><br>';
-                h+='<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#eab308;margin-right:3px;"></span><strong>'+yellowStores+'</strong> yellow<br>';
-                h+='<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#dc2626;margin-right:3px;"></span><strong>'+redStores+'</strong> red</div>';
+                h+='<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#2D8B28;margin-right:3px;"></span><strong>'+greenStores+'</strong> green <span style="color:#94a3b8;font-size:10px;">(was '+greenBase+')</span><br>';
+                h+='<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#8a6b00;margin-right:3px;"></span><strong>'+yellowStores+'</strong> yellow<br>';
+                h+='<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#D40000;margin-right:3px;"></span><strong>'+redStores+'</strong> red</div>';
                 h+='</div></div>';
 
                 // === ROW 2: Metric cards ===
@@ -1884,8 +1884,8 @@ const OB_TRENDS = {
                 // === ROW 3: Wins ===
                 h+='<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">';
                 // Wins column
-                h+='<div style="flex:1;min-width:280px;padding:14px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0;">';
-                h+='<div style="font-size:12px;font-weight:700;color:#15803d;margin-bottom:10px;">Wins Since Start</div>';
+                h+='<div style="flex:1;min-width:280px;padding:14px;background:rgba(45,139,40,0.10);border-radius:8px;border:1px solid rgba(45,139,40,0.10);">';
+                h+='<div style="font-size:12px;font-weight:700;color:#1a5e16;margin-bottom:10px;">Wins Since Start</div>';
                 if(improved.length){
                     improved.forEach(s=>{
                         const b2=calc(s.baseline), c2=calc(s.current);
@@ -1895,8 +1895,8 @@ const OB_TRENDS = {
                         if(gn(c2.sg)>gn(b2.sg)) drivers.push('Set% up ('+(s.current.set-s.baseline.set>0?'+':'')+(s.current.set-s.baseline.set).toFixed(0)+')');
                         if(gn(c2.lg)>gn(b2.lg)) drivers.push('Live% up');
                         if(gn(c2.ag)>gn(b2.ag)) drivers.push('Appt% up');
-                        h+='<div style="margin-bottom:8px;padding:6px 8px;background:#fff;border-radius:4px;border-left:3px solid #16a34a;">';
-                        h+='<div style="font-size:12px;font-weight:700;color:#1e293b;">'+s.id+' <span class="g '+gc(b2.ov)+'">'+b2.ov+'</span> → <span class="g '+gc(c2.ov)+'">'+c2.ov+'</span></div>';
+                        h+='<div style="margin-bottom:8px;padding:6px 8px;background:#fff;border-radius:4px;border-left:3px solid #2D8B28;">';
+                        h+='<div style="font-size:12px;font-weight:700;color:#0a0a0a;">'+s.id+' <span class="g '+gc(b2.ov)+'">'+b2.ov+'</span> → <span class="g '+gc(c2.ov)+'">'+c2.ov+'</span></div>';
                         h+='<div style="font-size:11px;color:#64748b;">'+(drivers.length?drivers.join(' · '):'Steady improvement across metrics')+'</div>';
                         h+='</div>';
                     });
@@ -1904,16 +1904,16 @@ const OB_TRENDS = {
                     h+='<div style="font-size:12px;color:#64748b;">No overall grade improvements yet.</div>';
                 }
                 // Spotlight: biggest single wins
-                h+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid #bbf7d0;">';
-                h+='<div style="font-size:10px;text-transform:uppercase;color:#15803d;letter-spacing:0.4px;margin-bottom:4px;font-weight:600;">Standout Metrics</div>';
+                h+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(45,139,40,0.10);">';
+                h+='<div style="font-size:10px;text-transform:uppercase;color:#1a5e16;letter-spacing:0.4px;margin-bottom:4px;font-weight:600;">Standout Metrics</div>';
                 if(bestRI.s) h+='<div style="font-size:11px;color:#334155;margin-bottom:2px;"><strong>'+bestRI.s.id+'</strong> — biggest RI jump: +'+bestRI.d.toFixed(0)+' pts ('+bestRI.s.baseline.req+'% → '+bestRI.s.current.req+'%)</div>';
                 if(bestSet.s) h+='<div style="font-size:11px;color:#334155;margin-bottom:2px;"><strong>'+bestSet.s.id+'</strong> — biggest Set jump: +'+bestSet.d.toFixed(0)+' pts ('+bestSet.s.baseline.set+'% → '+bestSet.s.current.set+'%)</div>';
                 if(bestImprover.s) h+='<div style="font-size:11px;color:#334155;"><strong>'+bestImprover.s.id+'</strong> — largest overall grade gain: '+calc(bestImprover.s.baseline).ov+' → '+calc(bestImprover.s.current).ov+'</div>';
                 h+='</div></div>';
 
                 // Opportunities column
-                h+='<div style="flex:1;min-width:280px;padding:14px;background:#fef2f2;border-radius:8px;border:1px solid #fecaca;">';
-                h+='<div style="font-size:12px;font-weight:700;color:#dc2626;margin-bottom:10px;">Opportunities</div>';
+                h+='<div style="flex:1;min-width:280px;padding:14px;background:#fafafa;border-radius:8px;border:1px solid rgba(212,0,0,0.20);">';
+                h+='<div style="font-size:12px;font-weight:700;color:#D40000;margin-bottom:10px;">Opportunities</div>';
                 if(declined.length){
                     declined.forEach(s=>{
                         const b2=calc(s.baseline), c2=calc(s.current);
@@ -1922,8 +1922,8 @@ const OB_TRENDS = {
                         if(gn(c2.sg)<gn(b2.sg)) issues.push('Set% down ('+(s.current.set-s.baseline.set).toFixed(0)+')');
                         if(gn(c2.lg)<gn(b2.lg)) issues.push('Live% down');
                         if(gn(c2.ag)<gn(b2.ag)) issues.push('Appt% down');
-                        h+='<div style="margin-bottom:8px;padding:6px 8px;background:#fff;border-radius:4px;border-left:3px solid #dc2626;">';
-                        h+='<div style="font-size:12px;font-weight:700;color:#1e293b;">'+s.id+' <span class="g '+gc(b2.ov)+'">'+b2.ov+'</span> → <span class="g '+gc(c2.ov)+'">'+c2.ov+'</span></div>';
+                        h+='<div style="margin-bottom:8px;padding:6px 8px;background:#fff;border-radius:4px;border-left:3px solid #D40000;">';
+                        h+='<div style="font-size:12px;font-weight:700;color:#0a0a0a;">'+s.id+' <span class="g '+gc(b2.ov)+'">'+b2.ov+'</span> → <span class="g '+gc(c2.ov)+'">'+c2.ov+'</span></div>';
                         h+='<div style="font-size:11px;color:#64748b;">'+(issues.length?issues.join(' · '):'Slight grade decline')+'</div>';
                         h+='</div>';
                     });
@@ -1931,8 +1931,8 @@ const OB_TRENDS = {
                     h+='<div style="font-size:12px;color:#64748b;">No stores declined from baseline!</div>';
                 }
                 // Spotlight: biggest concerns
-                h+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid #fecaca;">';
-                h+='<div style="font-size:10px;text-transform:uppercase;color:#dc2626;letter-spacing:0.4px;margin-bottom:4px;font-weight:600;">Watch Areas</div>';
+                h+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(212,0,0,0.20);">';
+                h+='<div style="font-size:10px;text-transform:uppercase;color:#D40000;letter-spacing:0.4px;margin-bottom:4px;font-weight:600;">Watch Areas</div>';
                 if(worstLive.s&&worstLive.d<-1) h+='<div style="font-size:11px;color:#334155;margin-bottom:2px;"><strong>'+worstLive.s.id+'</strong> — largest Live% drop: '+worstLive.d.toFixed(1)+' pts ('+worstLive.s.baseline.live+'% → '+worstLive.s.current.live+'%)</div>';
                 const failingStores=allStores.filter(s=>{const c2=calc(s.current);return c2.rg==='F'||c2.rg==='D'||c2.sg==='F'||c2.sg==='D'||c2.lg==='F'||c2.lg==='D'||c2.ag==='F'||c2.ag==='D';});
                 h+='<div style="font-size:11px;color:#334155;margin-bottom:2px;"><strong>'+failingStores.length+'</strong> stores have at least one D or F metric currently</div>';
@@ -1942,8 +1942,8 @@ const OB_TRENDS = {
                 h+='</div>';
 
                 // === ROW 4: Bottom line ===
-                h+='<div style="padding:10px 14px;background:#f1f5f9;border-radius:6px;border:1px solid #e2e8f0;font-size:12px;color:#334155;line-height:1.6;">';
-                h+='<strong style="color:#1e293b;">Bottom Line:</strong> ';
+                h+='<div style="padding:10px 14px;background:#fafafa;border-radius:6px;border:1px solid #fafafa;font-size:12px;color:#334155;line-height:1.6;">';
+                h+='<strong style="color:#0a0a0a;">Bottom Line:</strong> ';
                 h+='Group overall grade '+(avgCurOv>=avgBaseOv?'held':'slipped')+' at <strong>'+s2g(avgCurOv)+'</strong>. ';
                 h+='Inbound is the bright spot — Set % climbed <strong>+'+( avgC('set')-avgB('set')).toFixed(1)+' pts</strong> group-wide. ';
                 if(avgCurOB<avgBaseOB) h+='Outbound remains the primary opportunity — Live Convos and Appt Set both declined from baseline. ';
@@ -1956,12 +1956,12 @@ const OB_TRENDS = {
             }
 
             // Combined Enterprise Trend — Inbound GPA vs Outbound GPA (Y-axis 0-4)
-            const combinedHTML = `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;margin:12px 0;">
+            const combinedHTML = `<div style="background:#fff;border:1px solid #fafafa;border-radius:10px;padding:14px 16px;margin:12px 0;">
                 <h4 style="font-size:13px;color:#475569;margin:0 0 6px 0;font-weight:700;">Enterprise Trend — Inbound vs Outbound (Grade)</h4>
                 <canvas id="combinedTrendCanvas" width="900" height="220" style="width:100%;height:220px;display:block;"></canvas>
                 <div style="display:flex;gap:14px;margin-top:6px;font-size:11px;color:#64748b;">
-                    <div style="display:flex;align-items:center;gap:6px;"><div style="width:18px;height:3px;background:#0ea5e9;border-radius:2px;"></div>Inbound grade</div>
-                    <div style="display:flex;align-items:center;gap:6px;"><div style="width:18px;height:3px;background:#f97316;border-radius:2px;"></div>Outbound grade</div>
+                    <div style="display:flex;align-items:center;gap:6px;"><div style="width:18px;height:3px;background:#0a0a0a;border-radius:2px;"></div>Inbound grade</div>
+                    <div style="display:flex;align-items:center;gap:6px;"><div style="width:18px;height:3px;background:#D40000;border-radius:2px;"></div>Outbound grade</div>
                 </div>
             </div>`;
 
@@ -2018,7 +2018,7 @@ const OB_TRENDS = {
             if(!stories.length){ el.style.display='none'; return; }
             const today=new Date();
             const idx=(today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate()) % stories.length;
-            el.innerHTML = '<span style="font-weight:700;letter-spacing:0.4px;text-transform:uppercase;font-size:10px;color:#92400e;">Today</span> &nbsp; ' + stories[idx];
+            el.innerHTML = '<span style="font-weight:700;letter-spacing:0.4px;text-transform:uppercase;font-size:10px;color:#8a6b00;">Today</span> &nbsp; ' + stories[idx];
             el.style.display='block';
         }
 
@@ -2029,9 +2029,9 @@ const OB_TRENDS = {
             if(!below.length){ el.style.display='none'; return; }
             const chips = below.map(s=>{
                 const c=calc(s.current);
-                return `<span onclick="showOnePager('${s.id}')" title="Open ${s.id} action plan" style="cursor:pointer;display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid #c7d2fe;border-radius:6px;padding:3px 9px;font-size:12px;font-weight:800;color:#3730a3;">${s.id} <span class="g ${gc(c.ov)}" style="font-size:10px;">${c.ov}</span></span>`;
+                return `<span onclick="showOnePager('${s.id}')" title="Open ${s.id} action plan" style="cursor:pointer;display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid #e5e5e5;border-radius:6px;padding:3px 9px;font-size:12px;font-weight:800;color:#0a0a0a;">${s.id} <span class="g ${gc(c.ov)}" style="font-size:10px;">${c.ov}</span></span>`;
             }).join(' ');
-            el.innerHTML = `<span style="font-weight:700;letter-spacing:0.4px;text-transform:uppercase;font-size:10px;color:#3730a3;">June Training</span> &nbsp; <strong>${below.length} stores</strong> below B− — required for June extra training. <span onclick="const l=document.getElementById('juneBelowList');l.style.display=l.style.display==='none'?'flex':'none';" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px;color:#4338ca;font-weight:600;">See which &#9432;</span><div id="juneBelowList" style="display:none;flex-wrap:wrap;gap:6px;margin-top:8px;">${chips}</div>`;
+            el.innerHTML = `<span style="font-weight:700;letter-spacing:0.4px;text-transform:uppercase;font-size:10px;color:#0a0a0a;">June Training</span> &nbsp; <strong>${below.length} stores</strong> below B− — required for June extra training. <span onclick="const l=document.getElementById('juneBelowList');l.style.display=l.style.display==='none'?'flex':'none';" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px;color:#0a0a0a;font-weight:600;">See which &#9432;</span><div id="juneBelowList" style="display:none;flex-wrap:wrap;gap:6px;margin-top:8px;">${chips}</div>`;
             el.style.display='block';
         }
 
@@ -2261,13 +2261,13 @@ const OB_TRENDS = {
                 // Manager Ring Ring is primarily an inbound play — recommend when inbound is soft + overall declined
                 if(gn(c.ov)<gn(m.ov) && inboundWeak){
                     all.push({pri:1,type:'derby',tag:'Derby',title:s.id+' — Manager Ring Ring Session (5 pts)',
-                        text:'Overall declined '+m.ov+' → '+c.ov+' ('+PREV_MO+' → '+CUR_MO+' MTD) with weak inbound. Manager Ring Ring is primarily an inbound play \u2014 get it booked. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
+                        text:'Overall declined '+m.ov+' → '+c.ov+' ('+PREV_MO+' → '+CUR_MO+' MTD) with weak inbound. Manager Ring Ring is primarily an inbound play \u2014 get it booked. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Derby Board</a>'});
                 } else if(gn(c.ov)<gn(m.ov) && outboundWeak){
                     all.push({pri:1,type:'derby',tag:'Derby',title:s.id+' — Pull rep-level outbound',
-                        text:'Overall declined '+m.ov+' → '+c.ov+' ('+PREV_MO+' → '+CUR_MO+' MTD) and outbound is the drag. Pull individual rep Live%/Appt% \u2014 find the one or two people pulling the average down and scorecard their calls. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
+                        text:'Overall declined '+m.ov+' → '+c.ov+' ('+PREV_MO+' → '+CUR_MO+' MTD) and outbound is the drag. Pull individual rep Live%/Appt% \u2014 find the one or two people pulling the average down and scorecard their calls. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Derby Board</a>'});
                 } else if(weakMetrics.length>0){
                     all.push({pri:2,type:'derby',tag:'Derby',title:s.id+' — Scorecard recommended (1 pt)',
-                        text:'Weak '+weakMetrics.join(' & ')+' metrics. Scorecard surfaces whether it\'s call guide, pitch, or list. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
+                        text:'Weak '+weakMetrics.join(' & ')+' metrics. Scorecard surfaces whether it\'s call guide, pitch, or list. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Derby Board</a>'});
                 }
             });
             // Yellow-zone stores → find the weak link
@@ -2284,11 +2284,11 @@ const OB_TRENDS = {
                     midStores.map(s=>s.id).join(', ')+' holding in yellow. Pull rep-level data and find the weak link. If the bottom rep walked out tomorrow, what happens to the store grade?'
                 ];
                 all.push({pri:3,type:'derby',tag:'Derby',title:pick(ywv,'yw-t'),
-                    text:pick(ywt,'yw-b')+' <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
+                    text:pick(ywt,'yw-b')+' <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Derby Board</a>'});
             }
             // General Derby reminder
             all.push({pri:5,type:'system',tag:'',title:'Derby Reminder',
-                text:'Ring Ring Derby is live! <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">View Derby Scoreboard</a> | <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a>'});
+                text:'Ring Ring Derby is live! <a href="'+DERBY_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">View Derby Scoreboard</a> | <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Open Scorecard</a>'});
             // Sort by priority. Cap at 3-4, always show at least one West and one East store.
             all.sort((a,b)=>a.pri-b.pri);
             const westIds=new Set(D.stores.filter(s=>s.region==='West').map(s=>s.id));
@@ -2492,7 +2492,7 @@ const OB_TRENDS = {
                 const janAvg = trendAvg(metric,0), aprAvg = trendAvg(metric,ms.length-1);
                 const ytdD = aprAvg-janAvg;
                 let resp = '<strong>'+label+' YTD Trend</strong><br>Group avg: '+janAvg.toFixed(1)+'% (Jan) → <strong>'+aprAvg.toFixed(1)+'%</strong> ('+CUR_MO+' MTD)<br>'+
-                    'YTD change: <strong style="color:'+(ytdD>=0?'#16a34a':'#dc2626')+'">'+(ytdD>=0?'+':'')+ytdD.toFixed(1)+'</strong><br><br>';
+                    'YTD change: <strong style="color:'+(ytdD>=0?'#2D8B28':'#D40000')+'">'+(ytdD>=0?'+':'')+ytdD.toFixed(1)+'</strong><br><br>';
                 // Top movers
                 const deltas=[];
                 D.stores.forEach(s=>{const v=TRENDS[metric][s.id];if(v&&v[0]!==null&&v[ms.length-1]!==null)deltas.push({id:s.id,d:v[ms.length-1]-v[0]});});
@@ -2529,7 +2529,7 @@ const OB_TRENDS = {
                 const yellow=D.stores.filter(s=>gColor(calc(s.current).ov)==='yellow'&&!inboundDeclined.includes(s)&&!shopStores.includes(s));
                 if(yellow.length) recs.push('<strong>Find the weak link</strong> at: '+yellow.map(s=>s.id).join(', ')+' \u2014 yellow zone. Pull individual rep grades. One or two people are usually sinking the store average \u2014 scorecard their calls specifically.');
                 if(!recs.length) recs.push('All stores performing. If you want to stay sharp: pick the lowest-graded rep at any store and scorecard a few of their calls.');
-                return recs.join('<br><br>')+'<br><br><a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">View Derby Board</a>';
+                return recs.join('<br><br>')+'<br><br><a href="'+SCORECARD_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">View Derby Board</a>';
             }
             return 'Try asking about a specific store (e.g. "How is Acura doing?"), rankings ("Who has the best set %?"), comparisons ("West vs East"), status ("Who improved?"), or Derby activities ("Which stores need a scorecard?").';
         }
@@ -2568,21 +2568,21 @@ const OB_TRENDS = {
             } else {
                 sorted.forEach((p,i) => {
                     if(p.flagged){
-                        rows += `<tr style="background:#fef2f2;border-left:3px solid #dc2626;">
-                            <td style="color:#dc2626;font-weight:800;">${i+1}</td>
-                            <td style="color:#991b1b;font-weight:800;">${p.n} <span style="display:inline-block;margin-left:6px;padding:1px 7px;border-radius:3px;background:#dc2626;color:#fff;font-size:9px;font-weight:800;letter-spacing:0.5px;">BENCHED</span></td>
-                            <td class="num" style="color:#dc2626;font-weight:800;">0</td>
-                            <td class="num" style="color:#dc2626;font-weight:800;">0</td>
-                            <td class="num" style="color:#dc2626;font-weight:800;">0%</td>
-                            <td class="num" style="color:#dc2626;font-weight:800;">0</td>
-                            <td class="num" style="color:#dc2626;font-weight:800;">0%</td>
+                        rows += `<tr style="background:#fafafa;border-left:3px solid #D40000;">
+                            <td style="color:#D40000;font-weight:800;">${i+1}</td>
+                            <td style="color:#a00000;font-weight:800;">${p.n} <span style="display:inline-block;margin-left:6px;padding:1px 7px;border-radius:3px;background:#D40000;color:#fff;font-size:9px;font-weight:800;letter-spacing:0.5px;">BENCHED</span></td>
+                            <td class="num" style="color:#D40000;font-weight:800;">0</td>
+                            <td class="num" style="color:#D40000;font-weight:800;">0</td>
+                            <td class="num" style="color:#D40000;font-weight:800;">0%</td>
+                            <td class="num" style="color:#D40000;font-weight:800;">0</td>
+                            <td class="num" style="color:#D40000;font-weight:800;">0%</td>
                         </tr>`;
                         return;
                     }
                     const pLive = p.ob>0 ? p.lv.toFixed(1) : '—';
                     const pAppt = p.c>0 ? ((p.a/p.c)*100).toFixed(1) : '—';
-                    const livCol = p.tier===0?'color:#15803d;font-weight:700;':p.tier===1?'color:#92400e;font-weight:700;':'color:#dc2626;font-weight:700;';
-                    rows += `<tr style="${p.tier===0?'background:#f0fdf4;':p.tier===1?'background:#fffbeb;':'background:#fef2f2;'}">
+                    const livCol = p.tier===0?'color:#1a5e16;font-weight:700;':p.tier===1?'color:#8a6b00;font-weight:700;':'color:#D40000;font-weight:700;';
+                    rows += `<tr style="${p.tier===0?'background:rgba(45,139,40,0.10);':p.tier===1?'background:#fafafa;':'background:#fafafa;'}">
                         <td>${i+1}</td>
                         <td>${p.n}</td>
                         <td class="num">${p.ob}</td>
@@ -2605,21 +2605,21 @@ const OB_TRENDS = {
                 mgrRows = `<tr><td colspan="4" style="text-align:center;padding:10px;color:#64748b;font-style:italic;">No manager activity ${useWTD ? 'this week yet' : 'recorded'}.</td></tr>`;
             } else {
                 mgrs.forEach(m => {
-                    const roleColor = m.role==='GM'?'background:#dbeafe;color:#1e40af;':m.role==='GSM'?'background:#ede9fe;color:#6d28d9;':'background:#f0f9ff;color:#0369a1;';
+                    const roleColor = m.role==='GM'?'background:#dbeafe;color:#0a0a0a;':m.role==='GSM'?'background:#ede9fe;color:#6d28d9;':'background:#f5f5f5;color:#0a0a0a;';
                     const lowL = m.l < (useWTD ? 5 : 20);
                     mgrRows += `<tr>
                         <td>${m.n}</td>
                         <td><span style="${roleColor}padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;">${m.role}</span></td>
-                        <td class="num" style="${lowL?'color:#dc2626;font-weight:700;':''}">${m.l}</td>
+                        <td class="num" style="${lowL?'color:#D40000;font-weight:700;':''}">${m.l}</td>
                         <td class="num">${m.s}</td>
                     </tr>`;
                 });
             }
 
             const togglePill = `
-                <div style="display:inline-flex;background:#f1f5f9;border-radius:6px;padding:2px;font-size:11px;font-weight:700;">
-                    <button onclick="showStaffModal('${storeId}','MTD')" style="background:${!useWTD?'#fff':'transparent'};color:${!useWTD?'#0369a1':'#64748b'};border:none;padding:4px 12px;border-radius:4px;cursor:pointer;font-weight:700;${!useWTD?'box-shadow:0 1px 2px rgba(0,0,0,0.06);':''}">MTD</button>
-                    <button onclick="showStaffModal('${storeId}','WTD')" style="background:${useWTD?'#fff':'transparent'};color:${useWTD?'#0369a1':'#64748b'};border:none;padding:4px 12px;border-radius:4px;cursor:pointer;font-weight:700;${useWTD?'box-shadow:0 1px 2px rgba(0,0,0,0.06);':''}">WTD</button>
+                <div style="display:inline-flex;background:#fafafa;border-radius:6px;padding:2px;font-size:11px;font-weight:700;">
+                    <button onclick="showStaffModal('${storeId}','MTD')" style="background:${!useWTD?'#fff':'transparent'};color:${!useWTD?'#0a0a0a':'#64748b'};border:none;padding:4px 12px;border-radius:4px;cursor:pointer;font-weight:700;${!useWTD?'box-shadow:0 1px 2px rgba(0,0,0,0.06);':''}">MTD</button>
+                    <button onclick="showStaffModal('${storeId}','WTD')" style="background:${useWTD?'#fff':'transparent'};color:${useWTD?'#0a0a0a':'#64748b'};border:none;padding:4px 12px;border-radius:4px;cursor:pointer;font-weight:700;${useWTD?'box-shadow:0 1px 2px rgba(0,0,0,0.06);':''}">WTD</button>
                 </div>`;
 
             const modalHTML = `
@@ -2627,7 +2627,7 @@ const OB_TRENDS = {
                     <h3>${storeName} <span style="color:#64748b;font-weight:500;">— ${periodLbl} Outbound</span></h3>
                     <div style="display:flex;gap:10px;align-items:center;">
                         ${togglePill}
-                        <button onclick="printStaffModal()" style="background:#0369a1;color:#fff;border:none;border-radius:4px;padding:4px 12px;font-size:11px;font-weight:600;cursor:pointer;">Export PDF</button>
+                        <button onclick="printStaffModal()" style="background:#0a0a0a;color:#fff;border:none;border-radius:4px;padding:4px 12px;font-size:11px;font-weight:600;cursor:pointer;">Export PDF</button>
                         <button class="close-btn" onclick="closeStaffModal()">&times;</button>
                     </div>
                 </div>
@@ -2642,14 +2642,14 @@ const OB_TRENDS = {
                     </div>
                     <div style="display:flex;gap:12px;align-items:center;padding:6px 0;font-size:11px;">
                         <span style="font-weight:600;color:#64748b;">Live Convos %:</span>
-                        <span style="background:#f0fdf4;color:#15803d;padding:2px 8px;border-radius:4px;font-weight:600;">${greenN} ≥ 20% (Benchmark)</span>
-                        <span style="background:#fffbeb;color:#92400e;padding:2px 8px;border-radius:4px;font-weight:600;">${yellowN} 15–20%</span>
-                        <span style="background:#fef2f2;color:#dc2626;padding:2px 8px;border-radius:4px;font-weight:600;">${redN} < 15% (Coaching needed)</span>
+                        <span style="background:rgba(45,139,40,0.10);color:#1a5e16;padding:2px 8px;border-radius:4px;font-weight:600;">${greenN} ≥ 20% (Benchmark)</span>
+                        <span style="background:#fafafa;color:#8a6b00;padding:2px 8px;border-radius:4px;font-weight:600;">${yellowN} 15–20%</span>
+                        <span style="background:#fafafa;color:#D40000;padding:2px 8px;border-radius:4px;font-weight:600;">${redN} < 15% (Coaching needed)</span>
                     </div>
                     <table class="staff-tbl">
                         <thead><tr><th>#</th><th>Salesperson</th><th class="num">OB Calls</th><th class="num">Conn</th><th class="num">Live %</th><th class="num">Appts</th><th class="num">Appt %</th></tr></thead>
                         <tbody>${rows}</tbody>
-                        ${staff.length ? `<tfoot><tr style="font-weight:700;border-top:2px solid #d0d5dd;">
+                        ${staff.length ? `<tfoot><tr style="font-weight:700;border-top:2px solid #fafafa;">
                             <td></td><td>STORE TOTAL</td>
                             <td class="num">${totOB.toLocaleString()}</td>
                             <td class="num">${totC.toLocaleString()}</td>
@@ -2771,8 +2771,8 @@ const OB_TRENDS = {
             // Delta arrows
             function delta(b, c, isInt){
                 const d = c-b;
-                if(d>0.05) return '<span style="color:#15803d;font-weight:700;">▲</span>';
-                if(d<-0.05) return '<span style="color:#dc2626;font-weight:700;">▼</span>';
+                if(d>0.05) return '<span style="color:#1a5e16;font-weight:700;">▲</span>';
+                if(d<-0.05) return '<span style="color:#D40000;font-weight:700;">▼</span>';
                 return '<span style="color:#94a3b8;font-weight:700;">—</span>';
             }
             function row(label, b, c, bench, metric){
@@ -2818,31 +2818,31 @@ const OB_TRENDS = {
                         <h3 style="font-size:18px;margin-top:2px;">${store.name}</h3>
                     </div>
                     <div style="display:flex;gap:8px;align-items:center;">
-                        <div style="text-align:center;padding:4px 10px;background:#f8fafc;border-radius:6px;border:1px solid #e5e7eb;">
+                        <div style="text-align:center;padding:4px 10px;background:#fafafa;border-radius:6px;border:1px solid #e5e7eb;">
                             <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">May MTD Overall</div>
                             <div class="g ${gc(c.ov)}" style="font-size:18px;padding:0;">${c.ov}</div>
                         </div>
-                        ${HAS_ACTION_PLAN.has(storeId) ? `<a href="${planPdf(store)}" target="_blank" style="background:#0d2748;color:#fff;border:none;border-radius:4px;padding:6px 14px;font-size:11px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;">View Action Plan</a>` : ''}
+                        ${HAS_ACTION_PLAN.has(storeId) ? `<a href="${planPdf(store)}" target="_blank" style="background:#0a0a0a;color:#fff;border:none;border-radius:4px;padding:6px 14px;font-size:11px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;">View Action Plan</a>` : ''}
                         <button class="close-btn" onclick="closeStaffModal()">&times;</button>
                     </div>
                 </div>
                 <div class="staff-modal-body" style="padding:14px 22px 18px;">
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
                         <!-- INBOUND -->
-                        <div style="border:1px solid #bae6fd;border-radius:8px;padding:14px;background:#f0f9ff;">
+                        <div style="border:1px solid #e5e5e5;border-radius:8px;padding:14px;background:#f5f5f5;">
                             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
                                 <div style="display:flex;align-items:center;gap:13px;">
                                     <div style="text-align:center;">
-                                        <div style="font-size:8.5px;font-weight:800;color:#0369a1;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:3px;">Inbound</div>
+                                        <div style="font-size:8.5px;font-weight:800;color:#0a0a0a;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:3px;">Inbound</div>
                                         <div class="g ${gc(c.ib)}" style="font-size:40px;line-height:0.9;padding:8px 16px;border-radius:11px;font-weight:800;display:inline-block;">${c.ib}</div>
                                     </div>
                                     <div>
-                                        <h4 style="font-size:13px;font-weight:700;color:#0369a1;text-transform:uppercase;letter-spacing:0.5px;">Inbound Grade</h4>
+                                        <h4 style="font-size:13px;font-weight:700;color:#0a0a0a;text-transform:uppercase;letter-spacing:0.5px;">Inbound Grade</h4>
                                         <div style="font-size:10px;color:#94a3b8;margin-top:2px;">Bench: <strong style="color:#475569;">80% RI</strong> · <strong style="color:#475569;">45% Set</strong></div>
                                     </div>
                                 </div>
                                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
-                                    ${sparkline(setTrend,'#0369a1')}
+                                    ${sparkline(setTrend,'#0a0a0a')}
                                     <div style="font-size:9px;color:#94a3b8;letter-spacing:0.3px;">Set% · Jan→May</div>
                                 </div>
                             </div>
@@ -2858,28 +2858,28 @@ const OB_TRENDS = {
                                     ${row('Set %', store.baseline.set, store.current.set, BENCH.set, 'set')}
                                 </tbody>
                             </table>
-                            <div style="font-size:10px;color:#0369a1;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Top 3 to coach — asking for the appt</div>
+                            <div style="font-size:10px;color:#0a0a0a;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Top 3 to coach — asking for the appt</div>
                             ${ibCandidates.length ? ibCandidates.map((r,i)=>`
-                                <div style="background:#fff;border:1px solid #bae6fd;border-radius:5px;padding:9px 12px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;">
+                                <div style="background:#fff;border:1px solid #e5e5e5;border-radius:5px;padding:9px 12px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;">
                                     <span style="font-weight:600;color:#1a1a2e;font-size:13px;">${i+1}. ${r.n}</span>
-                                    <span style="font-size:13px;color:#dc2626;font-weight:700;">${r.askPct}% ask</span>
+                                    <span style="font-size:13px;color:#D40000;font-weight:700;">${r.askPct}% ask</span>
                                 </div>`).join('') : '<div style="font-size:11px;color:#64748b;font-style:italic;padding:6px 0;">Everyone\'s asking. No coaching candidates flagged.</div>'}
                         </div>
                         <!-- OUTBOUND -->
-                        <div style="border:1px solid #fed7aa;border-radius:8px;padding:14px;background:#fff7ed;">
+                        <div style="border:1px solid #fafafa;border-radius:8px;padding:14px;background:#fafafa;">
                             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
                                 <div style="display:flex;align-items:center;gap:13px;">
                                     <div style="text-align:center;">
-                                        <div style="font-size:8.5px;font-weight:800;color:#c2410c;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:3px;">Outbound</div>
+                                        <div style="font-size:8.5px;font-weight:800;color:#D40000;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:3px;">Outbound</div>
                                         <div class="g ${gc(c.ob)}" style="font-size:40px;line-height:0.9;padding:8px 16px;border-radius:11px;font-weight:800;display:inline-block;">${c.ob}</div>
                                     </div>
                                     <div>
-                                        <h4 style="font-size:13px;font-weight:700;color:#c2410c;text-transform:uppercase;letter-spacing:0.5px;">Outbound Grade</h4>
+                                        <h4 style="font-size:13px;font-weight:700;color:#D40000;text-transform:uppercase;letter-spacing:0.5px;">Outbound Grade</h4>
                                         <div style="font-size:10px;color:#94a3b8;margin-top:2px;">Bench: <strong style="color:#475569;">20% Live</strong> · <strong style="color:#475569;">10% Appt</strong></div>
                                     </div>
                                 </div>
                                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
-                                    ${sparkline(apptTrend,'#c2410c')}
+                                    ${sparkline(apptTrend,'#D40000')}
                                     <div style="font-size:9px;color:#94a3b8;letter-spacing:0.3px;">Appt% · Jan→May</div>
                                 </div>
                             </div>
@@ -2895,21 +2895,21 @@ const OB_TRENDS = {
                                     ${row('Appt %', store.baseline.appt, store.current.appt, BENCH.appt, 'appt')}
                                 </tbody>
                             </table>
-                            <div style="font-size:10px;color:#c2410c;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Top 3 to coach — connect & convert</div>
+                            <div style="font-size:10px;color:#D40000;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Top 3 to coach — connect & convert</div>
                             ${obCandidates.length ? obCandidates.map((r,i)=>`
-                                <div style="background:#fff;border:1px solid #fed7aa;border-radius:5px;padding:9px 12px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;">
+                                <div style="background:#fff;border:1px solid #fafafa;border-radius:5px;padding:9px 12px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;">
                                     <span style="font-weight:600;color:#1a1a2e;font-size:13px;">${i+1}. ${r.n}</span>
-                                    <span style="font-size:13px;color:#dc2626;font-weight:700;">${r.live<15?r.live+'% live':r.appt+'% appt'}</span>
+                                    <span style="font-size:13px;color:#D40000;font-weight:700;">${r.live<15?r.live+'% live':r.appt+'% appt'}</span>
                                 </div>`).join('') : '<div style="font-size:11px;color:#64748b;font-style:italic;padding:6px 0;">No coaching candidates flagged.</div>'}
                         </div>
                     </div>
                     <!-- Overall + Focus -->
-                    <div style="margin-top:14px;padding:12px 14px;background:#fef3c7;border:1px solid #fde68a;border-radius:8px;display:flex;justify-content:space-between;align-items:center;gap:14px;">
+                    <div style="margin-top:14px;padding:12px 14px;background:rgba(255,215,16,0.12);border:1px solid rgba(255,215,16,0.40);border-radius:8px;display:flex;justify-content:space-between;align-items:center;gap:14px;">
                         <div>
-                            <div style="font-size:10px;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px;">Where to focus</div>
-                            <div style="font-size:13px;color:#78350f;font-weight:600;">${focus}</div>
+                            <div style="font-size:10px;font-weight:700;color:#8a6b00;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px;">Where to focus</div>
+                            <div style="font-size:13px;color:#8a6b00;font-weight:600;">${focus}</div>
                         </div>
-                        <div style="text-align:right;font-size:11px;color:#92400e;">
+                        <div style="text-align:right;font-size:11px;color:#8a6b00;">
                             <div>Baseline: <span class="g ${gc(b.ov)}" style="font-size:10px;">${b.ov}</span> → May MTD: <span class="g ${gc(c.ov)}" style="font-size:10px;">${c.ov}</span></div>
                         </div>
                     </div>
@@ -2935,7 +2935,7 @@ const OB_TRENDS = {
             // Grade color helper
             function gBg(grade) {
                 const col = gColor(grade);
-                return col==='green'?'background:#dcfce7;color:#15803d;':col==='yellow'?'background:#fef9c3;color:#854d0e;':'background:#fecaca;color:#991b1b;';
+                return col==='green'?'background:rgba(45,139,40,0.10);color:#1a5e16;':col==='yellow'?'background:#fef9c3;color:#8a6b00;':'background:rgba(212,0,0,0.20);color:#a00000;';
             }
 
             // Grade strip — show Apr (current) with Mar comparison
@@ -2962,7 +2962,7 @@ const OB_TRENDS = {
                 if(!vals) return '';
                 let html = `<div class="spotlight-trend-row"><span class="spotlight-trend-label">${label}</span><div class="spotlight-trend-vals">`;
                 vals.forEach((v,i) => {
-                    const bg = v===null?'background:#f9fafb;color:#d0d5dd;': v>=bench?'background:#dcfce7;color:#15803d;': v>=bench*0.8?'background:#fef9c3;color:#854d0e;':'background:#fecaca;color:#991b1b;';
+                    const bg = v===null?'background:#fafafa;color:#fafafa;': v>=bench?'background:rgba(45,139,40,0.10);color:#1a5e16;': v>=bench*0.8?'background:#fef9c3;color:#8a6b00;':'background:rgba(212,0,0,0.20);color:#a00000;';
                     html += `<div class="spotlight-trend-cell" style="${bg}">${v!==null?v+'%':'—'}</div>`;
                 });
                 html += `</div></div>`;
@@ -2985,7 +2985,7 @@ const OB_TRENDS = {
                 staff.forEach(p=>{totOB+=p.ob;totC+=p.c;totA+=p.a;});
                 const topStaff = staff.slice(0,10);
                 staffHTML = `<div class="spotlight-section">
-                    <h4>Top Salespeople — Outbound MTD (${staff.length} total | <a href="#" onclick="event.preventDefault();closeSpotlight();showStaffModal('${storeId}');" style="color:#0369a1;text-decoration:underline;font-size:11px;text-transform:none;letter-spacing:0;font-weight:400;">View all</a>)</h4>
+                    <h4>Top Salespeople — Outbound MTD (${staff.length} total | <a href="#" onclick="event.preventDefault();closeSpotlight();showStaffModal('${storeId}');" style="color:#0a0a0a;text-decoration:underline;font-size:11px;text-transform:none;letter-spacing:0;font-weight:400;">View all</a>)</h4>
                     <table class="staff-tbl" style="font-size:11px;">
                         <thead><tr><th>Salesperson</th><th class="num">OB</th><th class="num">Conn</th><th class="num">Live%</th><th class="num">Appts</th><th class="num">Appt%</th></tr></thead>
                         <tbody>${topStaff.map(p=>{
@@ -2993,7 +2993,7 @@ const OB_TRENDS = {
                             const pa=p.c>0?((p.a/p.c)*100).toFixed(1):'—';
                             return '<tr><td>'+p.n+'</td><td class="num">'+p.ob+'</td><td class="num">'+p.c+'</td><td class="num">'+pl+'%</td><td class="num">'+p.a+'</td><td class="num">'+pa+'%</td></tr>';
                         }).join('')}</tbody>
-                        <tfoot><tr style="font-weight:700;border-top:2px solid #d0d5dd;">
+                        <tfoot><tr style="font-weight:700;border-top:2px solid #fafafa;">
                             <td>STORE TOTAL</td><td class="num">${totOB}</td><td class="num">${totC}</td>
                             <td class="num">${totOB>0?((totC/totOB)*100).toFixed(1):'0'}%</td>
                             <td class="num">${totA}</td><td class="num">${totC>0?((totA/totC)*100).toFixed(1):'0'}%</td>
@@ -3037,17 +3037,17 @@ const OB_TRENDS = {
             document.getElementById('focusBody').innerHTML = `
                 <div class="focus-region-prompt">
                     <div class="frp-cards">
-                        <button class="frp-card" style="--c1:#059669;" onclick="setFocusRegion('West')">
+                        <button class="frp-card" style="--c1:#2D8B28;" onclick="setFocusRegion('West')">
                             <div class="frc-region">West</div>
                             <div class="frc-meta">${westStores.length} stores</div>
                             <div class="frc-stores">${westNames}</div>
                         </button>
-                        <button class="frp-card" style="--c1:#0284c7;" onclick="setFocusRegion('East')">
+                        <button class="frp-card" style="--c1:#0a0a0a;" onclick="setFocusRegion('East')">
                             <div class="frc-region">East</div>
                             <div class="frc-meta">${eastStores.length} stores</div>
                             <div class="frc-stores">${eastNames}</div>
                         </button>
-                        <button class="frp-card" style="--c1:#7c3aed;" onclick="setFocusRegion('All')">
+                        <button class="frp-card" style="--c1:#0a0a0a;" onclick="setFocusRegion('All')">
                             <div class="frc-region">All regions</div>
                             <div class="frc-meta">${D.stores.length} stores</div>
                             <div class="frc-stores">Everyone in one view</div>
@@ -3129,13 +3129,13 @@ const OB_TRENDS = {
                     <div class="fsm-box"><div class="fsm-lbl">Group Grade</div><div class="fsm-val" style="color:${gradeColor(avgLetter)};">${avgLetter}</div><div class="fsm-sub">${scored.length} store${scored.length===1?'':'s'} · avg ${avgScore.toFixed(2)} GPA</div></div>
                     <div class="fsm-box"><div class="fsm-lbl">Avg ${isIB?'RI%':'Live%'}</div><div class="fsm-val">${avgPrimary.toFixed(1)}%</div><div class="fsm-sub">Bench: ${isIB?BENCH.req:BENCH.live}%</div></div>
                     <div class="fsm-box"><div class="fsm-lbl">Avg ${isIB?'Set%':'Appt%'}</div><div class="fsm-val">${avgSecondary.toFixed(1)}%</div><div class="fsm-sub">Bench: ${isIB?BENCH.set:BENCH.appt}%</div></div>
-                    <div class="fsm-box"><div class="fsm-lbl">Improved vs baseline</div><div class="fsm-val" style="color:#16a34a;">${improved}</div><div class="fsm-sub">Declined: ${declined}</div></div>
+                    <div class="fsm-box"><div class="fsm-lbl">Improved vs baseline</div><div class="fsm-val" style="color:#2D8B28;">${improved}</div><div class="fsm-sub">Declined: ${declined}</div></div>
                     <div class="fsm-box"><div class="fsm-lbl">Top performer</div><div class="fsm-val" style="font-size:16px;">${top.s.id} · ${top.ch}</div><div class="fsm-sub">${top.s.name.replace('Fred Anderson ','')}</div></div>
                     <div class="fsm-box"><div class="fsm-lbl">Bottom</div><div class="fsm-val" style="font-size:16px;">${bottom.s.id} · ${bottom.ch}</div><div class="fsm-sub">${bottom.s.name.replace('Fred Anderson ','')}</div></div>
                 </div>`;
             // Ranking table
             function gradePair(fromG, toG, diff){
-                const arrowCol = diff == null ? '#94a3b8' : diff >= 0.2 ? '#16a34a' : diff <= -0.2 ? '#dc2626' : '#94a3b8';
+                const arrowCol = diff == null ? '#94a3b8' : diff >= 0.2 ? '#2D8B28' : diff <= -0.2 ? '#D40000' : '#94a3b8';
                 const arrowChar = diff == null ? '&rarr;' : diff >= 0.2 ? '&#9650;' : diff <= -0.2 ? '&#9660;' : '&rarr;';
                 if(fromG == null) return `<span style="color:${arrowCol};">${arrowChar}</span>`;
                 return `<span style="color:#94a3b8;">${fromG}</span> <span style="color:${arrowCol};font-size:10px;margin-left:4px;">${arrowChar}</span>`;
@@ -3206,7 +3206,7 @@ const OB_TRENDS = {
                     <div class="fp-stats">
                         <span class="fp-stat-item"><strong>${biggerGap.label}</strong> ${biggerGap.val}% (bench ${biggerGap.bench}%)</span>
                         <span class="fp-stat-item">Channel grade <strong>${x.ch}</strong></span>
-                        <span class="fp-stat-item">vs start <strong style="color:${x.delta>=0?'#16a34a':'#dc2626'};">${x.delta>=0?'+':''}${x.delta.toFixed(2)}</strong></span>
+                        <span class="fp-stat-item">vs start <strong style="color:${x.delta>=0?'#2D8B28':'#D40000'};">${x.delta>=0?'+':''}${x.delta.toFixed(2)}</strong></span>
                     </div>
                     <div style="font-size:12px;line-height:1.5;margin-bottom:8px;">${diagnosis}</div>
                     <div class="fp-action">
@@ -3231,8 +3231,8 @@ const OB_TRENDS = {
                 </div>`;
             }).join('');
             // Compose body
-            const regionBadgeColor = region === 'East' ? '#dbeafe' : region === 'West' ? '#dcfce7' : '#ede9fe';
-            const regionBadgeTextColor = region === 'East' ? '#1e40af' : region === 'West' ? '#166534' : '#6b21a8';
+            const regionBadgeColor = region === 'East' ? '#dbeafe' : region === 'West' ? 'rgba(45,139,40,0.10)' : '#ede9fe';
+            const regionBadgeTextColor = region === 'East' ? '#0a0a0a' : region === 'West' ? '#1a5e16' : '#6b21a8';
             document.getElementById('focusBody').innerHTML = `
                 <button class="focus-back" onclick="openFocus(focusState.mode)">&larr; Change region</button>
                 <span class="focus-region-badge" style="background:${regionBadgeColor};color:${regionBadgeTextColor};">${region === 'All' ? 'All regions' : region + ' region'} &middot; ${scored.length} store${scored.length===1?'':'s'}</span>
@@ -3295,7 +3295,7 @@ const OB_TRENDS = {
             const ch = h - pad.top - pad.bottom;
             const yMin = 0, yMax = 4;
             // Gridlines at A/B/C/D/F
-            ctx.strokeStyle = '#e2e8f0';
+            ctx.strokeStyle = '#fafafa';
             ctx.lineWidth = 1;
             ctx.fillStyle = '#94a3b8';
             ctx.font = '10px -apple-system, sans-serif';
@@ -3318,7 +3318,7 @@ const OB_TRENDS = {
                 ctx.fillText(m, x, pad.top+ch+6);
             });
             // Line
-            const channelColor = isIB ? '#0ea5e9' : '#f97316';
+            const channelColor = isIB ? '#0a0a0a' : '#D40000';
             ctx.strokeStyle = channelColor;
             ctx.lineWidth = 3;
             ctx.lineJoin = 'round';
@@ -3361,11 +3361,11 @@ const OB_TRENDS = {
             });
         }
         function gradeColor(g){
-            if(g.startsWith('A')) return '#16a34a';
-            if(g.startsWith('B')) return '#0284c7';
+            if(g.startsWith('A')) return '#2D8B28';
+            if(g.startsWith('B')) return '#0a0a0a';
             if(g.startsWith('C')) return '#ca8a04';
             if(g.startsWith('D')) return '#ea580c';
-            return '#dc2626';
+            return '#D40000';
         }
         // Close focus on Esc
         document.addEventListener('keydown', e => {
@@ -3387,13 +3387,13 @@ const OB_TRENDS = {
         }
 
         function hmColor(val, bench) {
-            if(val === null) return 'background:#f9fafb;color:#d0d5dd;';
+            if(val === null) return 'background:#fafafa;color:#fafafa;';
             const ratio = val / bench;
-            if(ratio >= 1.0) return 'background:#dcfce7;color:#15803d;';
-            if(ratio >= 0.9) return 'background:#d1fae5;color:#166534;';
-            if(ratio >= 0.8) return 'background:#fef9c3;color:#854d0e;';
-            if(ratio >= 0.7) return 'background:#fed7aa;color:#9a3412;';
-            return 'background:#fecaca;color:#991b1b;';
+            if(ratio >= 1.0) return 'background:rgba(45,139,40,0.10);color:#1a5e16;';
+            if(ratio >= 0.9) return 'background:rgba(45,139,40,0.10);color:#1a5e16;';
+            if(ratio >= 0.8) return 'background:#fef9c3;color:#8a6b00;';
+            if(ratio >= 0.7) return 'background:#fafafa;color:#9a3412;';
+            return 'background:rgba(212,0,0,0.20);color:#a00000;';
         }
 
         function renderTrends() {
@@ -3421,7 +3421,7 @@ const OB_TRENDS = {
             let execHTML = `<div class="trends-exec">
                 <h4>Executive Summary — ${label} YTD Trend</h4>
                 <p>Group average: <strong>${janAvg!==null?janAvg.toFixed(1):'—'}%</strong> (Jan) → <strong>${aprAvg!==null?aprAvg.toFixed(1):'—'}%</strong> (May MTD) —
-                <strong style="color:${ytdDelta>=0?'#16a34a':'#dc2626'}">${ytdDelta>=0?'+':''}${ytdDelta.toFixed(1)} YTD</strong><br>
+                <strong style="color:${ytdDelta>=0?'#2D8B28':'#D40000'}">${ytdDelta>=0?'+':''}${ytdDelta.toFixed(1)} YTD</strong><br>
                 <strong>${improving}</strong> of ${storeDeltas.length} stores improved since Jan, <strong>${declining}</strong> declined.<br>
                 Benchmark: <strong>${bench}%</strong> — Group is currently <strong>${benchGap<=0?'at or above':benchGap.toFixed(1)+' below'}</strong> benchmark.</p>
             </div>`;
@@ -3437,18 +3437,18 @@ const OB_TRENDS = {
             const wJan=regionAvg(westStores,0), wApr=regionAvg(westStores,months.length-1);
             const eJan=regionAvg(eastStores,0), eApr=regionAvg(eastStores,months.length-1);
             const wD=wApr-wJan, eD=eApr-eJan;
-            execHTML += `<div class="trends-exec" style="background:#f8fafc;border-color:#e2e8f0;margin-top:8px;">
+            execHTML += `<div class="trends-exec" style="background:#fafafa;border-color:#fafafa;margin-top:8px;">
                 <h4 style="color:#475569;">East vs West</h4>
-                <p><strong>West</strong> (${westStores.length} stores): ${wJan!==null?wJan.toFixed(1):'—'}% (Jan) → <strong>${wApr!==null?wApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${wD>=0?'#16a34a':'#dc2626'}">${wD>=0?'+':''}${wD.toFixed(1)}</strong> &nbsp;&nbsp;|&nbsp;&nbsp;
-                <strong>East</strong> (${eastStores.length} stores): ${eJan!==null?eJan.toFixed(1):'—'}% (Jan) → <strong>${eApr!==null?eApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${eD>=0?'#16a34a':'#dc2626'}">${eD>=0?'+':''}${eD.toFixed(1)}</strong></p>
+                <p><strong>West</strong> (${westStores.length} stores): ${wJan!==null?wJan.toFixed(1):'—'}% (Jan) → <strong>${wApr!==null?wApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${wD>=0?'#2D8B28':'#D40000'}">${wD>=0?'+':''}${wD.toFixed(1)}</strong> &nbsp;&nbsp;|&nbsp;&nbsp;
+                <strong>East</strong> (${eastStores.length} stores): ${eJan!==null?eJan.toFixed(1):'—'}% (Jan) → <strong>${eApr!==null?eApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${eD>=0?'#2D8B28':'#D40000'}">${eD>=0?'+':''}${eD.toFixed(1)}</strong></p>
             </div>`;
 
             // Chart — Group Avg, West, East lines
             let chartHTML = `<div class="trends-chart-wrap">
                 <canvas id="trendCanvas" width="900" height="260"></canvas>
                 <div class="trends-chart-legend">
-                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#eab308;"></div>West</div>
-                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#2563eb;"></div>East</div>
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#8a6b00;"></div>West</div>
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#0a0a0a;"></div>East</div>
                     <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#9ca3af;border-top:2px dashed #9ca3af;height:0;"></div>Benchmark</div>
                 </div>
             </div>`;
@@ -3463,7 +3463,7 @@ const OB_TRENDS = {
                 </div>
                 <div class="trends-mover-card">
                     <h5>&#9660; Needs Attention</h5>
-                    ${losers.length ? losers.map(s=>`<div class="trends-mover-item"><span class="store-name">${s.id}</span><span class="vals">${s.jan}% → ${s.apr}%</span><span class="delta-down">${s.d}</span></div>`).join('') : '<div style="color:#16a34a;font-size:12px;font-weight:600;">Everyone improved!</div>'}
+                    ${losers.length ? losers.map(s=>`<div class="trends-mover-item"><span class="store-name">${s.id}</span><span class="vals">${s.jan}% → ${s.apr}%</span><span class="delta-down">${s.d}</span></div>`).join('') : '<div style="color:#2D8B28;font-size:12px;font-weight:600;">Everyone improved!</div>'}
                 </div>
             </div>`;
 
@@ -3497,13 +3497,13 @@ const OB_TRENDS = {
                 vals.forEach(v => {
                     if(v===null) { hmHTML += `<div class="sparkline-bar" style="height:2px;background:#e5e7eb;"></div>`; return; }
                     const pct = Math.max(10, (v/maxVal)*100);
-                    const color = v >= bench ? '#16a34a' : v >= bench*0.8 ? '#eab308' : '#dc2626';
+                    const color = v >= bench ? '#2D8B28' : v >= bench*0.8 ? '#8a6b00' : '#D40000';
                     hmHTML += `<div class="sparkline-bar" style="height:${pct}%;background:${color};"></div>`;
                 });
                 hmHTML += `</div></td>`;
                 // Change column
                 if(s.d !== null) {
-                    const cls = s.d>0?'color:#16a34a':'color:#dc2626';
+                    const cls = s.d>0?'color:#2D8B28':'color:#D40000';
                     const arrow = s.d>0?'▲':s.d<0?'▼':'—';
                     hmHTML += `<td class="change-cell" style="${cls}">${s.d>=0?'+':''}${s.d} ${arrow}</td>`;
                 } else {
@@ -3519,7 +3519,7 @@ const OB_TRENDS = {
                 hmHTML += `<td><span class="hm-cell" style="${hmColor(avg!==null?Math.round(avg):null,bench)}">${avg!==null?avg.toFixed(1)+'%':'—'}</span></td>`;
             });
             const avgD = (trendAvg(m,months.length-1)||0) - (trendAvg(m,0)||0);
-            hmHTML += `<td></td><td class="change-cell" style="color:${avgD>=0?'#16a34a':'#dc2626'}">${avgD>=0?'+':''}${avgD.toFixed(1)} ${avgD>=0?'▲':'▼'}</td>`;
+            hmHTML += `<td></td><td class="change-cell" style="color:${avgD>=0?'#2D8B28':'#D40000'}">${avgD>=0?'+':''}${avgD.toFixed(1)} ${avgD>=0?'▲':'▼'}</td>`;
             hmHTML += `</tr></tbody></table>`;
 
             document.getElementById('trendsPanel').innerHTML = `
@@ -3574,7 +3574,7 @@ const OB_TRENDS = {
             let execHTML = `<div class="trends-exec">
                 <h4>Outbound — ${label} YTD Trend</h4>
                 <p>Group average: <strong>${janAvg!==null?janAvg.toFixed(1):'—'}%</strong> (Jan) → <strong>${aprAvg!==null?aprAvg.toFixed(1):'—'}%</strong> (May MTD) —
-                <strong style="color:${ytdDelta>=0?'#16a34a':'#dc2626'}">${ytdDelta>=0?'+':''}${ytdDelta.toFixed(1)}</strong> YTD<br>
+                <strong style="color:${ytdDelta>=0?'#2D8B28':'#D40000'}">${ytdDelta>=0?'+':''}${ytdDelta.toFixed(1)}</strong> YTD<br>
                 <strong>${improving}</strong> of ${storeDeltas.length} stores improved since Jan, <strong>${declining}</strong> declined.<br>
                 Benchmark: <strong>${bench}%</strong> — Group is currently <strong>${benchGap<=0?'at or above':benchGap.toFixed(1)+' below'}</strong> benchmark.</p>
             </div>`;
@@ -3590,18 +3590,18 @@ const OB_TRENDS = {
             const wJan=obRegionAvg(westStores,0), wApr=obRegionAvg(westStores,months.length-1);
             const eJan=obRegionAvg(eastStores,0), eApr=obRegionAvg(eastStores,months.length-1);
             const wD=wApr-wJan, eD=eApr-eJan;
-            execHTML += `<div class="trends-exec" style="background:#f8fafc;border-color:#e2e8f0;margin-top:8px;">
+            execHTML += `<div class="trends-exec" style="background:#fafafa;border-color:#fafafa;margin-top:8px;">
                 <h4 style="color:#475569;">East vs West</h4>
-                <p><strong>West</strong> (${westStores.length} stores): ${wJan!==null?wJan.toFixed(1):'—'}% (Jan) → <strong>${wApr!==null?wApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${wD>=0?'#16a34a':'#dc2626'}">${wD>=0?'+':''}${wD.toFixed(1)}</strong> &nbsp;&nbsp;|&nbsp;&nbsp;
-                <strong>East</strong> (${eastStores.length} stores): ${eJan!==null?eJan.toFixed(1):'—'}% (Jan) → <strong>${eApr!==null?eApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${eD>=0?'#16a34a':'#dc2626'}">${eD>=0?'+':''}${eD.toFixed(1)}</strong></p>
+                <p><strong>West</strong> (${westStores.length} stores): ${wJan!==null?wJan.toFixed(1):'—'}% (Jan) → <strong>${wApr!==null?wApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${wD>=0?'#2D8B28':'#D40000'}">${wD>=0?'+':''}${wD.toFixed(1)}</strong> &nbsp;&nbsp;|&nbsp;&nbsp;
+                <strong>East</strong> (${eastStores.length} stores): ${eJan!==null?eJan.toFixed(1):'—'}% (Jan) → <strong>${eApr!==null?eApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${eD>=0?'#2D8B28':'#D40000'}">${eD>=0?'+':''}${eD.toFixed(1)}</strong></p>
             </div>`;
 
             // Chart
             let chartHTML = `<div class="trends-chart-wrap">
                 <canvas id="obTrendCanvas" width="900" height="260"></canvas>
                 <div class="trends-chart-legend">
-                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#eab308;"></div>West</div>
-                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#2563eb;"></div>East</div>
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#8a6b00;"></div>West</div>
+                    <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#0a0a0a;"></div>East</div>
                     <div class="trends-chart-legend-item"><div class="trends-chart-legend-line" style="background:#9ca3af;border-top:2px dashed #9ca3af;height:0;"></div>Benchmark</div>
                 </div>
             </div>`;
@@ -3616,7 +3616,7 @@ const OB_TRENDS = {
                 </div>
                 <div class="trends-mover-card">
                     <h5>&#9660; Needs Attention</h5>
-                    ${losers.length ? losers.map(s=>`<div class="trends-mover-item"><span class="store-name">${s.id}</span><span class="vals">${s.jan}% → ${s.apr}%</span><span class="delta-down">${s.d}</span></div>`).join('') : '<div style="color:#16a34a;font-size:12px;font-weight:600;">Everyone improved!</div>'}
+                    ${losers.length ? losers.map(s=>`<div class="trends-mover-item"><span class="store-name">${s.id}</span><span class="vals">${s.jan}% → ${s.apr}%</span><span class="delta-down">${s.d}</span></div>`).join('') : '<div style="color:#2D8B28;font-size:12px;font-weight:600;">Everyone improved!</div>'}
                 </div>
             </div>`;
 
@@ -3649,16 +3649,16 @@ const OB_TRENDS = {
                 vals.forEach(v => {
                     if(v===null){hmHTML+=`<div class="sparkline-bar" style="height:2px;background:#e5e7eb;"></div>`;return;}
                     const pct = Math.max(10,(v/maxVal)*100);
-                    const color = v>=bench?'#16a34a':v>=bench*0.8?'#eab308':'#dc2626';
+                    const color = v>=bench?'#2D8B28':v>=bench*0.8?'#8a6b00':'#D40000';
                     hmHTML+=`<div class="sparkline-bar" style="height:${pct}%;background:${color};"></div>`;
                 });
                 hmHTML += `</div></td>`;
                 if(d!==null){
-                    hmHTML += `<td class="change-cell" style="color:${d>=0?'#16a34a':'#dc2626'};font-weight:700;">${d>=0?'+':''}${d} ${d>0?'▲':d<0?'▼':'—'}</td>`;
+                    hmHTML += `<td class="change-cell" style="color:${d>=0?'#2D8B28':'#D40000'};font-weight:700;">${d>=0?'+':''}${d} ${d>0?'▲':d<0?'▼':'—'}</td>`;
                 } else {
                     hmHTML += `<td style="color:#9ca3af;">New</td>`;
                 }
-                hmHTML += `<td><a href="#" onclick="event.preventDefault();showStaffModal('${s.id}')" style="color:#0369a1;font-size:10px;">View ${staff.length}</a></td></tr>`;
+                hmHTML += `<td><a href="#" onclick="event.preventDefault();showStaffModal('${s.id}')" style="color:#0a0a0a;font-size:10px;">View ${staff.length}</a></td></tr>`;
             });
 
             // Avg row
@@ -3668,7 +3668,7 @@ const OB_TRENDS = {
                 hmHTML += `<td><span class="hm-cell" style="${hmColor(avg!==null?Math.round(avg):null,bench)}">${avg!==null?avg.toFixed(1)+'%':'—'}</span></td>`;
             });
             const avgD = (obTrendAvg(m,months.length-1)||0) - (obTrendAvg(m,0)||0);
-            hmHTML += `<td></td><td class="change-cell" style="color:${avgD>=0?'#16a34a':'#dc2626'};font-weight:700;">${avgD>=0?'+':''}${avgD.toFixed(1)} ${avgD>=0?'▲':'▼'}</td><td></td></tr></tbody></table>`;
+            hmHTML += `<td></td><td class="change-cell" style="color:${avgD>=0?'#2D8B28':'#D40000'};font-weight:700;">${avgD>=0?'+':''}${avgD.toFixed(1)} ${avgD>=0?'▲':'▼'}</td><td></td></tr></tbody></table>`;
 
             document.getElementById('obTrendsPanel').innerHTML = `
                 <div class="trends-header">
@@ -3765,8 +3765,8 @@ const OB_TRENDS = {
                 });
             }
 
-            drawLine(westSeries, '#eab308', 2.5);
-            drawLine(eastSeries, '#2563eb', 2.5);
+            drawLine(westSeries, '#8a6b00', 2.5);
+            drawLine(eastSeries, '#0a0a0a', 2.5);
 
             ctx.fillStyle = '#6b7280'; ctx.font = '11px Helvetica Neue, Helvetica, Arial'; ctx.textAlign = 'center';
             months.forEach((mo,i) => { ctx.fillText(mo, toX(i), h-pad.bottom+18); });
@@ -3861,8 +3861,8 @@ const OB_TRENDS = {
                 });
             }
 
-            drawLine(westSeries, '#eab308', 2.5);
-            drawLine(eastSeries, '#2563eb', 2.5);
+            drawLine(westSeries, '#8a6b00', 2.5);
+            drawLine(eastSeries, '#0a0a0a', 2.5);
 
             // X axis
             ctx.fillStyle = '#6b7280'; ctx.font = '11px Helvetica Neue, Helvetica, Arial'; ctx.textAlign = 'center';
@@ -3945,8 +3945,8 @@ const OB_TRENDS = {
                     ctx.fillText(lbl, x, y-10);
                 });
             }
-            drawLine(ibSeries, '#0ea5e9');
-            drawLine(obSeries, '#f97316');
+            drawLine(ibSeries, '#0a0a0a');
+            drawLine(obSeries, '#D40000');
 
             // X axis
             ctx.fillStyle='#6b7280'; ctx.font='11px Helvetica Neue, Helvetica, Arial'; ctx.textAlign='center';
@@ -3955,11 +3955,11 @@ const OB_TRENDS = {
             // Right-side end labels
             const lastI = months.length-1;
             if(ibSeries[lastI]!=null){
-                ctx.fillStyle='#0ea5e9'; ctx.font='bold 11px Helvetica Neue, Helvetica, Arial'; ctx.textAlign='left';
+                ctx.fillStyle='#0a0a0a'; ctx.font='bold 11px Helvetica Neue, Helvetica, Arial'; ctx.textAlign='left';
                 ctx.fillText('Inbound', toX(lastI)+10, toY(ibSeries[lastI])+4);
             }
             if(obSeries[lastI]!=null){
-                ctx.fillStyle='#f97316'; ctx.font='bold 11px Helvetica Neue, Helvetica, Arial'; ctx.textAlign='left';
+                ctx.fillStyle='#D40000'; ctx.font='bold 11px Helvetica Neue, Helvetica, Arial'; ctx.textAlign='left';
                 ctx.fillText('Outbound', toX(lastI)+10, toY(obSeries[lastI])+4);
             }
         }
@@ -4000,12 +4000,12 @@ const OB_TRENDS = {
             overlay.innerHTML=`
                 <div style="position:relative;text-align:center;transform:scale(0.6);transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1);opacity:0;" id="fwCard">
                     <div style="font-size:68px;line-height:1;margin-bottom:8px;">\u{1F386}</div>
-                    <div style="background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);border:3px solid #f59e0b;border-radius:18px;padding:22px 38px;box-shadow:0 20px 60px rgba(0,0,0,0.25);">
-                        <div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#92400e;font-weight:700;margin-bottom:6px;">Most Improved This Week</div>
-                        <div style="font-size:32px;font-weight:800;color:#78350f;margin-bottom:4px;">${top.store.id}</div>
-                        <div style="font-size:14px;color:#78350f;margin-bottom:10px;">${top.store.name}</div>
-                        <div style="font-size:18px;font-weight:700;color:#15803d;margin-bottom:6px;">${top.m.ov} \u2192 ${top.c.ov}</div>
-                        <div style="font-size:12px;font-weight:600;color:#92400e;font-style:italic;">${driver}</div>
+                    <div style="background:linear-gradient(135deg,rgba(255,215,16,0.12) 0%,rgba(255,215,16,0.40) 100%);border:3px solid #FFD710;border-radius:18px;padding:22px 38px;box-shadow:0 20px 60px rgba(0,0,0,0.25);">
+                        <div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#8a6b00;font-weight:700;margin-bottom:6px;">Most Improved This Week</div>
+                        <div style="font-size:32px;font-weight:800;color:#8a6b00;margin-bottom:4px;">${top.store.id}</div>
+                        <div style="font-size:14px;color:#8a6b00;margin-bottom:10px;">${top.store.name}</div>
+                        <div style="font-size:18px;font-weight:700;color:#1a5e16;margin-bottom:6px;">${top.m.ov} \u2192 ${top.c.ov}</div>
+                        <div style="font-size:12px;font-weight:600;color:#8a6b00;font-style:italic;">${driver}</div>
                     </div>
                 </div>
                 <canvas id="fwCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></canvas>
@@ -4016,7 +4016,7 @@ const OB_TRENDS = {
             canvas.width=window.innerWidth; canvas.height=window.innerHeight;
             const ctx=canvas.getContext('2d');
             const cx=window.innerWidth/2, cy=window.innerHeight/2;
-            const colors=['#f59e0b','#ef4444','#3b82f6','#10b981','#a855f7','#ec4899'];
+            const colors=['#FFD710','#D40000','#3b82f6','#10b981','#a855f7','#ec4899'];
             const particles=[];
             for(let burst=0;burst<3;burst++){
                 setTimeout(()=>{
@@ -4079,31 +4079,31 @@ const OB_TRENDS = {
 
             const rows = atRisk.map(x=>`
                 <div onclick="document.getElementById('raleighSplash').remove();showOnePager('${x.s.id}');"
-                     style="padding:11px 14px;border:1px solid #fecaca;border-radius:8px;margin-bottom:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:#fff;transition:background 0.15s;"
-                     onmouseover="this.style.background='#fef2f2';" onmouseout="this.style.background='#fff';">
+                     style="padding:11px 14px;border:1px solid rgba(212,0,0,0.20);border-radius:8px;margin-bottom:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:#fff;transition:background 0.15s;"
+                     onmouseover="this.style.background='#fafafa';" onmouseout="this.style.background='#fff';">
                     <div style="display:flex;align-items:center;gap:11px;">
-                        <span style="font-weight:800;font-size:15px;color:#7f1d1d;letter-spacing:0.3px;">${x.s.id}</span>
+                        <span style="font-weight:800;font-size:15px;color:#a00000;letter-spacing:0.3px;">${x.s.id}</span>
                         <span style="color:#64748b;font-weight:500;font-size:12px;">${x.s.name.replace('Fred Anderson ','').replace('Genesis of ','Genesis ')}</span>
                     </div>
                     <div style="display:flex;align-items:center;gap:10px;">
-                        <span style="background:#dc2626;color:#fff;font-weight:800;font-size:13px;padding:3px 10px;border-radius:6px;min-width:34px;text-align:center;">${x.c.ov}</span>
-                        <span style="font-size:10px;color:#b91c1c;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">View &rarr;</span>
+                        <span style="background:#D40000;color:#fff;font-weight:800;font-size:13px;padding:3px 10px;border-radius:6px;min-width:34px;text-align:center;">${x.c.ov}</span>
+                        <span style="font-size:10px;color:#a00000;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">View &rarr;</span>
                     </div>
                 </div>`).join('');
 
             const bubbleHTML = bubble.length ? `
                 <div style="padding:10px 18px 0;">
-                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#92400e;margin-bottom:6px;">On the bubble &mdash; one soft week from the list</div>
+                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#8a6b00;margin-bottom:6px;">On the bubble &mdash; one soft week from the list</div>
                     <div style="display:flex;flex-wrap:wrap;gap:6px;">
-                        ${bubble.map(x=>`<span onclick="document.getElementById('raleighSplash').remove();showOnePager('${x.s.id}');" style="cursor:pointer;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:4px 9px;font-size:12px;color:#78350f;font-weight:600;">${x.s.id} <span style="color:#a16207;font-weight:700;">${x.c.ov}</span></span>`).join('')}
+                        ${bubble.map(x=>`<span onclick="document.getElementById('raleighSplash').remove();showOnePager('${x.s.id}');" style="cursor:pointer;background:#fafafa;border:1px solid rgba(255,215,16,0.40);border-radius:6px;padding:4px 9px;font-size:12px;color:#8a6b00;font-weight:600;">${x.s.id} <span style="color:#8a6b00;font-weight:700;">${x.c.ov}</span></span>`).join('')}
                     </div>
                 </div>` : '';
 
             panel.innerHTML = `
-                <div style="padding:18px 22px 13px;border-bottom:1px solid #fecaca;background:#fef2f2;border-radius:14px 14px 0 0;">
-                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#b91c1c;margin-bottom:4px;">End-of-May Risk &nbsp;&middot;&nbsp; ${dLeft} day${dLeft===1?'':'s'} left</div>
-                    <h2 style="font-size:19px;font-weight:800;color:#7f1d1d;line-height:1.3;">${atRisk.length} ${atRisk.length===1?'store is':'stores are'} headed to Raleigh</h2>
-                    <div style="font-size:12.5px;color:#991b1b;margin-top:5px;line-height:1.45;">Any store finishing May <strong>below B&minus;</strong> attends remedial training in Raleigh in June. These are sitting there now &mdash; click any store to see its path back up.</div>
+                <div style="padding:18px 22px 13px;border-bottom:1px solid rgba(212,0,0,0.20);background:#fafafa;border-radius:14px 14px 0 0;">
+                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#a00000;margin-bottom:4px;">End-of-May Risk &nbsp;&middot;&nbsp; ${dLeft} day${dLeft===1?'':'s'} left</div>
+                    <h2 style="font-size:19px;font-weight:800;color:#a00000;line-height:1.3;">${atRisk.length} ${atRisk.length===1?'store is':'stores are'} headed to Raleigh</h2>
+                    <div style="font-size:12.5px;color:#a00000;margin-top:5px;line-height:1.45;">Any store finishing May <strong>below B&minus;</strong> attends remedial training in Raleigh in June. These are sitting there now &mdash; click any store to see its path back up.</div>
                 </div>
                 <div style="padding:14px 18px 4px;">
                     ${rows}
@@ -4111,7 +4111,7 @@ const OB_TRENDS = {
                 ${bubbleHTML}
                 <div style="padding:12px 18px 14px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#94a3b8;">
                     <span id="raleighSplashCountdown">Auto-dismissing in 15s</span>
-                    <button onclick="document.getElementById('raleighSplash').remove();" style="background:#dc2626;color:#fff;border:none;border-radius:5px;padding:6px 16px;font-size:12px;font-weight:600;cursor:pointer;">Got it</button>
+                    <button onclick="document.getElementById('raleighSplash').remove();" style="background:#D40000;color:#fff;border:none;border-radius:5px;padding:6px 16px;font-size:12px;font-weight:600;cursor:pointer;">Got it</button>
                 </div>`;
             overlay.appendChild(panel);
             overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.remove(); });
@@ -4161,25 +4161,25 @@ const OB_TRENDS = {
             const list = flagged.map(f=>`
                 <div onclick="document.getElementById('coachingSplash').remove();showStaffModal('${f.sid}','WTD');"
                      style="padding:11px 14px;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:#fff;transition:background 0.15s;"
-                     onmouseover="this.style.background='#fef3c7';" onmouseout="this.style.background='#fff';">
+                     onmouseover="this.style.background='rgba(255,215,16,0.12)';" onmouseout="this.style.background='#fff';">
                     <div>
                         <div style="font-weight:700;font-size:14px;color:#1a1a2e;">${f.sid} <span style="color:#64748b;font-weight:500;font-size:12px;">— ${f.name.replace('Fred Anderson ','').replace('Genesis of ','Genesis ')}</span></div>
-                        <div style="font-size:11px;color:#92400e;margin-top:2px;">${f.reason} · ${f.mgrs.length} mgr${f.mgrs.length===1?'':'s'}</div>
+                        <div style="font-size:11px;color:#8a6b00;margin-top:2px;">${f.reason} · ${f.mgrs.length} mgr${f.mgrs.length===1?'':'s'}</div>
                     </div>
-                    <div style="font-size:10px;color:#0369a1;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">View →</div>
+                    <div style="font-size:10px;color:#0a0a0a;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">View →</div>
                 </div>`).join('');
             panel.innerHTML = `
-                <div style="padding:18px 22px 12px;border-bottom:1px solid #fde68a;background:#fffbeb;border-radius:14px 14px 0 0;">
-                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#92400e;margin-bottom:4px;">Mid-Week Coaching Check</div>
-                    <h2 style="font-size:18px;font-weight:700;color:#78350f;line-height:1.3;">${flagged.length} ${flagged.length===1?'store needs':'stores need'} attention</h2>
-                    <div style="font-size:12px;color:#92400e;margin-top:4px;">Managers haven't listened to or shared a single call since Monday. Click any store to see who's missing.</div>
+                <div style="padding:18px 22px 12px;border-bottom:1px solid rgba(255,215,16,0.40);background:#fafafa;border-radius:14px 14px 0 0;">
+                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8a6b00;margin-bottom:4px;">Mid-Week Coaching Check</div>
+                    <h2 style="font-size:18px;font-weight:700;color:#8a6b00;line-height:1.3;">${flagged.length} ${flagged.length===1?'store needs':'stores need'} attention</h2>
+                    <div style="font-size:12px;color:#8a6b00;margin-top:4px;">Managers haven't listened to or shared a single call since Monday. Click any store to see who's missing.</div>
                 </div>
                 <div style="padding:14px 18px;">
                     ${list}
                 </div>
                 <div style="padding:10px 18px 14px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#94a3b8;">
                     <span id="coachingSplashCountdown">Auto-dismissing in 10s</span>
-                    <button onclick="document.getElementById('coachingSplash').remove();" style="background:#0369a1;color:#fff;border:none;border-radius:5px;padding:6px 16px;font-size:12px;font-weight:600;cursor:pointer;">Got it</button>
+                    <button onclick="document.getElementById('coachingSplash').remove();" style="background:#0a0a0a;color:#fff;border:none;border-radius:5px;padding:6px 16px;font-size:12px;font-weight:600;cursor:pointer;">Got it</button>
                 </div>`;
             overlay.appendChild(panel);
             overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.remove(); });
