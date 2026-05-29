@@ -127,8 +127,17 @@
         .stores-table.compact td.metric-cell,
         .stores-table.compact th.metric-h,
         .stores-table.compact th.group-label { display: none; }
-        .stores-table.compact td.grade-cell { padding: 10px 12px !important; }
-        .stores-table.compact tbody tr td.store-name { padding: 10px 14px !important; }
+        .stores-table.compact td.grade-cell { padding: 9px 14px !important; text-align: left; }
+        .stores-table.compact th { text-align: left; padding-left: 14px; }
+        .stores-table.compact th.left { padding-left: 8px; }
+        .stores-table.compact tbody tr td.store-name { padding: 9px 14px !important; }
+        /* Hover peek: tiny inline metric chips that slide in next to the grade pill */
+        .grade-wrap { display: inline-flex; align-items: center; gap: 12px; }
+        .grade-peek { display: inline-flex; align-items: center; gap: 14px; opacity: 0; max-width: 0; overflow: hidden; transition: opacity 0.18s ease-out, max-width 0.28s ease-out; white-space: nowrap; }
+        .grade-peek .gp-pair { font-size: 11.5px; color: #6b7280; font-variant-numeric: tabular-nums; letter-spacing: 0.1px; }
+        .grade-peek .gp-pair strong { color: #0a0a0a; font-weight: 700; }
+        .grade-peek .g { font-size: 10px; padding: 1px 5px; margin-left: 2px; }
+        .stores-table.compact tbody tr:hover .grade-peek { opacity: 1; max-width: 280px; }
         /* Compact/Detailed toggle */
         .view-toggle { display:inline-flex; background:#fafafa; border:1px solid #e5e5e5; border-radius:6px; overflow:hidden; }
         .view-toggle button { background:transparent; border:none; color:#6b7280; padding:5px 12px; font-size:11px; font-weight:600; font-family:inherit; cursor:pointer; transition:background 0.15s, color 0.15s; }
@@ -1341,10 +1350,10 @@ const OB_TRENDS = {
                     </td>
                     <td class="metric-cell ib-start">${miniBar(store.current.req,'req',c.rg)}</td>
                     <td class="metric-cell">${miniBar(store.current.set,'set',c.sg)}</td>
-                    <td class="grade-cell">${thermo(c.ib)}</td>
+                    <td class="grade-cell"><div class="grade-wrap">${thermo(c.ib)}<span class="grade-peek"><span class="gp-pair">RI <strong>${store.current.req}%</strong> <span class="g ${gc(c.rg)}">${c.rg}</span></span><span class="gp-pair">Set <strong>${store.current.set}%</strong> <span class="g ${gc(c.sg)}">${c.sg}</span></span></span></div></td>
                     <td class="metric-cell ob-start">${miniBar(store.current.live,'live',c.lg)}</td>
                     <td class="metric-cell">${miniBar(store.current.appt,'appt',c.ag)}</td>
-                    <td class="grade-cell">${thermo(c.ob)}</td>
+                    <td class="grade-cell"><div class="grade-wrap">${thermo(c.ob)}<span class="grade-peek"><span class="gp-pair">Live <strong>${store.current.live}%</strong> <span class="g ${gc(c.lg)}">${c.lg}</span></span><span class="gp-pair">Appt <strong>${store.current.appt}%</strong> <span class="g ${gc(c.ag)}">${c.ag}</span></span></span></div></td>
                 </tr>
                 <tr class="detail-row" id="detail-${idx}"><td colspan="8">
                     <div style="font-size:11px;color:#6b7280;margin-bottom:4px;font-weight:600;">${store.name}</div>
