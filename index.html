@@ -17,27 +17,18 @@
         }
 
         /* TOP BAR */
-        .top-bar {
-            background: #fff;
-            border-bottom: 2px solid #fafafa;
-            padding: 8px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .top-bar h1 { font-size: 15px; font-weight: 700; color: #1a1a2e; }
-        .top-bar h1 span { color: #0a0a0a; }
-
-        .top-bar-meta { display: flex; gap: 16px; font-size: 11px; color: #6b7280; align-items: center; }
-        .top-bar-meta strong { color: #374151; }
-        .last-updated { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border-radius: 4px; background: #f5f5f5; color: #0a0a0a; font-size: 10px; font-weight: 600; letter-spacing: 0.2px; }
-        .last-updated .lu-dot { width: 6px; height: 6px; border-radius: 50%; background: #10b981; box-shadow: 0 0 0 2px rgba(16,185,129,0.2); }
-        .top-link { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 0.3px; }
-        .derby-link { background: #dbeafe; color: #1d4ed8; }
-        .derby-link:hover { background: #e5e5e5; }
-        .scorecard-link { background: rgba(45,139,40,0.10); color: #1a5e16; }
-        .scorecard-link:hover { background: rgba(45,139,40,0.10); }
+        .top-bar { background: #fff; border-bottom: 1px solid #e5e5e5; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+        .top-bar-left h1 { font-size: 15px; font-weight: 700; color: #0a0a0a; margin: 0 0 3px; letter-spacing: -0.2px; }
+        .top-bar-left h1 span { color: #0a0a0a; }
+        .top-bar-left .meta { font-size: 11px; color: #6b7280; letter-spacing: 0.1px; }
+        .top-bar-left .meta strong { color: #0a0a0a; font-weight: 600; }
+        .top-bar-right { display: flex; align-items: center; gap: 14px; }
+        .last-updated { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; color: #6b7280; font-weight: 600; letter-spacing: 0.2px; }
+        .last-updated .lu-dot { width: 6px; height: 6px; border-radius: 50%; background: #2D8B28; }
+        .last-updated strong { color: #0a0a0a; font-weight: 600; }
+        .top-link { display: inline-block; padding: 5px 11px; border-radius: 4px; font-size: 10px; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 0.6px; transition: background 0.15s; }
+        .scorecard-link { background: #0a0a0a; color: #fff; }
+        .scorecard-link:hover { background: #1a1a1a; }
 
         /* SUMMARY STRIP */
         .summary-strip {
@@ -83,16 +74,11 @@
 
         .region-header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 5px 10px; border-radius: 6px 6px 0 0;
-            border: 1px solid #fafafa; border-bottom: none;
+            padding: 10px 0 6px; border-bottom: 1px solid #e5e5e5;
         }
-
-        .region-west-hdr { background: #f5f5f5; }
-        .region-east-hdr { background: rgba(45,139,40,0.10); }
-
-        .region-header h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
-        .region-west-hdr h3 { color: #0a0a0a; }
-        .region-east-hdr h3 { color: #1a5e16; }
+        .region-west-hdr, .region-east-hdr { background: transparent; }
+        .region-header h3 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; }
+        .region-west-hdr h3, .region-east-hdr h3 { color: #6b7280; }
 
         .region-summary { display: flex; gap: 12px; font-size: 11px; color: #6b7280; }
         .region-summary strong { color: #374151; }
@@ -117,10 +103,10 @@
         .sort-arrow { font-size: 8px; margin-left: 2px; color: #9ca3af; }
         .sort-arrow.active { color: #0a0a0a; }
 
-        .stores-table th.ib-start, .stores-table td.ib-start { border-left: 2px solid #0a0a0a; }
-        .stores-table th.ob-start, .stores-table td.ob-start { border-left: 2px solid #1a5e16; }
-        .stores-table th.ov-col, .stores-table td.ov-col { border-left: 2px solid #fafafa; }
-        .stores-table th.may-col, .stores-table td.may-col { border-left: 2px solid #0a0a0a; background:#fafafa; }
+        .stores-table th.ib-start, .stores-table td.ib-start { border-left: 1px solid #e5e5e5; }
+        .stores-table th.ob-start, .stores-table td.ob-start { border-left: 1px solid #e5e5e5; }
+        .stores-table th.ov-col, .stores-table td.ov-col { border-left: 1px solid #e5e5e5; }
+        .stores-table th.may-col, .stores-table td.may-col { border-left: 1px solid #e5e5e5; background: transparent; }
         .may-grade-big { display:inline-flex; align-items:center; justify-content:center; min-width:48px; padding:6px 10px; border-radius:6px; font-weight:800; font-size:22px; line-height:1; }
         .may-grade-big.g-green { background:rgba(45,139,40,0.18); color:#1a5e16; }
         .may-grade-big.g-yellow { background:rgba(255,215,16,0.42); color:#0a0a0a; }
@@ -133,9 +119,9 @@
         .plan-chip:hover { background:#0a0a0a; }
 
         .stores-table thead .group-label { font-size: 10px; font-weight: 700; letter-spacing: 0.6px; padding: 3px 6px; }
-        .group-ib { background: #f5f5f5; color: #0a0a0a; }
-        .group-ob { background: rgba(45,139,40,0.10); color: #1a5e16; }
-        .group-ov { background: #fafafa; color: #374151; }
+        .group-ib { background: transparent; color: #6b7280; }
+        .group-ob { background: transparent; color: #6b7280; }
+        .group-ov { background: transparent; color: #6b7280; }
 
         .stores-table tbody tr { border-bottom: 1px solid #e5e7eb; transition: background 0.1s; }
         .stores-table tbody tr:hover { background: #fafafa; }
@@ -294,10 +280,9 @@
         .detail-grade-trend { display: flex; align-items: center; gap: 3px; margin-top: 2px; }
 
         /* ALERTS */
-        .region-group-header { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 6px 10px; margin-top: 10px; border-radius: 5px 5px 0 0; }
+        .region-group-header { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 12px 0 6px; margin-top: 18px; color: #6b7280; border-bottom: 1px solid #e5e5e5; }
         .region-group-header:first-child { margin-top: 0; }
-        .region-group-header.west-hdr { background: #f5f5f5; color: #0a0a0a; border-left: 3px solid #0a0a0a; }
-        .region-group-header.east-hdr { background: rgba(45,139,40,0.10); color: #1a5e16; border-left: 3px solid #1a5e16; }
+        .region-group-header.west-hdr, .region-group-header.east-hdr { background: transparent; color: #6b7280; border-left: none; }
         .alert-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 6px; margin-bottom: 8px; }
         .alert-tile { padding: 7px 10px; border-radius: 6px; border-left: 3px solid; font-size: 12px; transition: box-shadow 0.15s, transform 0.1s; }
         .alert-tile:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); transform: translateY(-1px); }
@@ -395,7 +380,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center;
             transition: transform 0.2s, background 0.2s;
         }
-        .chat-fab:hover { background: #075985; transform: scale(1.05); }
+        .chat-fab:hover { background: #1a1a1a; transform: scale(1.05); }
         .chat-fab .badge {
             position: absolute; top: -2px; right: -2px; background: #D40000; color: #fff;
             font-size: 10px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%;
@@ -526,15 +511,15 @@
         .trends-toggle { display:flex; gap:0; border:1px solid #fafafa; border-radius:6px; overflow:hidden; }
         .trends-toggle button { padding:8px 20px; font-size:12px; font-weight:600; border:none; cursor:pointer; background:#fff; color:#6b7280; transition:all 0.15s; }
         .trends-toggle button.active { background:#0a0a0a; color:#fff; }
-        .trends-exec { background:#f5f5f5; border:1px solid #e5e5e5; border-radius:8px; padding:12px 16px; margin-bottom:14px; }
-        .trends-exec h4 { font-size:12px; font-weight:700; color:#0a0a0a; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.3px; }
-        .trends-exec p { font-size:12px; color:#374151; line-height:1.6; margin:0; }
-        .trends-exec strong { color:#1a1a2e; }
+        .trends-exec { background:transparent; border:none; border-top:1px solid #e5e5e5; padding:14px 0 18px; margin-bottom:18px; }
+        .trends-exec h4 { font-size:10px; font-weight:700; color:#6b7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:1px; }
+        .trends-exec p { font-size:13px; color:#0a0a0a; line-height:1.65; margin:0; }
+        .trends-exec strong { color:#0a0a0a; font-weight:700; }
         .trends-movers { display:flex; gap:12px; margin-bottom:14px; }
         .trends-mover-card { flex:1; background:#fff; border:1px solid #e5e7eb; border-radius:8px; padding:12px 14px; }
         .trends-mover-card h5 { font-size:10px; text-transform:uppercase; letter-spacing:0.4px; color:#6b7280; margin-bottom:8px; font-weight:600; }
         .trends-mover-item { display:flex; justify-content:space-between; align-items:center; padding:3px 0; font-size:12px; }
-        .trends-mover-item .store-name { font-weight:600; color:#1a1a2e; }
+        .trends-mover-item .store-name { font-weight:600; color:#0a0a0a; }
         .trends-mover-item .delta-up { font-weight:700; color:#2D8B28; }
         .trends-mover-item .delta-down { font-weight:700; color:#D40000; }
         .trends-mover-item .vals { font-size:10px; color:#9ca3af; }
@@ -560,13 +545,13 @@
         .staff-overlay.active { display:flex; }
         .staff-modal { background:#fff; border-radius:10px; max-width:720px; width:95%; max-height:85vh; overflow:auto; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
         .staff-modal-hdr { padding:14px 20px 10px; border-bottom:1px solid #e5e7eb; display:flex; justify-content:space-between; align-items:center; }
-        .staff-modal-hdr h3 { font-size:14px; font-weight:700; color:#1a1a2e; }
+        .staff-modal-hdr h3 { font-size:14px; font-weight:700; color:#0a0a0a; }
         .staff-modal-hdr .close-btn { background:none; border:none; font-size:20px; cursor:pointer; color:#6b7280; padding:0 4px; }
         .staff-modal-hdr .close-btn:hover { color:#111; }
         .staff-modal-body { padding:12px 20px 16px; }
         .staff-summary { display:flex; gap:16px; margin-bottom:10px; flex-wrap:wrap; }
         .staff-summary .ss-box { background:#f3f4f6; border-radius:6px; padding:6px 12px; font-size:11px; }
-        .staff-summary .ss-box strong { font-size:16px; display:block; color:#1a1a2e; }
+        .staff-summary .ss-box strong { font-size:16px; display:block; color:#0a0a0a; }
         .staff-tbl { width:100%; border-collapse:collapse; font-size:11px; }
         .staff-tbl th { text-align:left; padding:5px 8px; border-bottom:2px solid #fafafa; font-size:10px; text-transform:uppercase; letter-spacing:0.3px; color:#6b7280; font-weight:600; }
         .staff-tbl td { padding:4px 8px; border-bottom:1px solid #f0f0f0; }
@@ -577,7 +562,7 @@
         .spotlight-overlay.active { display:flex; }
         .spotlight-modal { background:#fff; border-radius:10px; max-width:860px; width:95%; max-height:88vh; overflow:auto; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
         .spotlight-hdr { padding:14px 20px 10px; border-bottom:1px solid #e5e7eb; display:flex; justify-content:space-between; align-items:center; }
-        .spotlight-hdr h3 { font-size:15px; font-weight:700; color:#1a1a2e; }
+        .spotlight-hdr h3 { font-size:15px; font-weight:700; color:#0a0a0a; }
         .spotlight-hdr .close-btn { background:none; border:none; font-size:20px; cursor:pointer; color:#6b7280; padding:0 4px; }
         .spotlight-grade-strip { display:flex; gap:8px; padding:12px 20px; border-bottom:1px solid #f0f0f0; flex-wrap:wrap; }
         .spotlight-grade-box { flex:1; min-width:80px; text-align:center; padding:8px; border-radius:6px; }
@@ -601,12 +586,11 @@
         /* FOCUS MODE BAR */
         .focus-bar { display:flex; gap:10px; align-items:center; padding:10px 20px; background:linear-gradient(90deg,rgba(45,139,40,0.10),rgba(45,139,40,0.10)); border-bottom:1px solid rgba(45,139,40,0.10); font-size:12px; }
         .focus-bar .fb-label { font-weight:700; color:#1a5e16; text-transform:uppercase; letter-spacing:0.4px; font-size:10px; }
-        .focus-btn { background:#fff; border:1.5px solid #2D8B28; color:#1a5e16; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; transition:all 0.15s; }
-        .focus-btn:hover { background:#2D8B28; color:#fff; transform:translateY(-1px); }
-        .focus-btn.ib { border-color:#0a0a0a; color:#0a0a0a; }
-        .focus-btn.ib:hover { background:#0a0a0a; color:#fff; }
-        .focus-btn.ob { border-color:#D40000; color:#D40000; }
-        .focus-btn.ob:hover { background:#D40000; color:#fff; }
+        .focus-btn { background:transparent; border:none; color:#0a0a0a; padding:4px 0; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; text-decoration:underline; text-decoration-style:dotted; text-decoration-color:#cbd5e1; text-underline-offset:3px; transition:text-decoration-color 0.15s; }
+        .focus-btn:hover { text-decoration-color:#0a0a0a; }
+        .focus-btn.ib { color:#0a0a0a; }
+        .focus-btn.ob { color:#0a0a0a; }
+        .focus-btn + .focus-btn { margin-left:18px; }
         .focus-bar .fb-hint { color:#4d7c0f; font-style:italic; margin-left:auto; font-size:11px; }
         .focus-region-prompt { padding:72px 32px 80px; display:flex; align-items:center; justify-content:center; min-height:380px; }
         .frp-cards { display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; max-width:780px; width:100%; }
@@ -656,7 +640,7 @@
         .focus-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.75); z-index:10000; overflow-y:auto; padding:24px; }
         .focus-overlay.active { display:block; }
         .focus-panel { background:#fff; border-radius:12px; max-width:1100px; margin:0 auto; box-shadow:0 25px 75px rgba(0,0,0,0.4); overflow:hidden; }
-        .focus-hdr { padding:18px 24px; border-bottom:1px solid #e5e7eb; display:flex; justify-content:space-between; align-items:center; background:linear-gradient(90deg,#1a1a2e,#16213e); color:#fff; }
+        .focus-hdr { padding:18px 24px; border-bottom:1px solid #e5e7eb; display:flex; justify-content:space-between; align-items:center; background:linear-gradient(90deg,#0a0a0a,#16213e); color:#fff; }
         .focus-hdr h2 { font-size:18px; font-weight:700; margin:0; letter-spacing:0.2px; }
         .focus-hdr .fh-sub { font-size:11px; color:#e5e5e5; margin-top:2px; font-weight:400; }
         .focus-hdr .close-btn { background:rgba(255,255,255,0.15); border:none; color:#fff; font-size:22px; cursor:pointer; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
@@ -672,7 +656,7 @@
         .focus-summary-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin-bottom:8px; }
         .fsm-box { background:#fafafa; border:1px solid #fafafa; border-radius:8px; padding:10px 12px; }
         .fsm-box .fsm-lbl { font-size:9px; text-transform:uppercase; letter-spacing:0.4px; color:#6b7280; font-weight:600; margin-bottom:4px; }
-        .fsm-box .fsm-val { font-size:22px; font-weight:700; color:#1a1a2e; }
+        .fsm-box .fsm-val { font-size:22px; font-weight:700; color:#0a0a0a; }
         .fsm-box .fsm-sub { font-size:10px; color:#6b7280; margin-top:2px; }
         .focus-tbl { width:100%; border-collapse:collapse; font-size:12px; }
         .focus-tbl th { text-align:left; padding:7px 10px; border-bottom:2px solid #e5e5e5; font-size:10px; text-transform:uppercase; letter-spacing:0.3px; color:#475569; font-weight:700; background:#fafafa; }
@@ -682,14 +666,14 @@
         .focus-tbl .grade-pill { display:inline-block; padding:2px 7px; border-radius:10px; font-weight:700; font-size:10px; min-width:24px; text-align:center; }
         /* Back-to-region switcher */
         .focus-back { display:inline-flex; align-items:center; gap:6px; background:#fafafa; border:1px solid #e5e5e5; color:#475569; padding:5px 12px; border-radius:16px; font-size:11px; font-weight:600; cursor:pointer; font-family:inherit; margin-bottom:14px; transition:all 0.15s; }
-        .focus-back:hover { background:#fafafa; color:#1a1a2e; transform:translateX(-2px); }
+        .focus-back:hover { background:#fafafa; color:#0a0a0a; transform:translateX(-2px); }
         .focus-region-badge { display:inline-block; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:700; background:#dbeafe; color:#0a0a0a; margin-left:8px; }
 
         /* Trend mini-chart */
         .focus-trend-wrap { background:#fff; border:1px solid #fafafa; border-radius:10px; padding:14px 16px; }
         .focus-trend-wrap canvas { width:100%; height:200px; display:block; }
         .focus-trend-hdr { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; font-size:11px; color:#6b7280; }
-        .focus-trend-hdr strong { font-size:13px; color:#1a1a2e; font-weight:700; }
+        .focus-trend-hdr strong { font-size:13px; color:#0a0a0a; font-weight:700; }
 
         /* Redesigned priority cards — URGENT */
         .focus-priority { background:linear-gradient(135deg,#fff5f0 0%,#fafafa 100%); border:1.5px solid rgba(212,0,0,0.20); border-left:5px solid #D40000; border-radius:10px; padding:14px 16px 14px 18px; margin-bottom:10px; color:#a00000; position:relative; box-shadow:0 2px 8px rgba(220,38,38,0.08); }
@@ -702,7 +686,7 @@
         .fp-badge.sev-high { background:#D40000; color:#fff; }
         .fp-badge.sev-med { background:#FFD710; color:#fff; }
         .fp-badge.sev-low { background:#0a0a0a; color:#fff; }
-        .fp-store { font-size:15px; font-weight:800; color:#1a1a2e; letter-spacing:-0.2px; }
+        .fp-store { font-size:15px; font-weight:800; color:#0a0a0a; letter-spacing:-0.2px; }
         .fp-store .fp-id { color:#D40000; margin-right:6px; }
         .focus-priority.sev-med .fp-store .fp-id { color:#b45309; }
         .focus-priority.sev-low .fp-store .fp-id { color:#0a0a0a; }
@@ -713,7 +697,7 @@
         .fp-gap-lbl { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; color:#6b7280; font-weight:700; margin-top:1px; }
         .fp-stats { display:flex; gap:14px; font-size:12px; margin-bottom:8px; flex-wrap:wrap; }
         .fp-stats .fp-stat-item { color:#6b7280; }
-        .fp-stats .fp-stat-item strong { color:#1a1a2e; font-weight:700; }
+        .fp-stats .fp-stat-item strong { color:#0a0a0a; font-weight:700; }
         .fp-action { background:rgba(255,255,255,0.7); border-radius:6px; padding:8px 10px; font-size:12px; line-height:1.5; border-left:3px solid rgba(0,0,0,0.15); }
         .fp-action-label { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; font-weight:800; color:#0a0a0a; margin-bottom:3px; }
         .focus-priority.sev-high .fp-action-label { color:#a00000; }
@@ -727,21 +711,21 @@
 </head>
 <body>
     <div class="top-bar">
-        <h1><span>Ring Ring</span> Command Center</h1>
-        <div class="top-bar-meta">
-            <span>Anderson Automotive Group</span>
-            <span id="dateRange">Last 30 Days</span>
-            <span>CarWars: <strong id="carwarsDate"></strong></span>
-            <span class="last-updated" title="Most recent data refresh"><span class="lu-dot"></span>Updated <strong style="color:#0a0a0a;">Fri May 29, 9:47 AM</strong></span>
+        <div class="top-bar-left">
+            <h1>Ring Ring Command Center</h1>
+            <div class="meta">Anderson Automotive Group &nbsp;&middot;&nbsp; <span id="dateRange">Last 30 Days</span> &nbsp;&middot;&nbsp; CarWars <strong id="carwarsDate"></strong></div>
+        </div>
+        <div class="top-bar-right">
+            <span class="last-updated" title="Most recent data refresh"><span class="lu-dot"></span>Updated <strong>Fri May 29, 9:47 AM</strong></span>
             <a href="https://anderson-scorecard.vercel.app" target="_blank" class="top-link scorecard-link">Scorecard</a>
-            <button onclick="window.print()" class="top-link" style="background:#f3f4f6;color:#374151;border:none;cursor:pointer;font-family:inherit;">Export PDF</button>
+            <button onclick="window.print()" class="top-link" style="background:#f5f5f5;color:#0a0a0a;border:none;cursor:pointer;font-family:inherit;">Export PDF</button>
         </div>
     </div>
 
     <div class="focus-bar">
-        <span class="fb-label">Focus Mode:</span>
-        <button class="focus-btn ib" onclick="openFocus('ib')">I ONLY care about Inbound</button>
-        <button class="focus-btn ob" onclick="openFocus('ob')">I ONLY care about Outbound</button>
+        <span class="fb-label">Focus on:</span>
+        <button class="focus-btn ib" onclick="openFocus('ib')">Inbound only</button>
+        <button class="focus-btn ob" onclick="openFocus('ob')">Outbound only</button>
     </div>
 
     <div class="summary-strip">
@@ -777,7 +761,7 @@
         <button class="tab-btn" onclick="switchTab('trends',this)">Inbound Trends</button>
         <button class="tab-btn" onclick="switchTab('obtrends',this)">Outbound Trends</button>
         <button class="tab-btn" onclick="switchTab('baseline',this)">Progress Since Start</button>
-        <button class="tab-btn" onclick="switchTab('entry',this)">Data Entry</button>
+        <button class="tab-btn" onclick="switchTab('entry',this)" style="display:none;">Data Entry</button>
     </div>
 
     <!-- Ask Laura Chat Widget -->
@@ -2608,7 +2592,7 @@ const OB_TRENDS = {
 
                     <div style="margin-top:18px;padding-top:14px;border-top:1px solid #e5e7eb;">
                         <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">
-                            <h4 style="font-size:12px;font-weight:700;color:#1a1a2e;text-transform:uppercase;letter-spacing:0.5px;">Manager Listens & Shares</h4>
+                            <h4 style="font-size:12px;font-weight:700;color:#0a0a0a;text-transform:uppercase;letter-spacing:0.5px;">Manager Listens & Shares</h4>
                             <div style="font-size:11px;color:#64748b;">${mgrs.length} mgr · <strong style="color:#374151;">${totListens}</strong> listens · <strong style="color:#374151;">${totShares}</strong> shares</div>
                         </div>
                         <table class="staff-tbl">
@@ -2727,7 +2711,7 @@ const OB_TRENDS = {
                 return `<tr>
                     <td style="padding:5px 8px;color:#475569;font-weight:600;font-size:12px;">${label}</td>
                     <td style="padding:5px 8px;font-size:12px;color:#64748b;">${b}% <span class="g ${gc(bg)}" style="font-size:10px;">${bg}</span></td>
-                    <td style="padding:5px 8px;font-size:12px;color:#1a1a2e;font-weight:600;">${c}% <span class="g ${gc(cg)}" style="font-size:10px;">${cg}</span></td>
+                    <td style="padding:5px 8px;font-size:12px;color:#0a0a0a;font-weight:600;">${c}% <span class="g ${gc(cg)}" style="font-size:10px;">${cg}</span></td>
                     <td style="padding:5px 8px;font-size:11px;">${delta(b,c)}</td>
                 </tr>`;
             }
@@ -2808,7 +2792,7 @@ const OB_TRENDS = {
                             <div style="font-size:10px;color:#0a0a0a;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Top 3 to coach — asking for the appt</div>
                             ${ibCandidates.length ? ibCandidates.map((r,i)=>`
                                 <div style="background:#fff;border:1px solid #e5e5e5;border-radius:5px;padding:9px 12px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;">
-                                    <span style="font-weight:600;color:#1a1a2e;font-size:13px;">${i+1}. ${r.n}</span>
+                                    <span style="font-weight:600;color:#0a0a0a;font-size:13px;">${i+1}. ${r.n}</span>
                                     <span style="font-size:13px;color:#D40000;font-weight:700;">${r.askPct}% ask</span>
                                 </div>`).join('') : '<div style="font-size:11px;color:#64748b;font-style:italic;padding:6px 0;">Everyone\'s asking. No coaching candidates flagged.</div>'}
                         </div>
@@ -2845,7 +2829,7 @@ const OB_TRENDS = {
                             <div style="font-size:10px;color:#D40000;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Top 3 to coach — connect & convert</div>
                             ${obCandidates.length ? obCandidates.map((r,i)=>`
                                 <div style="background:#fff;border:1px solid #fafafa;border-radius:5px;padding:9px 12px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;">
-                                    <span style="font-weight:600;color:#1a1a2e;font-size:13px;">${i+1}. ${r.n}</span>
+                                    <span style="font-weight:600;color:#0a0a0a;font-size:13px;">${i+1}. ${r.n}</span>
                                     <span style="font-size:13px;color:#D40000;font-weight:700;">${r.live<15?r.live+'% live':r.appt+'% appt'}</span>
                                 </div>`).join('') : '<div style="font-size:11px;color:#64748b;font-style:italic;padding:6px 0;">No coaching candidates flagged.</div>'}
                         </div>
@@ -3300,7 +3284,7 @@ const OB_TRENDS = {
                 ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI*2); ctx.fill();
                 // Letter above
                 const grade = s2g(v);
-                ctx.fillStyle = '#1a1a2e';
+                ctx.fillStyle = '#0a0a0a';
                 ctx.font = 'bold 11px -apple-system, sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'bottom';
@@ -4047,18 +4031,18 @@ const OB_TRENDS = {
                 </div>` : '';
 
             panel.innerHTML = `
-                <div style="padding:18px 22px 13px;border-bottom:1px solid rgba(212,0,0,0.20);background:#fafafa;border-radius:14px 14px 0 0;">
-                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#a00000;margin-bottom:4px;">End-of-May Risk &nbsp;&middot;&nbsp; ${dLeft} day${dLeft===1?'':'s'} left</div>
-                    <h2 style="font-size:19px;font-weight:800;color:#a00000;line-height:1.3;">${atRisk.length} ${atRisk.length===1?'store is':'stores are'} headed to Raleigh</h2>
-                    <div style="font-size:12.5px;color:#a00000;margin-top:5px;line-height:1.45;">Any store finishing May <strong>below B&minus;</strong> attends remedial training in Raleigh in June. These are sitting there now &mdash; click any store to see its path back up.</div>
+                <div style="padding:22px 26px 16px;border-bottom:1px solid #e5e5e5;background:#fff;border-radius:14px 14px 0 0;">
+                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#a00000;margin-bottom:6px;">End-of-May Risk &nbsp;&middot;&nbsp; ${dLeft} day${dLeft===1?'':'s'} left</div>
+                    <h2 style="font-size:20px;font-weight:800;color:#0a0a0a;line-height:1.3;letter-spacing:-0.2px;">${atRisk.length} ${atRisk.length===1?'store is':'stores are'} headed to Raleigh</h2>
+                    <div style="font-size:13px;color:#6b7280;margin-top:7px;line-height:1.5;">Any store finishing May <strong style="color:#0a0a0a;">below B&minus;</strong> attends remedial training in Raleigh in June. Click any store to see its path back up.</div>
                 </div>
-                <div style="padding:14px 18px 4px;">
+                <div style="padding:16px 22px 4px;">
                     ${rows}
                 </div>
                 ${bubbleHTML}
-                <div style="padding:12px 18px 14px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#94a3b8;">
+                <div style="padding:14px 22px 18px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9ca3af;">
                     <span id="raleighSplashCountdown">Auto-dismissing in 15s</span>
-                    <button onclick="document.getElementById('raleighSplash').remove();" style="background:#D40000;color:#fff;border:none;border-radius:5px;padding:6px 16px;font-size:12px;font-weight:600;cursor:pointer;">Got it</button>
+                    <button onclick="document.getElementById('raleighSplash').remove();" style="background:#0a0a0a;color:#fff;border:none;border-radius:5px;padding:7px 18px;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:0.2px;">Got it</button>
                 </div>`;
             overlay.appendChild(panel);
             overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.remove(); });
@@ -4110,7 +4094,7 @@ const OB_TRENDS = {
                      style="padding:11px 14px;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:#fff;transition:background 0.15s;"
                      onmouseover="this.style.background='rgba(255,215,16,0.12)';" onmouseout="this.style.background='#fff';">
                     <div>
-                        <div style="font-weight:700;font-size:14px;color:#1a1a2e;">${f.sid} <span style="color:#64748b;font-weight:500;font-size:12px;">— ${f.name.replace('Fred Anderson ','').replace('Genesis of ','Genesis ')}</span></div>
+                        <div style="font-weight:700;font-size:14px;color:#0a0a0a;">${f.sid} <span style="color:#64748b;font-weight:500;font-size:12px;">— ${f.name.replace('Fred Anderson ','').replace('Genesis of ','Genesis ')}</span></div>
                         <div style="font-size:11px;color:#0a0a0a;margin-top:2px;">${f.reason} · ${f.mgrs.length} mgr${f.mgrs.length===1?'':'s'}</div>
                     </div>
                     <div style="font-size:10px;color:#0a0a0a;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">View →</div>
