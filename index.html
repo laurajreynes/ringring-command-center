@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ring Ring Daily Command Center</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230f172a'/%3E%3Cstop offset='1' stop-color='%23020617'/%3E%3C/linearGradient%3E%3CradialGradient id='glow' cx='0.5' cy='0.5' r='0.5'%3E%3Cstop offset='0' stop-color='%2310b981' stop-opacity='0.6'/%3E%3Cstop offset='1' stop-color='%2310b981' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23bg)'/%3E%3Ccircle cx='32' cy='32' r='22' fill='url(%23glow)'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%2310b981' stroke-width='1.5' stroke-opacity='0.35'/%3E%3Ccircle cx='32' cy='32' r='13' fill='none' stroke='%230ea5e9' stroke-width='1.8' stroke-opacity='0.7'/%3E%3Ccircle cx='32' cy='32' r='6' fill='none' stroke='%23f97316' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='2.5' fill='%2310b981'/%3E%3Cline x1='6' y1='32' x2='14' y2='32' stroke='%2310b981' stroke-width='1.5' stroke-opacity='0.5'/%3E%3Cline x1='50' y1='32' x2='58' y2='32' stroke='%2310b981' stroke-width='1.5' stroke-opacity='0.5'/%3E%3Cline x1='32' y1='6' x2='32' y2='14' stroke='%2310b981' stroke-width='1.5' stroke-opacity='0.5'/%3E%3Cline x1='32' y1='50' x2='32' y2='58' stroke='%2310b981' stroke-width='1.5' stroke-opacity='0.5'/%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23D40000'/%3E%3Ccircle cx='32' cy='32' r='20' fill='%23FFD710'/%3E%3Ccircle cx='32' cy='32' r='10' fill='%232D8B28'/%3E%3C/svg%3E">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -123,6 +123,16 @@
         .store-name { font-weight: 600; color: #0a0a0a; font-size: 12px; white-space: nowrap; text-align: left; }
 
         .metric-cell { text-align: center; padding: 3px 4px !important; }
+        /* Compact view: hide percent bars + their headers and the group label row. Grade cells only. */
+        .stores-table.compact td.metric-cell,
+        .stores-table.compact th.metric-h,
+        .stores-table.compact th.group-label { display: none; }
+        .stores-table.compact td.grade-cell { padding: 10px 12px !important; }
+        .stores-table.compact tbody tr td.store-name { padding: 10px 14px !important; }
+        /* Compact/Detailed toggle */
+        .view-toggle { display:inline-flex; background:#fafafa; border:1px solid #e5e5e5; border-radius:6px; overflow:hidden; }
+        .view-toggle button { background:transparent; border:none; color:#6b7280; padding:5px 12px; font-size:11px; font-weight:600; font-family:inherit; cursor:pointer; transition:background 0.15s, color 0.15s; }
+        .view-toggle button.active { background:#0a0a0a; color:#fff; }
 
         /* MINI BAR — metric vs benchmark */
         .mini-bar-wrap {
@@ -1256,6 +1266,8 @@ const OB_TRENDS = {
             </div>`;
         }
 
+        if(typeof window.compactStores==='undefined') window.compactStores = true;
+        function setStoresView(compact){ window.compactStores = compact; renderStores(); }
         function renderStores(){
             const el=document.getElementById('storesRegions');
             const west=D.stores.filter(s=>s.region==='West'), east=D.stores.filter(s=>s.region==='East');
@@ -1264,7 +1276,14 @@ const OB_TRENDS = {
                 ${progressCard('West Region', west, '#0a0a0a', 'region-west')}
                 ${progressCard('East Region', east, '#1a5e16', 'region-east')}
             </div>`;
-            el.innerHTML=strip+regionTable(west,'West','west')+regionTable(east,'East','east');
+            const cm = window.compactStores!==false;
+            const toggle = `<div style="display:flex;justify-content:flex-end;padding:10px 0 6px;">
+                <div class="view-toggle">
+                    <button class="${cm?'active':''}" onclick="setStoresView(true)">Glance</button>
+                    <button class="${!cm?'active':''}" onclick="setStoresView(false)">Detailed</button>
+                </div>
+            </div>`;
+            el.innerHTML=strip+toggle+regionTable(west,'West','west')+regionTable(east,'East','east');
         }
 
         function regionTable(stores,label,cls){
@@ -1286,7 +1305,7 @@ const OB_TRENDS = {
                     <span>Appt: <strong>${avgAppt}%</strong></span>
                 </div>
             </div>
-            <table class="stores-table"><thead>
+            <table class="stores-table ${window.compactStores!==false?'compact':''}"><thead>
                 <tr>
                     <th rowspan="2" style="width:22px;"></th>
                     <th rowspan="2" class="left sortable" onclick="toggleSort('${label}','ov')">Store · May MTD${sortArrow(label,'ov')}</th>
@@ -1294,12 +1313,12 @@ const OB_TRENDS = {
                     <th colspan="3" class="group-label group-ob ob-start">Outbound (Salesperson Call Report)</th>
                 </tr>
                 <tr>
-                    <th class="ib-start sortable" onclick="toggleSort('${label}','req')">RI %${sortArrow(label,'req')}</th>
-                    <th class="sortable" onclick="toggleSort('${label}','set')">Set %${sortArrow(label,'set')}</th>
-                    <th class="sortable" onclick="toggleSort('${label}','ib')">Grade${sortArrow(label,'ib')}</th>
-                    <th class="ob-start sortable" onclick="toggleSort('${label}','live')">Live %${sortArrow(label,'live')}</th>
-                    <th class="sortable" onclick="toggleSort('${label}','appt')">Appt Set %${sortArrow(label,'appt')}</th>
-                    <th class="sortable" onclick="toggleSort('${label}','ob')">Grade${sortArrow(label,'ob')}</th>
+                    <th class="ib-start sortable metric-h" onclick="toggleSort('${label}','req')">RI %${sortArrow(label,'req')}</th>
+                    <th class="sortable metric-h" onclick="toggleSort('${label}','set')">Set %${sortArrow(label,'set')}</th>
+                    <th class="sortable ib-start" onclick="toggleSort('${label}','ib')">Inbound${sortArrow(label,'ib')}</th>
+                    <th class="ob-start sortable metric-h" onclick="toggleSort('${label}','live')">Live %${sortArrow(label,'live')}</th>
+                    <th class="sortable metric-h" onclick="toggleSort('${label}','appt')">Appt Set %${sortArrow(label,'appt')}</th>
+                    <th class="sortable ob-start" onclick="toggleSort('${label}','ob')">Outbound${sortArrow(label,'ob')}</th>
                 </tr>
             </thead><tbody>`;
 
@@ -1317,7 +1336,7 @@ const OB_TRENDS = {
                         <div style="display:flex;align-items:center;gap:11px;">
                             <span class="may-grade-big ${gc(may.ov)}">${may.ov}</span>
                             <span class="may-grade-arrow ${tc}">${trend}</span>
-                            <span><a href="#" onclick="event.preventDefault();event.stopPropagation();showOnePager('${store.id}')" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px;font-weight:800;font-size:18px;letter-spacing:0.3px;">${store.id}</a>${HAS_ACTION_PLAN.has(store.id) ? `<a href="${planPdf(store)}" target="_blank" onclick="event.stopPropagation();" class="plan-chip" title="View Action Plan PDF">PLAN</a>` : ''}</span>
+                            <span><a href="#" onclick="event.preventDefault();event.stopPropagation();showOnePager('${store.id}')" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px;font-weight:800;font-size:18px;letter-spacing:0.3px;">${store.id}</a></span>
                         </div>
                     </td>
                     <td class="metric-cell ib-start">${miniBar(store.current.req,'req',c.rg)}</td>
@@ -3996,9 +4015,9 @@ const OB_TRENDS = {
 
             const overlay = document.createElement('div');
             overlay.id = 'raleighSplash';
-            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(15,23,42,0.60);z-index:9998;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s ease;';
+            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(10,10,10,0.55);z-index:9998;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.22s ease-out;';
             const panel = document.createElement('div');
-            panel.style.cssText = 'background:#fff;border-radius:14px;max-width:600px;width:92%;max-height:88vh;overflow:auto;box-shadow:0 25px 70px rgba(0,0,0,0.4);transform:scale(0.92);transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);';
+            panel.style.cssText = 'background:#fff;border-radius:12px;max-width:600px;width:92%;max-height:88vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,0.18);transform:translateY(14px);opacity:0;transition:transform 0.32s cubic-bezier(0.16,1,0.3,1),opacity 0.22s ease-out;';
 
             const rows = atRisk.map(x=>`
                 <div onclick="document.getElementById('raleighSplash').remove();showOnePager('${x.s.id}');"
@@ -4039,7 +4058,7 @@ const OB_TRENDS = {
             overlay.appendChild(panel);
             overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.remove(); });
             document.body.appendChild(overlay);
-            requestAnimationFrame(()=>{ overlay.style.opacity='1'; panel.style.transform='scale(1)'; });
+            requestAnimationFrame(()=>{ overlay.style.opacity='1'; panel.style.transform='translateY(0)'; panel.style.opacity='1'; });
 
             let secs = 15;
             const cd = setInterval(()=>{
@@ -4078,9 +4097,9 @@ const OB_TRENDS = {
             // Build the splash
             const overlay = document.createElement('div');
             overlay.id = 'coachingSplash';
-            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(15,23,42,0.55);z-index:9998;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s ease;';
+            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(10,10,10,0.55);z-index:9998;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.22s ease-out;';
             const panel = document.createElement('div');
-            panel.style.cssText = 'background:#fff;border-radius:14px;max-width:580px;width:92%;max-height:85vh;overflow:auto;box-shadow:0 25px 70px rgba(0,0,0,0.35);transform:scale(0.92);transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);';
+            panel.style.cssText = 'background:#fff;border-radius:12px;max-width:580px;width:92%;max-height:85vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,0.18);transform:translateY(14px);opacity:0;transition:transform 0.32s cubic-bezier(0.16,1,0.3,1),opacity 0.22s ease-out;';
             const list = flagged.map(f=>`
                 <div onclick="document.getElementById('coachingSplash').remove();showStaffModal('${f.sid}','WTD');"
                      style="padding:11px 14px;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:#fff;transition:background 0.15s;"
@@ -4109,7 +4128,8 @@ const OB_TRENDS = {
             document.body.appendChild(overlay);
             requestAnimationFrame(()=>{
                 overlay.style.opacity='1';
-                panel.style.transform='scale(1)';
+                panel.style.transform='translateY(0)';
+                panel.style.opacity='1';
             });
             // Countdown + auto-dismiss
             let secs = 10;
