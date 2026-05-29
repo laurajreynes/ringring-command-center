@@ -1234,9 +1234,9 @@ const OB_TRENDS = {
             const rOff=-(gLen+yLen);
             return `<svg viewBox="0 0 56 56">
                 <circle cx="28" cy="28" r="${r}" fill="none" stroke="#fafafa" stroke-width="8"/>
-                ${gLen>0?`<circle cx="28" cy="28" r="${r}" fill="none" stroke="#2D8B28" stroke-width="8" stroke-dasharray="${gLen} ${circ-gLen}" stroke-dashoffset="${gOff}"/>`:''}
-                ${yLen>0?`<circle cx="28" cy="28" r="${r}" fill="none" stroke="#FFD710" stroke-width="8" stroke-dasharray="${yLen} ${circ-yLen}" stroke-dashoffset="${yOff}"/>`:''}
-                ${rLen>0?`<circle cx="28" cy="28" r="${r}" fill="none" stroke="#D40000" stroke-width="8" stroke-dasharray="${rLen} ${circ-rLen}" stroke-dashoffset="${rOff}"/>`:''}
+                ${gLen>0?`<circle cx="28" cy="28" r="${r}" fill="none" stroke="#2D8B28" stroke-opacity="0.6" stroke-width="8" stroke-dasharray="${gLen} ${circ-gLen}" stroke-dashoffset="${gOff}"/>`:''}
+                ${yLen>0?`<circle cx="28" cy="28" r="${r}" fill="none" stroke="#FFD710" stroke-opacity="0.7" stroke-width="8" stroke-dasharray="${yLen} ${circ-yLen}" stroke-dashoffset="${yOff}"/>`:''}
+                ${rLen>0?`<circle cx="28" cy="28" r="${r}" fill="none" stroke="#D40000" stroke-opacity="0.55" stroke-width="8" stroke-dasharray="${rLen} ${circ-rLen}" stroke-dashoffset="${rOff}"/>`:''}
             </svg>`;
         }
 
