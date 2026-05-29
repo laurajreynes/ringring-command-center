@@ -3111,12 +3111,12 @@ const OB_TRENDS = {
             });
             // strengths: top 2
             const strengths = scored.slice(0,2);
-            // trend (month-over-month Apr vs Mar)
+            // trend (month-over-month: May MTD vs Apr)
             const trendData = scored.map(x => {
                 const prim = isIB ? TRENDS.ri[x.s.id] : OB_TRENDS.live[x.s.id];
                 const sec = isIB ? TRENDS.set[x.s.id] : OB_TRENDS.appt[x.s.id];
-                const mar = prim && prim[2]!=null && sec && sec[2]!=null ? (gn(gg(prim[2], isIB?'req':'live')) + gn(gg(sec[2], isIB?'set':'appt'))) / 2 : null;
-                return {id:x.s.id, mar, apr:x.chN, diff: mar!=null ? x.chN - mar : null};
+                const apr = prim && prim[3]!=null && sec && sec[3]!=null ? (gn(gg(prim[3], isIB?'req':'live')) + gn(gg(sec[3], isIB?'set':'appt'))) / 2 : null;
+                return {id:x.s.id, prev:apr, cur:x.chN, diff: apr!=null ? x.chN - apr : null};
             });
             // Build summary grid
             const summaryHTML = `
@@ -3137,16 +3137,16 @@ const OB_TRENDS = {
             }
             let tableRows = scored.map((x, idx) => {
                 const td = trendData[idx];
-                const marGrade = td.mar != null ? s2g(td.mar) : null;
-                const aprGrade = x.ch;
+                const prevGrade = td.prev != null ? s2g(td.prev) : null;
+                const curGrade = x.ch;
                 const baseGrade = s2g(x.base);
                 return `<tr>
                     <td><strong>${x.s.id}</strong> <span style="color:#6b7280;font-size:11px;">${x.s.name.replace('Fred Anderson ','').replace('Fred Anderson','')}</span></td>
                     <td><span class="grade-pill" style="background:${gradeColor(x.ch)}20;color:${gradeColor(x.ch)};">${x.ch}</span></td>
                     <td class="num">${x.primary.toFixed(0)}% <span style="color:#9ca3af;font-size:10px;">(${x.primaryG})</span></td>
                     <td class="num">${x.secondary.toFixed(0)}% <span style="color:#9ca3af;font-size:10px;">(${x.secondaryG})</span></td>
-                    <td class="num">${gradePair(marGrade, aprGrade, td.diff)}</td>
-                    <td class="num">${gradePair(baseGrade, aprGrade, x.delta)}</td>
+                    <td class="num">${gradePair(prevGrade, curGrade, td.diff)}</td>
+                    <td class="num">${gradePair(baseGrade, curGrade, x.delta)}</td>
                 </tr>`;
             }).join('');
             const tableHTML = `
@@ -3156,7 +3156,7 @@ const OB_TRENDS = {
                         <th>${isIB?'Inbound':'Outbound'} Grade</th>
                         <th style="text-align:right;">${isIB?'RI%':'Live%'}</th>
                         <th style="text-align:right;">${isIB?'Set%':'Appt%'}</th>
-                        <th style="text-align:right;">Mar &rarr; Apr</th>
+                        <th style="text-align:right;">Apr &rarr; May MTD</th>
                         <th style="text-align:right;">vs Start</th>
                     </tr></thead>
                     <tbody>${tableRows}</tbody>
@@ -3236,7 +3236,7 @@ const OB_TRENDS = {
                     ${summaryHTML}
                 </div>
                 <div class="focus-section">
-                    <h3>${isIB?'Inbound':'Outbound'} trend — Jan through Apr</h3>
+                    <h3>${isIB?'Inbound':'Outbound'} trend — Jan through May MTD</h3>
                     <div class="focus-trend-wrap">
                         <div class="focus-trend-hdr">
                             <span><strong>${region === 'All' ? 'Enterprise' : region + ' region'} average ${isIB?'inbound':'outbound'} GPA</strong> · month over month</span>
@@ -3266,7 +3266,7 @@ const OB_TRENDS = {
             const ctx = canvas.getContext('2d');
             const w = canvas.width, h = canvas.height;
             ctx.clearRect(0,0,w,h);
-            const months = ['Jan','Feb','Mar','Apr'];
+            const months = ['Jan','Feb','Mar','Apr','May MTD'];
             const primArr = isIB ? TRENDS.ri : OB_TRENDS.live;
             const secArr = isIB ? TRENDS.set : OB_TRENDS.appt;
             const primKey = isIB ? 'req' : 'live';
@@ -3415,7 +3415,7 @@ const OB_TRENDS = {
             // Exec summary
             let execHTML = `<div class="trends-exec">
                 <h4>Executive Summary — ${label} YTD Trend</h4>
-                <p>Group average: <strong>${janAvg!==null?janAvg.toFixed(1):'—'}%</strong> (Jan) → <strong>${aprAvg!==null?aprAvg.toFixed(1):'—'}%</strong> (Apr) —
+                <p>Group average: <strong>${janAvg!==null?janAvg.toFixed(1):'—'}%</strong> (Jan) → <strong>${aprAvg!==null?aprAvg.toFixed(1):'—'}%</strong> (May MTD) —
                 <strong style="color:${ytdDelta>=0?'#16a34a':'#dc2626'}">${ytdDelta>=0?'+':''}${ytdDelta.toFixed(1)} YTD</strong><br>
                 <strong>${improving}</strong> of ${storeDeltas.length} stores improved since Jan, <strong>${declining}</strong> declined.<br>
                 Benchmark: <strong>${bench}%</strong> — Group is currently <strong>${benchGap<=0?'at or above':benchGap.toFixed(1)+' below'}</strong> benchmark.</p>
@@ -3568,7 +3568,7 @@ const OB_TRENDS = {
             // Exec summary
             let execHTML = `<div class="trends-exec">
                 <h4>Outbound — ${label} YTD Trend</h4>
-                <p>Group average: <strong>${janAvg!==null?janAvg.toFixed(1):'—'}%</strong> (Jan) → <strong>${aprAvg!==null?aprAvg.toFixed(1):'—'}%</strong> (Apr) —
+                <p>Group average: <strong>${janAvg!==null?janAvg.toFixed(1):'—'}%</strong> (Jan) → <strong>${aprAvg!==null?aprAvg.toFixed(1):'—'}%</strong> (May MTD) —
                 <strong style="color:${ytdDelta>=0?'#16a34a':'#dc2626'}">${ytdDelta>=0?'+':''}${ytdDelta.toFixed(1)}</strong> YTD<br>
                 <strong>${improving}</strong> of ${storeDeltas.length} stores improved since Jan, <strong>${declining}</strong> declined.<br>
                 Benchmark: <strong>${bench}%</strong> — Group is currently <strong>${benchGap<=0?'at or above':benchGap.toFixed(1)+' below'}</strong> benchmark.</p>
