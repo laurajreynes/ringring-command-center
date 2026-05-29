@@ -71,7 +71,7 @@
         }
 
         .tab-btn:hover { color: #374151; }
-        .tab-btn.active { color: #0369a1; border-bottom-color: #0369a1; }
+        .tab-btn.active { color: #0a0a0a; border-bottom-color: #0a0a0a; font-weight: 700; }
 
         /* MAIN */
         .main { padding: 12px 16px; }
@@ -122,9 +122,9 @@
         .stores-table th.ov-col, .stores-table td.ov-col { border-left: 2px solid #d0d5dd; }
         .stores-table th.may-col, .stores-table td.may-col { border-left: 2px solid #0d2748; background:#f8fafc; }
         .may-grade-big { display:inline-flex; align-items:center; justify-content:center; min-width:48px; padding:6px 10px; border-radius:6px; font-weight:800; font-size:22px; line-height:1; }
-        .may-grade-big.g-green { background:#dcfce7; color:#15803d; }
-        .may-grade-big.g-yellow { background:rgba(234,179,8,0.18); color:#854d0e; }
-        .may-grade-big.g-red { background:#fecaca; color:#991b1b; }
+        .may-grade-big.g-green { background:#16a34a; color:#fff; }
+        .may-grade-big.g-yellow { background:#d97706; color:#fff; }
+        .may-grade-big.g-red { background:#dc2626; color:#fff; }
         .may-grade-arrow { font-size:11px; margin-left:6px; font-weight:700; vertical-align:1px; }
         .may-grade-arrow.trend-up { color:#15803d; }
         .may-grade-arrow.trend-down { color:#dc2626; }
@@ -181,17 +181,17 @@
             color: #1e293b;
         }
 
-        .bar-green { background: rgba(22,163,74,0.3); }
-        .bar-yellow { background: rgba(234,179,8,0.3); }
-        .bar-red { background: rgba(220,38,38,0.25); }
+        .bar-green { background: #16a34a; }
+        .bar-yellow { background: #d97706; }
+        .bar-red { background: #dc2626; }
 
         .mg { font-size: 10px; margin-top: 1px; text-align: center; }
 
         /* GRADE BADGE */
         .g { display: inline-block; padding: 1px 5px; border-radius: 3px; font-weight: 700; font-size: 11px; }
-        .g-green { background: #dcfce7; color: #15803d; }
-        .g-yellow { background: rgba(234,179,8,0.15); color: #a16207; }
-        .g-red { background: #fecaca; color: #dc2626; }
+        .g-green { background: #16a34a; color: #fff; }
+        .g-yellow { background: #d97706; color: #fff; }
+        .g-red { background: #dc2626; color: #fff; }
 
         /* GRADE THERMOMETER */
         .thermo-wrap {
@@ -773,7 +773,7 @@
         <button class="tab-btn active" onclick="switchTab('stores',this)">Stores</button>
         <button class="tab-btn" onclick="switchTab('alerts',this)">Alerts</button>
         <button class="tab-btn" onclick="switchTab('coaching',this)">Coaching</button>
-        <button class="tab-btn" onclick="switchTab('regions',this)">Regions</button>
+        <button class="tab-btn" onclick="switchTab('regions',this)" style="display:none;">Regions</button>
         <button class="tab-btn" onclick="switchTab('trends',this)">Inbound Trends</button>
         <button class="tab-btn" onclick="switchTab('obtrends',this)">Outbound Trends</button>
         <button class="tab-btn" onclick="switchTab('baseline',this)">Progress Since Start</button>
@@ -986,9 +986,9 @@ const OB_TRENDS = {
                 'KRA':[13.3,16.3,12.4,12.6,13.1],'NRA':[15.9,16.2,15.5,15.8,16.1],'TSA':[16.1,17.6,16.2,15.7,15.9],'TCH':[15.2,14.8,11.5,13.3,18.8],'TCC':[null,null,null,35.9,24]
             },
             appt: {
-                'SAS':[null,null,null,null,null],'TAS':[null,null,null,null,null],'NAS':[null,null,null,null,null],'KGR':[null,null,null,null,null],'TGR':[null,null,null,null,null],'CGR':[null,null,null,null,null],
-                'HGR':[null,null,null,null,null],'GGR':[null,null,null,null,null],'AGV':[null,null,null,null,null],'KGV':[null,null,null,null,null],'HGV':[null,null,null,null,null],'TRA':[null,null,null,null,null],
-                'KRA':[null,null,null,null,null],'NRA':[null,null,null,null,null],'TSA':[null,null,null,null,null],'TCH':[null,null,null,null,null],'TCC':[null,null,null,null,null]
+                'SAS':[null,null,null,null,8.5],'TAS':[null,null,null,null,10],'NAS':[null,null,null,null,10.7],'KGR':[null,null,null,null,9.1],'TGR':[null,null,null,null,8.3],'CGR':[null,null,null,null,8.1],
+                'HGR':[null,null,null,null,11.7],'GGR':[null,null,null,null,14],'AGV':[null,null,null,null,9.5],'KGV':[null,null,null,null,9.7],'HGV':[null,null,null,null,10.5],'TRA':[null,null,null,null,9.8],
+                'KRA':[null,null,null,null,8.1],'NRA':[null,null,null,null,8.5],'TSA':[null,null,null,null,9.2],'TCH':[null,null,null,null,5.7],'TCC':[null,null,null,null,10.2]
             }
         };
 
