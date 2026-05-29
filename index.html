@@ -1043,7 +1043,12 @@ const OB_TRENDS = {
             return{ib:s2g(iS),ob:s2g(oS),ov:s2g(ovS),iS,oS,ovS,rg,sg,lg,ag};
         }
 
-        // Compute March (Last Month) and YTD from TRENDS arrays
+        // Dynamic month indices: last locked month + current MTD month (auto-shifts each month).
+        const _PMI = TRENDS.months.length - 2;     // previous (last locked) month index
+        const _CMI = TRENDS.months.length - 1;     // current MTD month index
+        const PREV_MO = TRENDS.months[_PMI];       // e.g. 'Apr' today, 'May' next month
+        const CUR_MO  = TRENDS.months[_CMI];       // e.g. 'May' today, 'Jun' next month
+        // Compute lastMonth / currentMTD aliases and (legacy) March / Apr / May fields from TRENDS arrays
         D.stores.forEach(s=>{
             const ri=TRENDS.ri[s.id], st=TRENDS.set[s.id];
             const lv=OB_TRENDS.live[s.id], ap=OB_TRENDS.appt[s.id];
@@ -1054,12 +1059,12 @@ const OB_TRENDS = {
                 live: lv&&lv[4]!=null ? lv[4] : s.current.live,
                 appt: ap&&ap[4]!=null ? ap[4] : s.current.appt
             };
-            // March = index 2
-            s.march = {
-                req: ri&&ri[2]!=null ? ri[2] : s.current.req,
-                set: st&&st[2]!=null ? st[2] : s.current.set,
-                live: lv&&lv[2]!=null ? lv[2] : s.current.live,
-                appt: ap&&ap[2]!=null ? ap[2] : s.current.appt
+            // Dynamic alias: lastMonth = previous locked month (PREV_MO)
+            s.lastMonth = {
+                req: ri&&ri[_PMI]!=null ? ri[_PMI] : s.current.req,
+                set: st&&st[_PMI]!=null ? st[_PMI] : s.current.set,
+                live: lv&&lv[_PMI]!=null ? lv[_PMI] : s.current.live,
+                appt: ap&&ap[_PMI]!=null ? ap[_PMI] : s.current.appt
             };
             // April = index 3 (locked)
             s.april = {
@@ -1242,7 +1247,7 @@ const OB_TRENDS = {
         function progressCard(title, stores, borderColor, scrollTarget) {
             let green=0,yellow=0,red=0,improved=0,declined=0,steady=0;
             stores.forEach(s=>{
-                const c=calc(s.current), m=calc(s.march);
+                const c=calc(s.current), m=calc(s.lastMonth);
                 const col=gColor(c.ov);
                 if(col==='green')green++;else if(col==='yellow')yellow++;else red++;
                 const cg=gn(c.ov),mg=gn(m.ov);
@@ -1324,7 +1329,7 @@ const OB_TRENDS = {
 
             const sorted=sortStores(stores,label);
             sorted.forEach(store=>{
-                const c=calc(store.current), m=calc(store.march), y=calc(store.ytd), may=calc(store.may), apr=calc(store.april);
+                const c=calc(store.current), m=calc(store.lastMonth), y=calc(store.ytd), may=calc(store.may), apr=calc(store.april);
                 const aprGpa=gn(apr.ov),mayGpa=gn(may.ov);
                 const trend=mayGpa>aprGpa?'&#9650;':mayGpa<aprGpa?'&#9660;':'&mdash;';
                 const tc=mayGpa>aprGpa?'trend-up':mayGpa<aprGpa?'trend-down':'trend-neutral';
@@ -1383,17 +1388,17 @@ const OB_TRENDS = {
         function getAlertsForStores(stores){
             const alerts=[];
             stores.filter(s=>s.id!=='TCC').forEach(store=>{
-                const c=calc(store.current),m=calc(store.march),name=store.id;
-                if(gn(c.ov)<gn(m.ov)) alerts.push({sev:'critical',sid:store.id,type:'declined',title:name+' DECLINED',desc:'Overall '+m.ov+' → '+c.ov+' (Mar → Apr). Immediate coaching needed.'});
+                const c=calc(store.current),m=calc(store.lastMonth),name=store.id;
+                if(gn(c.ov)<gn(m.ov)) alerts.push({sev:'critical',sid:store.id,type:'declined',title:name+' DECLINED',desc:'Overall '+m.ov+' → '+c.ov+' ('+PREV_MO+' → '+CUR_MO+' MTD). Immediate coaching needed.'});
                 const fails=[];
                 if(c.rg==='F'||c.rg==='D') fails.push('RI: '+store.current.req+'% ('+c.rg+')');
                 if(c.sg==='F'||c.sg==='D') fails.push('Set: '+store.current.set+'% ('+c.sg+')');
                 if(c.lg==='F'||c.lg==='D') fails.push('Live: '+store.current.live+'% ('+c.lg+')');
                 if(c.ag==='F'||c.ag==='D') fails.push('Appt: '+store.current.appt+'% ('+c.ag+')');
                 if(fails.length>0&&gn(c.ov)>=gn(m.ov)) alerts.push({sev:'high',sid:store.id,type:'critical',title:name+' — Critical Metrics',desc:fails.join(', ')});
-                const mrg=gg(store.march.req,'req'),msg=gg(store.march.set,'set');
+                const mrg=gg(store.lastMonth.req,'req'),msg=gg(store.lastMonth.set,'set');
                 if((gn(c.rg)<gn(mrg)||gn(c.sg)<gn(msg))&&gn(c.ov)>=gn(m.ov)&&fails.length===0)
-                    alerts.push({sev:'medium',sid:store.id,type:'inbound',title:name+' — Inbound Decline',desc:'Inbound slipped from March despite overall holding. Watch RI & Set.'});
+                    alerts.push({sev:'medium',sid:store.id,type:'inbound',title:name+' — Inbound Decline',desc:'Inbound slipped from '+PREV_MO+' despite overall holding. Watch RI & Set.'});
             });
             return alerts;
         }
@@ -1412,7 +1417,7 @@ const OB_TRENDS = {
             alertExpandedId = sid;
             const store = D.stores.find(s=>s.id===sid);
             if(!store) return;
-            const c = calc(store.current), m = calc(store.march);
+            const c = calc(store.current), m = calc(store.lastMonth);
 
             // Build grade breakdown
             function gradePill(label, grade, pct) {
@@ -1611,13 +1616,13 @@ const OB_TRENDS = {
         function getCoachingForStores(stores){
             const cards=[];
             stores.filter(s=>s.id!=='TCC').forEach(store=>{
-                const c=calc(store.current),m=calc(store.march);
+                const c=calc(store.current),m=calc(store.lastMonth);
                 const issues=[];
                 // Inbound issues
                 if(c.rg==='F'||c.rg==='D') issues.push({tag:'ib',metric:'RI %',val:store.current.req+'%',grade:c.rg});
-                else if((c.rg==='C'||c.rg==='C-')&&gn(c.rg)<gn(gg(store.march.req,'req'))) issues.push({tag:'ib',metric:'RI %',val:store.current.req+'%',grade:c.rg});
+                else if((c.rg==='C'||c.rg==='C-')&&gn(c.rg)<gn(gg(store.lastMonth.req,'req'))) issues.push({tag:'ib',metric:'RI %',val:store.current.req+'%',grade:c.rg});
                 if(c.sg==='F'||c.sg==='D') issues.push({tag:'ib',metric:'Set %',val:store.current.set+'%',grade:c.sg});
-                else if((c.sg==='C'||c.sg==='C-')&&gn(c.sg)<gn(gg(store.march.set,'set'))) issues.push({tag:'ib',metric:'Set %',val:store.current.set+'%',grade:c.sg});
+                else if((c.sg==='C'||c.sg==='C-')&&gn(c.sg)<gn(gg(store.lastMonth.set,'set'))) issues.push({tag:'ib',metric:'Set %',val:store.current.set+'%',grade:c.sg});
                 // Outbound issues
                 if(c.lg==='F'||c.lg==='D') issues.push({tag:'ob',metric:'Live %',val:store.current.live+'%',grade:c.lg});
                 if(c.ag==='F'||c.ag==='D') issues.push({tag:'ob',metric:'Appt %',val:store.current.appt+'%',grade:c.ag});
@@ -1967,7 +1972,7 @@ const OB_TRENDS = {
 
         function renderSummary(){
             let imp=0,dec=0,ste=0;
-            D.stores.forEach(s=>{const c=gn(calc(s.current).ov),m=gn(calc(s.march).ov);if(c>m)imp++;else if(c<m)dec++;else ste++;});
+            D.stores.forEach(s=>{const c=gn(calc(s.current).ov),m=gn(calc(s.lastMonth).ov);if(c>m)imp++;else if(c<m)dec++;else ste++;});
             document.getElementById('improvedCount').textContent=imp;
             document.getElementById('declinedCount').textContent=dec;
             document.getElementById('steadyCount').textContent=ste;
@@ -1977,7 +1982,7 @@ const OB_TRENDS = {
             const real = D.stores.filter(s=>s.id!=='TCC');
             function regionStats(stores){
                 const gpa = stores.reduce((a,s)=>a+calc(s.current).ovS,0)/stores.length;
-                const up = stores.filter(s=>calc(s.current).ovS>calc(s.march).ovS).length;
+                const up = stores.filter(s=>calc(s.current).ovS>calc(s.lastMonth).ovS).length;
                 return {gpa, up, total:stores.length};
             }
             const w = regionStats(real.filter(s=>s.region==='West'));
@@ -1999,11 +2004,11 @@ const OB_TRENDS = {
             const real = D.stores.filter(s=>s.id!=='TCC');
             const stories = [];
             // Biggest mover Mar→Apr
-            const movers = real.map(s=>({s, d:calc(s.current).ovS-calc(s.march).ovS}));
+            const movers = real.map(s=>({s, d:calc(s.current).ovS-calc(s.lastMonth).ovS}));
             movers.sort((a,b)=>b.d-a.d);
             const top = movers[0], bot = movers[movers.length-1];
-            if(top.d>=0.3) stories.push(`<strong>${top.s.id}</strong> is the biggest improver Mar → Apr — ${calc(top.s.march).ov} → ${calc(top.s.current).ov}.`);
-            if(bot.d<=-0.3) stories.push(`<strong>${bot.s.id}</strong> gave up the most ground Mar → Apr — ${calc(bot.s.march).ov} → ${calc(bot.s.current).ov}.`);
+            if(top.d>=0.3) stories.push(`<strong>${top.s.id}</strong> is the biggest improver ${PREV_MO} → ${CUR_MO} MTD — ${calc(top.s.lastMonth).ov} → ${calc(top.s.current).ov}.`);
+            if(bot.d<=-0.3) stories.push(`<strong>${bot.s.id}</strong> gave up the most ground ${PREV_MO} → ${CUR_MO} MTD — ${calc(bot.s.lastMonth).ov} → ${calc(bot.s.current).ov}.`);
             // Stores at A on appt
             const aAppt = real.filter(s=>calc(s.current).ag==='A' || calc(s.current).ag==='A-');
             if(aAppt.length>=8) stories.push(`${aAppt.length} of 16 stores grade A or A− on outbound Appt% — same calls converting more often.`);
@@ -2085,9 +2090,9 @@ const OB_TRENDS = {
                 if(used[category].size>=n) used[category].clear();
                 return arr[idx];
             };
-            // Biggest improver (Mar → Apr)
+            // Biggest improver ('+PREV_MO+' → '+CUR_MO+' MTD)
             let bestGain={store:null,delta:-99};
-            alertStores.forEach(s=>{const c=calc(s.current),m=calc(s.march),d=c.ovS-m.ovS;if(d>bestGain.delta)bestGain={store:s,delta:d,cg:c.ov,mg:m.ov};});
+            alertStores.forEach(s=>{const c=calc(s.current),m=calc(s.lastMonth),d=c.ovS-m.ovS;if(d>bestGain.delta)bestGain={store:s,delta:d,cg:c.ov,mg:m.ov};});
             if(bestGain.store && bestGain.delta>0){
                 const v=[
                     bestGain.mg+' \u2192 '+bestGain.cg+' overall. Pull their scorecard \u2014 what\u2019s different vs. last month?',
@@ -2101,7 +2106,7 @@ const OB_TRENDS = {
             // Stuck-low alerts — stores currently at C+ or below (regardless of trend)
             // These are the real coaching priorities, not B+ stores that slipped to B-.
             alertStores.forEach(s=>{
-                const c=calc(s.current),m=calc(s.march);
+                const c=calc(s.current),m=calc(s.lastMonth);
                 if(gn(c.ov)<2.3 && gn(c.ov)>1.0){  // C+ or worse, but above the "bottom of board" alert which handles D+/D/F
                     const declined = gn(c.ov)<gn(m.ov);
                     const flat = gn(c.ov)===gn(m.ov);
@@ -2119,7 +2124,7 @@ const OB_TRENDS = {
             // Overall declines — only flag as URGENT if landing in the C zone or worse, otherwise pri:1
             alertStores.forEach(s=>{
                 if(partialMonth) return;
-                const c=calc(s.current),m=calc(s.march);
+                const c=calc(s.current),m=calc(s.lastMonth);
                 if(gn(c.ov)<gn(m.ov)){
                     // Skip if already covered by stuck-low alert above
                     if(gn(c.ov)<2.3 && gn(c.ov)>1.0) return;
@@ -2151,37 +2156,37 @@ const OB_TRENDS = {
                     all.push({pri:priority,type:'watch',tag:'Watch',title:s.id+' \u2014 Overall declined ('+m.ov+' \u2192 '+c.ov+')',text:pickUnique(v,s.id+'decl','decl')});
                 }
             });
-            // Big Set swings (Mar → Apr)
-            alertStores.forEach(s=>{const d=s.current.set-s.march.set;
+            // Big Set swings ('+PREV_MO+' → '+CUR_MO+' MTD)
+            alertStores.forEach(s=>{const d=s.current.set-s.lastMonth.set;
                 if(d>=10){
                     const v=[
-                        s.march.set+'% \u2192 '+s.current.set+'%. Pull 2 strong calls and play them at next huddle.',
+                        s.lastMonth.set+'% \u2192 '+s.current.set+'%. Pull 2 strong calls and play them at next huddle.',
                         'Up '+d.toFixed(0)+' pts on Set%. Run a scorecard while the wins are fresh \u2014 lock in what\'s working.',
-                        s.march.set+'% to '+s.current.set+'% in a month. Ask the top setter to walk the team through their hook.',
+                        s.lastMonth.set+'% to '+s.current.set+'% in a month. Ask the top setter to walk the team through their hook.',
                         'Set% moved '+d.toFixed(0)+' pts. Get a Ring Ring on the books so other stores can borrow it.'
                     ];
                     all.push({pri:2,type:'opportunity',tag:'Opportunity',title:s.id+' \u2014 Set % surged +'+d.toFixed(0)+' pts',text:pickUnique(v,s.id+'setup','setup')});
                 }
                 if(d<=-8){
                     const v=[
-                        s.march.set+'% \u2192 '+s.current.set+'%. Pull 3 unconverted RI calls \u2014 are we hooking the trade? Asking more than once?',
-                        'Set% off a cliff: '+s.march.set+'% \u2192 '+s.current.set+'%. Run a scorecard this week and listen for the ask.',
+                        s.lastMonth.set+'% \u2192 '+s.current.set+'%. Pull 3 unconverted RI calls \u2014 are we hooking the trade? Asking more than once?',
+                        'Set% off a cliff: '+s.lastMonth.set+'% \u2192 '+s.current.set+'%. Run a scorecard this week and listen for the ask.',
                         'Lost '+Math.abs(d).toFixed(0)+' pts on Set%. Listen to 5 calls with the team and make them name what they hear.',
-                        s.march.set+'% down to '+s.current.set+'%. Schedule a Ring Ring in person \u2014 phones are saying something reports can\'t.',
+                        s.lastMonth.set+'% down to '+s.current.set+'%. Schedule a Ring Ring in person \u2014 phones are saying something reports can\'t.',
                         'Set% dropped '+Math.abs(d).toFixed(0)+' pts. Which specific reps own the slide? Scorecard their calls \u2014 this is call guide, not the whole team.'
                     ];
                     all.push({pri:1,type:'watch',tag:'Watch',title:s.id+' \u2014 Set % fell '+Math.abs(d).toFixed(0)+' pts',text:pickUnique(v,s.id+'setdn','setdn')});
                 }
             });
-            // Live Convos drops (Mar → Apr) — usually list quality, small chance timing
-            alertStores.forEach(s=>{const d=s.current.live-s.march.live;
+            // Live Convos drops ('+PREV_MO+' → '+CUR_MO+' MTD) — usually list quality, small chance timing
+            alertStores.forEach(s=>{const d=s.current.live-s.lastMonth.live;
                 if(d<=-3){
                     const v=[
-                        s.march.live+'% \u2192 '+s.current.live+'%. Pull individual Live% \u2014 one rep usually drags this. Is their organizer caught up?',
+                        s.lastMonth.live+'% \u2192 '+s.current.live+'%. Pull individual Live% \u2014 one rep usually drags this. Is their organizer caught up?',
                         'Live Convos off '+Math.abs(d).toFixed(1)+' pts. Are they working unsold showroom traffic or just old internet leads?',
-                        s.march.live+'% dropped to '+s.current.live+'%. Bad list = bad Live%. Look at the list, not the pitch.',
+                        s.lastMonth.live+'% dropped to '+s.current.live+'%. Bad list = bad Live%. Look at the list, not the pitch.',
                         'Outbound connect rate slid to '+s.current.live+'%. Check whose organizer is current and whose isn\'t.',
-                        s.march.live+'% \u2192 '+s.current.live+'%. Audit lead sources and unsold follow-ups \u2014 we can\'t connect with people we\'re not calling.',
+                        s.lastMonth.live+'% \u2192 '+s.current.live+'%. Audit lead sources and unsold follow-ups \u2014 we can\'t connect with people we\'re not calling.',
                         'Live at '+s.current.live+'% and we\'re not calling the right people. Unsold showroom from last week \u2014 is anyone touching those?'
                     ];
                     all.push({pri:2,type:'watch',tag:'Watch',title:s.id+' \u2014 Live Convos dropped '+d.toFixed(1)+' pts',text:pickUnique(v,s.id+'livedn','livedn')});
@@ -2189,18 +2194,18 @@ const OB_TRENDS = {
             });
             // Appt% crossed the 10% line
             alertStores.forEach(s=>{
-                if(s.current.appt>=10 && s.march.appt<10){
+                if(s.current.appt>=10 && s.lastMonth.appt<10){
                     const v=[
-                        'Appt% broke 10%: '+s.march.appt+'% \u2192 '+s.current.appt+'%. Ask the top rep to walk through the pitch at next huddle.',
+                        'Appt% broke 10%: '+s.lastMonth.appt+'% \u2192 '+s.current.appt+'%. Ask the top rep to walk through the pitch at next huddle.',
                         'Outbound conversion above benchmark ('+s.current.appt+'%). Pull a clip and send it around the enterprise.',
-                        s.march.appt+'% up to '+s.current.appt+'% on Appt. Run a scorecard and find the language that\u2019s working.'
+                        s.lastMonth.appt+'% up to '+s.current.appt+'% on Appt. Run a scorecard and find the language that\u2019s working.'
                     ];
                     all.push({pri:2,type:'opportunity',tag:'Opportunity',title:s.id+' \u2014 Appt% crossed 10%',text:pickUnique(v,s.id+'apptup','apptup')});
                 }
             });
             // RI just hit A-grade
             alertStores.forEach(s=>{
-                const c=calc(s.current),m=calc(s.march);
+                const c=calc(s.current),m=calc(s.lastMonth);
                 if(c.rg==='A' && gn(m.rg)<4){
                     const v=[
                         'RI at '+s.current.req+'% (A). Pull the ad mix and routing logs \u2014 what changed?',
@@ -2213,7 +2218,7 @@ const OB_TRENDS = {
             // Stuck in the red — bottom overall store. Chronic = stuck at low for months; we get more exasperated.
             const ranked=[...alertStores].sort((a,b)=>calc(a.current).ovS-calc(b.current).ovS);
             ranked.slice(0,1).forEach(s=>{
-                const c=calc(s.current),m=calc(s.march),b=calc(s.baseline);
+                const c=calc(s.current),m=calc(s.lastMonth),b=calc(s.baseline);
                 const chronic=gn(c.ov)<=1.0 && gn(m.ov)<=1.0 && gn(b.ov)<=2.0; // baseline was weak AND Mar was weak AND Apr still weak
                 if(gn(c.ov)<=1.0){
                     const v=chronic?[
@@ -2247,7 +2252,7 @@ const OB_TRENDS = {
             const SCORECARD_URL='https://anderson-scorecard.vercel.app';
             const DERBY_URL='https://ringderby.vercel.app';
             alertStores.forEach(s=>{
-                const c=calc(s.current),m=calc(s.march);
+                const c=calc(s.current),m=calc(s.lastMonth);
                 const weakMetrics=[];
                 const inboundWeak=c.rg==='F'||c.rg==='D'||c.sg==='F'||c.sg==='D';
                 const outboundWeak=c.lg==='F'||c.lg==='D'||c.ag==='F'||c.ag==='D';
@@ -2256,10 +2261,10 @@ const OB_TRENDS = {
                 // Manager Ring Ring is primarily an inbound play — recommend when inbound is soft + overall declined
                 if(gn(c.ov)<gn(m.ov) && inboundWeak){
                     all.push({pri:1,type:'derby',tag:'Derby',title:s.id+' — Manager Ring Ring Session (5 pts)',
-                        text:'Overall declined '+m.ov+' → '+c.ov+' (Mar → Apr) with weak inbound. Manager Ring Ring is primarily an inbound play \u2014 get it booked. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
+                        text:'Overall declined '+m.ov+' → '+c.ov+' ('+PREV_MO+' → '+CUR_MO+' MTD) with weak inbound. Manager Ring Ring is primarily an inbound play \u2014 get it booked. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
                 } else if(gn(c.ov)<gn(m.ov) && outboundWeak){
                     all.push({pri:1,type:'derby',tag:'Derby',title:s.id+' — Pull rep-level outbound',
-                        text:'Overall declined '+m.ov+' → '+c.ov+' (Mar → Apr) and outbound is the drag. Pull individual rep Live%/Appt% \u2014 find the one or two people pulling the average down and scorecard their calls. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
+                        text:'Overall declined '+m.ov+' → '+c.ov+' ('+PREV_MO+' → '+CUR_MO+' MTD) and outbound is the drag. Pull individual rep Live%/Appt% \u2014 find the one or two people pulling the average down and scorecard their calls. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
                 } else if(weakMetrics.length>0){
                     all.push({pri:2,type:'derby',tag:'Derby',title:s.id+' — Scorecard recommended (1 pt)',
                         text:'Weak '+weakMetrics.join(' & ')+' metrics. Scorecard surfaces whether it\'s call guide, pitch, or list. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0369a1;text-decoration:underline;">Derby Board</a>'});
@@ -2377,7 +2382,7 @@ const OB_TRENDS = {
             const matchStore=D.stores.find(s=>ql.includes(s.id.toLowerCase())||ql.includes(s.name.toLowerCase().split(' ').pop()));
             if(matchStore){
                 const s=matchStore;
-                const c=calc(s.current),m=calc(s.march);
+                const c=calc(s.current),m=calc(s.lastMonth);
                 const trend=gn(c.ov)>gn(m.ov)?'improved from':gn(c.ov)<gn(m.ov)?'slipped from':'held at';
                 // Rank metrics by grade to find best/worst
                 const mg=[
@@ -2426,8 +2431,8 @@ const OB_TRENDS = {
                     '<strong>2.</strong> '+gap+'<br><br>'+
                     '<strong>3.</strong> '+push+'<br><br>'+
                     '<em>Apr \u2192 May:</em><br>'+
-                    'Inbound \u2014 RI '+fmt(s.march.req,s.current.req)+' \u00b7 Set '+fmt(s.march.set,s.current.set)+'<br>'+
-                    'Outbound \u2014 Live '+fmt(s.march.live,s.current.live)+' \u00b7 Appt '+fmt(s.march.appt,s.current.appt);
+                    'Inbound \u2014 RI '+fmt(s.lastMonth.req,s.current.req)+' \u00b7 Set '+fmt(s.lastMonth.set,s.current.set)+'<br>'+
+                    'Outbound \u2014 Live '+fmt(s.lastMonth.live,s.current.live)+' \u00b7 Appt '+fmt(s.lastMonth.appt,s.current.appt);
                 return resp;
             }
             // Best/top/highest
@@ -2454,14 +2459,14 @@ const OB_TRENDS = {
             }
             // Improved / declined
             if(ql.match(/improved|improving|up|gaining/)){
-                const improved=D.stores.filter(s=>gn(calc(s.current).ov)>gn(calc(s.march).ov));
-                if(!improved.length) return 'No stores improved their overall letter grade from March.';
-                return improved.length+' stores improved (Mar → Apr):<br>'+improved.map(s=>'\u2022 <strong>'+s.id+'</strong> '+calc(s.march).ov+' \u2192 '+calc(s.current).ov).join('<br>');
+                const improved=D.stores.filter(s=>gn(calc(s.current).ov)>gn(calc(s.lastMonth).ov));
+                if(!improved.length) return 'No stores improved their overall letter grade from '+PREV_MO+'.';
+                return improved.length+' stores improved ('+PREV_MO+' → '+CUR_MO+' MTD):<br>'+improved.map(s=>'\u2022 <strong>'+s.id+'</strong> '+calc(s.lastMonth).ov+' \u2192 '+calc(s.current).ov).join('<br>');
             }
             if(ql.match(/declined|dropping|down|falling|slipping/)){
-                const declined=D.stores.filter(s=>gn(calc(s.current).ov)<gn(calc(s.march).ov));
-                if(!declined.length) return 'No stores declined in overall letter grade from March. Everyone is holding or improving!';
-                return declined.length+' stores declined (Mar → Apr):<br>'+declined.map(s=>'\u2022 <strong>'+s.id+'</strong> '+calc(s.march).ov+' \u2192 '+calc(s.current).ov).join('<br>');
+                const declined=D.stores.filter(s=>gn(calc(s.current).ov)<gn(calc(s.lastMonth).ov));
+                if(!declined.length) return 'No stores declined in overall letter grade from '+PREV_MO+'. Everyone is holding or improving!';
+                return declined.length+' stores declined ('+PREV_MO+' → '+CUR_MO+' MTD):<br>'+declined.map(s=>'\u2022 <strong>'+s.id+'</strong> '+calc(s.lastMonth).ov+' \u2192 '+calc(s.current).ov).join('<br>');
             }
             // West vs East / compare regions
             if(ql.match(/west|east|region|compare/)){
@@ -2486,7 +2491,7 @@ const OB_TRENDS = {
                 const ms = TRENDS.months;
                 const janAvg = trendAvg(metric,0), aprAvg = trendAvg(metric,ms.length-1);
                 const ytdD = aprAvg-janAvg;
-                let resp = '<strong>'+label+' YTD Trend</strong><br>Group avg: '+janAvg.toFixed(1)+'% (Jan) → <strong>'+aprAvg.toFixed(1)+'%</strong> (Apr)<br>'+
+                let resp = '<strong>'+label+' YTD Trend</strong><br>Group avg: '+janAvg.toFixed(1)+'% (Jan) → <strong>'+aprAvg.toFixed(1)+'%</strong> ('+CUR_MO+' MTD)<br>'+
                     'YTD change: <strong style="color:'+(ytdD>=0?'#16a34a':'#dc2626')+'">'+(ytdD>=0?'+':'')+ytdD.toFixed(1)+'</strong><br><br>';
                 // Top movers
                 const deltas=[];
@@ -2513,7 +2518,7 @@ const OB_TRENDS = {
                 const DERBY_URL='https://ringderby.vercel.app';
                 const recs=[];
                 // Declined stores with inbound issues → Manager Ring Ring (5 pts, inbound-primary)
-                const declined=D.stores.filter(s=>gn(calc(s.current).ov)<gn(calc(s.march).ov));
+                const declined=D.stores.filter(s=>gn(calc(s.current).ov)<gn(calc(s.lastMonth).ov));
                 const inboundDeclined=declined.filter(s=>{const c=calc(s.current);return gn(c.rg)<3.0||gn(c.sg)<3.0;});
                 if(inboundDeclined.length) recs.push('<strong>Manager Ring Ring Session (5 pts)</strong> for: '+inboundDeclined.map(s=>s.id).join(', ')+' \u2014 inbound declined (RI/Set). Manager Ring Ring is primarily an inbound play.');
                 // Stores with F/D metrics → Scorecard (1 pt)
@@ -2924,7 +2929,7 @@ const OB_TRENDS = {
         function showSpotlight(storeId) {
             const store = D.stores.find(s=>s.id===storeId);
             if(!store) return;
-            const c = calc(store.current), m = calc(store.march), y = calc(store.ytd);
+            const c = calc(store.current), m = calc(store.lastMonth), y = calc(store.ytd);
             const staff = STAFF[storeId] || [];
 
             // Grade color helper
@@ -2937,11 +2942,11 @@ const OB_TRENDS = {
             const metrics = [
                 {label:'Overall', grade:c.ov, prev:m.ov},
                 {label:'Inbound', grade:c.ib, prev:m.ib},
-                {label:'RI%', grade:c.rg, pct:store.current.req+'%', prev:store.march.req+'%'},
-                {label:'Set%', grade:c.sg, pct:store.current.set+'%', prev:store.march.set+'%'},
+                {label:'RI%', grade:c.rg, pct:store.current.req+'%', prev:store.lastMonth.req+'%'},
+                {label:'Set%', grade:c.sg, pct:store.current.set+'%', prev:store.lastMonth.set+'%'},
                 {label:'Outbound', grade:c.ob, prev:m.ob},
-                {label:'Live%', grade:c.lg, pct:store.current.live+'%', prev:store.march.live+'%'},
-                {label:'Appt%', grade:c.ag, pct:store.current.appt+'%', prev:store.march.appt+'%'}
+                {label:'Live%', grade:c.lg, pct:store.current.live+'%', prev:store.lastMonth.live+'%'},
+                {label:'Appt%', grade:c.ag, pct:store.current.appt+'%', prev:store.lastMonth.appt+'%'}
             ];
 
             let gradeStrip = metrics.map(mt => `
@@ -2965,7 +2970,7 @@ const OB_TRENDS = {
             }
 
             let trendHTML = `<div class="spotlight-section">
-                <h4>Inbound Trends (Jan – Apr YTD)</h4>
+                <h4>Inbound Trends (Jan – ${CUR_MO} MTD)</h4>
                 <div style="display:flex;gap:6px;margin-bottom:4px;padding-left:36px;font-size:9px;color:#9ca3af;">
                     ${months.map(mo=>'<div style="min-width:36px;text-align:center;">'+mo+'</div>').join('')}
                 </div>
@@ -3523,7 +3528,7 @@ const OB_TRENDS = {
                         <button class="${m==='ri'?'active':''}" onclick="trendMetric='ri';renderTrends()">Request In %</button>
                         <button class="${m==='set'?'active':''}" onclick="trendMetric='set';renderTrends()">Set %</button>
                     </div>
-                    <span style="font-size:11px;color:#6b7280;">Jan – Apr 2026 YTD | Monthly CRISP Data</span>
+                    <span style="font-size:11px;color:#6b7280;">Jan – ${CUR_MO} MTD 2026 | Monthly CRISP Data</span>
                 </div>
                 ${execHTML}${chartHTML}${moversHTML}${hmHTML}`;
 
@@ -3671,7 +3676,7 @@ const OB_TRENDS = {
                         <button class="${m==='live'?'active':''}" onclick="obMetric='live';renderOBTrends()">Live Convos %</button>
                         <button class="${m==='appt'?'active':''}" onclick="obMetric='appt';renderOBTrends()">Appt Set %</button>
                     </div>
-                    <span style="font-size:11px;color:#6b7280;">Jan – Apr 2026 YTD | CarWars Monthly Data</span>
+                    <span style="font-size:11px;color:#6b7280;">Jan – ${CUR_MO} MTD 2026 | CarWars Monthly Data</span>
                 </div>
                 ${execHTML}${chartHTML}${moversHTML}${hmHTML}`;
 
@@ -3974,11 +3979,11 @@ const OB_TRENDS = {
         function renderAll(){renderDates();renderStores();renderAlerts();renderCoaching();renderRegions();renderTrends();renderOBTrends();renderBaseline();renderDataEntry();renderSummary();renderInsights();}
         // Most-improved-of-the-week firework on page load
         function showMostImprovedFirework(){
-            // Biggest Mar → Apr grade gain
+            // Biggest ${PREV_MO} → ${CUR_MO} MTD grade gain
             let top={store:null, delta:-99};
             D.stores.filter(s=>s.id!=='TCC').forEach(s=>{
-                const d=calc(s.current).ovS-calc(s.march).ovS;
-                if(d>top.delta) top={store:s, delta:d, c:calc(s.current), m:calc(s.march)};
+                const d=calc(s.current).ovS-calc(s.lastMonth).ovS;
+                if(d>top.delta) top={store:s, delta:d, c:calc(s.current), m:calc(s.lastMonth)};
             });
             if(!top.store || top.delta<=0) return;
             // What drove the jump? inbound vs outbound GPA delta
