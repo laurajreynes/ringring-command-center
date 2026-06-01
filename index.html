@@ -127,10 +127,10 @@
         .stores-table.compact td.metric-cell,
         .stores-table.compact th.metric-h,
         .stores-table.compact th.group-label { display: none; }
-        .stores-table.compact td.grade-cell { padding: 3px 14px !important; text-align: left; }
-        .stores-table.compact th { text-align: left; padding-left: 14px; padding-top:5px; padding-bottom:5px; }
+        .stores-table.compact td.grade-cell { padding: 2px 14px !important; text-align: left; }
+        .stores-table.compact th { text-align: left; padding-left: 14px; padding-top:4px; padding-bottom:4px; }
         .stores-table.compact th.left { padding-left: 8px; }
-        .stores-table.compact tbody tr td.store-name { padding: 3px 14px !important; }
+        .stores-table.compact tbody tr td.store-name { padding: 2px 14px !important; }
         .stores-table.compact tbody tr { border-bottom: 1px solid #f0f0f0; }
         .stores-table.compact .may-grade-big { font-size: 16px; padding: 3px 8px; min-width: 34px; }
         .stores-table.compact .thermo { height: 24px; }
@@ -1292,16 +1292,14 @@ const OB_TRENDS = {
                 ${progressCard('East Region', east, '#1a5e16', 'region-east')}
             </div>`;
             const cm = window.compactStores!==false;
-            const toggle = `<div style="display:flex;justify-content:flex-end;padding:2px 0 0;">
-                <div class="view-toggle">
-                    <button class="${cm?'active':''}" onclick="setStoresView(true)">Glance</button>
-                    <button class="${!cm?'active':''}" onclick="setStoresView(false)">Detailed</button>
-                </div>
+            const toggle = `<div class="view-toggle">
+                <button class="${cm?'active':''}" onclick="setStoresView(true)">Glance</button>
+                <button class="${!cm?'active':''}" onclick="setStoresView(false)">Detailed</button>
             </div>`;
-            el.innerHTML=strip+toggle+regionTable(west,'West','west')+regionTable(east,'East','east');
+            el.innerHTML=strip+regionTable(west,'West','west',toggle)+regionTable(east,'East','east','');
         }
 
-        function regionTable(stores,label,cls){
+        function regionTable(stores,label,cls,extraRight){
             const n=stores.length;
             const avgOv=stores.map(s=>calc(s.current).ovS).reduce((a,b)=>a+b,0)/n;
             const avgReq=(stores.map(s=>s.current.req).reduce((a,b)=>a+b,0)/n).toFixed(1);
@@ -1312,12 +1310,15 @@ const OB_TRENDS = {
             let h=`<div class="region-section" id="region-${cls}" style="scroll-margin-top:12px;">
             <div class="region-header region-${cls}-hdr">
                 <h3>${label} Region &mdash; ${n} Stores</h3>
-                <div class="region-summary">
-                    <span>Overall: <strong><span class="g ${gc(s2g(avgOv))}">${s2g(avgOv)}</span></strong></span>
-                    <span>RI: <strong>${avgReq}%</strong></span>
-                    <span>S: <strong>${avgSet}%</strong></span>
-                    <span>Live: <strong>${avgLive}%</strong></span>
-                    <span>Appt: <strong>${avgAppt}%</strong></span>
+                <div style="display:flex;align-items:center;gap:18px;">
+                    <div class="region-summary">
+                        <span>Overall: <strong><span class="g ${gc(s2g(avgOv))}">${s2g(avgOv)}</span></strong></span>
+                        <span>RI: <strong>${avgReq}%</strong></span>
+                        <span>S: <strong>${avgSet}%</strong></span>
+                        <span>Live: <strong>${avgLive}%</strong></span>
+                        <span>Appt: <strong>${avgAppt}%</strong></span>
+                    </div>
+                    ${extraRight || ''}
                 </div>
             </div>
             <table class="stores-table ${window.compactStores!==false?'compact':''}"><thead>
