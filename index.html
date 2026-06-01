@@ -489,12 +489,20 @@
             .tab-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
             .tab-btn { white-space: nowrap; padding: 7px 10px; font-size: 11px; }
             .main { padding: 8px; }
-            .region-section { overflow-x: auto; }
-            .stores-table { min-width: 700px; }
+            .region-section { overflow-x: visible; }
+            .stores-table { min-width: 0; width: 100%; }
             .summary-strip { flex-wrap: wrap; gap: 8px; padding: 6px 12px; }
             .detail-grid { grid-template-columns: 1fr; }
             .entry-grid { grid-template-columns: 1fr !important; }
             .progress-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 8px 20px; background: #fff; border-bottom: 1px solid #e5e5e5; }
+            /* Mobile glance: drop the inline RI/Set/Live/Appt numbers — show grade pills only */
+            .stores-table.compact .grade-peek { display: none; }
+            .stores-table.compact .may-grade-big { font-size: 14px; padding: 2px 6px; min-width: 28px; }
+            .stores-table.compact .thermo { height: 20px; }
+            .stores-table.compact td.grade-cell { padding: 3px 8px !important; }
+            .stores-table.compact tbody tr td.store-name { padding: 3px 8px !important; }
+            .region-header h3 { font-size: 9px; }
+            .region-summary span { font-size: 10px; }
         }
         @media (max-width: 480px) {
             body { font-size: 12px; }
@@ -972,9 +980,10 @@ const TRENDS = {
                 'KRA':[63,75,72,69,63],'NRA':[63,66,63,62,63],'TSA':[64,65,57,63,61],'TCH':[69,70,68,73,74],'TCC':[null,null,null,67,65]
             },
             set: {
-                'SAS':[null,null,null,null,null],'TAS':[null,null,null,null,null],'NAS':[null,null,null,null,null],'KGR':[null,null,null,null,null],'TGR':[null,null,null,null,null],'CGR':[null,null,null,null,null],
-                'HGR':[null,null,null,null,null],'GGR':[null,null,null,null,null],'AGV':[null,null,null,null,null],'KGV':[null,null,null,null,null],'HGV':[null,null,null,null,null],'TRA':[null,null,null,null,null],
-                'KRA':[null,null,null,null,null],'NRA':[null,null,null,null,null],'TSA':[null,null,null,null,null],'TCH':[null,null,null,null,null],'TCC':[null,null,null,null,null]
+                'SAS':[37,39,28,39,36],'TAS':[24,23,30,26,26],'NAS':[37,39,41,36,39],'KGR':[37,48,55,49,45],'TGR':[31,32,33,35,27],'CGR':[23,33,26,34,29],
+                'HGR':[20,34,39,43,40],'GGR':[36,42,30,37,35],'AGV':[35,46,46,33,53],'KGV':[33,34,35,42,31],'HGV':[37,39,43,40,43],'TRA':[38,36,41,40,36],
+                'KRA':[42,36,38,47,51],'NRA':[38,41,44,39,47],'TSA':[34,32,45,40,35],'TCH':[31,27,31,30,38],'TCC':[null,null,null,40,33]
+            
             }
         };
 
