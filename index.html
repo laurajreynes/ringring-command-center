@@ -17,8 +17,8 @@
         }
 
         /* TOP BAR */
-        .top-bar { background: #fff; border-bottom: 1px solid #e5e5e5; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
-        .top-bar-left h1 { font-size: 15px; font-weight: 700; color: #0a0a0a; margin: 0 0 3px; letter-spacing: -0.2px; }
+        .top-bar { background: #fff; border-bottom: 1px solid #e5e5e5; padding: 7px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .top-bar-left h1 { font-size: 14px; font-weight: 700; color: #0a0a0a; margin: 0 0 1px; letter-spacing: -0.2px; }
         .top-bar-left h1 span { color: #0a0a0a; }
         .top-bar-left .meta { font-size: 11px; color: #6b7280; letter-spacing: 0.1px; }
         .top-bar-left .meta strong { color: #0a0a0a; font-weight: 600; }
@@ -31,9 +31,9 @@
         .scorecard-link:hover { background: #1a1a1a; }
 
         /* SUMMARY STRIP */
-        .summary-strip { background: #fff; border-bottom: 1px solid #e5e5e5; padding: 10px 24px; display: flex; gap: 28px; align-items: baseline; }
+        .summary-strip { background: #fff; border-bottom: 1px solid #e5e5e5; padding: 5px 20px; display: flex; gap: 28px; align-items: baseline; }
         .summary-item { display: inline-flex; align-items: baseline; gap: 7px; }
-        .summary-item .num { font-size: 16px; font-weight: 700; line-height: 1; color: #0a0a0a; }
+        .summary-item .num { font-size: 14px; font-weight: 700; line-height: 1; color: #0a0a0a; }
         .summary-item .lbl { color: #6b7280; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
         .num-green { color: #2D8B28; }
         .num-red { color: #D40000; }
@@ -127,17 +127,22 @@
         .stores-table.compact td.metric-cell,
         .stores-table.compact th.metric-h,
         .stores-table.compact th.group-label { display: none; }
-        .stores-table.compact td.grade-cell { padding: 9px 14px !important; text-align: left; }
-        .stores-table.compact th { text-align: left; padding-left: 14px; }
+        .stores-table.compact td.grade-cell { padding: 3px 14px !important; text-align: left; }
+        .stores-table.compact th { text-align: left; padding-left: 14px; padding-top:5px; padding-bottom:5px; }
         .stores-table.compact th.left { padding-left: 8px; }
-        .stores-table.compact tbody tr td.store-name { padding: 9px 14px !important; }
-        /* Hover peek: tiny inline metric chips that slide in next to the grade pill */
-        .grade-wrap { display: inline-flex; align-items: center; gap: 12px; }
-        .grade-peek { display: inline-flex; align-items: center; gap: 14px; opacity: 0; max-width: 0; overflow: hidden; transition: opacity 0.18s ease-out, max-width 0.28s ease-out; white-space: nowrap; }
-        .grade-peek .gp-pair { font-size: 11.5px; color: #6b7280; font-variant-numeric: tabular-nums; letter-spacing: 0.1px; }
+        .stores-table.compact tbody tr td.store-name { padding: 3px 14px !important; }
+        .stores-table.compact tbody tr { border-bottom: 1px solid #f0f0f0; }
+        .stores-table.compact .may-grade-big { font-size: 16px; padding: 3px 8px; min-width: 34px; }
+        .stores-table.compact .thermo { height: 24px; }
+        /* Inline numbers — always visible. Hover reveals benchmark gap chip + row tint. */
+        .grade-wrap { display: inline-flex; align-items: center; gap: 11px; }
+        .grade-peek { display: inline-flex; align-items: center; gap: 11px; white-space: nowrap; }
+        .grade-peek .gp-pair { font-size: 11px; color: #6b7280; font-variant-numeric: tabular-nums; letter-spacing: 0.1px; }
         .grade-peek .gp-pair strong { color: #0a0a0a; font-weight: 700; }
-        .grade-peek .g { font-size: 10px; padding: 1px 5px; margin-left: 2px; }
-        .stores-table.compact tbody tr:hover .grade-peek { opacity: 1; max-width: 280px; }
+        .grade-peek .g { font-size: 9.5px; padding: 1px 4px; margin-left: 2px; }
+        .grade-peek .gp-bench { opacity: 0; max-width: 0; overflow: hidden; transition: opacity 0.18s ease-out, max-width 0.25s ease-out; display: inline-block; font-size: 10px; color: #9ca3af; margin-left: 4px; font-weight: 600; letter-spacing: 0.1px; }
+        .stores-table.compact tbody tr:hover { background: #fafafa; }
+        .stores-table.compact tbody tr:hover .gp-bench { opacity: 1; max-width: 80px; }
         /* Compact/Detailed toggle */
         .view-toggle { display:inline-flex; background:#fafafa; border:1px solid #e5e5e5; border-radius:6px; overflow:hidden; }
         .view-toggle button { background:transparent; border:none; color:#6b7280; padding:5px 12px; font-size:11px; font-weight:600; font-family:inherit; cursor:pointer; transition:background 0.15s, color 0.15s; }
@@ -264,18 +269,15 @@
         }
 
         /* PROGRESS VISUAL */
-        .progress-strip {
-            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
-            margin-bottom: 12px;
-        }
+        .progress-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 8px 20px; background: #fff; border-bottom: 1px solid #e5e5e5; }
         .progress-card {
             background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; padding: 10px 14px;
         }
         .progress-card h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 6px; }
         .progress-donut-row { display: flex; align-items: center; gap: 14px; }
-        .progress-donut { position: relative; width: 56px; height: 56px; flex-shrink: 0; }
-        .progress-donut svg { width: 56px; height: 56px; transform: rotate(-90deg); }
-        .progress-donut-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 14px; font-weight: 700; color: #0a0a0a; }
+        .progress-donut { position: relative; width: 42px; height: 42px; flex-shrink: 0; }
+        .progress-donut svg { width: 42px; height: 42px; transform: rotate(-90deg); }
+        .progress-donut-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 12px; font-weight: 700; color: #0a0a0a; }
         .progress-stats { display: flex; flex-direction: column; gap: 2px; font-size: 11px; }
         .progress-stats .ps-row { display: flex; align-items: center; gap: 4px; }
         .ps-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
@@ -476,7 +478,7 @@
         @media (max-width: 900px) {
             .coaching-tiles { grid-template-columns: 1fr; }
             .region-compare-grid { grid-template-columns: 1fr; }
-            .progress-strip { grid-template-columns: 1fr; }
+            .progress-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 8px 20px; background: #fff; border-bottom: 1px solid #e5e5e5; }
         }
         @media (max-width: 768px) {
             .top-bar { flex-direction: column; gap: 4px; align-items: flex-start; padding: 8px 12px; }
@@ -489,7 +491,7 @@
             .summary-strip { flex-wrap: wrap; gap: 8px; padding: 6px 12px; }
             .detail-grid { grid-template-columns: 1fr; }
             .entry-grid { grid-template-columns: 1fr !important; }
-            .progress-strip { grid-template-columns: 1fr; gap: 6px; }
+            .progress-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 8px 20px; background: #fff; border-bottom: 1px solid #e5e5e5; }
         }
         @media (max-width: 480px) {
             body { font-size: 12px; }
@@ -595,7 +597,7 @@
         .staff-apr-click * { pointer-events:none; }
 
         /* FOCUS MODE BAR */
-        .focus-bar { display:flex; gap:10px; align-items:center; padding:10px 20px; background:linear-gradient(90deg,rgba(45,139,40,0.10),rgba(45,139,40,0.10)); border-bottom:1px solid rgba(45,139,40,0.10); font-size:12px; }
+        .focus-bar { background: #fafafa; border-bottom: 1px solid #e5e5e5; padding: 4px 20px; display: flex; gap: 14px; align-items: center; font-family: inherit; }
         .focus-bar .fb-label { font-weight:700; color:#1a5e16; text-transform:uppercase; letter-spacing:0.4px; font-size:10px; }
         .focus-btn { background:transparent; border:none; color:#0a0a0a; padding:4px 0; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; text-decoration:underline; text-decoration-style:dotted; text-decoration-color:#cbd5e1; text-underline-offset:3px; transition:text-decoration-color 0.15s; }
         .focus-btn:hover { text-decoration-color:#0a0a0a; }
@@ -749,7 +751,7 @@
         <div class="summary-item" style="display:none;"><div class="lbl" id="currentDate">—</div></div>
     </div>
     <div id="storyOfDay" style="background:#fafafa;border-bottom:1px solid rgba(255,215,16,0.40);padding:7px 20px;font-size:12px;color:#0a0a0a;display:none;"></div>
-    <div id="juneTrainingBanner" style="background:#fff;border-bottom:1px solid #e5e5e5;padding:10px 24px;font-size:12px;color:#0a0a0a;display:none;"></div>
+    <div id="juneTrainingBanner" style="background:#fff;border-bottom:1px solid #e5e5e5;padding:5px 20px;font-size:11.5px;color:#0a0a0a;display:none;"></div>
 
     <div class="focus-overlay" id="focusOverlay" onclick="if(event.target===this)closeFocus()">
         <div class="focus-panel">
@@ -1316,7 +1318,7 @@ const OB_TRENDS = {
             <table class="stores-table ${window.compactStores!==false?'compact':''}"><thead>
                 <tr>
                     <th rowspan="2" style="width:22px;"></th>
-                    <th rowspan="2" class="left sortable" onclick="toggleSort('${label}','ov')">Store · May MTD${sortArrow(label,'ov')}</th>
+                    <th rowspan="2" class="left sortable" onclick="toggleSort('${label}','ov')">Store · May${sortArrow(label,'ov')}</th>
                     <th colspan="3" class="group-label group-ib ib-start">Inbound (CRISP)</th>
                     <th colspan="3" class="group-label group-ob ob-start">Outbound (Salesperson Call Report)</th>
                 </tr>
@@ -1349,10 +1351,10 @@ const OB_TRENDS = {
                     </td>
                     <td class="metric-cell ib-start">${miniBar(store.current.req,'req',c.rg)}</td>
                     <td class="metric-cell">${miniBar(store.current.set,'set',c.sg)}</td>
-                    <td class="grade-cell"><div class="grade-wrap">${thermo(c.ib)}<span class="grade-peek"><span class="gp-pair">RI <strong>${store.current.req}%</strong> <span class="g ${gc(c.rg)}">${c.rg}</span></span><span class="gp-pair">Set <strong>${store.current.set}%</strong> <span class="g ${gc(c.sg)}">${c.sg}</span></span></span></div></td>
+                    <td class="grade-cell"><div class="grade-wrap">${thermo(c.ib)}<span class="grade-peek"><span class="gp-pair">RI <strong>${store.current.req}%</strong> <span class="g ${gc(c.rg)}">${c.rg}</span><span class="gp-bench">vs ${BENCH.req}%</span></span><span class="gp-pair">Set <strong>${store.current.set}%</strong> <span class="g ${gc(c.sg)}">${c.sg}</span><span class="gp-bench">vs ${BENCH.set}%</span></span></span></div></td>
                     <td class="metric-cell ob-start">${miniBar(store.current.live,'live',c.lg)}</td>
                     <td class="metric-cell">${miniBar(store.current.appt,'appt',c.ag)}</td>
-                    <td class="grade-cell"><div class="grade-wrap">${thermo(c.ob)}<span class="grade-peek"><span class="gp-pair">Live <strong>${store.current.live}%</strong> <span class="g ${gc(c.lg)}">${c.lg}</span></span><span class="gp-pair">Appt <strong>${store.current.appt}%</strong> <span class="g ${gc(c.ag)}">${c.ag}</span></span></span></div></td>
+                    <td class="grade-cell"><div class="grade-wrap">${thermo(c.ob)}<span class="grade-peek"><span class="gp-pair">Live <strong>${store.current.live}%</strong> <span class="g ${gc(c.lg)}">${c.lg}</span><span class="gp-bench">vs ${BENCH.live}%</span></span><span class="gp-pair">Appt <strong>${store.current.appt}%</strong> <span class="g ${gc(c.ag)}">${c.ag}</span><span class="gp-bench">vs ${BENCH.appt}%</span></span></span></div></td>
                 </tr>
                 <tr class="detail-row" id="detail-${idx}"><td colspan="8">
                     <div style="font-size:11px;color:#6b7280;margin-bottom:4px;font-weight:600;">${store.name}</div>
@@ -1392,7 +1394,7 @@ const OB_TRENDS = {
             const alerts=[];
             stores.filter(s=>s.id!=='TCC').forEach(store=>{
                 const c=calc(store.current),m=calc(store.lastMonth),name=store.id;
-                if(gn(c.ov)<gn(m.ov)) alerts.push({sev:'critical',sid:store.id,type:'declined',title:name+' DECLINED',desc:'Overall '+m.ov+' → '+c.ov+' ('+PREV_MO+' → '+CUR_MO+' MTD). Immediate coaching needed.'});
+                if(gn(c.ov)<gn(m.ov)) alerts.push({sev:'critical',sid:store.id,type:'declined',title:name+' DECLINED',desc:'Overall '+m.ov+' → '+c.ov+' ('+PREV_MO+' → '+CUR_MO+'). Immediate coaching needed.'});
                 const fails=[];
                 if(c.rg==='F'||c.rg==='D') fails.push('RI: '+store.current.req+'% ('+c.rg+')');
                 if(c.sg==='F'||c.sg==='D') fails.push('Set: '+store.current.set+'% ('+c.sg+')');
@@ -1957,8 +1959,8 @@ const OB_TRENDS = {
             const movers = real.map(s=>({s, d:calc(s.current).ovS-calc(s.lastMonth).ovS}));
             movers.sort((a,b)=>b.d-a.d);
             const top = movers[0], bot = movers[movers.length-1];
-            if(top.d>=0.3) stories.push(`<strong>${top.s.id}</strong> is the biggest improver ${PREV_MO} → ${CUR_MO} MTD — ${calc(top.s.lastMonth).ov} → ${calc(top.s.current).ov}.`);
-            if(bot.d<=-0.3) stories.push(`<strong>${bot.s.id}</strong> gave up the most ground ${PREV_MO} → ${CUR_MO} MTD — ${calc(bot.s.lastMonth).ov} → ${calc(bot.s.current).ov}.`);
+            if(top.d>=0.3) stories.push(`<strong>${top.s.id}</strong> is the biggest improver ${PREV_MO} → ${CUR_MO} — ${calc(top.s.lastMonth).ov} → ${calc(top.s.current).ov}.`);
+            if(bot.d<=-0.3) stories.push(`<strong>${bot.s.id}</strong> gave up the most ground ${PREV_MO} → ${CUR_MO} — ${calc(bot.s.lastMonth).ov} → ${calc(bot.s.current).ov}.`);
             // Stores at A on appt
             const aAppt = real.filter(s=>calc(s.current).ag==='A' || calc(s.current).ag==='A-');
             if(aAppt.length>=8) stories.push(`${aAppt.length} of 16 stores grade A or A− on outbound Appt% — same calls converting more often.`);
@@ -2040,7 +2042,7 @@ const OB_TRENDS = {
                 if(used[category].size>=n) used[category].clear();
                 return arr[idx];
             };
-            // Biggest improver ('+PREV_MO+' → '+CUR_MO+' MTD)
+            // Biggest improver ('+PREV_MO+' → '+CUR_MO+')
             let bestGain={store:null,delta:-99};
             alertStores.forEach(s=>{const c=calc(s.current),m=calc(s.lastMonth),d=c.ovS-m.ovS;if(d>bestGain.delta)bestGain={store:s,delta:d,cg:c.ov,mg:m.ov};});
             if(bestGain.store && bestGain.delta>0){
@@ -2106,7 +2108,7 @@ const OB_TRENDS = {
                     all.push({pri:priority,type:'watch',tag:'Watch',title:s.id+' \u2014 Overall declined ('+m.ov+' \u2192 '+c.ov+')',text:pickUnique(v,s.id+'decl','decl')});
                 }
             });
-            // Big Set swings ('+PREV_MO+' → '+CUR_MO+' MTD)
+            // Big Set swings ('+PREV_MO+' → '+CUR_MO+')
             alertStores.forEach(s=>{const d=s.current.set-s.lastMonth.set;
                 if(d>=10){
                     const v=[
@@ -2128,7 +2130,7 @@ const OB_TRENDS = {
                     all.push({pri:1,type:'watch',tag:'Watch',title:s.id+' \u2014 Set % fell '+Math.abs(d).toFixed(0)+' pts',text:pickUnique(v,s.id+'setdn','setdn')});
                 }
             });
-            // Live Convos drops ('+PREV_MO+' → '+CUR_MO+' MTD) — usually list quality, small chance timing
+            // Live Convos drops ('+PREV_MO+' → '+CUR_MO+') — usually list quality, small chance timing
             alertStores.forEach(s=>{const d=s.current.live-s.lastMonth.live;
                 if(d<=-3){
                     const v=[
@@ -2211,10 +2213,10 @@ const OB_TRENDS = {
                 // Manager Ring Ring is primarily an inbound play — recommend when inbound is soft + overall declined
                 if(gn(c.ov)<gn(m.ov) && inboundWeak){
                     all.push({pri:1,type:'derby',tag:'Derby',title:s.id+' — Manager Ring Ring Session (5 pts)',
-                        text:'Overall declined '+m.ov+' → '+c.ov+' ('+PREV_MO+' → '+CUR_MO+' MTD) with weak inbound. Manager Ring Ring is primarily an inbound play \u2014 get it booked. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Derby Board</a>'});
+                        text:'Overall declined '+m.ov+' → '+c.ov+' ('+PREV_MO+' → '+CUR_MO+') with weak inbound. Manager Ring Ring is primarily an inbound play \u2014 get it booked. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Derby Board</a>'});
                 } else if(gn(c.ov)<gn(m.ov) && outboundWeak){
                     all.push({pri:1,type:'derby',tag:'Derby',title:s.id+' — Pull rep-level outbound',
-                        text:'Overall declined '+m.ov+' → '+c.ov+' ('+PREV_MO+' → '+CUR_MO+' MTD) and outbound is the drag. Pull individual rep Live%/Appt% \u2014 find the one or two people pulling the average down and scorecard their calls. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Derby Board</a>'});
+                        text:'Overall declined '+m.ov+' → '+c.ov+' ('+PREV_MO+' → '+CUR_MO+') and outbound is the drag. Pull individual rep Live%/Appt% \u2014 find the one or two people pulling the average down and scorecard their calls. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Derby Board</a>'});
                 } else if(weakMetrics.length>0){
                     all.push({pri:2,type:'derby',tag:'Derby',title:s.id+' — Scorecard recommended (1 pt)',
                         text:'Weak '+weakMetrics.join(' & ')+' metrics. Scorecard surfaces whether it\'s call guide, pitch, or list. <a href="'+SCORECARD_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Open Scorecard</a> | <a href="'+DERBY_URL+'" target="_blank" style="color:#0a0a0a;text-decoration:underline;">Derby Board</a>'});
@@ -2411,12 +2413,12 @@ const OB_TRENDS = {
             if(ql.match(/improved|improving|up|gaining/)){
                 const improved=D.stores.filter(s=>gn(calc(s.current).ov)>gn(calc(s.lastMonth).ov));
                 if(!improved.length) return 'No stores improved their overall letter grade from '+PREV_MO+'.';
-                return improved.length+' stores improved ('+PREV_MO+' → '+CUR_MO+' MTD):<br>'+improved.map(s=>'\u2022 <strong>'+s.id+'</strong> '+calc(s.lastMonth).ov+' \u2192 '+calc(s.current).ov).join('<br>');
+                return improved.length+' stores improved ('+PREV_MO+' → '+CUR_MO+'):<br>'+improved.map(s=>'\u2022 <strong>'+s.id+'</strong> '+calc(s.lastMonth).ov+' \u2192 '+calc(s.current).ov).join('<br>');
             }
             if(ql.match(/declined|dropping|down|falling|slipping/)){
                 const declined=D.stores.filter(s=>gn(calc(s.current).ov)<gn(calc(s.lastMonth).ov));
                 if(!declined.length) return 'No stores declined in overall letter grade from '+PREV_MO+'. Everyone is holding or improving!';
-                return declined.length+' stores declined ('+PREV_MO+' → '+CUR_MO+' MTD):<br>'+declined.map(s=>'\u2022 <strong>'+s.id+'</strong> '+calc(s.lastMonth).ov+' \u2192 '+calc(s.current).ov).join('<br>');
+                return declined.length+' stores declined ('+PREV_MO+' → '+CUR_MO+'):<br>'+declined.map(s=>'\u2022 <strong>'+s.id+'</strong> '+calc(s.lastMonth).ov+' \u2192 '+calc(s.current).ov).join('<br>');
             }
             // West vs East / compare regions
             if(ql.match(/west|east|region|compare/)){
@@ -2441,7 +2443,7 @@ const OB_TRENDS = {
                 const ms = TRENDS.months;
                 const janAvg = trendAvg(metric,0), aprAvg = trendAvg(metric,ms.length-1);
                 const ytdD = aprAvg-janAvg;
-                let resp = '<strong>'+label+' YTD Trend</strong><br>Group avg: '+janAvg.toFixed(1)+'% (Jan) → <strong>'+aprAvg.toFixed(1)+'%</strong> ('+CUR_MO+' MTD)<br>'+
+                let resp = '<strong>'+label+' YTD Trend</strong><br>Group avg: '+janAvg.toFixed(1)+'% (Jan) → <strong>'+aprAvg.toFixed(1)+'%</strong> ('+CUR_MO+')<br>'+
                     'YTD change: <strong style="color:'+(ytdD>=0?'#2D8B28':'#D40000')+'">'+(ytdD>=0?'+':'')+ytdD.toFixed(1)+'</strong><br><br>';
                 // Top movers
                 const deltas=[];
@@ -2494,7 +2496,7 @@ const OB_TRENDS = {
             const useWTD = _staffModalState.period === 'WTD';
             const staffSrc = useWTD ? STAFF_WTD : STAFF;
             const mgrSrc   = useWTD ? MANAGERS_WTD : MANAGERS;
-            const periodLbl = useWTD ? 'WTD (since Mon)' : 'May MTD';
+            const periodLbl = useWTD ? 'WTD (since Mon)' : 'May';
 
             const staff = staffSrc[storeId] || [];
             const mgrs  = mgrSrc[storeId] || [];
@@ -2822,7 +2824,7 @@ const OB_TRENDS = {
                     </div>
                     <div style="display:flex;gap:8px;align-items:center;">
                         <div style="text-align:center;padding:4px 10px;background:#fafafa;border-radius:6px;border:1px solid #e5e7eb;">
-                            <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">May MTD Overall</div>
+                            <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">May Overall</div>
                             <div class="g ${gc(c.ov)}" style="font-size:18px;padding:0;">${c.ov}</div>
                         </div>
                         ${HAS_ACTION_PLAN.has(storeId) ? `<a href="${planPdf(store)}" target="_blank" style="background:#0a0a0a;color:#fff;border:none;border-radius:4px;padding:6px 14px;font-size:11px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;">View Action Plan</a>` : ''}
@@ -2853,7 +2855,7 @@ const OB_TRENDS = {
                                 <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:0.4px;">
                                     <th style="padding:4px 8px;text-align:left;font-weight:600;">Metric</th>
                                     <th style="padding:4px 8px;text-align:left;font-weight:600;">Baseline</th>
-                                    <th style="padding:4px 8px;text-align:left;font-weight:600;">May MTD</th>
+                                    <th style="padding:4px 8px;text-align:left;font-weight:600;">May</th>
                                     <th style="padding:4px 8px;text-align:left;font-weight:600;">Δ</th>
                                 </tr></thead>
                                 <tbody>
@@ -2890,7 +2892,7 @@ const OB_TRENDS = {
                                 <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:0.4px;">
                                     <th style="padding:4px 8px;text-align:left;font-weight:600;">Metric</th>
                                     <th style="padding:4px 8px;text-align:left;font-weight:600;">Baseline</th>
-                                    <th style="padding:4px 8px;text-align:left;font-weight:600;">May MTD</th>
+                                    <th style="padding:4px 8px;text-align:left;font-weight:600;">May</th>
                                     <th style="padding:4px 8px;text-align:left;font-weight:600;">Δ</th>
                                 </tr></thead>
                                 <tbody>
@@ -2913,7 +2915,7 @@ const OB_TRENDS = {
                             <div style="font-size:13px;color:#0a0a0a;font-weight:600;">${focus}</div>
                         </div>
                         <div style="text-align:right;font-size:11px;color:#0a0a0a;">
-                            <div>Baseline: <span class="g ${gc(b.ov)}" style="font-size:10px;">${b.ov}</span> → May MTD: <span class="g ${gc(c.ov)}" style="font-size:10px;">${c.ov}</span></div>
+                            <div>Baseline: <span class="g ${gc(b.ov)}" style="font-size:10px;">${b.ov}</span> → May: <span class="g ${gc(c.ov)}" style="font-size:10px;">${c.ov}</span></div>
                         </div>
                     </div>
                 </div>`;
@@ -2973,7 +2975,7 @@ const OB_TRENDS = {
             }
 
             let trendHTML = `<div class="spotlight-section">
-                <h4>Inbound Trends (Jan – ${CUR_MO} MTD)</h4>
+                <h4>Inbound Trends (Jan – ${CUR_MO})</h4>
                 <div style="display:flex;gap:6px;margin-bottom:4px;padding-left:36px;font-size:9px;color:#9ca3af;">
                     ${months.map(mo=>'<div style="min-width:36px;text-align:center;">'+mo+'</div>').join('')}
                 </div>
@@ -3119,7 +3121,7 @@ const OB_TRENDS = {
             });
             // strengths: top 2
             const strengths = scored.slice(0,2);
-            // trend (month-over-month: May MTD vs Apr)
+            // trend (month-over-month: May vs Apr)
             const trendData = scored.map(x => {
                 const prim = isIB ? TRENDS.ri[x.s.id] : OB_TRENDS.live[x.s.id];
                 const sec = isIB ? TRENDS.set[x.s.id] : OB_TRENDS.appt[x.s.id];
@@ -3164,7 +3166,7 @@ const OB_TRENDS = {
                         <th>${isIB?'Inbound':'Outbound'} Grade</th>
                         <th style="text-align:right;">${isIB?'RI%':'Live%'}</th>
                         <th style="text-align:right;">${isIB?'Set%':'Appt%'}</th>
-                        <th style="text-align:right;">Apr &rarr; May MTD</th>
+                        <th style="text-align:right;">Apr &rarr; May</th>
                         <th style="text-align:right;">vs Start</th>
                     </tr></thead>
                     <tbody>${tableRows}</tbody>
@@ -3244,7 +3246,7 @@ const OB_TRENDS = {
                     ${summaryHTML}
                 </div>
                 <div class="focus-section">
-                    <h3>${isIB?'Inbound':'Outbound'} trend — Jan through May MTD</h3>
+                    <h3>${isIB?'Inbound':'Outbound'} trend — Jan through ${CUR_MO}</h3>
                     <div class="focus-trend-wrap">
                         <div class="focus-trend-hdr">
                             <span><strong>${region === 'All' ? 'Enterprise' : region + ' region'} average ${isIB?'inbound':'outbound'} GPA</strong> · month over month</span>
@@ -3274,7 +3276,7 @@ const OB_TRENDS = {
             const ctx = canvas.getContext('2d');
             const w = canvas.width, h = canvas.height;
             ctx.clearRect(0,0,w,h);
-            const months = ['Jan','Feb','Mar','Apr','May MTD'];
+            const months = ['Jan','Feb','Mar','Apr','May'];
             const primArr = isIB ? TRENDS.ri : OB_TRENDS.live;
             const secArr = isIB ? TRENDS.set : OB_TRENDS.appt;
             const primKey = isIB ? 'req' : 'live';
@@ -3423,7 +3425,7 @@ const OB_TRENDS = {
             // Exec summary
             let execHTML = `<div class="trends-exec">
                 <h4>Executive Summary — ${label} YTD Trend</h4>
-                <p>Group average: <strong>${janAvg!==null?janAvg.toFixed(1):'—'}%</strong> (Jan) → <strong>${aprAvg!==null?aprAvg.toFixed(1):'—'}%</strong> (May MTD) —
+                <p>Group average: <strong>${janAvg!==null?janAvg.toFixed(1):'—'}%</strong> (Jan) → <strong>${aprAvg!==null?aprAvg.toFixed(1):'—'}%</strong> (May) —
                 <strong style="color:${ytdDelta>=0?'#2D8B28':'#D40000'}">${ytdDelta>=0?'+':''}${ytdDelta.toFixed(1)} YTD</strong><br>
                 <strong>${improving}</strong> of ${storeDeltas.length} stores improved since Jan, <strong>${declining}</strong> declined.<br>
                 Benchmark: <strong>${bench}%</strong> — Group is currently <strong>${benchGap<=0?'at or above':benchGap.toFixed(1)+' below'}</strong> benchmark.</p>
@@ -3531,7 +3533,7 @@ const OB_TRENDS = {
                         <button class="${m==='ri'?'active':''}" onclick="trendMetric='ri';renderTrends()">Request In %</button>
                         <button class="${m==='set'?'active':''}" onclick="trendMetric='set';renderTrends()">Set %</button>
                     </div>
-                    <span style="font-size:11px;color:#6b7280;">Jan – ${CUR_MO} MTD 2026 | Monthly CRISP Data</span>
+                    <span style="font-size:11px;color:#6b7280;">Jan – ${CUR_MO} 2026 | Monthly CRISP Data</span>
                 </div>
                 ${execHTML}${chartHTML}${moversHTML}${hmHTML}`;
 
@@ -3576,7 +3578,7 @@ const OB_TRENDS = {
             // Exec summary
             let execHTML = `<div class="trends-exec">
                 <h4>Outbound — ${label} YTD Trend</h4>
-                <p>Group average: <strong>${janAvg!==null?janAvg.toFixed(1):'—'}%</strong> (Jan) → <strong>${aprAvg!==null?aprAvg.toFixed(1):'—'}%</strong> (May MTD) —
+                <p>Group average: <strong>${janAvg!==null?janAvg.toFixed(1):'—'}%</strong> (Jan) → <strong>${aprAvg!==null?aprAvg.toFixed(1):'—'}%</strong> (May) —
                 <strong style="color:${ytdDelta>=0?'#2D8B28':'#D40000'}">${ytdDelta>=0?'+':''}${ytdDelta.toFixed(1)}</strong> YTD<br>
                 <strong>${improving}</strong> of ${storeDeltas.length} stores improved since Jan, <strong>${declining}</strong> declined.<br>
                 Benchmark: <strong>${bench}%</strong> — Group is currently <strong>${benchGap<=0?'at or above':benchGap.toFixed(1)+' below'}</strong> benchmark.</p>
@@ -3679,7 +3681,7 @@ const OB_TRENDS = {
                         <button class="${m==='live'?'active':''}" onclick="obMetric='live';renderOBTrends()">Live Convos %</button>
                         <button class="${m==='appt'?'active':''}" onclick="obMetric='appt';renderOBTrends()">Appt Set %</button>
                     </div>
-                    <span style="font-size:11px;color:#6b7280;">Jan – ${CUR_MO} MTD 2026 | CarWars Monthly Data</span>
+                    <span style="font-size:11px;color:#6b7280;">Jan – ${CUR_MO} 2026 | CarWars Monthly Data</span>
                 </div>
                 ${execHTML}${chartHTML}${moversHTML}${hmHTML}`;
 
@@ -3970,19 +3972,19 @@ const OB_TRENDS = {
         function renderDates(){
             const now = new Date();
             const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-            // CarWars date = yesterday (data is always previous day)
             const yesterday = new Date(now); yesterday.setDate(now.getDate()-1);
             const cwDate = mo[yesterday.getMonth()]+' '+yesterday.getDate();
-            // MTD range: 1st of current month through yesterday
-            const monthStart = mo[now.getMonth()]+' 1';
-            const rangeStr = monthStart+' – '+mo[yesterday.getMonth()]+' '+yesterday.getDate();
+            // On the 1st of the month, the snapshot reflects the previous month FINAL, not "MTD."
+            const onFirst = now.getDate() === 1;
+            const dataMonthIdx = onFirst ? (now.getMonth()+11) % 12 : now.getMonth();
+            const label = onFirst ? mo[dataMonthIdx]+' Final' : mo[dataMonthIdx]+' MTD';
             document.getElementById('carwarsDate').textContent = cwDate;
-            document.getElementById('dateRange').textContent = mo[now.getMonth()]+' MTD ('+rangeStr+')';
+            document.getElementById('dateRange').textContent = label;
         }
         function renderAll(){renderDates();renderStores();renderAlerts();renderCoaching();renderRegions();renderTrends();renderOBTrends();renderBaseline();renderDataEntry();renderSummary();renderInsights();}
         // Most-improved-of-the-week firework on page load
         function showMostImprovedFirework(){
-            // Biggest ${PREV_MO} → ${CUR_MO} MTD grade gain
+            // Biggest ${PREV_MO} → ${CUR_MO} grade gain
             let top={store:null, delta:-99};
             D.stores.filter(s=>s.id!=='TCC').forEach(s=>{
                 const d=calc(s.current).ovS-calc(s.lastMonth).ovS;
