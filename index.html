@@ -140,9 +140,12 @@
         .grade-peek .gp-pair { font-size: 11px; color: #6b7280; font-variant-numeric: tabular-nums; letter-spacing: 0.1px; }
         .grade-peek .gp-pair strong { color: #0a0a0a; font-weight: 700; }
         .grade-peek .g { font-size: 9.5px; padding: 1px 4px; margin-left: 2px; }
-        .grade-peek .gp-bench { opacity: 0; max-width: 0; overflow: hidden; transition: opacity 0.18s ease-out, max-width 0.25s ease-out; display: inline-block; font-size: 10px; color: #9ca3af; margin-left: 4px; font-weight: 600; letter-spacing: 0.1px; }
+        .gp-bar { position:relative; display:inline-block; height:5px; background:#f0f0f0; border-radius:3px; opacity:0; width:0; overflow:visible; transition:opacity 0.18s ease-out, width 0.25s ease-out; vertical-align:middle; margin-left:6px; }
+        .gp-bar .gp-bar-fill { position:absolute; left:0; top:0; bottom:0; border-radius:3px; }
+        .gp-bar .gp-bar-bench { position:absolute; top:-2px; bottom:-2px; width:1.5px; background:#0a0a0a; }
+        .stores-table.compact tbody tr:hover .gp-bar { opacity:1; width:54px; }
         .stores-table.compact tbody tr:hover { background: #fafafa; }
-        .stores-table.compact tbody tr:hover .gp-bench { opacity: 1; max-width: 80px; }
+        
         /* Compact/Detailed toggle */
         .view-toggle { display:inline-flex; background:#fafafa; border:1px solid #e5e5e5; border-radius:6px; overflow:hidden; }
         .view-toggle button { background:transparent; border:none; color:#6b7280; padding:5px 12px; font-size:11px; font-weight:600; font-family:inherit; cursor:pointer; transition:background 0.15s, color 0.15s; }
@@ -1289,7 +1292,7 @@ const OB_TRENDS = {
                 ${progressCard('East Region', east, '#1a5e16', 'region-east')}
             </div>`;
             const cm = window.compactStores!==false;
-            const toggle = `<div style="display:flex;justify-content:flex-end;padding:10px 0 6px;">
+            const toggle = `<div style="display:flex;justify-content:flex-end;padding:2px 0 0;">
                 <div class="view-toggle">
                     <button class="${cm?'active':''}" onclick="setStoresView(true)">Glance</button>
                     <button class="${!cm?'active':''}" onclick="setStoresView(false)">Detailed</button>
@@ -1353,10 +1356,10 @@ const OB_TRENDS = {
                     </td>
                     <td class="metric-cell ib-start">${miniBar(store.current.req,'req',c.rg)}</td>
                     <td class="metric-cell">${miniBar(store.current.set,'set',c.sg)}</td>
-                    <td class="grade-cell"><div class="grade-wrap">${thermo(c.ib)}<span class="grade-peek"><span class="gp-pair">RI <strong>${store.current.req}%</strong> <span class="g ${gc(c.rg)}">${c.rg}</span><span class="gp-bench">vs ${BENCH.req}%</span></span><span class="gp-pair">Set <strong>${store.current.set}%</strong> <span class="g ${gc(c.sg)}">${c.sg}</span><span class="gp-bench">vs ${BENCH.set}%</span></span></span></div></td>
+                    <td class="grade-cell"><div class="grade-wrap">${thermo(c.ib)}<span class="grade-peek"><span class="gp-pair">RI <strong>${store.current.req}%</strong> <span class="g ${gc(c.rg)}">${c.rg}</span><span class="gp-bar"><span class="gp-bar-fill ${barC(c.rg)}" style="width:${Math.min(100, store.current.req/(BENCH.req*1.2)*100)}%;"></span><span class="gp-bar-bench" style="left:83.33%;"></span></span></span><span class="gp-pair">Set <strong>${store.current.set}%</strong> <span class="g ${gc(c.sg)}">${c.sg}</span><span class="gp-bar"><span class="gp-bar-fill ${barC(c.sg)}" style="width:${Math.min(100, store.current.set/(BENCH.set*1.2)*100)}%;"></span><span class="gp-bar-bench" style="left:83.33%;"></span></span></span></span></div></td>
                     <td class="metric-cell ob-start">${miniBar(store.current.live,'live',c.lg)}</td>
                     <td class="metric-cell">${miniBar(store.current.appt,'appt',c.ag)}</td>
-                    <td class="grade-cell"><div class="grade-wrap">${thermo(c.ob)}<span class="grade-peek"><span class="gp-pair">Live <strong>${store.current.live}%</strong> <span class="g ${gc(c.lg)}">${c.lg}</span><span class="gp-bench">vs ${BENCH.live}%</span></span><span class="gp-pair">Appt <strong>${store.current.appt}%</strong> <span class="g ${gc(c.ag)}">${c.ag}</span><span class="gp-bench">vs ${BENCH.appt}%</span></span></span></div></td>
+                    <td class="grade-cell"><div class="grade-wrap">${thermo(c.ob)}<span class="grade-peek"><span class="gp-pair">Live <strong>${store.current.live}%</strong> <span class="g ${gc(c.lg)}">${c.lg}</span><span class="gp-bar"><span class="gp-bar-fill ${barC(c.lg)}" style="width:${Math.min(100, store.current.live/(BENCH.live*1.2)*100)}%;"></span><span class="gp-bar-bench" style="left:83.33%;"></span></span></span><span class="gp-pair">Appt <strong>${store.current.appt}%</strong> <span class="g ${gc(c.ag)}">${c.ag}</span><span class="gp-bar"><span class="gp-bar-fill ${barC(c.ag)}" style="width:${Math.min(100, store.current.appt/(BENCH.appt*1.2)*100)}%;"></span><span class="gp-bar-bench" style="left:83.33%;"></span></span></span></span></div></td>
                 </tr>
                 <tr class="detail-row" id="detail-${idx}"><td colspan="8">
                     <div style="font-size:11px;color:#6b7280;margin-bottom:4px;font-weight:600;">${store.name}</div>
