@@ -1992,7 +1992,7 @@ const OB_TRENDS = {
 
         function renderJuneTrainingBanner(){
             const el=document.getElementById('juneTrainingBanner');
-            const below = D.stores.filter(s=>s.id!=='TCC').filter(s=>calc(s.current).ovS<2.3)
+            const below = D.stores.filter(s=>s.id!=='TCC' && !GRACED_FROM_RALEIGH.has(s.id)).filter(s=>calc(s.current).ovS<2.3)
                 .sort((a,b)=>calc(a.current).ovS-calc(b.current).ovS);
             if(!below.length){ el.style.display='none'; return; }
             const chips = below.map(s=>{
