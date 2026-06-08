@@ -1464,7 +1464,7 @@ const TRENDS = {
                 html += gradePill('Overall', c.ov, '');
                 html += '</div>';
                 if(type==='declined') {
-                    html += '<div style="font-size:10px;color:#64748b;margin-bottom:10px;">March: Overall '+m.ov+' · Inbound '+m.ib+' · Outbound '+m.ob+'</div>';
+                    html += '<div style="font-size:10px;color:#64748b;margin-bottom:10px;">'+PREV_MO+': Overall '+m.ov+' · Inbound '+m.ib+' · Outbound '+m.ob+'</div>';
                 }
             }
 
@@ -2192,7 +2192,7 @@ const TRENDS = {
                 if(gn(c.ov)<=1.0){
                     const v=chronic?[
                         'Still at '+c.ov+'. Still. What the hell is happening over there? Pull individual rep grades \u2014 someone has to be sinking it.',
-                        c.ov+' in April. Was '+m.ov+' in March. Was '+b.ov+' at baseline. This is chronic \u2014 find the one or two reps dragging the average and scorecard their calls, now.',
+                        c.ov+' in '+CUR_MO+'. Was '+m.ov+' in '+PREV_MO+'. Was '+b.ov+' at baseline. This is chronic \u2014 find the one or two reps dragging the average and scorecard their calls, now.',
                         'Enterprise bottom '+c.ov+' and has not budged. If the weakest rep walked out tomorrow, what happens to the store grade? That tells you where to start.',
                         c.ov+' and flat. Don\'t scorecard the store \u2014 scorecard the worst rep. One person is usually doing most of the damage.'
                     ]:[
@@ -2386,7 +2386,7 @@ const TRENDS = {
                 const b=calc(s.baseline);
                 const chronic=gn(c.ov)<=2.0 && gn(m.ov)<=2.0 && gn(b.ov)<=2.3;
                 let push;
-                if(chronic) push='<strong>The push</strong> \u2014 Baseline was '+b.ov+', March was '+m.ov+', April is '+c.ov+'. This isn\'t a bad week, it\'s a pattern. Stop scorecarding the store and start scorecarding people. Pull individual rep grades \u2014 who is the single worst performer? If they walked out tomorrow, what happens to the store grade? That tells you where to start.';
+                if(chronic) push='<strong>The push</strong> \u2014 Baseline was '+b.ov+', '+PREV_MO+' was '+m.ov+', '+CUR_MO+' is '+c.ov+'. This isn\'t a bad week, it\'s a pattern. Stop scorecarding the store and start scorecarding people. Pull individual rep grades \u2014 who is the single worst performer? If they walked out tomorrow, what happens to the store grade? That tells you where to start.';
                 else if(riDelta>=10 && setDelta<3) push='<strong>The push</strong> \u2014 RI up '+rv[0]+'% \u2192 '+rv[rv.length-1]+'% but Set% is flat. Call guide check: are they hooking the trade, asking for the appointment more than once, giving them a reason to come in? Which reps have the lowest set rate \u2014 listen to their calls.';
                 else if(riDelta>=10 && setDelta>=3) push='<strong>The push</strong> \u2014 RI up '+rv[0]+'% \u2192 '+rv[rv.length-1]+'% and Set% keeping pace. Pull 2 recent converted calls and use them for a team huddle \u2014 lock the language in before month-end.';
                 else if(setDelta<=-5) push='<strong>The push</strong> \u2014 Set% dropped '+sv[0]+'% \u2192 '+sv[sv.length-1]+'% since Jan. This is the call guide \u2014 are they hooking the trade, asking for the appointment more than once, giving a reason to come in? Find the reps with the lowest set rate and listen to their calls.';
@@ -3007,7 +3007,7 @@ const TRENDS = {
                 staff.forEach(p=>{totOB+=p.ob;totC+=p.c;totA+=p.a;});
                 const topStaff = staff.slice(0,10);
                 staffHTML = `<div class="spotlight-section">
-                    <h4>Top Salespeople — Outbound MTD (${staff.length} total | <a href="#" onclick="event.preventDefault();closeSpotlight();showStaffModal('${storeId}');" style="color:#0a0a0a;text-decoration:underline;font-size:11px;text-transform:none;letter-spacing:0;font-weight:400;">View all</a>)</h4>
+                    <h4>Top Salespeople — Outbound (${staff.length} total | <a href="#" onclick="event.preventDefault();closeSpotlight();showStaffModal('${storeId}');" style="color:#0a0a0a;text-decoration:underline;font-size:11px;text-transform:none;letter-spacing:0;font-weight:400;">View all</a>)</h4>
                     <table class="staff-tbl" style="font-size:11px;">
                         <thead><tr><th>Salesperson</th><th class="num">OB</th><th class="num">Conn</th><th class="num">Live%</th><th class="num">Appts</th><th class="num">Appt%</th></tr></thead>
                         <tbody>${topStaff.map(p=>{
@@ -4125,7 +4125,7 @@ const TRENDS = {
                 <div style="padding:22px 26px 16px;border-bottom:1px solid #e5e5e5;background:#fff;border-radius:14px 14px 0 0;">
                     <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#a00000;margin-bottom:6px;">End-of-Month Risk &nbsp;&middot;&nbsp; ${dLeft} day${dLeft===1?'':'s'} left</div>
                     <h2 style="font-size:20px;font-weight:800;color:#0a0a0a;line-height:1.3;letter-spacing:-0.2px;">${atRisk.length} ${atRisk.length===1?'store is':'stores are'} headed to Raleigh</h2>
-                    <div style="font-size:13px;color:#6b7280;margin-top:7px;line-height:1.5;">Any store finishing May <strong style="color:#0a0a0a;">below B&minus;</strong> attends remedial training in Raleigh in June. Click any store to see its path back up.</div>
+                    <div style="font-size:13px;color:#6b7280;margin-top:7px;line-height:1.5;">Any store finishing the month <strong style="color:#0a0a0a;">below B&minus;</strong> attends remedial training the following month in Raleigh. Click any store to see its path back up.</div>
                 </div>
                 <div style="padding:16px 22px 4px;">
                     ${rows}
