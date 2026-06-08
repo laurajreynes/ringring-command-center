@@ -1174,7 +1174,7 @@ const TRENDS = {
                     </div>
                 </div>
                 <div class="detail-bar-row">
-                    <span class="detail-bar-label">Apr</span>
+                    <span class="detail-bar-label">${PREV_MO}</span>
                     <div class="detail-bar-track">
                         <div class="detail-bar-fill-inner ${barC(marGrade)}" style="width:${marPct}%"></div>
                         <div class="detail-bar-mark" style="left:${benchPct}%"></div>
@@ -1182,7 +1182,7 @@ const TRENDS = {
                     </div>
                 </div>
                 <div class="detail-bar-row"${clickAttr}>
-                    <span class="detail-bar-label">May</span>
+                    <span class="detail-bar-label">${CUR_MO}</span>
                     <div class="detail-bar-track">
                         <div class="detail-bar-fill-inner ${barC(curGrade)}" style="width:${curPct}%"></div>
                         <div class="detail-bar-mark" style="left:${benchPct}%"></div>
@@ -1376,8 +1376,8 @@ const TRENDS = {
                 <tr class="detail-row" id="detail-${idx}"><td colspan="8">
                     <div style="font-size:11px;color:#6b7280;margin-bottom:4px;font-weight:600;">${store.name}</div>
                     <div class="detail-grid">
-                        <div class="detail-card"><div class="dl">Request In % <span style="color:#9ca3af;">bench: ${BENCH.req}%</span></div>${detailBar('',store.ytd.req,store.current.req,store.may.req,'req')}</div>
-                        <div class="detail-card"><div class="dl">Set % <span style="color:#9ca3af;">bench: ${BENCH.set}%</span></div>${detailBar('',store.ytd.set,store.current.set,store.may.set,'set')}</div>
+                        <div class="detail-card"><div class="dl">Request In % <span style="color:#9ca3af;">bench: ${BENCH.req}%</span></div>${detailBar('',store.ytd.req,store.may.req,store.current.req,'req')}</div>
+                        <div class="detail-card"><div class="dl">Set % <span style="color:#9ca3af;">bench: ${BENCH.set}%</span></div>${detailBar('',store.ytd.set,store.may.set,store.current.set,'set')}</div>
                         <div class="detail-card"><div class="dl">Inbound Grade</div>
                             <div class="detail-bar-row"><span class="detail-bar-label">YTD</span><span class="g ${gc(y.ib)}">${y.ib}</span></div>
                             <div class="detail-bar-row"><span class="detail-bar-label">Apr</span><span class="g ${gc(c.ib)}">${c.ib}</span></div>
@@ -1385,8 +1385,8 @@ const TRENDS = {
                                 ${gn(may.ib)>gn(c.ib)?'<span class="trend-arrow trend-up" style="margin-left:4px;">&#9650;</span>':gn(may.ib)<gn(c.ib)?'<span class="trend-arrow trend-down" style="margin-left:4px;">&#9660;</span>':'<span class="trend-arrow trend-neutral" style="margin-left:4px;">&mdash;</span>'}
                             </div>
                         </div>
-                        <div class="detail-card"><div class="dl">Live Convos % <span style="color:#9ca3af;">bench: ${BENCH.live}%</span></div>${detailBar('',store.ytd.live,store.current.live,store.may.live,'live',store.id)}</div>
-                        <div class="detail-card"><div class="dl">Appt Set % <span style="color:#9ca3af;">bench: ${BENCH.appt}%</span></div>${detailBar('',store.ytd.appt,store.current.appt,store.may.appt,'appt',store.id)}</div>
+                        <div class="detail-card"><div class="dl">Live Convos % <span style="color:#9ca3af;">bench: ${BENCH.live}%</span></div>${detailBar('',store.ytd.live,store.may.live,store.current.live,'live',store.id)}</div>
+                        <div class="detail-card"><div class="dl">Appt Set % <span style="color:#9ca3af;">bench: ${BENCH.appt}%</span></div>${detailBar('',store.ytd.appt,store.may.appt,store.current.appt,'appt',store.id)}</div>
                         <div class="detail-card"><div class="dl">Outbound Grade</div>
                             <div class="detail-bar-row"><span class="detail-bar-label">YTD</span><span class="g ${gc(y.ob)}">${y.ob}</span></div>
                             <div class="detail-bar-row"><span class="detail-bar-label">Apr</span><span class="g ${gc(c.ob)}">${c.ob}</span></div>
