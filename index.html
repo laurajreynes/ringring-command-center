@@ -1380,18 +1380,18 @@ const TRENDS = {
                         <div class="detail-card"><div class="dl">Set % <span style="color:#9ca3af;">bench: ${BENCH.set}%</span></div>${detailBar('',store.ytd.set,store.may.set,store.current.set,'set')}</div>
                         <div class="detail-card"><div class="dl">Inbound Grade</div>
                             <div class="detail-bar-row"><span class="detail-bar-label">YTD</span><span class="g ${gc(y.ib)}">${y.ib}</span></div>
-                            <div class="detail-bar-row"><span class="detail-bar-label">Apr</span><span class="g ${gc(c.ib)}">${c.ib}</span></div>
+                            <div class="detail-bar-row"><span class="detail-bar-label">${PREV_MO}</span><span class="g ${gc(may.ib)}">${may.ib}</span></div>
                             <div class="detail-bar-row"><span class="detail-bar-label">${CUR_MO}</span><span class="g ${gc(c.ib)}">${c.ib}</span>
-                                ${gn(may.ib)>gn(c.ib)?'<span class="trend-arrow trend-up" style="margin-left:4px;">&#9650;</span>':gn(may.ib)<gn(c.ib)?'<span class="trend-arrow trend-down" style="margin-left:4px;">&#9660;</span>':'<span class="trend-arrow trend-neutral" style="margin-left:4px;">&mdash;</span>'}
+                                ${gn(c.ib)>gn(may.ib)?'<span class="trend-arrow trend-up" style="margin-left:4px;">&#9650;</span>':gn(c.ib)<gn(may.ib)?'<span class="trend-arrow trend-down" style="margin-left:4px;">&#9660;</span>':'<span class="trend-arrow trend-neutral" style="margin-left:4px;">&mdash;</span>'}
                             </div>
                         </div>
                         <div class="detail-card"><div class="dl">Live Convos % <span style="color:#9ca3af;">bench: ${BENCH.live}%</span></div>${detailBar('',store.ytd.live,store.may.live,store.current.live,'live',store.id)}</div>
                         <div class="detail-card"><div class="dl">Appt Set % <span style="color:#9ca3af;">bench: ${BENCH.appt}%</span></div>${detailBar('',store.ytd.appt,store.may.appt,store.current.appt,'appt',store.id)}</div>
                         <div class="detail-card"><div class="dl">Outbound Grade</div>
                             <div class="detail-bar-row"><span class="detail-bar-label">YTD</span><span class="g ${gc(y.ob)}">${y.ob}</span></div>
-                            <div class="detail-bar-row"><span class="detail-bar-label">Apr</span><span class="g ${gc(c.ob)}">${c.ob}</span></div>
+                            <div class="detail-bar-row"><span class="detail-bar-label">${PREV_MO}</span><span class="g ${gc(may.ob)}">${may.ob}</span></div>
                             <div class="detail-bar-row staff-apr-click" onclick="event.stopPropagation();showStaffModal('${store.id}')" title="Click to see per-salesperson breakdown"><span class="detail-bar-label">${CUR_MO}</span><span class="g ${gc(c.ob)}">${c.ob}</span>
-                                ${gn(may.ob)>gn(c.ob)?'<span class="trend-arrow trend-up" style="margin-left:4px;">&#9650;</span>':gn(may.ob)<gn(c.ob)?'<span class="trend-arrow trend-down" style="margin-left:4px;">&#9660;</span>':'<span class="trend-arrow trend-neutral" style="margin-left:4px;">&mdash;</span>'}
+                                ${gn(c.ob)>gn(may.ob)?'<span class="trend-arrow trend-up" style="margin-left:4px;">&#9650;</span>':gn(c.ob)<gn(may.ob)?'<span class="trend-arrow trend-down" style="margin-left:4px;">&#9660;</span>':'<span class="trend-arrow trend-neutral" style="margin-left:4px;">&mdash;</span>'}
                             </div>
                         </div>
                     </div>
@@ -1860,7 +1860,7 @@ const TRENDS = {
                 '</div>';
             }
             let h='<div style="padding:6px 0;">';
-            h+='<div style="font-size:10px;text-transform:uppercase;color:#475569;letter-spacing:0.5px;margin-bottom:5px;font-weight:700;">Start → Current (Apr)</div>';
+            h+='<div style="font-size:10px;text-transform:uppercase;color:#475569;letter-spacing:0.5px;margin-bottom:5px;font-weight:700;">Start → Current (${CUR_MO})</div>';
             h+='<div style="display:flex;flex-wrap:wrap;gap:2px;margin-bottom:10px;">';
             h+=pill('Overall',b.ov,c.ov)+pill('Inbound',b.ib,c.ib)+pill('Outbound',b.ob,c.ob);
             h+='</div>';
@@ -3461,8 +3461,8 @@ const TRENDS = {
             const wD=wApr-wJan, eD=eApr-eJan;
             execHTML += `<div class="trends-exec" style="background:#fafafa;border-color:#fafafa;margin-top:8px;">
                 <h4 style="color:#475569;">East vs West</h4>
-                <p><strong>West</strong> (${westStores.length} stores): ${wJan!==null?wJan.toFixed(1):'—'}% (Jan) → <strong>${wApr!==null?wApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${wD>=0?'#2D8B28':'#D40000'}">${wD>=0?'+':''}${wD.toFixed(1)}</strong> &nbsp;&nbsp;|&nbsp;&nbsp;
-                <strong>East</strong> (${eastStores.length} stores): ${eJan!==null?eJan.toFixed(1):'—'}% (Jan) → <strong>${eApr!==null?eApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${eD>=0?'#2D8B28':'#D40000'}">${eD>=0?'+':''}${eD.toFixed(1)}</strong></p>
+                <p><strong>West</strong> (${westStores.length} stores): ${wJan!==null?wJan.toFixed(1):'—'}% (Jan) → <strong>${wApr!==null?wApr.toFixed(1):'—'}%</strong> (${CUR_MO}) <strong style="color:${wD>=0?'#2D8B28':'#D40000'}">${wD>=0?'+':''}${wD.toFixed(1)}</strong> &nbsp;&nbsp;|&nbsp;&nbsp;
+                <strong>East</strong> (${eastStores.length} stores): ${eJan!==null?eJan.toFixed(1):'—'}% (Jan) → <strong>${eApr!==null?eApr.toFixed(1):'—'}%</strong> (${CUR_MO}) <strong style="color:${eD>=0?'#2D8B28':'#D40000'}">${eD>=0?'+':''}${eD.toFixed(1)}</strong></p>
             </div>`;
 
             // Chart — Group Avg, West, East lines
@@ -3480,7 +3480,7 @@ const TRENDS = {
             const losers = storeDeltas.filter(s=>s.d<0).sort((a,b)=>a.d-b.d).slice(0,5);
             let moversHTML = `<div class="trends-movers">
                 <div class="trends-mover-card">
-                    <h5>&#9650; Biggest Gainers (Jan → Apr)</h5>
+                    <h5>&#9650; Biggest Gainers (Jan → ${CUR_MO})</h5>
                     ${gainers.map(s=>`<div class="trends-mover-item"><span class="store-name">${s.id}</span><span class="vals">${s.jan}% → ${s.apr}%</span><span class="delta-up">+${s.d}</span></div>`).join('')}
                 </div>
                 <div class="trends-mover-card">
@@ -3614,8 +3614,8 @@ const TRENDS = {
             const wD=wApr-wJan, eD=eApr-eJan;
             execHTML += `<div class="trends-exec" style="background:#fafafa;border-color:#fafafa;margin-top:8px;">
                 <h4 style="color:#475569;">East vs West</h4>
-                <p><strong>West</strong> (${westStores.length} stores): ${wJan!==null?wJan.toFixed(1):'—'}% (Jan) → <strong>${wApr!==null?wApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${wD>=0?'#2D8B28':'#D40000'}">${wD>=0?'+':''}${wD.toFixed(1)}</strong> &nbsp;&nbsp;|&nbsp;&nbsp;
-                <strong>East</strong> (${eastStores.length} stores): ${eJan!==null?eJan.toFixed(1):'—'}% (Jan) → <strong>${eApr!==null?eApr.toFixed(1):'—'}%</strong> (Apr) <strong style="color:${eD>=0?'#2D8B28':'#D40000'}">${eD>=0?'+':''}${eD.toFixed(1)}</strong></p>
+                <p><strong>West</strong> (${westStores.length} stores): ${wJan!==null?wJan.toFixed(1):'—'}% (Jan) → <strong>${wApr!==null?wApr.toFixed(1):'—'}%</strong> (${CUR_MO}) <strong style="color:${wD>=0?'#2D8B28':'#D40000'}">${wD>=0?'+':''}${wD.toFixed(1)}</strong> &nbsp;&nbsp;|&nbsp;&nbsp;
+                <strong>East</strong> (${eastStores.length} stores): ${eJan!==null?eJan.toFixed(1):'—'}% (Jan) → <strong>${eApr!==null?eApr.toFixed(1):'—'}%</strong> (${CUR_MO}) <strong style="color:${eD>=0?'#2D8B28':'#D40000'}">${eD>=0?'+':''}${eD.toFixed(1)}</strong></p>
             </div>`;
 
             // Chart
@@ -3633,7 +3633,7 @@ const TRENDS = {
             const losers = storeDeltas.filter(s=>s.d<0).sort((a,b)=>a.d-b.d).slice(0,5);
             let moversHTML = `<div class="trends-movers">
                 <div class="trends-mover-card">
-                    <h5>&#9650; Biggest Gainers (Jan → Apr)</h5>
+                    <h5>&#9650; Biggest Gainers (Jan → ${CUR_MO})</h5>
                     ${gainers.length ? gainers.map(s=>`<div class="trends-mover-item"><span class="store-name">${s.id}</span><span class="vals">${s.jan}% → ${s.apr}%</span><span class="delta-up">+${s.d}</span></div>`).join('') : '<div style="color:#6b7280;font-size:11px;">No stores gained</div>'}
                 </div>
                 <div class="trends-mover-card">
