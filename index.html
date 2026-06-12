@@ -1005,7 +1005,6 @@ const OB_TRENDS = {
         const BENCH = { req: 80, set: 45, live: 20, appt: 10 };
         // Stores with published action plan PDFs (deployed alongside index.html).
         // File naming: {STORE}_{region}.pdf  (e.g. SAS_west.pdf, TRA_east.pdf)
-        const GRACED_FROM_RALEIGH = new Set(['TGR']);   // bent-rule grace; close-misses
         const HAS_ACTION_PLAN = new Set();  // plans deprecated for June — out of date
         const planPdf = s => `${s.id}_${s.region.toLowerCase()}.pdf`;
 
@@ -1608,7 +1607,7 @@ const OB_TRENDS = {
         }
 
         function renderAlerts(){
-            // Bucket every store by severity. Severity = how close to / how far below the Raleigh line.
+            // Bucket every store by severity. Severity = how close to / how far below the B− line.
             const all = D.stores.filter(s=>s.id!=='TCC').map(s=>{
                 const c = calc(s.current), lm = calc(s.lastMonth);
                 const dropOv = gn(lm.ov) - gn(c.ov);   // positive = declined since last month
@@ -1631,7 +1630,7 @@ const OB_TRENDS = {
             const hero = travel[0] || bubble[0];
             const heroPath = pathToGrade(hero.s.current, 2.3);
             const heroAction = heroPath
-                ? `Lift <strong>${heroPath.label}</strong> ${(+heroPath.fromPct).toFixed(heroPath.key==='appt'||heroPath.key==='live'?1:0)}% &rarr; ${(+heroPath.toPct).toFixed(heroPath.key==='appt'||heroPath.key==='live'?1:0)}% (${heroPath.fromGrade} &rarr; ${heroPath.toGrade}). That single move clears the June training line.`
+                ? `Lift <strong>${heroPath.label}</strong> ${(+heroPath.fromPct).toFixed(heroPath.key==='appt'||heroPath.key==='live'?1:0)}% &rarr; ${(+heroPath.toPct).toFixed(heroPath.key==='appt'||heroPath.key==='live'?1:0)}% (${heroPath.fromGrade} &rarr; ${heroPath.toGrade}). That single move clears the B&minus; line.`
                 : `Inbound is the gap on both sides &mdash; pull the rep coaching list and work RI and Set together.`;
 
             const heroBlock = `
@@ -1639,7 +1638,7 @@ const OB_TRENDS = {
                     <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;">
                         <div style="display:flex;align-items:baseline;gap:14px;">
                             <span style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#a00000;font-weight:700;">Top Priority</span>
-                            <span style="font-size:11px;color:#6b7280;">${hero.c.ovS<2.3?'On the June training list':'Sitting at B&minus; &mdash; one slip from the list'}</span>
+                            <span style="font-size:11px;color:#6b7280;">${hero.c.ovS<2.3?'Below B&minus; &mdash; needs lift':'Sitting at B&minus; &mdash; one slip from below'}</span>
                         </div>
                         <span class="g ${gc(hero.c.ov)}" style="font-size:14px;padding:4px 10px;">${hero.c.ov}</span>
                     </div>
@@ -1990,16 +1989,10 @@ const OB_TRENDS = {
         }
 
         function renderJuneTrainingBanner(){
+            // Raleigh training was a May→June event and is now complete. Banner retired.
             const el=document.getElementById('juneTrainingBanner');
-            const below = D.stores.filter(s=>s.id!=='TCC' && !GRACED_FROM_RALEIGH.has(s.id)).filter(s=>calc(s.current).ovS<2.3)
-                .sort((a,b)=>calc(a.current).ovS-calc(b.current).ovS);
-            if(!below.length){ el.style.display='none'; return; }
-            const chips = below.map(s=>{
-                const c=calc(s.current);
-                return `<span onclick="showOnePager('${s.id}')" title="Open ${s.id} action plan" style="cursor:pointer;display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid #e5e5e5;border-radius:6px;padding:3px 9px;font-size:12px;font-weight:800;color:#0a0a0a;">${s.id} <span class="g ${gc(c.ov)}" style="font-size:10px;">${c.ov}</span></span>`;
-            }).join(' ');
-            el.innerHTML = `<span style="font-weight:700;letter-spacing:0.4px;text-transform:uppercase;font-size:10px;color:#a00000;">June Training Locked</span> &nbsp; <strong>${below.length} stores</strong> going to Raleigh. <span onclick="const l=document.getElementById('juneBelowList');l.style.display=l.style.display==='none'?'flex':'none';" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px;color:#0a0a0a;font-weight:600;">See which &#9432;</span><div id="juneBelowList" style="display:none;flex-wrap:wrap;gap:6px;margin-top:8px;">${chips}</div>`;
-            el.style.display='inline-flex';
+            if(el) el.style.display='none';
+            return;
         }
 
         function recalculateGrades(){
@@ -2078,10 +2071,10 @@ const OB_TRENDS = {
                     const declined = gn(c.ov)<gn(m.ov);
                     const flat = gn(c.ov)===gn(m.ov);
                     const v=[
-                        s.id+' is sitting at '+c.ov+'. Below B− means June extra training — let\'s move it up before then. Pull rep grades and start with the bottom 2.',
+                        s.id+' is sitting at '+c.ov+'. Below B− is where the work concentrates — pull rep grades and start with the bottom 2.',
                         'Stuck at '+c.ov+'. '+(declined?'Slid from '+m.ov+' last month — ':'')+'pick the one weak side (inbound or outbound) and run a scorecard this week.',
                         c.ov+' overall and not moving the right direction. Schedule a Ring Ring — peer-store of similar size that broke through.',
-                        s.id+' grading '+c.ov+'. The June training list keeps getting shorter the more we move now. Where\'s the easiest grade to lift?'
+                        s.id+' grading '+c.ov+'. Where\'s the easiest grade to lift?'
                     ];
                     all.push({pri:0, type:'watch', tag:'Below B−',
                         title:s.id+' — Sitting at '+c.ov+(declined?' (slipped from '+m.ov+')':flat?' (flat)':''),
@@ -2812,7 +2805,7 @@ const OB_TRENDS = {
             if(c.ovS < 2.3){
                 const p = pathToGrade(store.current, 2.3);
                 if(p && p.steps<=2){
-                    focus = `<strong>To reach B−:</strong> lift ${p.label} from ${fp(p.fromPct)}% to ${fp(p.toPct)}% (${p.fromGrade} → ${p.toGrade}). That single move clears the June training line.`;
+                    focus = `<strong>To reach B−:</strong> lift ${p.label} from ${fp(p.fromPct)}% to ${fp(p.toPct)}% (${p.fromGrade} → ${p.toGrade}).`;
                 } else {
                     // Too far for one lever — name the two weakest metrics to work.
                     const weak = ['req','set','live','appt']
@@ -2835,7 +2828,7 @@ const OB_TRENDS = {
                 <div class="staff-modal-hdr" style="background:#fff;">
                     <div>
                         <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:#94a3b8;text-transform:uppercase;">Store 1‑Pager · ${region}</div>
-                        <h3 style="font-size:18px;margin-top:2px;display:flex;align-items:center;gap:10px;">${store.name}${c.ovS < 2.3 && !GRACED_FROM_RALEIGH.has(store.id) ? '<span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:#fff;background:#D40000;padding:3px 9px;border-radius:4px;">Going to Raleigh &middot; June</span>' : ''}</h3>
+                        <h3 style="font-size:18px;margin-top:2px;display:flex;align-items:center;gap:10px;">${store.name}</h3>
                     </div>
                     <div style="display:flex;gap:8px;align-items:center;">
                         <div style="text-align:center;padding:4px 10px;background:#fafafa;border-radius:6px;border:1px solid #e5e7eb;">
@@ -4072,90 +4065,15 @@ const OB_TRENDS = {
                 setTimeout(()=>overlay.remove(), 500);
             }, 3500);
         }
-        // ===== Raleigh Risk Splash =====
-        // On load: stores finishing May BELOW B- (C+ or worse) -> remedial training in Raleigh in June.
-        // Same threshold as the June banner (overall GPA < 2.3). Auto-dismiss after 15s.
-        function showRaleighRiskSplash(){
-            const atRisk = D.stores.filter(s=>s.id!=='TCC')
-                .map(s=>({s, c:calc(s.current)}))
-                .filter(x=>x.c.ovS < 2.3 && !GRACED_FROM_RALEIGH.has(x.s.id))
-                .sort((a,b)=>a.c.ovS - b.c.ovS);
-            if(!atRisk.length) return false;
 
-            // On the bubble = stores sitting exactly at B- (one slip from the travel list).
-            const bubble = D.stores.filter(s=>s.id!=='TCC')
-                .map(s=>({s, c:calc(s.current)}))
-                .filter(x=>x.c.ovS >= 2.3 && x.c.ovS < 2.7)
-                .sort((a,b)=>a.c.ovS - b.c.ovS);
-
-            const now = new Date();
-            const dLeft = Math.max(0, Math.ceil((new Date(now.getFullYear(),4,31) - now) / 86400000));
-
-            const overlay = document.createElement('div');
-            overlay.id = 'raleighSplash';
-            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(10,10,10,0.55);z-index:9998;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.22s ease-out;';
-            const panel = document.createElement('div');
-            panel.style.cssText = 'background:#fff;border-radius:12px;max-width:600px;width:92%;max-height:88vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,0.18);transform:translateY(14px);opacity:0;transition:transform 0.32s cubic-bezier(0.16,1,0.3,1),opacity 0.22s ease-out;';
-
-            const rows = atRisk.map(x=>`
-                <div onclick="document.getElementById('raleighSplash').remove();showOnePager('${x.s.id}');"
-                     style="padding:11px 14px;border:1px solid rgba(212,0,0,0.20);border-radius:8px;margin-bottom:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:#fff;transition:background 0.15s;"
-                     onmouseover="this.style.background='#fafafa';" onmouseout="this.style.background='#fff';">
-                    <div style="display:flex;align-items:center;gap:11px;">
-                        <span style="font-weight:800;font-size:15px;color:#a00000;letter-spacing:0.3px;">${x.s.id}</span>
-                        <span style="color:#64748b;font-weight:500;font-size:12px;">${x.s.name.replace('Fred Anderson ','').replace('Genesis of ','Genesis ')}</span>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:10px;">
-                        <span style="background:#D40000;color:#fff;font-weight:800;font-size:13px;padding:3px 10px;border-radius:6px;min-width:34px;text-align:center;">${x.c.ov}</span>
-                        <span style="font-size:10px;color:#a00000;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">View &rarr;</span>
-                    </div>
-                </div>`).join('');
-
-            const bubbleHTML = bubble.length ? `
-                <div style="padding:10px 18px 0;">
-                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#0a0a0a;margin-bottom:6px;">On the bubble &mdash; one soft week from the list</div>
-                    <div style="display:flex;flex-wrap:wrap;gap:6px;">
-                        ${bubble.map(x=>`<span onclick="document.getElementById('raleighSplash').remove();showOnePager('${x.s.id}');" style="cursor:pointer;background:#fafafa;border:1px solid rgba(255,215,16,0.40);border-radius:6px;padding:4px 9px;font-size:12px;color:#0a0a0a;font-weight:600;">${x.s.id} <span style="color:#0a0a0a;font-weight:700;">${x.c.ov}</span></span>`).join('')}
-                    </div>
-                </div>` : '';
-
-            panel.innerHTML = `
-                <div style="padding:22px 26px 16px;border-bottom:1px solid #e5e5e5;background:#fff;border-radius:14px 14px 0 0;">
-                    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#a00000;margin-bottom:6px;">End-of-Month Risk &nbsp;&middot;&nbsp; ${dLeft} day${dLeft===1?'':'s'} left</div>
-                    <h2 style="font-size:20px;font-weight:800;color:#0a0a0a;line-height:1.3;letter-spacing:-0.2px;">${atRisk.length} ${atRisk.length===1?'store is':'stores are'} headed to Raleigh</h2>
-                    <div style="font-size:13px;color:#6b7280;margin-top:7px;line-height:1.5;">Any store finishing the month <strong style="color:#0a0a0a;">below B&minus;</strong> attends remedial training the following month in Raleigh. Click any store to see its path back up.</div>
-                </div>
-                <div style="padding:16px 22px 4px;">
-                    ${rows}
-                </div>
-                ${bubbleHTML}
-                <div style="padding:14px 22px 18px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9ca3af;">
-                    <span id="raleighSplashCountdown">Auto-dismissing in 15s</span>
-                    <button onclick="document.getElementById('raleighSplash').remove();" style="background:#0a0a0a;color:#fff;border:none;border-radius:5px;padding:7px 18px;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:0.2px;">Got it</button>
-                </div>`;
-            overlay.appendChild(panel);
-            overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.remove(); });
-            document.body.appendChild(overlay);
-            requestAnimationFrame(()=>{ overlay.style.opacity='1'; panel.style.transform='translateY(0)'; panel.style.opacity='1'; });
-
-            let secs = 15;
-            const cd = setInterval(()=>{
-                secs--;
-                const el = document.getElementById('raleighSplashCountdown');
-                if(el) el.textContent = `Auto-dismissing in ${secs}s`;
-                if(secs<=0){ clearInterval(cd); const o=document.getElementById('raleighSplash'); if(o) o.remove(); }
-            }, 1000);
-            return true;
-        }
-
-        // ===== Wednesday Coaching Cadence Splash =====
+        // ===== Mid-week + Friday Coaching Cadence Splash =====
         // Surfaces stores where SMs+GSMs have 0 listens OR 0 shares since Monday.
-        // Window: Wed 3pm through end of Thursday. Once per page load. Auto-dismiss after 10s.
+        // Window: Wed 3pm through end of Friday. Once per page load. Auto-dismiss after 10s.
         function maybeShowCoachingSplash(){
             const now = new Date();
-            const day = now.getDay();   // 0=Sun, 3=Wed, 4=Thu
+            const day = now.getDay();   // 0=Sun, 3=Wed, 4=Thu, 5=Fri
             const hour = now.getHours();
-            const inWindow = (day===3 && hour>=15) || (day===4);
+            const inWindow = (day===3 && hour>=15) || (day===4) || (day===5);
             if(!inWindow) return;
             if(typeof MANAGERS_WTD==='undefined') return;
 
