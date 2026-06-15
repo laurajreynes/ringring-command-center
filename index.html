@@ -216,6 +216,39 @@
         .card-lift { transition: transform 0.18s cubic-bezier(0.16,1,0.3,1), box-shadow 0.18s ease, border-color 0.18s ease; will-change: transform; }
         .card-lift:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(15,23,42,0.06), 0 1px 3px rgba(15,23,42,0.04); border-color: #e2e6ea; }
 
+        /* Motion: subtle entry animations + hover responses */
+        @keyframes fadeUp { from { opacity:0; transform: translateY(6px); } to { opacity:1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+        @keyframes scaleIn { from { opacity:0; transform: scale(0.92); } to { opacity:1; transform: scale(1); } }
+        @keyframes barFill { from { width:0; } }
+        @keyframes pulseDot { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(1.4); opacity:0.7; } }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+        .tab-panel.active { animation: fadeUp 0.32s cubic-bezier(0.16,1,0.3,1); }
+        .progress-card { animation: fadeUp 0.42s cubic-bezier(0.16,1,0.3,1) both; }
+        .progress-card:nth-child(1) { animation-delay: 0.02s; }
+        .progress-card:nth-child(2) { animation-delay: 0.10s; }
+        .progress-card:nth-child(3) { animation-delay: 0.18s; }
+        .pgb-green, .pgb-yellow, .pgb-red { animation: barFill 0.7s cubic-bezier(0.16,1,0.3,1) 0.25s both; }
+        .g { animation: scaleIn 0.30s cubic-bezier(0.16,1,0.3,1) both; }
+        .g:hover { transform: translateY(-1px) scale(1.03); transition: transform 0.12s ease; }
+        .lu-dot { animation: pulseDot 2.4s ease-in-out infinite; }
+        .alert-tile.critical { animation: fadeUp 0.32s cubic-bezier(0.16,1,0.3,1) both; }
+        .alert-tile.critical::before { content:''; position:absolute; top:0; left:0; bottom:0; width:3px; background:#D40000; animation: pulseDot 1.8s ease-in-out infinite; }
+        .alert-tile { position:relative; }
+        .stores-table tbody tr { animation: fadeIn 0.4s ease-out both; }
+        .stores-table tbody tr:nth-child(n+1) { animation-delay: calc((var(--row-i, 0)) * 0.025s); }
+        .focus-btn:active { transform: scale(0.96); transition: transform 0.06s; }
+        .tab-btn { position: relative; }
+        .tab-btn::after { content:''; position:absolute; bottom:-2px; left:50%; right:50%; height:2px; background:#2D8B28; transition: left 0.22s cubic-bezier(0.16,1,0.3,1), right 0.22s cubic-bezier(0.16,1,0.3,1); }
+        .tab-btn:hover::after { left:14px; right:14px; }
+        .tab-btn.active::after { left:14px; right:14px; }
+        .tab-btn.active { border-bottom-color: transparent; }
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+        }
+
         /* GRADE THERMOMETER */
         .thermo-wrap {
             display: flex;
@@ -297,6 +330,11 @@
         }
         .progress-card:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(15,23,42,0.05); }
         .progress-card h4 { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 5px; }
+        .pc-trend { font-size:10.5px; font-weight:700; color:#0a0a0a; letter-spacing:0; text-transform:none; }
+        .pc-trend .trend-arrow { font-size:9px; vertical-align:1px; margin-right:1px; }
+        .pc-trend .trend-up { color:#2D8B28; }
+        .pc-trend .trend-down { color:#D40000; }
+        .pc-trend .trend-neutral { color:#9ca3af; }
         .progress-donut-row { display: flex; align-items: center; gap: 12px; }
         .progress-donut { position: relative; width: 38px; height: 38px; flex-shrink: 0; }
         .progress-donut svg { width: 38px; height: 38px; transform: rotate(-90deg); }
@@ -1312,18 +1350,20 @@ const OB_TRENDS = {
             const avgOv=stores.map(s=>calc(s.current).ovS).reduce((a,b)=>a+b,0)/n;
             const clickAttr = scrollTarget ? ` onclick="scrollToRegion('${scrollTarget}')" style="border-top:3px solid ${borderColor};cursor:pointer;" title="Jump to ${title}"` : ` style="border-top:3px solid ${borderColor};"`;
             return `<div class="progress-card"${clickAttr}>
-                <h4>${title}</h4>
+                <h4 style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;">
+                    <span>${title}</span>
+                    <span class="pc-trend">
+                        <span class="trend-arrow trend-up">&#9650;</span>${improved}
+                        <span class="trend-arrow trend-down" style="margin-left:6px;">&#9660;</span>${declined}
+                        <span class="trend-arrow trend-neutral" style="margin-left:6px;">&mdash;</span>${steady}
+                    </span>
+                </h4>
                 <div class="progress-donut-row">
                     <div class="progress-donut">${donutSVG(pG,pY,pR)}<div class="progress-donut-label">${s2g(avgOv)}</div></div>
                     <div class="progress-stats">
                         <div class="ps-row"><span class="ps-dot ps-dot-green"></span><strong>${green}</strong> green (A/A-/B+)</div>
                         <div class="ps-row"><span class="ps-dot ps-dot-yellow"></span><strong>${yellow}</strong> yellow (B–C)</div>
                         <div class="ps-row"><span class="ps-dot ps-dot-red"></span><strong>${red}</strong> red (C- &amp; below)</div>
-                        <div class="ps-row" style="margin-top:2px;color:#6b7280;">
-                            <span class="trend-arrow trend-up">&#9650;</span>${improved}
-                            <span class="trend-arrow trend-down" style="margin-left:4px;">&#9660;</span>${declined}
-                            <span class="trend-arrow trend-neutral" style="margin-left:4px;">&mdash;</span>${steady}
-                        </div>
                     </div>
                 </div>
                 <div class="progress-grade-bar">
@@ -1673,9 +1713,12 @@ const OB_TRENDS = {
 
             // Hero = worst store still below the line (if any), else worst on bubble
             const hero = travel[0] || bubble[0];
-            const heroPath = pathToGrade(hero.s.current, 2.3);
+            // Next grade rung up from hero's current ovS
+            const RUNGS = [0.7,1.0,1.3,1.7,2.0,2.3,2.7,3.0,3.3,3.7];
+            const heroNext = RUNGS.find(t=>t>hero.c.ovS+1e-9);
+            const heroPath = heroNext ? pathToGrade(hero.s.current, heroNext) : null;
             const heroAction = heroPath
-                ? `Lift <strong>${heroPath.label}</strong> ${(+heroPath.fromPct).toFixed(heroPath.key==='appt'||heroPath.key==='live'?1:0)}% &rarr; ${(+heroPath.toPct).toFixed(heroPath.key==='appt'||heroPath.key==='live'?1:0)}% (${heroPath.fromGrade} &rarr; ${heroPath.toGrade}). That single move clears the B&minus; line.`
+                ? `Lift <strong>${heroPath.label}</strong> ${(+heroPath.fromPct).toFixed(heroPath.key==='appt'||heroPath.key==='live'?1:0)}% &rarr; ${(+heroPath.toPct).toFixed(heroPath.key==='appt'||heroPath.key==='live'?1:0)}% (${heroPath.fromGrade} &rarr; ${heroPath.toGrade}). One move clears a grade.`
                 : `Inbound is the gap on both sides &mdash; pull the rep coaching list and work RI and Set together.`;
 
             const heroBlock = `
@@ -1683,7 +1726,7 @@ const OB_TRENDS = {
                     <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;">
                         <div style="display:flex;align-items:baseline;gap:14px;">
                             <span style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#a00000;font-weight:700;">Top Priority</span>
-                            <span style="font-size:11px;color:#6b7280;">${hero.c.ovS<2.3?'Below B&minus; &mdash; needs lift':'Sitting at B&minus; &mdash; one slip from below'}</span>
+                            <span style="font-size:11px;color:#6b7280;">${hero.c.ovS<2.3?'Lowest overall grade — biggest lift available':'Stuck at this rung — one move up moves the team'}</span>
                         </div>
                         <span class="g ${gc(hero.c.ov)}" style="font-size:14px;padding:4px 10px;">${hero.c.ov}</span>
                     </div>
@@ -1696,7 +1739,7 @@ const OB_TRENDS = {
 
             // Compact list of all remaining alerts (rest of travel + bubble + watchers)
             const rest = [...travel.slice(1), ...bubble, ...watchers];
-            const sevTag = x => x.c.ovS<2.3 ? {label:'Travel', color:'#a00000'} : x.c.ovS<2.7 ? {label:'On bubble', color:'#0a0a0a'} : {label:'Watch', color:'#0a0a0a'};
+            const sevTag = x => x.c.ovS<2.3 ? {label:'Lowest Grades', color:'#a00000'} : x.c.ovS<2.7 ? {label:'On the Bubble', color:'#0a0a0a'} : {label:'Watch', color:'#0a0a0a'};
             const rowHTML = rest.map(x=>{
                 const t = sevTag(x);
                 const delta = x.dropOv>0 ? `<span style="color:#a00000;font-weight:700;">&minus;${x.dropOv.toFixed(2)} vs ${PREV_MO}</span>` : '';
@@ -1711,8 +1754,8 @@ const OB_TRENDS = {
 
             const summary = `
                 <div style="display:flex;gap:30px;padding:14px 0 22px;font-family:Helvetica,Arial,sans-serif;">
-                    <div><span style="font-size:24px;font-weight:800;color:#a00000;">${travel.length}</span> <span style="font-size:11px;letter-spacing:0.6px;text-transform:uppercase;color:#6b7280;font-weight:700;margin-left:4px;">Travel</span></div>
-                    <div><span style="font-size:24px;font-weight:800;color:#0a0a0a;">${bubble.length}</span> <span style="font-size:11px;letter-spacing:0.6px;text-transform:uppercase;color:#6b7280;font-weight:700;margin-left:4px;">On bubble</span></div>
+                    <div><span style="font-size:24px;font-weight:800;color:#a00000;">${travel.length}</span> <span style="font-size:11px;letter-spacing:0.6px;text-transform:uppercase;color:#6b7280;font-weight:700;margin-left:4px;">Lowest Grades</span></div>
+                    <div><span style="font-size:24px;font-weight:800;color:#0a0a0a;">${bubble.length}</span> <span style="font-size:11px;letter-spacing:0.6px;text-transform:uppercase;color:#6b7280;font-weight:700;margin-left:4px;">On the Bubble</span></div>
                     <div><span style="font-size:24px;font-weight:800;color:#0a0a0a;">${watchers.length}</span> <span style="font-size:11px;letter-spacing:0.6px;text-transform:uppercase;color:#6b7280;font-weight:700;margin-left:4px;">Watch</span></div>
                 </div>`;
 
@@ -1779,7 +1822,7 @@ const OB_TRENDS = {
             const hero = pool[0];
             const heroPathText = hero.path && hero.path.steps<=2
                 ? `Lift <strong>${hero.path.label}</strong> ${fp(hero.path.fromPct)}% &rarr; ${fp(hero.path.toPct)}% (${hero.path.fromGrade} &rarr; ${hero.path.toGrade}) and ${hero.s.id} clears the B&minus; line.`
-                : `Too far for one lever &mdash; ${hero.s.id} needs RI and Set moving together. Work both off the rep list.`;
+                : `${hero.s.id} needs RI and Set moving together. Work both off the rep list to lift one grade.`;
             const heroRepText = hero.rep
                 ? `Coach <strong>${hero.rep.n}</strong> (${hero.rep.ib} calls, ${hero.rep.askPct}% ask, ${hero.rep.setPct}% set). Pull 3 of their answered calls and mark exactly where they should have said &ldquo;let&rsquo;s get you in to see it.&rdquo;`
                 : `No standout rep flagged &mdash; coaching is a whole-team conversation.`;
@@ -1981,12 +2024,24 @@ const OB_TRENDS = {
             baseExpandedId = null;
         }
 
+        function countUp(el, target, dur=900){
+            if(!el) return;
+            const start = performance.now();
+            const from = parseInt(el.textContent) || 0;
+            const tick = (now) => {
+                const t = Math.min(1, (now-start)/dur);
+                const eased = 1 - Math.pow(1-t, 3);
+                el.textContent = Math.round(from + (target-from)*eased);
+                if(t<1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        }
         function renderSummary(){
             let imp=0,dec=0,ste=0;
             D.stores.forEach(s=>{const c=gn(calc(s.current).ov),m=gn(calc(s.lastMonth).ov);if(c>m)imp++;else if(c<m)dec++;else ste++;});
-            document.getElementById('improvedCount').textContent=imp;
-            document.getElementById('declinedCount').textContent=dec;
-            document.getElementById('steadyCount').textContent=ste;
+            countUp(document.getElementById('improvedCount'), imp);
+            countUp(document.getElementById('declinedCount'), dec);
+            countUp(document.getElementById('steadyCount'), ste);
             document.getElementById('currentDate').textContent=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
 
             // East / West summary
@@ -2843,29 +2898,26 @@ const OB_TRENDS = {
                 </tr>`;
             }
 
-            // "Where to focus" — the single most efficient lever to reach the next grade line, using the scale.
+            // "Where to focus" — the single most efficient lever to reach the NEXT grade rung above current.
             const fp = v => (Math.round(v*10)/10).toString();
-            const GRADE_BOUNDS = [2.3,2.7,3.0,3.3,3.7]; // B-, B, B+, A-, A
+            // Full grade rungs: D-, D, D+, C-, C, C+, B-, B, B+, A-, A
+            const GRADE_BOUNDS = [0.7,1.0,1.3,1.7,2.0,2.3,2.7,3.0,3.3,3.7];
+            const next = GRADE_BOUNDS.find(t=>t>c.ovS+1e-9);
+            const nextLetter = next ? s2g(next) : null;
             let focus;
-            if(c.ovS < 2.3){
-                const p = pathToGrade(store.current, 2.3);
+            if(next){
+                const p = pathToGrade(store.current, next);
                 if(p && p.steps<=2){
-                    focus = `<strong>To reach B−:</strong> lift ${p.label} from ${fp(p.fromPct)}% to ${fp(p.toPct)}% (${p.fromGrade} → ${p.toGrade}).`;
+                    focus = `<strong>One grade up to ${nextLetter}:</strong> lift ${p.label} ${fp(p.fromPct)}% → ${fp(p.toPct)}% (${p.fromGrade} → ${p.toGrade}). One move clears it.`;
                 } else {
-                    // Too far for one lever — name the two weakest metrics to work.
+                    // Two-move path — show the two metrics with most leverage
                     const weak = ['req','set','live','appt']
                         .map(k=>({label:METRIC_LABELS[k], pct:store.current[k], g:gg(store.current[k],k)}))
                         .sort((a,b)=>gn(a.g)-gn(b.g)).slice(0,2);
-                    focus = `<strong>To reach B−:</strong> too far for one move — start with the weakest two: ${weak[0].label} (${fp(weak[0].pct)}%, ${weak[0].g}) and ${weak[1].label} (${fp(weak[1].pct)}%, ${weak[1].g}).`;
+                    focus = `<strong>One grade up to ${nextLetter}:</strong> needs two moves — start with ${weak[0].label} (${fp(weak[0].pct)}%, ${weak[0].g}) and ${weak[1].label} (${fp(weak[1].pct)}%, ${weak[1].g}).`;
                 }
             } else {
-                const next = GRADE_BOUNDS.find(t=>t>c.ovS+1e-9);
-                const p = next ? pathToGrade(store.current, next) : null;
-                if(p){
-                    focus = `<strong>Clear of the B− line.</strong> Next rung — ${s2g(next)}: lift ${p.label} ${fp(p.fromPct)}% → ${fp(p.toPct)}% (${p.fromGrade} → ${p.toGrade}).`;
-                } else {
-                    focus = `<strong>Clear of the B− line.</strong> Grading ${c.ov} — hold the gains and keep the rep lists moving.`;
-                }
+                focus = `<strong>At the top — A.</strong> Hold the gains; spot-check rep performance weekly.`;
             }
 
             const region = store.region;
