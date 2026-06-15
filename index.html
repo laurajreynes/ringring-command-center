@@ -787,6 +787,7 @@
         <button class="tab-btn" onclick="switchTab('trends',this)">Inbound Trends</button>
         <button class="tab-btn" onclick="switchTab('obtrends',this)">Outbound Trends</button>
         <button class="tab-btn" onclick="switchTab('baseline',this)">Progress Since Start</button>
+        <button class="tab-btn" onclick="switchTab('remedial',this)">Remedial Training</button>
         <button class="tab-btn" onclick="switchTab('entry',this)" style="display:none;">Data Entry</button>
     </div>
 
@@ -817,6 +818,7 @@
         <div class="tab-panel" id="panel-trends"><div id="trendsPanel"></div></div>
         <div class="tab-panel" id="panel-obtrends"><div id="obTrendsPanel"></div></div>
         <div class="tab-panel" id="panel-baseline"><div id="baselinePanel"></div></div>
+        <div class="tab-panel" id="panel-remedial"><div id="remedialPanel"></div></div>
         <div class="tab-panel" id="panel-entry">
             <div class="success-message" id="successMessage">Data saved — dashboard updated.</div>
             <div id="dataEntryForm"></div>
@@ -998,6 +1000,32 @@ const OB_TRENDS = {
                 'SAS':[null,null,null,null,null,null],'TAS':[null,null,null,null,null,null],'NAS':[null,null,null,null,null,null],'KGR':[null,null,null,null,null,null],'TGR':[null,null,null,null,null,null],'CGR':[null,null,null,null,null,null],
                 'HGR':[null,null,null,null,null,null],'GGR':[null,null,null,null,null,null],'AGV':[null,null,null,null,null,null],'KGV':[null,null,null,null,null,null],'HGV':[null,null,null,null,null,null],'TRA':[null,null,null,null,null,null],
                 'KRA':[null,null,null,null,null,null],'NRA':[null,null,null,null,null,null],'TSA':[null,null,null,null,null,null],'TCH':[null,null,null,null,null,null],'TCC':[null,null,null,null,null,null]
+            }
+        };
+
+        // ===== Remedial Training (4 stores below B− on May Final) =====
+        // Change: 'All Sales Opportunity for Sales Calls' enabled Jun 12 on inbound queue.
+        // Pre window: Jun 1–12 (snapshot at Jun 12 9:47am) | Post window: Jun 13–today.
+        const REMEDIAL_DATA = {
+            TAS: {
+                pre: { ib:118, rq:69, bk:41, ri:58, set:35 },
+                seg: { ib:30, rq:22, bk:15, ri:73, set:50 },
+                reps: [{n:'Alexa Bradley',ibPre:2,rqPre:1,bkPre:1,ibSeg:1,rqSeg:1,bkSeg:1},{n:'Andre Caldero',ibPre:6,rqPre:1,bkPre:0,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Andrew Fox',ibPre:4,rqPre:2,bkPre:1,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Benjamin Ross',ibPre:3,rqPre:1,bkPre:1,ibSeg:1,rqSeg:1,bkSeg:0},{n:'Brandon Davis',ibPre:6,rqPre:4,bkPre:2,ibSeg:2,rqSeg:2,bkSeg:2},{n:'Brandon Lance',ibPre:1,rqPre:1,bkPre:1,ibSeg:1,rqSeg:0,bkSeg:0},{n:'Caleb Clampitt',ibPre:2,rqPre:1,bkPre:1,ibSeg:3,rqSeg:3,bkSeg:2},{n:'Cameron Davis',ibPre:13,rqPre:5,bkPre:2,ibSeg:5,rqSeg:4,bkSeg:3},{n:'Cameron Howell',ibPre:1,rqPre:1,bkPre:1,ibSeg:1,rqSeg:1,bkSeg:0},{n:'Candice Cox',ibPre:4,rqPre:2,bkPre:0,ibSeg:2,rqSeg:0,bkSeg:0},{n:'Dylan Sims',ibPre:5,rqPre:4,bkPre:3,ibSeg:1,rqSeg:0,bkSeg:0},{n:'Eli Sajia',ibPre:8,rqPre:4,bkPre:4,ibSeg:3,rqSeg:3,bkSeg:2},{n:'Emily Brison',ibPre:6,rqPre:5,bkPre:4,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Jerred Davis',ibPre:2,rqPre:1,bkPre:0,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Jesus Varela',ibPre:1,rqPre:0,bkPre:0,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Joe Shively',ibPre:4,rqPre:1,bkPre:0,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Joseph Brittain',ibPre:3,rqPre:3,bkPre:2,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Kelsey Snyder',ibPre:0,rqPre:0,bkPre:0,ibSeg:1,rqSeg:0,bkSeg:0},{n:'Matthew Bateman',ibPre:3,rqPre:2,bkPre:1,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Michael Marcoux',ibPre:8,rqPre:6,bkPre:4,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Michael Price',ibPre:5,rqPre:1,bkPre:1,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Reilly Taylor',ibPre:6,rqPre:4,bkPre:3,ibSeg:3,rqSeg:2,bkSeg:1},{n:'Santiago Leon-Corona',ibPre:3,rqPre:0,bkPre:0,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Steve Troia',ibPre:4,rqPre:2,bkPre:1,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Tor Wendel',ibPre:6,rqPre:5,bkPre:2,ibSeg:5,rqSeg:5,bkSeg:4},{n:'Warren Weitner',ibPre:12,rqPre:12,bkPre:6,ibSeg:1,rqSeg:0,bkSeg:0}]
+            },
+            GGR: {
+                pre: { ib:12, rq:5, bk:2, ri:42, set:17 },
+                seg: { ib:2, rq:1, bk:0, ri:50, set:0 },
+                reps: [{n:'Dusty Locke',ibPre:1,rqPre:0,bkPre:0,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Gary DeFilippo',ibPre:3,rqPre:2,bkPre:1,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Joyce Hornbeck',ibPre:3,rqPre:0,bkPre:0,ibSeg:1,rqSeg:0,bkSeg:0},{n:'Matthew Cabral',ibPre:5,rqPre:3,bkPre:1,ibSeg:1,rqSeg:1,bkSeg:0}]
+            },
+            HGR: {
+                pre: { ib:26, rq:14, bk:10, ri:54, set:38 },
+                seg: { ib:7, rq:1, bk:0, ri:14, set:0 },
+                reps: [{n:'Carlos Ochoa',ibPre:4,rqPre:1,bkPre:1,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Jamaru Rodgers',ibPre:2,rqPre:1,bkPre:1,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Jonathan Hudson',ibPre:4,rqPre:2,bkPre:1,ibSeg:1,rqSeg:0,bkSeg:0},{n:'Michael Perez',ibPre:7,rqPre:5,bkPre:4,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Rachel Hamby',ibPre:5,rqPre:2,bkPre:1,ibSeg:4,rqSeg:0,bkSeg:0},{n:'Rick Veit',ibPre:3,rqPre:3,bkPre:2,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Tyler Winters',ibPre:1,rqPre:0,bkPre:0,ibSeg:2,rqSeg:1,bkSeg:0}]
+            },
+            CGR: {
+                pre: { ib:67, rq:37, bk:24, ri:55, set:36 },
+                seg: { ib:9, rq:5, bk:4, ri:56, set:44 },
+                reps: [{n:'Cedric Ferguson',ibPre:5,rqPre:4,bkPre:2,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Chris Morrison',ibPre:7,rqPre:7,bkPre:6,ibSeg:1,rqSeg:0,bkSeg:0},{n:'Daniela Gelder',ibPre:6,rqPre:3,bkPre:2,ibSeg:1,rqSeg:1,bkSeg:1},{n:'David Herr',ibPre:1,rqPre:0,bkPre:0,ibSeg:1,rqSeg:0,bkSeg:0},{n:'Dylan Geese',ibPre:3,rqPre:0,bkPre:0,ibSeg:1,rqSeg:1,bkSeg:1},{n:'Jerel Mosley',ibPre:9,rqPre:6,bkPre:3,ibSeg:1,rqSeg:1,bkSeg:1},{n:'John Karvelas',ibPre:0,rqPre:0,bkPre:0,ibSeg:1,rqSeg:0,bkSeg:0},{n:'John Kennedy',ibPre:5,rqPre:2,bkPre:1,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Joshua Hart',ibPre:2,rqPre:2,bkPre:1,ibSeg:0,rqSeg:0,bkSeg:0},{n:'Sonia Perna',ibPre:10,rqPre:4,bkPre:4,ibSeg:2,rqSeg:1,bkSeg:0},{n:'Wofford Shipman',ibPre:19,rqPre:9,bkPre:5,ibSeg:1,rqSeg:1,bkSeg:1}]
             }
         };
 
@@ -3989,7 +4017,116 @@ const OB_TRENDS = {
             document.getElementById('carwarsDate').textContent = cwDate;
             document.getElementById('dateRange').textContent = label;
         }
-        function renderAll(){renderDates();renderStores();renderAlerts();renderCoaching();renderRegions();renderTrends();renderOBTrends();renderBaseline();renderDataEntry();renderSummary();renderInsights();}
+        function renderAll(){renderDates();renderStores();renderAlerts();renderCoaching();renderRegions();renderTrends();renderOBTrends();renderBaseline();renderRemedial();renderDataEntry();renderSummary();renderInsights();}
+
+        // ===== Remedial Training panel — 4 stores below B− on May Final =====
+        function renderRemedial(){
+            const el = document.getElementById('remedialPanel'); if(!el) return;
+            const FULL = {TAS:'Toyota of Asheville', GGR:'Genesis of Greer', HGR:'Hyundai of Greer', CGR:'Chevy Buick GMC Cadillac'};
+            const ORDER = ['TAS','CGR','HGR','GGR'];
+            function arrow(d){ return d>0.5 ? '<span style="color:#2D8B28;">↑</span>' : d<-0.5 ? '<span style="color:#D40000;">↓</span>' : '<span style="color:#999;">→</span>'; }
+            function bandClass(p, type){
+                if(type==='ri'){ return p>=66?'green':p>=57?'yellow':'red'; }
+                if(type==='set'){ return p>=36?'green':p>=30?'yellow':'red'; }
+                return 'red';
+            }
+            const cards = ORDER.map(code=>{
+                const d = REMEDIAL_DATA[code]; if(!d) return '';
+                const dRI = d.seg.ri - d.pre.ri;
+                const dSet = d.seg.set - d.pre.set;
+                // Rep classification
+                const reps = d.reps.filter(r=>r.ibSeg>0 || r.ibPre>=3).map(r=>{
+                    const riPre = r.ibPre? r.rqPre/r.ibPre*100 : null;
+                    const riSeg = r.ibSeg? r.rqSeg/r.ibSeg*100 : null;
+                    const setPre = r.ibPre? r.bkPre/r.ibPre*100 : null;
+                    const setSeg = r.ibSeg? r.bkSeg/r.ibSeg*100 : null;
+                    let cls = 'neutral';
+                    if(r.ibSeg>0){
+                        const segScore = (riSeg||0) + (setSeg||0);
+                        const preScore = (riPre||0) + (setPre||0);
+                        if(segScore - preScore > 20) cls='help';
+                        else if(segScore - preScore < -20) cls='hurt';
+                        else if(riSeg>=70 && setSeg>=44) cls='help';
+                        else if(riSeg<40 || setSeg<24) cls='hurt';
+                    }
+                    return {...r, riPre, riSeg, setPre, setSeg, cls};
+                });
+                const helpers = reps.filter(r=>r.cls==='help').sort((a,b)=>b.ibSeg-a.ibSeg);
+                const hurters = reps.filter(r=>r.cls==='hurt').sort((a,b)=>b.ibSeg-a.ibSeg);
+                function repRow(r){
+                    const seg = r.ibSeg>0
+                        ? `<span style="color:#0a0a0a;">${r.ibSeg} call${r.ibSeg===1?'':'s'} · RI ${Math.round(r.riSeg)}% · Set ${Math.round(r.setSeg)}%</span>`
+                        : `<span style="color:#999;">no calls post-change</span>`;
+                    const pre = r.ibPre>0
+                        ? `<span style="color:#999;font-size:10px;">pre: ${r.ibPre} calls · RI ${Math.round(r.riPre)}% · Set ${Math.round(r.setPre)}%</span>`
+                        : `<span style="color:#999;font-size:10px;">no pre data</span>`;
+                    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 10px;border-left:3px solid var(--bar,#ccc);background:var(--bg,#fafafa);margin-bottom:3px;border-radius:0 3px 3px 0;">
+                        <div><div style="font-weight:600;font-size:11.5px;color:#0a0a0a;">${r.n}</div><div>${pre}</div></div>
+                        <div style="font-size:11px;text-align:right;">${seg}</div>
+                    </div>`;
+                }
+                const helpersHTML = helpers.length
+                    ? helpers.map(r=>repRow(r).replace('var(--bar,#ccc)','#2D8B28').replace('var(--bg,#fafafa)','#F4FAF1')).join('')
+                    : '<div style="color:#999;font-size:11px;padding:6px 10px;">No clear helpers yet.</div>';
+                const hurtersHTML = hurters.length
+                    ? hurters.map(r=>repRow(r).replace('var(--bar,#ccc)','#D40000').replace('var(--bg,#fafafa)','#FFF6F6')).join('')
+                    : '<div style="color:#999;font-size:11px;padding:6px 10px;">No active drag this segment.</div>';
+
+                const dirRI = arrow(dRI), dirSet = arrow(dSet);
+                const segSample = d.seg.ib;
+                const sampleNote = segSample < 10
+                    ? `<span style="font-size:10px;color:#D40000;font-weight:600;">⚠ Small sample (${segSample} calls)</span>`
+                    : `<span style="font-size:10px;color:#999;">${segSample} calls post-change</span>`;
+
+                return `<div style="background:#fff;border:1px solid #e5e5e5;border-radius:10px;padding:18px 20px;margin-bottom:14px;">
+                    <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid #f0f0f0;padding-bottom:10px;margin-bottom:12px;">
+                        <div>
+                            <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;font-weight:700;">${code}</div>
+                            <h3 style="font-size:18px;font-weight:800;margin:1px 0 0;color:#0a0a0a;">${FULL[code]}</h3>
+                        </div>
+                        <div>${sampleNote}</div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+                        <div style="background:#fafafa;border-radius:6px;padding:10px 14px;">
+                            <div style="font-size:9px;color:#64748b;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;margin-bottom:6px;">Request In %</div>
+                            <div style="display:flex;align-items:baseline;gap:10px;">
+                                <span style="font-size:11px;color:#999;">Pre <strong style="color:#0a0a0a;font-size:14px;">${d.pre.ri}%</strong></span>
+                                <span style="font-size:18px;">${dirRI}</span>
+                                <span style="font-size:11px;color:#999;">Post <strong class="g ${bandClass(d.seg.ri,'ri')}" style="font-size:14px;padding:1px 6px;">${d.seg.ri}%</strong></span>
+                            </div>
+                            <div style="font-size:10px;color:#94a3b8;margin-top:4px;">Δ ${dRI>=0?'+':''}${dRI.toFixed(0)} points</div>
+                        </div>
+                        <div style="background:#fafafa;border-radius:6px;padding:10px 14px;">
+                            <div style="font-size:9px;color:#64748b;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;margin-bottom:6px;">Set %</div>
+                            <div style="display:flex;align-items:baseline;gap:10px;">
+                                <span style="font-size:11px;color:#999;">Pre <strong style="color:#0a0a0a;font-size:14px;">${d.pre.set}%</strong></span>
+                                <span style="font-size:18px;">${dirSet}</span>
+                                <span style="font-size:11px;color:#999;">Post <strong class="g ${bandClass(d.seg.set,'set')}" style="font-size:14px;padding:1px 6px;">${d.seg.set}%</strong></span>
+                            </div>
+                            <div style="font-size:10px;color:#94a3b8;margin-top:4px;">Δ ${dSet>=0?'+':''}${dSet.toFixed(0)} points</div>
+                        </div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                        <div>
+                            <div style="font-size:10px;color:#2D8B28;letter-spacing:0.5px;text-transform:uppercase;font-weight:700;margin-bottom:6px;">Helping ↗</div>
+                            ${helpersHTML}
+                        </div>
+                        <div>
+                            <div style="font-size:10px;color:#D40000;letter-spacing:0.5px;text-transform:uppercase;font-weight:700;margin-bottom:6px;">Hurting ↘</div>
+                            ${hurtersHTML}
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+
+            el.innerHTML = `
+                <div style="margin-bottom:18px;padding:14px 18px;background:#fff8e0;border-left:3px solid #FFD710;border-radius:6px;">
+                    <div style="font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:#0a0a0a;">Trigger Change · Jun 12</div>
+                    <div style="font-size:13px;margin-top:4px;color:#0a0a0a;">Inbound queue setting flipped to <strong>All Sales Opportunity for Sales Calls</strong>. Pre window = Jun 1–12, Post window = Jun 13–today.</div>
+                </div>
+                <h2 style="font-size:20px;font-weight:800;margin:0 0 16px;">Remedial Training Stores</h2>
+                ${cards}`;
+        }
         // Most-improved-of-the-week firework on page load
         function showMostImprovedFirework(){
             // Biggest ${PREV_MO} → ${CUR_MO} grade gain
