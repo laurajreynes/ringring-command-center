@@ -9,7 +9,9 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "SF Pro Text", Inter, Helvetica Neue, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
             background: #fafafa;
             color: #0a0a0a;
             font-size: 13px;
@@ -193,10 +195,18 @@
         .mg { font-size: 10px; margin-top: 1px; text-align: center; }
 
         /* GRADE BADGE */
-        .g { display: inline-block; padding: 1px 5px; border-radius: 3px; font-weight: 700; font-size: 11px; }
-        .g-green { background: rgba(45,139,40,0.14); color: #1a5e16; }
-        .g-yellow { background: rgba(255,215,16,0.35); color: #0a0a0a; }
-        .g-red { background: rgba(212,0,0,0.12); color: #a00000; }
+        .g { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px 2px 7px; border-radius: 999px; font-weight: 700; font-size: 11px; letter-spacing: 0.1px; }
+        .g::before { content:''; width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+        .g-green { background: rgba(45,139,40,0.08); color: #1a5e16; }
+        .g-green::before { background: #2D8B28; }
+        .g-yellow { background: rgba(168,136,31,0.12); color: #6e5916; }
+        .g-yellow::before { background: #B89518; }
+        .g-red { background: rgba(212,0,0,0.08); color: #a00000; }
+        .g-red::before { background: #D40000; }
+
+        /* Modernize cards: softer borders, subtle elevation, optional hover lift */
+        .card-lift { transition: transform 0.18s cubic-bezier(0.16,1,0.3,1), box-shadow 0.18s ease, border-color 0.18s ease; will-change: transform; }
+        .card-lift:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(15,23,42,0.06), 0 1px 3px rgba(15,23,42,0.04); border-color: #e2e6ea; }
 
         /* GRADE THERMOMETER */
         .thermo-wrap {
@@ -4030,6 +4040,13 @@ const OB_TRENDS = {
                 if(type==='set'){ return p>=36?'green':p>=30?'yellow':'red'; }
                 return 'red';
             }
+            // Inbound letter grade from RI% and Set% (same scale as dashboard)
+            const GPA_MAP={'A':4.0,'A-':3.7,'B+':3.3,'B':3.0,'B-':2.7,'C+':2.3,'C':2.0,'C-':1.7,'D+':1.3,'D':1.0,'D-':0.7,'F':0};
+            function gradeRI(p){ for(const[t,g]of[[78,'A'],[75,'A-'],[72,'B+'],[69,'B'],[66,'B-'],[63,'C+'],[60,'C'],[57,'C-'],[54,'D+'],[51,'D'],[48,'D-']]) if(p>=t) return g; return 'F'; }
+            function gradeSet(p){ for(const[t,g]of[[44,'A'],[42,'A-'],[40,'B+'],[38,'B'],[36,'B-'],[34,'C+'],[32,'C'],[30,'C-'],[28,'D+'],[26,'D'],[24,'D-']]) if(p>=t) return g; return 'F'; }
+            function letterFromGPA(v){ for(const[t,g]of[[3.85,'A'],[3.5,'A-'],[3.15,'B+'],[2.85,'B'],[2.5,'B-'],[2.15,'C+'],[1.85,'C'],[1.5,'C-'],[1.15,'D+'],[0.85,'D'],[0.35,'D-']]) if(v>=t) return g; return 'F'; }
+            function inboundGrade(ri,set){ return letterFromGPA((GPA_MAP[gradeRI(ri)]+GPA_MAP[gradeSet(set)])/2); }
+            function gClass(letter){ return ['A','A-','B+','B','B-'].includes(letter)?'g-green':['C+','C','C-'].includes(letter)?'g-yellow':'g-red'; }
             const cards = ORDER.map(code=>{
                 const d = REMEDIAL_DATA[code]; if(!d) return '';
                 const dRI = d.seg.ri - d.pre.ri;
@@ -4078,33 +4095,45 @@ const OB_TRENDS = {
                     ? `<span style="font-size:10px;color:#D40000;font-weight:600;">⚠ Small sample (${segSample} calls)</span>`
                     : `<span style="font-size:10px;color:#999;">${segSample} calls post-change</span>`;
 
-                return `<div style="background:#fff;border:1px solid #e5e5e5;border-radius:10px;padding:18px 20px;margin-bottom:14px;">
-                    <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid #f0f0f0;padding-bottom:10px;margin-bottom:12px;">
-                        <div>
-                            <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;font-weight:700;">${code}</div>
-                            <h3 style="font-size:18px;font-weight:800;margin:1px 0 0;color:#0a0a0a;">${FULL[code]}</h3>
+                const preGrade = inboundGrade(d.pre.ri, d.pre.set);
+                const postGrade = inboundGrade(d.seg.ri, d.seg.set);
+                const gradeDelta = GPA_MAP[postGrade] - GPA_MAP[preGrade];
+                return `<div class="card-lift" style="background:#fff;border:1px solid #eceef0;border-radius:12px;padding:18px 22px;margin-bottom:14px;box-shadow:0 1px 2px rgba(15,23,42,0.03);">
+                    <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f1f3f5;padding-bottom:12px;margin-bottom:14px;gap:14px;">
+                        <div style="flex:1;">
+                            <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:1.2px;font-weight:700;">${code}</div>
+                            <h3 style="font-size:18px;font-weight:800;margin:1px 0 0;color:#0a0a0a;letter-spacing:-0.3px;">${FULL[code]}</h3>
                         </div>
-                        <div>${sampleNote}</div>
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <div style="text-align:right;">
+                                <div style="font-size:8.5px;color:#94a3b8;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;margin-bottom:3px;">Inbound Grade</div>
+                                <div style="display:flex;align-items:center;gap:6px;">
+                                    <span class="g ${gClass(preGrade)}" style="font-size:11px;opacity:0.7;">${preGrade}</span>
+                                    <span style="color:#94a3b8;font-size:13px;">→</span>
+                                    <span class="g ${gClass(postGrade)}" style="font-size:14px;padding:3px 10px 3px 9px;font-weight:800;">${postGrade}</span>
+                                </div>
+                            </div>
+                            <div style="border-left:1px solid #e5e7eb;padding-left:12px;">${sampleNote}</div>
+                        </div>
                     </div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
-                        <div style="background:#fafafa;border-radius:6px;padding:10px 14px;">
-                            <div style="font-size:9px;color:#64748b;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;margin-bottom:6px;">Request In %</div>
-                            <div style="display:flex;align-items:baseline;gap:10px;">
-                                <span style="font-size:11px;color:#999;">Pre <strong style="color:#0a0a0a;font-size:14px;">${d.pre.ri}%</strong></span>
-                                <span style="font-size:18px;">${dirRI}</span>
-                                <span style="font-size:11px;color:#999;">Post <strong class="g ${bandClass(d.seg.ri,'ri')}" style="font-size:14px;padding:1px 6px;">${d.seg.ri}%</strong></span>
-                            </div>
-                            <div style="font-size:10px;color:#94a3b8;margin-top:4px;">Δ ${dRI>=0?'+':''}${dRI.toFixed(0)} points</div>
-                        </div>
-                        <div style="background:#fafafa;border-radius:6px;padding:10px 14px;">
-                            <div style="font-size:9px;color:#64748b;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;margin-bottom:6px;">Set %</div>
-                            <div style="display:flex;align-items:baseline;gap:10px;">
-                                <span style="font-size:11px;color:#999;">Pre <strong style="color:#0a0a0a;font-size:14px;">${d.pre.set}%</strong></span>
-                                <span style="font-size:18px;">${dirSet}</span>
-                                <span style="font-size:11px;color:#999;">Post <strong class="g ${bandClass(d.seg.set,'set')}" style="font-size:14px;padding:1px 6px;">${d.seg.set}%</strong></span>
-                            </div>
-                            <div style="font-size:10px;color:#94a3b8;margin-top:4px;">Δ ${dSet>=0?'+':''}${dSet.toFixed(0)} points</div>
-                        </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;">
+                        ${[['ri','Request In',d.pre.ri,d.seg.ri,dRI],['set','Set',d.pre.set,d.seg.set,dSet]].map(([k,label,pre,post,delta])=>{
+                            const deltaColor = delta>0 ? '#2D8B28' : delta<0 ? '#D40000' : '#94a3b8';
+                            const deltaBg = delta>0 ? 'rgba(45,139,40,0.10)' : delta<0 ? 'rgba(212,0,0,0.10)' : 'rgba(148,163,184,0.10)';
+                            const deltaSign = delta>0 ? '+' : '';
+                            return `<div style="background:#fafafa;border-radius:10px;padding:18px 22px;border:1px solid #eef0f2;">
+                                <div style="font-size:10px;color:#64748b;letter-spacing:0.8px;text-transform:uppercase;font-weight:700;margin-bottom:14px;">${label} %</div>
+                                <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:10px;">
+                                    <span style="font-size:42px;font-weight:800;line-height:1;letter-spacing:-1.5px;color:#0a0a0a;">${post}<span style="font-size:22px;color:#64748b;font-weight:700;">%</span></span>
+                                    <span style="display:inline-flex;align-items:center;gap:4px;background:${deltaBg};color:${deltaColor};font-weight:700;font-size:13px;padding:5px 10px;border-radius:999px;line-height:1;">
+                                        ${delta>0?'↑':delta<0?'↓':'→'} ${deltaSign}${delta.toFixed(0)} pts
+                                    </span>
+                                </div>
+                                <div style="font-size:11px;color:#94a3b8;letter-spacing:0.2px;">
+                                    from <strong style="color:#475569;font-weight:600;">${pre}%</strong> in Jun 1–12
+                                </div>
+                            </div>`;
+                        }).join('')}
                     </div>
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
                         <div>
