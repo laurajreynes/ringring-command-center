@@ -19,7 +19,9 @@
         }
 
         /* TOP BAR */
-        .top-bar { background: #fff; border-bottom: 1px solid #e5e5e5; padding: 7px 20px; display: flex; justify-content: space-between; align-items: center; }
+        /* Brand accent stripe at very top */
+        body::before { content:''; position:fixed; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, #2D8B28 0%, #2D8B28 40%, #FFD710 40%, #FFD710 80%, #D40000 80%, #D40000 100%); z-index:9999; pointer-events:none; }
+        .top-bar { background: #fff; border-bottom: 1px solid #eceef0; padding: 8px 20px 7px; display: flex; justify-content: space-between; align-items: center; }
         .top-bar-left h1 { font-size: 14px; font-weight: 700; color: #0a0a0a; margin: 0 0 1px; letter-spacing: -0.2px; }
         .top-bar-left h1 span { color: #0a0a0a; }
         .top-bar-left .meta { font-size: 11px; color: #6b7280; letter-spacing: 0.1px; }
@@ -32,11 +34,14 @@
         .scorecard-link { background: #0a0a0a; color: #fff; }
         .scorecard-link:hover { background: #1a1a1a; }
 
-        /* SUMMARY STRIP */
-        .summary-strip { background: #fff; border-bottom: 1px solid #e5e5e5; padding: 5px 20px; display: flex; gap: 28px; align-items: baseline; }
-        .summary-item { display: inline-flex; align-items: baseline; gap: 7px; }
-        .summary-item .num { font-size: 14px; font-weight: 700; line-height: 1; color: #0a0a0a; }
-        .summary-item .lbl { color: #6b7280; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+        /* SUMMARY STRIP — merged with focus into single meta strip */
+        .meta-strip { background: #fff; border-bottom: 1px solid #eceef0; padding: 6px 20px; display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+        .ms-divider { width: 1px; height: 18px; background: #e5e7eb; }
+        .ms-focus { display: flex; align-items: center; gap: 12px; }
+        .ms-stats { display: flex; gap: 18px; }
+        .ms-stat { font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.7px; font-weight: 600; display: inline-flex; align-items: baseline; gap: 5px; }
+        .ms-stat strong { color: #0a0a0a; font-size: 14px; font-weight: 800; letter-spacing: -0.3px; text-transform: none; }
+        .summary-strip { display: none; }
         .num-green { color: #2D8B28; }
         .num-red { color: #D40000; }
         .num-amber { color: #0a0a0a; }
@@ -44,19 +49,22 @@
         /* TAB NAV */
         .tab-nav {
             background: #fff;
-            border-bottom: 1px solid #fafafa;
-            padding: 0 20px;
+            border-bottom: 1px solid #eceef0;
+            padding: 0 16px;
             display: flex;
+            gap: 2px;
         }
 
         .tab-btn {
-            padding: 7px 14px; font-size: 12px; font-weight: 600; color: #6b7280;
+            padding: 9px 14px 8px; font-size: 12px; font-weight: 600; color: #6b7280;
             cursor: pointer; border: none; background: none;
             border-bottom: 2px solid transparent; font-family: inherit;
+            transition: color 0.15s ease, border-color 0.15s ease;
+            letter-spacing: 0.1px;
         }
 
-        .tab-btn:hover { color: #374151; }
-        .tab-btn.active { color: #0a0a0a; border-bottom-color: #0a0a0a; font-weight: 700; }
+        .tab-btn:hover { color: #0a0a0a; }
+        .tab-btn.active { color: #0a0a0a; border-bottom-color: #2D8B28; font-weight: 800; }
 
         /* MAIN */
         .main { padding: 12px 16px; }
@@ -195,13 +203,13 @@
         .mg { font-size: 10px; margin-top: 1px; text-align: center; }
 
         /* GRADE BADGE */
-        .g { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px 2px 7px; border-radius: 999px; font-weight: 700; font-size: 11px; letter-spacing: 0.1px; }
+        .g { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px 2px 8px; border-radius: 999px; font-weight: 700; font-size: 11px; letter-spacing: 0.1px; }
         .g::before { content:''; width:6px; height:6px; border-radius:50%; flex-shrink:0; }
-        .g-green { background: rgba(45,139,40,0.08); color: #1a5e16; }
+        .g-green { background: rgba(45,139,40,0.10); color: #1f6b1a; }
         .g-green::before { background: #2D8B28; }
-        .g-yellow { background: rgba(168,136,31,0.12); color: #6e5916; }
-        .g-yellow::before { background: #B89518; }
-        .g-red { background: rgba(212,0,0,0.08); color: #a00000; }
+        .g-yellow { background: rgba(255,215,16,0.30); color: #0a0a0a; }
+        .g-yellow::before { background: #FFD710; box-shadow: 0 0 0 1px rgba(0,0,0,0.10); }
+        .g-red { background: rgba(212,0,0,0.10); color: #a00000; }
         .g-red::before { background: #D40000; }
 
         /* Modernize cards: softer borders, subtle elevation, optional hover lift */
@@ -281,23 +289,25 @@
             position: absolute; top: 0; bottom: 0; width: 2px; background: #374151; z-index: 3;
         }
 
-        /* PROGRESS VISUAL */
-        .progress-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 8px 20px; background: #fff; border-bottom: 1px solid #e5e5e5; }
+        /* PROGRESS VISUAL — compact, 3 cards side-by-side */
+        .progress-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 8px 16px 4px; background: #fff; border-bottom: 1px solid #eceef0; }
         .progress-card {
-            background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; padding: 10px 14px;
+            background: #fff; border: 1px solid #eceef0; border-radius: 10px; padding: 8px 12px;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
-        .progress-card h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 6px; }
-        .progress-donut-row { display: flex; align-items: center; gap: 14px; }
-        .progress-donut { position: relative; width: 42px; height: 42px; flex-shrink: 0; }
-        .progress-donut svg { width: 42px; height: 42px; transform: rotate(-90deg); }
-        .progress-donut-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 12px; font-weight: 700; color: #0a0a0a; }
-        .progress-stats { display: flex; flex-direction: column; gap: 2px; font-size: 11px; }
+        .progress-card:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(15,23,42,0.05); }
+        .progress-card h4 { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 5px; }
+        .progress-donut-row { display: flex; align-items: center; gap: 12px; }
+        .progress-donut { position: relative; width: 38px; height: 38px; flex-shrink: 0; }
+        .progress-donut svg { width: 38px; height: 38px; transform: rotate(-90deg); }
+        .progress-donut-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 11px; font-weight: 800; color: #0a0a0a; letter-spacing: -0.3px; }
+        .progress-stats { display: flex; flex-direction: column; gap: 1px; font-size: 10.5px; }
         .progress-stats .ps-row { display: flex; align-items: center; gap: 4px; }
-        .ps-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .ps-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
         .ps-dot-green { background: #2D8B28; }
-        .ps-dot-yellow { background: #FFD710; }
+        .ps-dot-yellow { background: #FFD710; box-shadow: 0 0 0 1px rgba(0,0,0,0.10); }
         .ps-dot-red { background: #D40000; }
-        .progress-grade-bar { display: flex; height: 6px; border-radius: 3px; overflow: hidden; margin-top: 6px; }
+        .progress-grade-bar { display: flex; height: 5px; border-radius: 3px; overflow: hidden; margin-top: 6px; }
         .pgb-green { background: #2D8B28; }
         .pgb-yellow { background: #FFD710; }
         .pgb-red { background: #D40000; }
@@ -619,12 +629,12 @@
 
         /* FOCUS MODE BAR */
         .focus-bar { background: #fafafa; border-bottom: 1px solid #e5e5e5; padding: 4px 20px; display: flex; gap: 14px; align-items: center; font-family: inherit; }
-        .focus-bar .fb-label { font-weight:700; color:#1a5e16; text-transform:uppercase; letter-spacing:0.4px; font-size:10px; }
-        .focus-btn { background:transparent; border:none; color:#0a0a0a; padding:4px 0; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; text-decoration:underline; text-decoration-style:dotted; text-decoration-color:#cbd5e1; text-underline-offset:3px; transition:text-decoration-color 0.15s; }
-        .focus-btn:hover { text-decoration-color:#0a0a0a; }
-        .focus-btn.ib { color:#0a0a0a; }
-        .focus-btn.ob { color:#0a0a0a; }
-        .focus-btn + .focus-btn { margin-left:18px; }
+        .focus-bar .fb-label, .meta-strip .fb-label { font-weight:800; color:#1a5e16; text-transform:uppercase; letter-spacing:0.8px; font-size:10px; }
+        .focus-btn { background:#fafbfc; border:1px solid #eceef0; color:#0a0a0a; padding:3px 9px; font-size:11px; font-weight:600; cursor:pointer; font-family:inherit; border-radius:999px; transition:background 0.15s, border-color 0.15s, transform 0.1s; }
+        .focus-btn:hover { background:#fff; border-color:#cbd5e1; transform:translateY(-1px); }
+        .focus-btn.ib::before { content:'\25CF'; color:#2D8B28; font-size:8px; margin-right:5px; vertical-align:1px; }
+        .focus-btn.ob::before { content:'\25CF'; color:#0a0a0a; font-size:8px; margin-right:5px; vertical-align:1px; }
+        .focus-btn + .focus-btn { margin-left:6px; }
         .focus-bar .fb-hint { color:#4d7c0f; font-style:italic; margin-left:auto; font-size:11px; }
         .focus-region-prompt { padding:72px 32px 80px; display:flex; align-items:center; justify-content:center; min-height:380px; }
         .frp-cards { display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; max-width:780px; width:100%; }
@@ -756,23 +766,20 @@
         </div>
     </div>
 
-    <div class="focus-bar" style="justify-content:space-between;">
-        <div style="display:flex;align-items:center;gap:14px;">
+    <div class="meta-strip">
+        <div class="ms-focus">
             <span class="fb-label">Focus on:</span>
             <button class="focus-btn ib" onclick="openFocus('ib')">Inbound only</button>
             <button class="focus-btn ob" onclick="openFocus('ob')">Outbound only</button>
         </div>
-        <div id="juneTrainingBanner" style="font-size:11.5px;color:#0a0a0a;display:none;"></div>
-    </div>
-
-    <div class="summary-strip">
-        <div class="summary-item"><div class="num">17</div><div class="lbl">Stores</div></div>
-        <div class="summary-item"><div class="num num-green" id="improvedCount">0</div><div class="lbl">Improved</div></div>
-        <div class="summary-item"><div class="num num-red" id="declinedCount">0</div><div class="lbl">Declined</div></div>
-        <div class="summary-item"><div class="num num-amber" id="steadyCount">0</div><div class="lbl">Steady</div></div>
-        <div class="summary-item" style="display:none;"><div style="font-size:12px;" id="westSummary">—</div></div>
-        <div class="summary-item" style="display:none;"><div style="font-size:12px;" id="eastSummary">—</div></div>
-        <div class="summary-item" style="display:none;"><div class="lbl" id="currentDate">—</div></div>
+        <div class="ms-divider"></div>
+        <div class="ms-stats">
+            <span class="ms-stat"><strong>17</strong> Stores</span>
+            <span class="ms-stat"><strong class="num-green" id="improvedCount">0</strong> Improved</span>
+            <span class="ms-stat"><strong class="num-red" id="declinedCount">0</strong> Declined</span>
+            <span class="ms-stat"><strong id="steadyCount">0</strong> Steady</span>
+        </div>
+        <div id="juneTrainingBanner" style="font-size:11.5px;color:#0a0a0a;display:none;margin-left:auto;"></div>
     </div>
     <div id="storyOfDay" style="background:#fafafa;border-bottom:1px solid rgba(255,215,16,0.40);padding:7px 20px;font-size:12px;color:#0a0a0a;display:none;"></div>
 
