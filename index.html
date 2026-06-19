@@ -1434,16 +1434,18 @@ const OB_TRENDS = {
             const sorted=sortStores(stores,label);
             sorted.forEach(store=>{
                 const c=calc(store.current), m=calc(store.lastMonth), y=calc(store.ytd), may=calc(store.may), apr=calc(store.april);
-                const aprGpa=gn(apr.ov),mayGpa=gn(may.ov);
-                const trend=mayGpa>aprGpa?'&#9650;':mayGpa<aprGpa?'&#9660;':'&mdash;';
-                const tc=mayGpa>aprGpa?'trend-up':mayGpa<aprGpa?'trend-down':'trend-neutral';
+                // Leftmost pill = CURRENT month (CUR_MO) overall grade.
+                // Arrow = current vs lastMonth (PREV_MO).
+                const curGpa=gn(c.ov),prevGpa=gn(m.ov);
+                const trend=curGpa>prevGpa?'&#9650;':curGpa<prevGpa?'&#9660;':'&mdash;';
+                const tc=curGpa>prevGpa?'trend-up':curGpa<prevGpa?'trend-down':'trend-neutral';
                 const idx=D.stores.indexOf(store);
 
                 h+=`<tr>
                     <td><button class="row-expand-btn" onclick="toggleDetail(${idx},event)">&#9660;</button></td>
                     <td class="store-name" title="${store.name}">
                         <div style="display:flex;align-items:center;gap:11px;">
-                            <span class="may-grade-big ${gc(may.ov)}">${may.ov}</span>
+                            <span class="may-grade-big ${gc(c.ov)}">${c.ov}</span>
                             <span class="may-grade-arrow ${tc}">${trend}</span>
                             <span><a href="#" onclick="event.preventDefault();event.stopPropagation();showOnePager('${store.id}')" style="color:inherit;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px;font-weight:800;font-size:18px;letter-spacing:0.3px;">${store.id}</a></span>
                         </div>
