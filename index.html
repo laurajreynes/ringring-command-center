@@ -4088,7 +4088,22 @@ const OB_TRENDS = {
             document.getElementById('carwarsDate').textContent = cwDate;
             document.getElementById('dateRange').textContent = label;
         }
-        function renderAll(){renderDates();renderStores();renderAlerts();renderCoaching();renderRegions();renderTrends();renderOBTrends();renderBaseline();renderRemedial();renderDataEntry();renderSummary();renderInsights();}
+        function renderAll(){
+            // Each renderer wrapped so one failure can't kill the whole chain (notifications, splash, etc.)
+            const safeRun = (name, fn) => { try { fn(); } catch(e) { console.error('renderAll: '+name+' failed:', e); } };
+            safeRun('renderDates', renderDates);
+            safeRun('renderStores', renderStores);
+            safeRun('renderAlerts', renderAlerts);
+            safeRun('renderCoaching', renderCoaching);
+            safeRun('renderRegions', renderRegions);
+            safeRun('renderTrends', renderTrends);
+            safeRun('renderOBTrends', renderOBTrends);
+            safeRun('renderBaseline', renderBaseline);
+            safeRun('renderRemedial', renderRemedial);
+            safeRun('renderDataEntry', renderDataEntry);
+            safeRun('renderSummary', renderSummary);
+            safeRun('renderInsights', renderInsights);
+        }
 
         // ===== Remedial Training panel — 4 stores below B− on May Final =====
         function renderRemedial(){
@@ -4347,15 +4362,16 @@ const OB_TRENDS = {
                     <button onclick="document.getElementById('coachingSplash').remove();" style="background:#0a0a0a;color:#fff;border:none;border-radius:5px;padding:7px 18px;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:0.2px;">Got it</button>
                 </div>`;
             overlay.appendChild(panel);
-            overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.remove(); });
+            // Click-outside dismiss disabled — Laura was missing the splash via stray clicks.
+            // Must use the Got it button or wait for auto-dismiss.
             document.body.appendChild(overlay);
             requestAnimationFrame(()=>{
                 overlay.style.opacity='1';
                 panel.style.transform='translateY(0)';
                 panel.style.opacity='1';
             });
-            // Countdown + auto-dismiss
-            let secs = 10;
+            // Countdown + auto-dismiss (extended to 30s so it's actually catchable)
+            let secs = 30;
             const cd = setInterval(()=>{
                 secs--;
                 const el = document.getElementById('coachingSplashCountdown');
@@ -4363,7 +4379,10 @@ const OB_TRENDS = {
                 if(secs<=0){ clearInterval(cd); const o=document.getElementById('coachingSplash'); if(o) o.remove(); }
             }, 1000);
         }
-        document.addEventListener('DOMContentLoaded',()=>{renderAll();setTimeout(maybeShowCoachingSplash,500);});
+        document.addEventListener('DOMContentLoaded',()=>{
+            try { renderAll(); } catch(e) { console.error('renderAll fatal:', e); }
+            setTimeout(()=>{ try { maybeShowCoachingSplash(); } catch(e) { console.error('splash failed:', e); } }, 500);
+        });
     </script>
     <div class="staff-overlay" id="staffOverlay" onclick="if(event.target===this)closeStaffModal()">
         <div class="staff-modal"></div>
