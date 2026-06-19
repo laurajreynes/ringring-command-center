@@ -798,7 +798,7 @@
             <div class="meta">Anderson Automotive Group &nbsp;&middot;&nbsp; <span id="dateRange">Last 30 Days</span> &nbsp;&middot;&nbsp; CarWars <strong id="carwarsDate"></strong></div>
         </div>
         <div class="top-bar-right">
-            <span class="last-updated" title="Most recent data refresh"><span class="lu-dot"></span>Updated <strong>Fri Jun 19, 8:04 AM</strong></span>
+            <span class="last-updated" title="Most recent data refresh"><span class="lu-dot"></span>Updated <strong>Fri Jun 19, 12:55 PM</strong></span>
             <a href="https://anderson-scorecard.vercel.app" target="_blank" class="top-link scorecard-link">Scorecard</a>
             <button onclick="window.print()" class="top-link" style="background:#f5f5f5;color:#0a0a0a;border:none;cursor:pointer;font-family:inherit;">Export PDF</button>
         </div>
@@ -949,6 +949,26 @@ const STAFF = {
         };
 
         const MANAGERS = {
+            'SAS':[{n:'Thom Morrow',role:'SM',l:88,s:20},{n:'Justin Harrison	',role:'SM',l:40,s:9},{n:'Melissa Bell	',role:'GSM',l:71,s:12},{n:'Zachary Polos',role:'SM',l:64,s:11},{n:'Ryan Brown ',role:'GM',l:11,s:3},{n:'Shane Buzzetti',role:'SM',l:31,s:7}],
+            'TAS':[{n:'Ryan Shipman',role:'SM',l:137,s:40},{n:'Joseph Shipman ',role:'SM',l:55,s:62},{n:'Josh Mitchell',role:'SM',l:63,s:3},{n:'Robert Siler',role:'GSM',l:92,s:24},{n:'Leo Luna',role:'SM',l:150,s:30},{n:'Aaron Sumner',role:'GM',l:12,s:1},{n:'Josh Binkley',role:'SM',l:40,s:21}],
+            'NAS':[{n:'Austin Avent',role:'GSM',l:88,s:17},{n:'Mark Clampitt',role:'SM',l:41,s:10},{n:'Michael Baker',role:'SM',l:41,s:6},{n:'Conner Davis',role:'SM',l:47,s:10},{n:'Joseph Salameh',role:'SM',l:1,s:0},{n:'Nick Tasios',role:'GM',l:2,s:1}],
+            'KGR':[{n:'Kevin Brizendine',role:'GM',l:167,s:53},{n:'Jason Scott',role:'GSM',l:15,s:3},{n:'Ian Jones',role:'SM',l:4,s:1},{n:'Trevor Finley',role:'SM',l:1,s:0}],
+            'TGR':[{n:'Jordan Plunkett',role:'SM',l:63,s:27},{n:'Brandon Torres',role:'SM',l:2,s:0},{n:'Mark Saville',role:'SM',l:11,s:0},{n:'Mike Stanley',role:'SM',l:25,s:4}],
+            'CGR':[{n:'Christopher Rhyder',role:'GSM',l:40,s:29},{n:'Alex Reynes',role:'SM',l:1,s:0},{n:'Caden Peeler',role:'SM',l:20,s:0},{n:'Tony Hill',role:'SM',l:15,s:0}],
+            'HGR':[{n:'Kelcy Quarles',role:'SM',l:15,s:11},{n:'Brandon Price',role:'GSM',l:6,s:3},{n:'Ryan McDaniel',role:'SM',l:2,s:0}],
+            'GGR':[{n:'Chris Dunbar',role:'GM',l:1,s:0},{n:'Ryan McDaniel',role:'SM',l:64,s:64}],
+            'AGV':[{n:'John Carroll',role:'SM',l:33,s:25},{n:'Jordan Lewis',role:'SM',l:8,s:3}],
+            'KGV':[{n:'Philip Owens',role:'SM',l:66,s:2},{n:'Chris Moore',role:'SM',l:41,s:0},{n:'Nathan Ray',role:'GSM',l:10,s:1},{n:'Robert Miles',role:'SM',l:11,s:0}],
+            'HGV':[{n:'Adin Colon',role:'SM',l:91,s:19},{n:'Chris Edenfield',role:'SM',l:14,s:1},{n:'Jaylen Pettit',role:'SM',l:1,s:0},{n:'Matt Lovell',role:'SM',l:1,s:0},{n:'Sergey Kukhar',role:'SM',l:14,s:0},{n:'Carlos Alvarez',role:'SM',l:3,s:0},{n:'Malcolm Carter',role:'SM',l:8,s:0}],
+            'TRA':[{n:'Preston Elmer',role:'SM',l:8,s:0},{n:'Jeremiah Graves',role:'SM',l:14,s:1},{n:'Kyle Gustafson',role:'SM',l:9,s:2},{n:'Mike Hardy',role:'SM',l:1,s:0},{n:'Adam Hamias',role:'SM',l:32,s:0},{n:'Kevin Corley',role:'SM',l:27,s:13}],
+            'KRA':[{n:' Jason Campbell',role:'SM',l:117,s:0},{n:'Sami Sider',role:'SM',l:12,s:2},{n:'Charles Meserve',role:'GSM',l:12,s:0},{n:'Marty Vass',role:'GM',l:3,s:0}],
+            'NRA':[{n:'Tyler Boyajian',role:'GM',l:57,s:7},{n:'Amer Amer',role:'SM',l:1,s:0},{n:'Jordan Bellamy',role:'GSM',l:21,s:0},{n:'Sean Stafford',role:'SM',l:19,s:5}],
+            'TSA':[{n:'Charles Grosso',role:'SM',l:145,s:18},{n:'Adam Beasley',role:'SM',l:43,s:7},{n:'Bernard Jacobs',role:'SM',l:11,s:6},{n:'Chris Mclean',role:'SM',l:6,s:2}],
+            'TCH':[{n:'Bill Utnick',role:'SM',l:30,s:30},{n:'Benjamin Williamson',role:'SM',l:55,s:22},{n:'Jeremy Young',role:'SM',l:13,s:1},{n:'Victoria Johnson',role:'SM',l:48,s:40},{n:'Don Hesher',role:'SM',l:46,s:46},{n:'Matt Worlock',role:'SM',l:29,s:29},{n:'Steven Rhoads',role:'GM',l:1,s:0}],
+            'TCC':[]
+        };
+
+        const MANAGERS_WTD = {
             'SAS':[{n:'Thom Morrow',role:'SM',l:31,s:7},{n:'Justin Harrison	',role:'SM',l:3,s:0},{n:'Melissa Bell	',role:'GSM',l:3,s:1},{n:'Zachary Polos',role:'SM',l:2,s:1}],
             'TAS':[{n:'Ryan Shipman',role:'SM',l:38,s:6},{n:'Joseph Shipman ',role:'SM',l:12,s:12},{n:'Josh Mitchell',role:'SM',l:10,s:0},{n:'Robert Siler',role:'GSM',l:9,s:1},{n:'Leo Luna',role:'SM',l:6,s:0}],
             'NAS':[{n:'Austin Avent',role:'GSM',l:28,s:2},{n:'Mark Clampitt',role:'SM',l:16,s:5},{n:'Michael Baker',role:'SM',l:12,s:1},{n:'Conner Davis',role:'SM',l:7,s:1}],
@@ -965,26 +985,6 @@ const STAFF = {
             'NRA':[{n:'Tyler Boyajian',role:'GM',l:12,s:3}],
             'TSA':[{n:'Charles Grosso',role:'SM',l:21,s:2},{n:'Adam Beasley',role:'SM',l:14,s:2}],
             'TCH':[{n:'Bill Utnick',role:'SM',l:18,s:18},{n:'Benjamin Williamson',role:'SM',l:12,s:6},{n:'Jeremy Young',role:'SM',l:3,s:0},{n:'Victoria Johnson',role:'SM',l:2,s:1}],
-            'TCC':[]
-        };
-
-        const MANAGERS_WTD = {
-            'SAS':[{n:'Thom Morrow',role:'SM',l:0,s:0},{n:'Justin Harrison	',role:'SM',l:0,s:0},{n:'Melissa Bell	',role:'GSM',l:0,s:0},{n:'Zachary Polos',role:'SM',l:0,s:0}],
-            'TAS':[{n:'Ryan Shipman',role:'SM',l:0,s:0},{n:'Joseph Shipman ',role:'SM',l:0,s:0},{n:'Josh Mitchell',role:'SM',l:0,s:0},{n:'Robert Siler',role:'GSM',l:0,s:0},{n:'Leo Luna',role:'SM',l:0,s:0}],
-            'NAS':[{n:'Austin Avent',role:'GSM',l:0,s:0},{n:'Mark Clampitt',role:'SM',l:0,s:0},{n:'Michael Baker',role:'SM',l:0,s:0},{n:'Conner Davis',role:'SM',l:0,s:0}],
-            'KGR':[{n:'Kevin Brizendine',role:'GM',l:0,s:0},{n:'Jason Scott',role:'GSM',l:15,s:3},{n:'Ian Jones',role:'SM',l:0,s:0}],
-            'TGR':[{n:'Jordan Plunkett',role:'SM',l:0,s:0}],
-            'CGR':[{n:'Christopher Rhyder',role:'GSM',l:0,s:0},{n:'Alex Reynes',role:'SM',l:1,s:0}],
-            'HGR':[{n:'Kelcy Quarles',role:'SM',l:15,s:11},{n:'Brandon Price',role:'GSM',l:0,s:0}],
-            'GGR':[],
-            'AGV':[{n:'John Carroll',role:'SM',l:0,s:0},{n:'Jordan Lewis',role:'SM',l:2,s:0}],
-            'KGV':[{n:'Philip Owens',role:'SM',l:0,s:0},{n:'Chris Moore',role:'SM',l:0,s:0}],
-            'HGV':[{n:'Adin Colon',role:'SM',l:0,s:0},{n:'Chris Edenfield',role:'SM',l:10,s:1},{n:'Jaylen Pettit',role:'SM',l:1,s:0},{n:'Matt Lovell',role:'SM',l:1,s:0},{n:'Sergey Kukhar',role:'SM',l:0,s:0}],
-            'TRA':[{n:'Preston Elmer',role:'SM',l:0,s:0},{n:'Jeremiah Graves',role:'SM',l:0,s:0},{n:'Kyle Gustafson',role:'SM',l:0,s:0},{n:'Mike Hardy',role:'SM',l:1,s:0}],
-            'KRA':[{n:' Jason Campbell',role:'SM',l:0,s:0},{n:'Sami Sider',role:'SM',l:0,s:0}],
-            'NRA':[{n:'Tyler Boyajian',role:'GM',l:0,s:0}],
-            'TSA':[{n:'Charles Grosso',role:'SM',l:0,s:0},{n:'Adam Beasley',role:'SM',l:0,s:0}],
-            'TCH':[{n:'Bill Utnick',role:'SM',l:6,s:6},{n:'Benjamin Williamson',role:'SM',l:0,s:0},{n:'Jeremy Young',role:'SM',l:0,s:0},{n:'Victoria Johnson',role:'SM',l:0,s:0}],
             'TCC':[]
         };
 
