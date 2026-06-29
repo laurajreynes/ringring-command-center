@@ -2054,7 +2054,7 @@ const OB_TRENDS = {
             countUp(document.getElementById('declinedCount'), dec);
             countUp(document.getElementById('steadyCount'), ste);
             const vsEl = document.getElementById('vsPrevMoLabel');
-            if(vsEl) vsEl.textContent = CUR_MO.toUpperCase()+' MTD vs BASELINE';
+            if(vsEl) vsEl.textContent = 'PROGRESS SINCE START';
             document.getElementById('currentDate').textContent=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
 
             // East / West summary
@@ -3002,8 +3002,8 @@ const OB_TRENDS = {
                                     </div>
                                 </div>
                                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
-                                    ${sparkline(apptTrend,'#D40000')}
-                                    <div style="font-size:9px;color:#94a3b8;letter-spacing:0.3px;">Appt% · Jan→${CUR_MO}</div>
+                                    ${sparkline(liveTrend,'#D40000')}
+                                    <div style="font-size:9px;color:#94a3b8;letter-spacing:0.3px;">Live% · Jan→${CUR_MO}</div>
                                 </div>
                             </div>
                             <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">
