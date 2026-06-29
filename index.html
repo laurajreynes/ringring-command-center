@@ -811,9 +811,9 @@
             <button class="focus-btn ob" onclick="openFocus('ob')">Outbound only</button>
         </div>
         <div class="ms-divider"></div>
-        <div class="ms-stats">
+        <div class="ms-stats" title="Overall letter grade change: current month vs previous month">
             <span class="ms-stat"><strong>17</strong> Stores</span>
-            <span class="ms-stat"><strong class="num-green" id="improvedCount">0</strong> Improved</span>
+            <span class="ms-stat"><strong class="num-green" id="improvedCount">0</strong> Improved <span style="font-size:9px;text-transform:none;letter-spacing:0;color:#9ca3af;font-weight:500;" id="vsPrevMo">vs May</span></span>
             <span class="ms-stat"><strong class="num-red" id="declinedCount">0</strong> Declined</span>
             <span class="ms-stat"><strong id="steadyCount">0</strong> Steady</span>
         </div>
@@ -1741,7 +1741,7 @@ const OB_TRENDS = {
 
             // Compact list of all remaining alerts (rest of travel + bubble + watchers), grouped by region
             const rest = [...travel.slice(1), ...bubble, ...watchers];
-            const sevTag = x => x.c.ovS<2.3 ? {label:'Lowest Grades', color:'#a00000'} : x.c.ovS<2.7 ? {label:'On the Bubble', color:'#0a0a0a'} : {label:'Watch', color:'#0a0a0a'};
+            const sevTag = x => x.c.ovS<2.3 ? {label:'Lowest Grades', color:'#a00000'} : x.c.ovS<2.7 ? {label:'Borderline', color:'#0a0a0a'} : {label:'Slipping', color:'#0a0a0a'};
             const rowFn = x => {
                 const t = sevTag(x);
                 const delta = x.dropOv>0 ? `<span style="color:#a00000;font-weight:700;">&minus;${x.dropOv.toFixed(2)} vs ${PREV_MO}</span>` : '';
@@ -1761,24 +1761,17 @@ const OB_TRENDS = {
                 eastRest.length ? regionHeader('East Region', eastRest.length, '#993C1D') + eastRest.map(rowFn).join('') : ''
             ].join('');
 
-            // Legend for the severity tags
-            const legendHTML = `<div style="display:flex;gap:18px;padding:10px 18px 14px;font-size:11px;color:#6b7280;border-top:1px solid #f0f0f0;background:#fafafa;">
-                <span><strong style="color:#a00000;">Lowest Grades</strong> = below B− overall (the bottom of the board)</span>
-                <span><strong style="color:#0a0a0a;">On the Bubble</strong> = sitting at B− or just above (one bad week from slipping)</span>
-                <span><strong style="color:#0a0a0a;">Watch</strong> = B/B+ but dropped 0.7+ GPA since last month</span>
-            </div>`;
-
             const summary = `
                 <div style="display:flex;gap:30px;padding:14px 0 22px;font-family:Helvetica,Arial,sans-serif;">
                     <div><span style="font-size:24px;font-weight:800;color:#a00000;">${travel.length}</span> <span style="font-size:11px;letter-spacing:0.6px;text-transform:uppercase;color:#6b7280;font-weight:700;margin-left:4px;">Lowest Grades</span></div>
-                    <div><span style="font-size:24px;font-weight:800;color:#0a0a0a;">${bubble.length}</span> <span style="font-size:11px;letter-spacing:0.6px;text-transform:uppercase;color:#6b7280;font-weight:700;margin-left:4px;">On the Bubble</span></div>
-                    <div><span style="font-size:24px;font-weight:800;color:#0a0a0a;">${watchers.length}</span> <span style="font-size:11px;letter-spacing:0.6px;text-transform:uppercase;color:#6b7280;font-weight:700;margin-left:4px;">Watch</span></div>
+                    <div><span style="font-size:24px;font-weight:800;color:#0a0a0a;">${bubble.length}</span> <span style="font-size:11px;letter-spacing:0.6px;text-transform:uppercase;color:#6b7280;font-weight:700;margin-left:4px;">Borderline</span></div>
+                    <div><span style="font-size:24px;font-weight:800;color:#0a0a0a;">${watchers.length}</span> <span style="font-size:11px;letter-spacing:0.6px;text-transform:uppercase;color:#6b7280;font-weight:700;margin-left:4px;">Slipping</span></div>
                 </div>`;
 
             p.innerHTML = `<div style="font-family:Helvetica,Arial,sans-serif;max-width:980px;">
                 ${summary}
                 ${heroBlock}
-                ${rest.length ? `<div style="background:#fff;border:1px solid #e5e5e5;border-radius:10px;overflow:hidden;">${rowHTML}${legendHTML}</div>` : ''}
+                ${rest.length ? `<div style="background:#fff;border:1px solid #e5e5e5;border-radius:10px;overflow:hidden;">${rowHTML}</div>` : ''}
             </div>`;
             alertExpandedId = null;
         }
@@ -2058,6 +2051,8 @@ const OB_TRENDS = {
             countUp(document.getElementById('improvedCount'), imp);
             countUp(document.getElementById('declinedCount'), dec);
             countUp(document.getElementById('steadyCount'), ste);
+            const vsEl = document.getElementById('vsPrevMo');
+            if(vsEl) vsEl.textContent = 'vs '+PREV_MO;
             document.getElementById('currentDate').textContent=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
 
             // East / West summary
