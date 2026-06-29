@@ -811,7 +811,7 @@
             <button class="focus-btn ob" onclick="openFocus('ob')">Outbound only</button>
         </div>
         <div class="ms-divider"></div>
-        <div class="ms-stats" title="Overall letter grade change: current month vs previous month">
+        <div class="ms-stats" title="Overall letter grade change: current month vs Jan-Mar baseline (program start)">
             <span class="ms-stat"><strong>17</strong> Stores</span>
             <span class="ms-stat" style="padding-left:14px;border-left:1px solid #e5e7eb;"><span style="font-size:9.5px;letter-spacing:0.6px;text-transform:uppercase;color:#9ca3af;font-weight:700;margin-right:6px;" id="vsPrevMoLabel">JUN MTD vs MAY</span></span>
             <span class="ms-stat"><strong class="num-green" id="improvedCount">0</strong> Improved</span>
@@ -2048,12 +2048,13 @@ const OB_TRENDS = {
         }
         function renderSummary(){
             let imp=0,dec=0,ste=0;
-            D.stores.forEach(s=>{const c=gn(calc(s.current).ov),m=gn(calc(s.lastMonth).ov);if(c>m)imp++;else if(c<m)dec++;else ste++;});
+            // Compare current month overall grade to BASELINE (Jan-Mar avg) — program progress
+            D.stores.forEach(s=>{const c=gn(calc(s.current).ov),b=gn(calc(s.baseline).ov);if(c>b)imp++;else if(c<b)dec++;else ste++;});
             countUp(document.getElementById('improvedCount'), imp);
             countUp(document.getElementById('declinedCount'), dec);
             countUp(document.getElementById('steadyCount'), ste);
             const vsEl = document.getElementById('vsPrevMoLabel');
-            if(vsEl) vsEl.textContent = CUR_MO.toUpperCase()+' MTD vs '+PREV_MO.toUpperCase();
+            if(vsEl) vsEl.textContent = CUR_MO.toUpperCase()+' MTD vs BASELINE';
             document.getElementById('currentDate').textContent=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
 
             // East / West summary
