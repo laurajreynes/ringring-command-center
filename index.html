@@ -4138,21 +4138,18 @@ const OB_TRENDS = {
                 const d = REMEDIAL_DATA[code]; if(!d) return '';
                 const dRI = d.junCrisp.ri - d.mayCrisp.ri;
                 const dSet = d.junCrisp.set - d.mayCrisp.set;
-                // Per-rep helper/hurter is from Staff Activity (only source for per-rep)
-                // — labeled accordingly so it's not confused with CRISP store totals.
+                // Per-rep helper/hurter is from Staff Activity (only source for per-rep).
+                // Classify on POST performance only, with min 4-call sample.
+                // Comparing post-vs-pre creates fake "drops" when pre samples are tiny.
                 const reps = d.reps.filter(r=>r.ibSeg>0 || r.ibPre>=3).map(r=>{
                     const riPre = r.ibPre? r.rqPre/r.ibPre*100 : null;
                     const riSeg = r.ibSeg? r.rqSeg/r.ibSeg*100 : null;
                     const setPre = r.ibPre? r.bkPre/r.ibPre*100 : null;
                     const setSeg = r.ibSeg? r.bkSeg/r.ibSeg*100 : null;
                     let cls = 'neutral';
-                    if(r.ibSeg>0){
-                        const segScore = (riSeg||0) + (setSeg||0);
-                        const preScore = (riPre||0) + (setPre||0);
-                        if(segScore - preScore > 20) cls='help';
-                        else if(segScore - preScore < -20) cls='hurt';
-                        else if(riSeg>=70 && setSeg>=44) cls='help';
-                        else if(riSeg<40 || setSeg<24) cls='hurt';
+                    if(r.ibSeg >= 4){  // need enough post-change volume to judge
+                        if(riSeg >= 70 && setSeg >= 40) cls='help';
+                        else if(riSeg < 50 || setSeg < 25) cls='hurt';
                     }
                     return {...r, riPre, riSeg, setPre, setSeg, cls};
                 });
