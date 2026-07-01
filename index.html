@@ -4320,18 +4320,18 @@ const OB_TRENDS = {
             const inWindow = true; if(!inWindow) return;
             if(typeof MANAGERS_WTD==='undefined') return;
 
-            // Find offending stores
-            const flagged = [];
+            // Split into two tiers: truly disengaged (zero listens) vs. listening but not sharing
+            const zeroListens = [];
+            const zeroShares = [];
             D.stores.filter(s=>s.id!=='TCC').forEach(s=>{
                 const mgrs = (MANAGERS_WTD[s.id] || []).filter(m=>m.role!=='GM');  // SMs + GSMs only
                 const totL = mgrs.reduce((a,m)=>a+m.l,0);
                 const totS = mgrs.reduce((a,m)=>a+m.s,0);
-                if(totL===0 || totS===0){
-                    flagged.push({sid:s.id, name:s.name, mgrs, totL, totS,
-                        reason: totL===0 ? 'No listens since Monday' : 'No shares since Monday'});
-                }
+                if(totL===0) zeroListens.push({sid:s.id, name:s.name, mgrs, totL, totS});
+                else if(totS===0) zeroShares.push({sid:s.id, name:s.name, mgrs, totL, totS});
             });
-            if(!flagged.length) return;
+            const total = zeroListens.length + zeroShares.length;
+            if(!total) return;
 
             // Build the splash
             const overlay = document.createElement('div');
@@ -4339,27 +4339,43 @@ const OB_TRENDS = {
             overlay.style.cssText = 'position:fixed;inset:0;background:rgba(10,10,10,0.55);z-index:9998;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.22s ease-out;';
             const panel = document.createElement('div');
             panel.style.cssText = 'background:#fff;border-radius:12px;max-width:580px;width:92%;max-height:85vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,0.18);transform:translateY(14px);opacity:0;transition:transform 0.32s cubic-bezier(0.16,1,0.3,1),opacity 0.22s ease-out;';
-            const list = flagged.map(f=>`
-                <div onclick="document.getElementById('coachingSplash').remove();showStaffModal('${f.sid}','WTD');"
-                     style="padding:11px 14px;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:#fff;transition:background 0.15s;"
+            const rowHTML = (f, tier) => {
+                const detail = tier === 'critical'
+                    ? `<strong style="color:#a00000;">Zero listens</strong> · ${f.mgrs.length} mgr${f.mgrs.length===1?'':'s'}`
+                    : `${f.totL} listen${f.totL===1?'':'s'} but <strong>zero shares</strong> · ${f.mgrs.length} mgr${f.mgrs.length===1?'':'s'}`;
+                return `<div onclick="document.getElementById('coachingSplash').remove();showStaffModal('${f.sid}','WTD');"
+                     style="padding:11px 14px;border:1px solid ${tier==='critical'?'rgba(212,0,0,0.25)':'#e5e7eb'};border-radius:8px;margin-bottom:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:#fff;transition:background 0.15s;"
                      onmouseover="this.style.background='rgba(255,215,16,0.12)';" onmouseout="this.style.background='#fff';">
                     <div>
                         <div style="font-weight:700;font-size:14px;color:#0a0a0a;">${f.sid} <span style="color:#64748b;font-weight:500;font-size:12px;">— ${f.name.replace('Fred Anderson ','').replace('Genesis of ','Genesis ')}</span></div>
-                        <div style="font-size:11px;color:#0a0a0a;margin-top:2px;">${f.reason} · ${f.mgrs.length} mgr${f.mgrs.length===1?'':'s'}</div>
+                        <div style="font-size:11px;color:#0a0a0a;margin-top:2px;">${detail}</div>
                     </div>
                     <div style="font-size:10px;color:#0a0a0a;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">View →</div>
-                </div>`).join('');
+                </div>`;
+            };
+            const criticalSection = zeroListens.length ? `
+                <div style="padding:12px 22px 0;">
+                    <div style="font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#a00000;margin-bottom:8px;">🔴 Zero listens all week · ${zeroListens.length} store${zeroListens.length===1?'':'s'}</div>
+                    ${zeroListens.map(f=>rowHTML(f,'critical')).join('')}
+                </div>` : '';
+            const softSection = zeroShares.length ? `
+                <div style="padding:${zeroListens.length?'8px':'12px'} 22px 0;">
+                    <div style="font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#8a6b00;margin-bottom:8px;">🟡 Listening but not sharing · ${zeroShares.length} store${zeroShares.length===1?'':'s'}</div>
+                    ${zeroShares.map(f=>rowHTML(f,'soft')).join('')}
+                </div>` : '';
+            const intro = zeroListens.length
+                ? `${zeroListens.length} store${zeroListens.length===1?' has':'s have'} no manager listens since Monday. ${zeroShares.length} more ${zeroShares.length===1?'is listening but hasn\'t':'are listening but haven\'t'} shared a call. Click any store to see who's missing.`
+                : `Managers are listening but haven't shared any calls with reps since Monday. A share takes 10 seconds and moves the coaching needle. Click any store to see who's missing.`;
             panel.innerHTML = `
                 <div style="padding:22px 26px 16px;border-bottom:1px solid #e5e5e5;background:#fff;border-radius:14px 14px 0 0;">
                     <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#8a6b00;margin-bottom:6px;">Mid-Week Coaching Check</div>
-                    <h2 style="font-size:20px;font-weight:800;color:#0a0a0a;line-height:1.3;letter-spacing:-0.2px;">${flagged.length} ${flagged.length===1?'store needs':'stores need'} attention</h2>
-                    <div style="font-size:13px;color:#6b7280;margin-top:7px;line-height:1.5;">Managers haven&rsquo;t listened to or shared a single call since Monday. Click any store to see who&rsquo;s missing.</div>
+                    <h2 style="font-size:20px;font-weight:800;color:#0a0a0a;line-height:1.3;letter-spacing:-0.2px;">${total} ${total===1?'store needs':'stores need'} attention</h2>
+                    <div style="font-size:13px;color:#6b7280;margin-top:7px;line-height:1.5;">${intro}</div>
                 </div>
-                <div style="padding:16px 22px 4px;">
-                    ${list}
-                </div>
+                ${criticalSection}
+                ${softSection}
                 <div style="padding:14px 22px 18px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9ca3af;">
-                    <span id="coachingSplashCountdown">Auto-dismissing in 10s</span>
+                    <span id="coachingSplashCountdown">Auto-dismissing in 30s</span>
                     <button onclick="document.getElementById('coachingSplash').remove();" style="background:#0a0a0a;color:#fff;border:none;border-radius:5px;padding:7px 18px;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:0.2px;">Got it</button>
                 </div>`;
             overlay.appendChild(panel);
