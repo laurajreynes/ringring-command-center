@@ -4317,7 +4317,7 @@ const OB_TRENDS = {
             const now = new Date();
             const day = now.getDay();   // 0=Sun, 3=Wed, 4=Thu, 5=Fri
             const hour = now.getHours();
-            const inWindow = true; if(!inWindow) return;
+            const inWindow = (day === 3 && hour >= 15) || day === 4 || day === 5; if(!inWindow) return;  // Wed 3pm through Fri (Laura, Jul 6)
             if(typeof MANAGERS_WTD==='undefined') return;
 
             // Split into two tiers: truly disengaged (zero listens) vs. listening but not sharing
