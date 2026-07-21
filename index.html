@@ -798,7 +798,7 @@
             <div class="meta">Anderson Automotive Group &nbsp;&middot;&nbsp; <span id="dateRange">Last 30 Days</span> &nbsp;&middot;&nbsp; CarWars <strong id="carwarsDate"></strong></div>
         </div>
         <div class="top-bar-right">
-            <span class="last-updated" title="Most recent data refresh"><span class="lu-dot"></span>Updated <strong>Mon Jul 20, 10:22 AM</strong></span>
+            <span class="last-updated" title="Most recent data refresh"><span class="lu-dot"></span>Updated <strong>Tue Jul 21, 10:41 AM</strong></span>
             <a href="https://anderson-scorecard.vercel.app" target="_blank" class="top-link scorecard-link">Scorecard</a>
             <button onclick="window.print()" class="top-link" style="background:#f5f5f5;color:#0a0a0a;border:none;cursor:pointer;font-family:inherit;">Export PDF</button>
         </div>
@@ -813,8 +813,8 @@
         <div class="ms-divider"></div>
         <div class="ms-focus" title="vs Goal: outbound measured against target (the gap / opportunity) — this is the store-facing view. vs Actual: measured against calls actually made and convos actually had — the training team's true-conversion lens.">
             <span class="fb-label">Outbound view:</span>
-            <button data-obbasis="goal" onclick="setOBBasis('goal')" style="background:#0a0a0a;color:#fff;border:1px solid #0a0a0a;border-radius:5px;padding:4px 11px;font-family:inherit;font-size:11px;font-weight:700;cursor:pointer;margin-right:4px;">vs Goal</button>
-            <button data-obbasis="actual" onclick="setOBBasis('actual')" style="background:transparent;color:#64748b;border:1px solid #e5e7eb;border-radius:5px;padding:4px 11px;font-family:inherit;font-size:11px;font-weight:700;cursor:pointer;">vs Actual</button>
+            <button data-obbasis="goal" onclick="setOBBasis('goal')" style="background:transparent;color:#64748b;border:1px solid #e5e7eb;border-radius:5px;padding:4px 11px;font-family:inherit;font-size:11px;font-weight:700;cursor:pointer;margin-right:4px;">vs Goal</button>
+            <button data-obbasis="actual" onclick="setOBBasis('actual')" style="background:#0a0a0a;color:#fff;border:1px solid #0a0a0a;border-radius:5px;padding:4px 11px;font-family:inherit;font-size:11px;font-weight:700;cursor:pointer;">vs Actual</button>
         </div>
         <div class="ms-divider"></div>
         <div class="ms-stats" title="Overall letter grade change: current month vs Jan-Mar baseline (program start)">
@@ -1182,7 +1182,7 @@ const OB_TRENDS = {
 
         // --- Outbound measurement basis: 'goal' (store-facing, vs target) or 'actual' (team, vs what happened) ---
         // Both computed from the weekly Salesperson Call Report figures (goal, actual dials, live convos, appts).
-        let OB_BASIS = 'goal';
+        let OB_BASIS = 'actual';
         (function computeOBBases(){
             const wk = {}; (WEEKLY_REPORT.rows||[]).forEach(r=>{ wk[r.id]=r; });
             D.stores.forEach(s=>{
@@ -2091,7 +2091,7 @@ const OB_TRENDS = {
             countUp(document.getElementById('steadyCount'), ste);
             const vsEl = document.getElementById('vsPrevMoLabel');
             if(vsEl) vsEl.textContent = 'PROGRESS SINCE START';
-            document.getElementById('currentDate').textContent=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+            { const cd=document.getElementById('currentDate'); if(cd) cd.textContent=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}); }
 
             // East / West summary
             const real = D.stores.filter(s=>s.id!=='TCC');
@@ -2103,8 +2103,8 @@ const OB_TRENDS = {
             const w = regionStats(real.filter(s=>s.region==='West'));
             const e = regionStats(real.filter(s=>s.region==='East'));
             const fmtRegion = r=>`${s2g(r.gpa)} avg · ${r.up}/${r.total} improving`;
-            document.getElementById('westSummary').textContent = fmtRegion(w);
-            document.getElementById('eastSummary').textContent = fmtRegion(e);
+            { const ws=document.getElementById('westSummary'); if(ws) ws.textContent = fmtRegion(w); }
+            { const es=document.getElementById('eastSummary'); if(es) es.textContent = fmtRegion(e); }
 
             // Story of the day — pick one interesting fact
             renderStoryOfDay();
