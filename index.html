@@ -2715,7 +2715,17 @@ const OB_TRENDS = {
             const useWTD = _staffModalState.period === 'WTD';
             const staffSrc = useWTD ? STAFF_WTD : STAFF;
             const mgrSrc   = useWTD ? MANAGERS_WTD : MANAGERS;
-            const _early = !DATA_IS_MTD; const periodLbl = useWTD ? (_early?'This Week':'WTD (since Mon)') : (_early?'Last Month':'MTD');
+            // The WTD block is whatever window PACE says it is. On a Monday that is still the
+            // FINISHED week, because CarWars data runs through the previous day, so label it
+            // with the actual dates instead of an implied "this week".
+            const _wkLbl = (typeof PACE!=='undefined' && PACE.week)
+                ? PACE.week.replace(/^Week of\s*/,'Week of ').replace(/,\s*\d{4}$/,'')
+                    .replace(/January/,'Jan').replace(/February/,'Feb').replace(/March/,'Mar')
+                    .replace(/April/,'Apr').replace(/June/,'Jun').replace(/July/,'Jul')
+                    .replace(/August/,'Aug').replace(/September/,'Sep').replace(/October/,'Oct')
+                    .replace(/November/,'Nov').replace(/December/,'Dec')
+                : 'This Week';
+            const _early = !DATA_IS_MTD; const periodLbl = useWTD ? _wkLbl : (_early?'Last Month':'MTD');
 
             const staff = staffSrc[storeId] || [];
             const mgrs  = mgrSrc[storeId] || [];
